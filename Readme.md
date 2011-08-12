@@ -14,4 +14,4 @@ Deploy it on your Google App Engine account or test it there post-on-my-fridge.a
 
 * Design the fridge.
 * Implement drag and drop and message with javascript.
-
+* Add funny captcha.
