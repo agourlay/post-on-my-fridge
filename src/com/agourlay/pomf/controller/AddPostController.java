@@ -12,14 +12,10 @@ import com.google.appengine.api.users.UserServiceFactory;
 public class AddPostController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		System.out.println("Creating new Post ");
-		User user = (User) req.getAttribute("user");
-		if (user == null) {
-			UserService userService = UserServiceFactory.getUserService();
-			user = userService.getCurrentUser();
-		}
 
 		String content = checkNull(req.getParameter("content"));
-		Dao.INSTANCE.add(user.getUserId(), content);
+		String author = checkNull(req.getParameter("author"));
+		Dao.INSTANCE.add(author, content);
 
 		resp.sendRedirect("/TheFridge.jsp");
 	}
