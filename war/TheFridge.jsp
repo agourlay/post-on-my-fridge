@@ -10,7 +10,10 @@
 	<head>
 		<title>Posts on the fridge</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
-		  <meta charset="utf-8"> 
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
+		<script type="text/javascript" src = "/scripts/jquery-1.6.2.min.js"></script>
+		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
+		<meta charset="utf-8"> 
 	</head>
 	<body>
 	<%
@@ -49,33 +52,38 @@
 			</form>
 		</div>
 		<div class="main">	
-			<table class="fridge">
-			  <tr>
-			      <th>Author </th>
-			      <th>Content</th>
-			      <th>Creation date</th>
-			      <th>Delete</th>
-			  </tr>
-			
+			<div class="fridge">			
 				<% for (Post post : posts) {%>
-				<tr> 
-				<td>
-				<%=post.getAuthor()%>
-				</td>
-				<td>
-				<%=post.getContent()%>
-				</td>
-				<td>
-				<%=post.getFormatedDate()%>
-				</td>
-				<td>
-				<a class="delete" href="/remove?id=<%=post.getId()%>">Delete</a>
-				</td>
-				</tr> 
+				
+				<div id =<%=post.getId()%> class="post draggable">
+					<a class ="delete" href="/remove?id=<%=post.getId()%>">X</a>	
+					<div class="content">
+						<%=post.getContent()%>
+					</div>
+					<div class="author">
+						by <%=post.getAuthor()%>
+					</div>
+					<div class="date">
+						<i><%=post.getFormatedDate()%></i>
+					</div>	
+				</div>
+				
 				<%}
 				%>
-			</table>
+			</div>
 		</div>
 	</div>
 	</body>
 </html>
+<script>
+	$(function() {
+		$( ".draggable" ).draggable({ containment: ".fridge", scroll: true });
+		$( ".post" ).hide().fadeIn(1000);
+	        
+	});
+	
+	function deletePost(){
+		
+	}
+	
+</script>

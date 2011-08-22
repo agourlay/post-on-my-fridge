@@ -33,6 +33,7 @@ hr {
 .main {
 	margin-left: auto;
 	margin-right: auto;
+	padding-top:5%;
 	width: 55%;
 	background-image:url(../images/fridgeBg.jpg);
 	background-size:100%;
@@ -45,25 +46,42 @@ hr {
 	text-align:center;
 	margin-top:10%;
 	width:90%;
+    font-family:"Comic Sans MS", serif;
+    min-height:2000px;
 	}
 
-.fridge th {
-	background:#e5ecf9 none repeat scroll 0 0;
-	border-top:1px solid #CCCCCC;
-	font-size:small;
-	padding-left:5px;
-	padding-right:4px;
-	padding-top:4px;
-	vertical-align:top;
-	font-family: Arial, Helvetica, sans-serif;
-	font-variant: bold;
-}
+.post {
+	background: transparent url(../images/PostIt.png) no-repeat 0 0;
+	box-shadow: 15px 15px 12px #aaa;
+	width:228px;
+    height:228px;
+    padding-top: 5px;
+	}
+	
+.post .content{
+	position: relative;
+	font-weight: bold;
+	padding: 3px;
+	width:200px;
+	}
+	
+.post .author{
+	position: relative;
+	padding: 3px;
+	}
+	
+.post .date{
+	position: relative;
+	font-weight: lighter;
+	padding: 3px;
+	}	
 
-.fridge tr {	
-	font-size:small;
-	font-family:"Comic Sans MS", serif;
-}
-
+.post .delete{
+	position: relative;
+	float: right;
+	padding: 3px;
+	text-decoration: none;
+	}	
 
 .topLine {
 	height: 1.25em;
