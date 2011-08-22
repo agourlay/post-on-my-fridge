@@ -11,21 +11,56 @@ hr {
 }
 
 
+.global {
+	border-top :solid 10px white; 
+	background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.37, rgb(124,154,194)),
+    color-stop(0.69, rgb(255,255,255))
+	);
+	background-image: -moz-linear-gradient(
+	    center bottom,
+	    rgb(124,154,194) 37%,
+	    rgb(255,255,255) 69%
+	);
+	height: 100%;
+	width: 100%;
+	}
 
-table th {
-	background:#EFEFEF none repeat scroll 0 0;
+.main {
+	margin-left: auto;
+	margin-right: auto;
+	width: 55%;
+	background-image:url(../images/fridgeBg.jpg);
+	background-size:100%;
+	height: 100%;
+	}
+
+.fridge {
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
+	margin-top:10%;
+	width:90%;
+	}
+
+.fridge th {
+	background:#e5ecf9 none repeat scroll 0 0;
 	border-top:1px solid #CCCCCC;
 	font-size:small;
 	padding-left:5px;
 	padding-right:4px;
 	padding-top:4px;
 	vertical-align:top;
-	text-align:left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-variant: bold;
 }
 
-table tr {	
-	background-color: #e5ecf9;
+.fridge tr {	
 	font-size:small;
+	font-family:"Comic Sans MS", serif;
 }
 
 
@@ -41,21 +76,33 @@ table tr {
 .headline {
 	font-weight: bold;
 	color: #3366cc;
+	text-align: center;
 }
 
+.info {
+	float:left;
+	width: 20%;
+	position: fixed;
+  	top: 20%;
+  	padding: 10px
+	}
 
+.input_zone {
+	right: 0;
+	width: 20%;
+	position: fixed;
+  	top: 20%;
+  	padding: 10px;
+  	font-family:"Comic Sans MS", serif;
+	}
 
-.done {
-	font-size: x-small;
-	vertical-align: top;
-}
+.input {
+	margin-left: auto;
+	margin-right: auto;
+	width:50%;
+	}
 
-
-.email {
-	font-size: x-small;
-	vertical-align: top;
-}
-
-form td {
+.input td {
 	font-size: smaller;
 }
+

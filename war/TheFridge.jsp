@@ -8,71 +8,74 @@
 
 <html>
 	<head>
-		<title>Posts</title>
+		<title>Posts on the fridge</title>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 		  <meta charset="utf-8"> 
 	</head>
 	<body>
-<%
-Dao dao = Dao.INSTANCE;
-List<Post> posts = new ArrayList<Post>();
-posts = dao.getPosts();
-%>
-	<div style="width: 100%;">
-		<div class="line"></div>
-		<div class="topLine">
-			<div style="float: left;" class="headline">Post</div>
+	<%
+	Dao dao = Dao.INSTANCE;
+	List<Post> posts = new ArrayList<Post>();
+	posts = dao.getPosts();
+	%>
+	<div class="global">
+		<div>
+				<div class="line"></div>
+				<div class="topLine">
+					<div class="headline"><%= posts.size() %> posts on the fridge</div>
+				</div>
+			</div>
+		<div class="info">
+			Ingredients in the fridge :<br/>
+			<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">https://github.com/shagaan/PostOnMyFridge</a>
+		</div>
+		<div class ="input_zone">
+			<div class="headline">New post</div>
+			
+			<form action="/new" method="post" accept-charset="utf-8">
+				<table class="input">
+					<tr>
+						<td>Content</td>
+						<td><textarea name=content id="content" rows="3" cols="30">*Type your message*</textarea></td>
+					</tr>
+					<tr>
+						<td>Author</td>
+						<td><input type="text" name=author id="author" size="25"/></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right"><input type="submit" value="Create"/></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="main">	
+			<table class="fridge">
+			  <tr>
+			      <th>Author </th>
+			      <th>Content</th>
+			      <th>Creation date</th>
+			      <th>Delete</th>
+			  </tr>
+			
+				<% for (Post post : posts) {%>
+				<tr> 
+				<td>
+				<%=post.getAuthor()%>
+				</td>
+				<td>
+				<%=post.getContent()%>
+				</td>
+				<td>
+				<%=post.getFormatedDate()%>
+				</td>
+				<td>
+				<a class="delete" href="/remove?id=<%=post.getId()%>">Delete</a>
+				</td>
+				</tr> 
+				<%}
+				%>
+			</table>
 		</div>
 	</div>
-
-<div style="clear: both;"/>	
-You have a total number of <%= posts.size() %>  Posts.
-
-<table>
-  <tr>
-      <th>Author </th>
-      <th>Content</th>
-      <th>Delete</th>
-    </tr>
-
-<% for (Post post : posts) {%>
-<tr> 
-<td>
-<%=post.getAuthor()%>
-</td>
-<td>
-<%=post.getContent()%>
-</td>
-<td>
-<a class="delete" href="/remove?id=<%=post.getId()%>">Delete</a>
-</td>
-</tr> 
-<%}
-%>
-</table>
-
-
-<hr />
-
-<div class="main">
-
-<div class="headline">New post</div>
-
-<form action="/new" method="post" accept-charset="utf-8">
-	<table>
-		<tr>
-			<td><label for="summary">Content</label></td>
-			<td><input type="text" name="content" id="content" size="65"/></td>
-		</tr>
-		<tr>
-			<td><label for="author">Author</label></td>
-			<td><input type="text" name=author id="author" size="65"/></td>
-		</tr>
-		<tr>
-			<td colspan="2" align="right"><input type="submit" value="Create"/></td>
-		</tr>
-	</table>
-</form>
-</div>
-</body>
+	</body>
 </html>

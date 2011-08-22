@@ -32,7 +32,7 @@ public enum Dao {
 	public List<Post> getPosts() {
 		List<Post> posts = new ArrayList<Post>();
 		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select t from Post t ");
+		Query q = em.createQuery("select t from Post t order by date ASC");
 		posts = q.getResultList();
 		return posts;
 	}

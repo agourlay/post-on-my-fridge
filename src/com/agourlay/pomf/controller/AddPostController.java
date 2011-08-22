@@ -1,12 +1,12 @@
 package com.agourlay.pomf.controller;
 
 import java.io.IOException;
-import javax.servlet.http.*;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.agourlay.pomf.dao.Dao;
-import com.google.appengine.api.users.User;
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 
 @SuppressWarnings("serial")
 public class AddPostController extends HttpServlet {
