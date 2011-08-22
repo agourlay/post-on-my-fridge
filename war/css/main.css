@@ -25,7 +25,7 @@ hr {
 	    rgb(124,154,194) 37%,
 	    rgb(255,255,255) 69%
 	);
-	height: 100%;
+	min-height:2000px;
 	width: 100%;
 	}
 
@@ -35,7 +35,7 @@ hr {
 	width: 55%;
 	background-image:url(../images/fridgeBg.jpg);
 	background-size:100%;
-	height: 100%;
+	min-height:2000px;
 	}
 
 .fridge {
@@ -75,6 +75,7 @@ hr {
 
 .headline {
 	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
 	color: #3366cc;
 	text-align: center;
 }
