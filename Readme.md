@@ -5,6 +5,7 @@
 ## Features 
 
 The application allows any user to let a message on a fridge :D
+The javascript is powered by Jquery/Jquery UI.
 
 ## How to use it
 
@@ -12,7 +13,7 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 
 ## Futur improvements
 
-* Design the fridge.
-* Implement drag and drop and message with javascript.
 * Add funny captcha.
+* Delete posts by drag and drop into a trashbin.
+* Redesign background.
 * Mavenize the project!
