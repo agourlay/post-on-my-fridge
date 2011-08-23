@@ -5,6 +5,7 @@
 ## Features 
 
 The application allows any user to let a message on a fridge :D.
+
 The javascript is powered by Jquery/Jquery UI.
 
 ## How to use it
