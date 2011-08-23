@@ -16,11 +16,9 @@ public class UpdatePostController extends HttpServlet {
 
 		public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 			Long id = Long.parseLong(req.getParameter("id"));
-			String posXString = req.getParameter("positionX");
-			String posYString = req.getParameter("positionY");
-			
-			Integer positionX = Integer.parseInt(posXString);
-			Integer positionY = Integer.parseInt(posYString);
+
+			Integer positionX = Integer.parseInt(req.getParameter("positionX"));
+			Integer positionY = Integer.parseInt(req.getParameter("positionY"));
 			
 			Dao.INSTANCE.updatePosition(id, positionX, positionY);
 			
