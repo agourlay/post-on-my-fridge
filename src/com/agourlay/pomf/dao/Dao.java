@@ -29,6 +29,17 @@ public enum Dao {
 		}
 	}
 
+	public void updatePosition(Long id, Integer positionX,Integer positionY) {
+		synchronized (this) {
+			EntityManager em = EMFService.get().createEntityManager();
+			Post postToUpdate = em.find(Post.class, id);
+			postToUpdate.setPositionX(positionX);
+			postToUpdate.setPositionY(positionY);
+			em.persist(postToUpdate);
+			em.close();
+		}
+	}
+	
 	public List<Post> getPosts() {
 		List<Post> posts = new ArrayList<Post>();
 		EntityManager em = EMFService.get().createEntityManager();

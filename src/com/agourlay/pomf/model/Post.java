@@ -21,11 +21,15 @@ public class Post {
 	private String author;
 	private String content;
 	private Date date;
+	private Integer positionX;
+	private Integer positionY;
 
 	public Post(String author, String content) {
 		this.author = author;
 		this.content = content;
 		this.date = new Date();
+		this.positionX = 0;
+		this.positionY = 0;
 	}
 
 	public Long getId() {
@@ -59,6 +63,26 @@ public class Post {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Integer getPositionX() {
+		return positionX;
+	}
+
+	public void setPositionX(Integer positionX) {
+		this.positionX = positionX;
+	}
+
+	public Integer getPositionY() {
+		return positionY;
+	}
+
+	public void setPositionY(Integer positionY) {
+		this.positionY = positionY;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

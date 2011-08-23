@@ -31,6 +31,7 @@
 		<div class="info">
 			Ingredients in the fridge :<br/>
 			<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">https://github.com/shagaan/PostOnMyFridge</a>
+			<div class="work-in-progress"></div>
 		</div>
 		<div class ="input_zone">
 			<div class="headline">New post</div>
@@ -67,6 +68,10 @@
 						<i><%=post.getFormatedDate()%></i>
 					</div>	
 				</div>
+				<script>
+				$( "#<%=post.getId()%>" ).css('left',<%=post.getPositionX()%>)
+				$( "#<%=post.getId()%>" ).css('top',<%=post.getPositionY()%>)
+				</script>
 				
 				<%}
 				%>
@@ -79,6 +84,14 @@
 	$(function() {
 		$( ".draggable" ).draggable({ containment: ".fridge", scroll: true });
 		$( ".post" ).hide().fadeIn(1000);
+		
+		
+		
+		$( ".post" ).draggable({
+			stop: function() {			
+				$.ajax({ url: "/update?id="+$(this).attr('id')+"&positionX="+parseInt($(this).css('left'))+"&positionY="+parseInt($(this).css('top'))});
+			}
+		});
 	        
 	});
 	

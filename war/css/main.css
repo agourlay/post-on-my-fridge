@@ -126,3 +126,12 @@ hr {
 	font-size: smaller;
 }
 
+.work-in-progress{
+	background: transparent url(../images/wip.png) no-repeat 0 0;
+	margin-left: auto;
+	margin-right: auto;
+	background-size:70%;
+    padding-top: 5px;
+    min-height:200px;
+	}
+}
