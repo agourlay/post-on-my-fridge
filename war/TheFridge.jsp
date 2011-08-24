@@ -60,7 +60,6 @@
 				<% for (Post post : posts) {%>
 				
 				<div id =<%=post.getId()%> class="post draggable">
-					<a class ="delete" href="/remove?id=<%=post.getId()%>">X</a>	
 					<div class="content">
 						<%=post.getContent()%>
 					</div>

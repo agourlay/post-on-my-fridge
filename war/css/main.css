@@ -78,14 +78,6 @@ hr {
 	padding: 3px;
 	}	
 
-.post .delete{
-	position: relative;
-	float: right;
-	padding: 3px;
-	text-decoration: none;
-	height: 20px;
-	}	
-
 .topLine {
 	height: 1.25em;
 	background-color: #e5ecf9;
