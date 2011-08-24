@@ -21,15 +21,15 @@ public class Post {
 	private String author;
 	private String content;
 	private Date date;
-	private Integer positionX;
-	private Integer positionY;
+	private Double positionX;
+	private Double positionY;
 
 	public Post(String author, String content) {
-		this.author = author;
+		this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();;
 		this.content = content;
 		this.date = new Date();
-		this.positionX = 0;
-		this.positionY = 0;
+		this.positionX = new Double(0);
+		this.positionY = new Double(0);
 	}
 
 	public Long getId() {
@@ -65,19 +65,19 @@ public class Post {
 		this.date = date;
 	}
 
-	public Integer getPositionX() {
+	public Double getPositionX() {
 		return positionX;
 	}
 
-	public void setPositionX(Integer positionX) {
+	public void setPositionX(Double positionX) {
 		this.positionX = positionX;
 	}
 
-	public Integer getPositionY() {
+	public Double getPositionY() {
 		return positionY;
 	}
 
-	public void setPositionY(Integer positionY) {
+	public void setPositionY(Double positionY) {
 		this.positionY = positionY;
 	}
 

@@ -52,6 +52,9 @@
 				</table>
 			</form>
 		</div>
+		
+		<div class ="trash_bin"></div>
+		
 		<div class="main">	
 			<div class="fridge">			
 				<% for (Post post : posts) {%>
@@ -69,8 +72,8 @@
 					</div>	
 				</div>
 				<script>
-				$( "#<%=post.getId()%>" ).css('left',<%=post.getPositionX()%>)
-				$( "#<%=post.getId()%>" ).css('top',<%=post.getPositionY()%>)
+				$( "#<%=post.getId()%>" ).css('left',<%=post.getPositionX()%>*$(document).width())
+				$( "#<%=post.getId()%>" ).css('top',<%=post.getPositionY()%>*$(document).height())
 				</script>
 				
 				<%}
@@ -82,14 +85,35 @@
 </html>
 <script>
 	$(function() {
-		$( ".draggable" ).draggable({ containment: ".fridge", scroll: true });
+		$( ".draggable" ).draggable({ revert: "invalid" , scroll: true });
+		
+		$( ".trash_bin" ).droppable({
+			accept: ".post",
+			drop: function( event, ui ) {
+				$(this).effect("bounce",{ times:3 }, 300);
+				$.ajax({ url: "/remove?id="+ui.draggable.attr('id')});
+				ui.draggable.effect("clip",{ times:1 }, 300);
+			}
+		});
+		
+		$('.trash_bin').mouseover(function() {
+			$(this).effect("shake",{ times:1 }, 300);
+		});
+		
+		$( ".fridge" ).droppable({
+			accept: ".post",
+			drop: function( event, ui ) {
+				var posX = (parseInt(ui.draggable.css('left')))/$(document).width();
+				var posY = (parseInt(ui.draggable.css('top')))/$(document).height();
+				$.ajax({ url: "/update?id="+ui.draggable.attr('id')+"&positionX="+posX+"&positionY="+posY});
+			}
+		});
+		
 		$( ".post" ).hide().fadeIn(1000);
-		
-		
-		
+			
 		$( ".post" ).draggable({
-			stop: function() {			
-				$.ajax({ url: "/update?id="+$(this).attr('id')+"&positionX="+parseInt($(this).css('left'))+"&positionY="+parseInt($(this).css('top'))});
+			stop: function() {
+			
 			}
 		});
 	        

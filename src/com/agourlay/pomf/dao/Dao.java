@@ -29,7 +29,7 @@ public enum Dao {
 		}
 	}
 
-	public void updatePosition(Long id, Integer positionX,Integer positionY) {
+	public void updatePosition(Long id, Double positionX,Double positionY) {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
 			Post postToUpdate = em.find(Post.class, id);

@@ -25,7 +25,7 @@ hr {
 	    rgb(124,154,194) 37%,
 	    rgb(255,255,255) 69%
 	);
-	min-height:2000px;
+	min-height:1500px;
 	width: 100%;
 	
 	}
@@ -37,7 +37,7 @@ hr {
 	width: 55%;
 	background-image:url(../images/fridgeBg.jpg);
 	background-size:100%;
-	min-height:2000px;
+	min-height:1500px;
 	}
 
 .fridge {
@@ -46,8 +46,8 @@ hr {
 	text-align:center;
 	margin-top:10%;
 	width:90%;
+	min-height:1500px;
     font-family:"Comic Sans MS", serif;
-    min-height:2000px;
 	}
 
 .post {
@@ -62,7 +62,9 @@ hr {
 	position: relative;
 	font-weight: bold;
 	padding: 3px;
+	padding-left : 30px;
 	width:200px;
+	height:130px;
 	}
 	
 .post .author{
@@ -81,6 +83,7 @@ hr {
 	float: right;
 	padding: 3px;
 	text-decoration: none;
+	height: 20px;
 	}	
 
 .topLine {
@@ -116,6 +119,19 @@ hr {
   	font-family:"Comic Sans MS", serif;
 	}
 
+.trash_bin {
+	right: 5%;
+	position: fixed;
+  	top: 60%;
+  	padding: 10px;
+  	background: transparent url(../images/trash.png) no-repeat 0 0;
+ 	height:150px;
+ 	width: 150px;
+ 	background-size:60%;
+ 	margin-left: auto;
+	margin-right: auto;
+	}
+
 .input {
 	margin-left: auto;
 	margin-right: auto;
@@ -130,8 +146,8 @@ hr {
 	background: transparent url(../images/wip.png) no-repeat 0 0;
 	margin-left: auto;
 	margin-right: auto;
-	background-size:70%;
+	background-size:50%;
     padding-top: 5px;
-    min-height:200px;
+    min-height:150px;
 	}
 }
