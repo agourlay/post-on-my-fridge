@@ -17,6 +17,7 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Fix display for different resolution.
 * Add funny captcha.
 * Add funny magnets to move around.
-* Refresh with Ajax.
+* Add post with due date.
+* Refresh fridge with Ajax.
 * Redesign background.
 * Mavenize the project!
