@@ -16,6 +16,5 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 
 * Fix display for different resolution.
 * Add funny captcha.
-* Delete posts by drag and drop into a trashbin.
 * Redesign background.
 * Mavenize the project!
