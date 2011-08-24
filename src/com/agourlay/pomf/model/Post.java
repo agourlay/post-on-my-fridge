@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.agourlay.pomf.tools.Validation;
+
 /**
  * Model class which will store the Post Items
  * 
@@ -25,8 +27,19 @@ public class Post {
 	private Double positionY;
 
 	public Post(String author, String content) {
-		this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();;
-		this.content = content;
+		
+		if (Validation.isNoTNullOrEmpty(author)){
+			this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();
+		}else{
+			this.author = "Anonymous";
+		}
+		
+		if (Validation.isNoTNullOrEmpty(content)){
+			this.content = content;
+		}else{
+			this.content = "What's up?";
+		}
+		
 		this.date = new Date();
 		this.positionX = new Double(0);
 		this.positionY = new Double(0);
