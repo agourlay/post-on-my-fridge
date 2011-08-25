@@ -40,6 +40,7 @@
 			Ingredients in the fridge :<br/>
 			<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">https://github.com/shagaan/PostOnMyFridge</a>
 			<div class="work-in-progress"></div>
+			<img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
 		</div>
 		<div class ="input_zone">
 			<div class="headline">New post</div>
