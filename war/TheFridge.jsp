@@ -85,6 +85,7 @@
 	</body>
 </html>
 <script type="text/javascript"> 
+//browser detection
 var $buoop = {vs:{i:8,f:4,o:10.6,s:4,n:9}} 
 $buoop.ol = window.onload; 
 window.onload=function(){ 
@@ -93,5 +94,17 @@ window.onload=function(){
  e.setAttribute("type", "text/javascript"); 
  e.setAttribute("src", "http://browser-update.org/update.js"); 
  document.body.appendChild(e); 
+ 
+//google analytics
+ var _gaq = _gaq || [];
+ _gaq.push(['_setAccount', 'UA-25345034-1']);
+ _gaq.push(['_trackPageview']);
+
+ (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+ 
 } 
 </script> 
