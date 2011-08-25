@@ -15,6 +15,7 @@
 		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jYoutube.js"></script>
 		<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
+		<script type="text/javascript" src="http://updateyourbrowser.net/uyb.js"> </script> 
 		<meta charset="utf-8"> 
 	</head>
 	<body>
