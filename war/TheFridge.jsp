@@ -31,11 +31,11 @@
 	%>
 	<div class="global">
 		<div>
-				<div class="line"></div>
-				<div class="topLine">
-					<div class="headline"><%= posts.size() %> posts on the fridge</div>
-				</div>
+			<div class="line"></div>
+			<div class="topLine">
+				<div class="headline"><%= posts.size() %> posts on the fridge</div>
 			</div>
+		</div>
 		<div class="info">
 			Ingredients in the fridge :<br/>
 			<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">https://github.com/shagaan/PostOnMyFridge</a>
