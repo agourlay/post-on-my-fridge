@@ -26,6 +26,7 @@ hr {
 	    rgb(255,255,255) 69%
 	);
 	min-height:1500px;
+	max-height:2000px;
 	width: 100%;
 	
 	}
@@ -38,6 +39,7 @@ hr {
 	background-image:url(../images/fridgeBg.jpg);
 	background-size:100%;
 	min-height:1500px;
+	max-height:2000px;
 	}
 
 .fridge {
@@ -47,6 +49,7 @@ hr {
 	margin-top:10%;
 	width:90%;
 	min-height:1500px;
+	max-height:2000px;
     font-family:"Comic Sans MS", serif;
 	}
 
@@ -144,8 +147,8 @@ hr {
 	}
 	
 .post_picture {
-	height : 100px;
-	width: 100px;
+	height : 80%;
+	width: 60%;
 	}
 
 }

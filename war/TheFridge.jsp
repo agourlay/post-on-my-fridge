@@ -42,7 +42,7 @@
 				<table class="input">
 					<tr>
 						<td>Content</td>
-						<td><textarea name=content id="content" rows="3" cols="30">*Type your message*</textarea></td>
+						<td><textarea name=content id="content" rows="3" cols="30">*Type your message, links will be detected*</textarea></td>
 					</tr>
 					<tr>
 						<td>Author</td>

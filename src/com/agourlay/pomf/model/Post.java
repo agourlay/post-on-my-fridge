@@ -41,8 +41,8 @@ public class Post {
 		}
 		
 		this.date = new Date();
-		this.positionX = new Double(0);
-		this.positionY = new Double(0);
+		this.positionX = new Double(0.15);
+		this.positionY = new Double(0.1);
 	}
 
 	public Long getId() {
