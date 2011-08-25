@@ -17,8 +17,6 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Fix timestamp value.
 * Fix display for different resolution.
 * Possibility to choose the color of the post.
-* Generate href links when link in content.
-* Generate thumbnail when youtube link in content.
 * Add funny captcha.
 * Add funny magnets to move around.
 * Add post with due date.
