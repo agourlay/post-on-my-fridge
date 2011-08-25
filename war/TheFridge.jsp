@@ -9,35 +9,19 @@
 <html>
 	<head>
 		<title>Posts on the fridge</title>
+		
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
+		
 		<script type="text/javascript" src = "/scripts/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jYoutube.js"></script>
 		<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
+		
+		<script type="text/javascript" src = "/scripts/browser-update.js"></script>
+		<script type="text/javascript" src = "/scripts/google-analytics.js"></script>
+		
 		<meta charset="utf-8">
-		
-		<script type="text/javascript"> 		
-		 $(function() {
-		   //browser detection
-		   var $buoop = {vs:{i:8,f:4,o:10.6,s:4,n:9}} 
-		   $buoop.ol = window.onload; 	
-		   try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
-		   var e = document.createElement("script"); 
-		   e.setAttribute("type", "text/javascript"); 
-		   e.setAttribute("src", "http://browser-update.org/update.js"); 
-		   document.body.appendChild(e); 
-		   
-		   //google analytics
-		   var _gaq = _gaq || [];
-		   _gaq.push(['_setAccount', 'UA-25345034-1']);
-		   _gaq.push(['_trackPageview']);
-		   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		 });
-		
-		</script>  
 	</head>
 	<body>
 	<%
