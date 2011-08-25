@@ -44,8 +44,8 @@ $(function() {
 		content = trim(content);
 		
 		var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-		var youtubeRegexp = /(ftp|http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
-		var pictureRegexp = /(ftp|http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
+		var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
+		var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
 			
 		var contentArray = content.split(' ');
 		$.each(contentArray, function(index, value) {  
@@ -55,7 +55,7 @@ $(function() {
 					replacementThumb = "</br><a href="+value+"><img src="+youtubeThumb+" /></a>";
 					content = content.replace(youtubeRegexp,replacementThumb);
 				}else if(isRegExp(pictureRegexp,value)){
-					replacementPict = "</br><a href="+value+"><img  class='post_picture' src="+value+" /></a>";
+					replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
 					content = content.replace(pictureRegexp,replacementPict);
 				}else{
 					replacement = "<a href="+value+" target= blank>"+value+"</a> ";
