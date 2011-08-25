@@ -15,7 +15,6 @@
 		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jYoutube.js"></script>
 		<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
-		<script type="text/javascript" src="http://updateyourbrowser.net/uyb.js"> </script> 
 		<meta charset="utf-8"> 
 	</head>
 	<body>
@@ -85,3 +84,14 @@
 	</div>
 	</body>
 </html>
+<script type="text/javascript"> 
+var $buoop = {vs:{i:8,f:4,o:10.6,s:4,n:9}} 
+$buoop.ol = window.onload; 
+window.onload=function(){ 
+ try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+ var e = document.createElement("script"); 
+ e.setAttribute("type", "text/javascript"); 
+ e.setAttribute("src", "http://browser-update.org/update.js"); 
+ document.body.appendChild(e); 
+} 
+</script> 
