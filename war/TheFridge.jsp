@@ -13,6 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
 		<script type="text/javascript" src = "/scripts/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
+		<script type="text/javascript" src = "/scripts/jYoutube.js"></script>
+		<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
 		<meta charset="utf-8"> 
 	</head>
 	<body>
@@ -82,44 +84,3 @@
 	</div>
 	</body>
 </html>
-<script>
-	$(function() {
-		$( ".draggable" ).draggable({ revert: "invalid" , scroll: true });
-		
-		$( ".trash_bin" ).droppable({
-			accept: ".post",
-			drop: function( event, ui ) {
-				$(this).effect("bounce",{ times:3 }, 300);
-				$.ajax({ url: "/remove?id="+ui.draggable.attr('id')});
-				ui.draggable.effect("clip",{ times:1 }, 300);
-			}
-		});
-		
-		$('.trash_bin').mouseover(function() {
-			$(this).effect("shake",{ times:1 }, 300);
-		});
-		
-		$( ".fridge" ).droppable({
-			accept: ".post",
-			drop: function( event, ui ) {
-				var posX = (parseInt(ui.draggable.css('left')))/$(document).width();
-				var posY = (parseInt(ui.draggable.css('top')))/$(document).height();
-				$.ajax({ url: "/update?id="+ui.draggable.attr('id')+"&positionX="+posX+"&positionY="+posY});
-			}
-		});
-		
-		$( ".post" ).hide().fadeIn(1000);
-			
-		$( ".post" ).draggable({
-			stop: function() {
-			
-			}
-		});
-	        
-	});
-	
-	function deletePost(){
-		
-	}
-	
-</script>
