@@ -52,7 +52,7 @@ $(function() {
 			if (isRegExp(urlRegexp,value)){
 				if(isRegExp(youtubeRegexp,value)){
 					youtubeThumb = $.jYoutube(value,'small');
-					replacementThumb = "</br><a href="+value+"><img src="+youtubeThumb+" /></a>";
+					replacementThumb = "</br><a href="+value+" target= blank ><img src="+youtubeThumb+" /></a>";
 					content = content.replace(youtubeRegexp,replacementThumb);
 				}else if(isRegExp(pictureRegexp,value)){
 					replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
