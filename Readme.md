@@ -1,4 +1,4 @@
-# Post On My Fridge project
+# Post On My Fridge
 
 *This is a small project i made to learn how to deploy a web application on google Paas (Google App Engine) .*
 
@@ -30,7 +30,6 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Fix display for different resolution (remove most of fixed sizes).
 * Possibility to choose the color of the post (http://acko.net/dev/farbtastic and save color in db, then color PNG file).
 * Read youtube video on the post (extract video Id then http://apiblog.youtube.com/2010/07/new-way-to-embed-youtube-videos.html).
-* Add funny captcha (http://www.webdesignbeach.com/beachbar/ajax-fancy-captcha-jquery-plugin).
 * Add funny magnets to move around (put a magnet on a post to lock it?).
 * Add post with due date (use Jquery Datepicker and save it in db, then erase it when date expires).
 * Refresh fridge with Ajax (use Jquery .load() to refresh only the content of the fridge). 

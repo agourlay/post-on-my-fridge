@@ -12,9 +12,11 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
+		<link rel="stylesheet" type="text/css" href="css/captcha.css"/>
 		
 		<script type="text/javascript" src = "/scripts/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
+		<script type="text/javascript" src = "/scripts/jquery-captcha.js"></script>
 		<script type="text/javascript" src = "/scripts/jYoutube.js"></script>
 		<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
 		
@@ -45,7 +47,7 @@
 		<div class ="input_zone">
 			<div class="headline">New post</div>
 			
-			<form action="/new" method="post" accept-charset="utf-8">
+			<form id="postForm" action="/new" method="post" accept-charset="utf-8">
 				<table class="input">
 					<tr>
 						<td>Content</td>
@@ -59,6 +61,7 @@
 						<td colspan="2" align="right"><input type="submit" value="Create"/></td>
 					</tr>
 				</table>
+				<div class="ajax-fc-container"></div>
 			</form>
 		</div>
 		
