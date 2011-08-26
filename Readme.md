@@ -8,12 +8,15 @@ The application allows any user to let a message on a fridge :D.
 There is no authentication, everyone can add or delete stuff.
 
 Just fill out the form on the right side to create a post. If you copy/paste in the content a link to a website, a youtube video or a picture, it will be parsed to adapt the display.
+
 Then you can move the post around by drag and drop on the fridge. To delete a post, just drop it in the trashbin.   
 
 ## Technical infos
 
 The server side is written in java and hosted on google App Engine.
-The client side use a lot of javascript to display and move objects around. It uses Jquery and Jquery UI.
+
+The client side uses a lot of javascript to display and move objects around. It uses Jquery and Jquery UI.
+
 The position of a post on the fridge is saved in db using ajax requests everytime it changes. 
 
 ## How to use it
