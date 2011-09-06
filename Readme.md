@@ -1,6 +1,6 @@
 # Post On My Fridge
 
-*This is a small project i made to learn how to deploy a web application on google Paas (Google App Engine) .*
+*This is a small project i made to have fun with javascript and learn how to deploy a web application on google Paas (Google App Engine) .*
 
 ## Features 
 
@@ -23,19 +23,23 @@ The position of a post on the fridge is saved in db using ajax requests everytim
 
 Deploy it on your Google App Engine account or test it there www.post-on-my-fridge.appspot.com
 
-## Futur improvements
+## Futur fixes and improvements
 
 * Fix timestamp value (client vs server local).
 * Fix regexp to detect url.
 * Fix display for different resolution (remove most of fixed sizes).
-* Possibility to choose the color of the post (http://acko.net/dev/farbtastic and save color in db, then color PNG file).
-* Read youtube video on the post (extract video Id then http://apiblog.youtube.com/2010/07/new-way-to-embed-youtube-videos.html).
-* Display a Rss feed on a post
-* Display a Twitter feed on a post. 
-* Add funny magnets to move around (put a magnet on a post to lock it?).
-* Add post with due date (use Jquery Datepicker and save it in db, then erase it when date expires).
 * Refresh fridge with Ajax (use Jquery .load() to refresh only the content of the fridge). 
 * Redesign background (some cool kitchen wall?).
 * Mavenize the project (https://code.google.com/p/maven-gae-plugin/).
 * Update to App Engine 1.5.3 (http://googleappengine.blogspot.com/2011/08/app-engine-153-sdk-released.html).
-* Think about the creation of account, 1 user = 1 fridge.(use google account authentication).
+
+## Futur features
+
+* Possibility to choose the color of the post (http://acko.net/dev/farbtastic and save color in db, then color PNG file).
+* Read youtube video on the post (extract video Id then http://apiblog.youtube.com/2010/07/new-way-to-embed-youtube-videos.html).
+* Add funny magnets to move around (put a magnet on a post to lock it?).
+* Add post with due date (use Jquery Datepicker and save it in db, then erase it when date expires).
+* Display last article from Rss feed on a post
+* Display last message from a Twitter account on a post.
+* Display current played song on a LastFm account or other info (http://www.lastfm.fr/api possibility to stream the song?).
+* Think about the creation of account, 1 user = 1 fridge (use google account authentication).
