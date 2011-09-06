@@ -38,4 +38,4 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Redesign background (some cool kitchen wall?).
 * Mavenize the project (https://code.google.com/p/maven-gae-plugin/).
 * Update to App Engine 1.5.3 (http://googleappengine.blogspot.com/2011/08/app-engine-153-sdk-released.html).
-* Think about the creation of account, 1 user = 1 fridge.
+* Think about the creation of account, 1 user = 1 fridge.(use google account authentication).
