@@ -34,7 +34,7 @@ $.fn.captcha = function(options){
 	$("#ajax-fc-circle").droppable({
 		drop: function(event, ui) {
 			$(".ajax-fc-" + rand).draggable("disable");
-			$("#" + options.formId).append("<input type=\"hidden\" style=\"display: none;\" name=\"captcha\" value=\"" + rand + "\">");
+			$("#" + options.formId).append("<input type=\"hidden\" style=\"display: none;\" name=\"captcha\"  id=\"captcha\" value=\"" + rand + "\">");
 		},
 		tolerance: 'touch'
 	});	

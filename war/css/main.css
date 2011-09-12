@@ -58,8 +58,13 @@ hr {
 	width:228px;
 	height:228px;
 	padding-top: 5px;
+	position: absolute;
 	}
-	
+
+.post:hover {
+	cursor: move;
+}
+
 .post .content{
 	position: relative;
 	font-weight: bold;
@@ -116,14 +121,12 @@ hr {
 .trash_bin {
 	right: 5%;
 	position: fixed;
-  	top: 60%;
+  	top: 70%;
   	padding: 10px;
   	background: transparent url(../images/trash.png) no-repeat 0 0;
  	height:150px;
  	width: 150px;
  	background-size:60%;
- 	margin-left: auto;
-	margin-right: auto;
 	}
 
 .input {

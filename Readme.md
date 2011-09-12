@@ -27,8 +27,7 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 
 * Fix timestamp value (client vs server local).
 * Fix regexp to detect url.
-* Fix display for different resolution (remove most of fixed sizes).
-* Refresh fridge with Ajax (use Jquery .load() to refresh only the content of the fridge). 
+* Fix display for different resolution (remove most of fixed sizes). 
 * Redesign background (some cool kitchen wall?).
 * Mavenize the project (https://code.google.com/p/maven-gae-plugin/).
 * Update to App Engine 1.5.3 (http://googleappengine.blogspot.com/2011/08/app-engine-153-sdk-released.html).

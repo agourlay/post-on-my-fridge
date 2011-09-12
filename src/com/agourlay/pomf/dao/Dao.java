@@ -12,14 +12,6 @@ public enum Dao {
 
 	INSTANCE;
 
-	public List<Post> listPosts() {
-		EntityManager em = EMFService.get().createEntityManager();
-		// Read the existing entries
-		Query q = em.createQuery("select m from Post m");
-		List<Post> posts = q.getResultList();
-		return posts;
-	}
-
 	public void add(String author, String content) {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
@@ -33,28 +25,43 @@ public enum Dao {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
 			Post postToUpdate = em.find(Post.class, id);
-			postToUpdate.setPositionX(positionX);
-			postToUpdate.setPositionY(positionY);
-			em.persist(postToUpdate);
+			if (postToUpdate != null){
+				postToUpdate.setPositionX(positionX);
+				postToUpdate.setPositionY(positionY);
+				em.persist(postToUpdate);
+			}
 			em.close();
 		}
 	}
 	
 	public List<Post> getPosts() {
-		List<Post> posts = new ArrayList<Post>();
-		EntityManager em = EMFService.get().createEntityManager();
-		Query q = em.createQuery("select t from Post t order by date ASC");
-		posts = q.getResultList();
-		return posts;
+		synchronized (this) {
+			List<Post> posts = new ArrayList<Post>();
+			EntityManager em = EMFService.get().createEntityManager();
+			Query q = em.createQuery("select t from Post t order by date ASC");
+			posts = q.getResultList();
+			return posts;
+		}
 	}
+	
+	public Post getPostById(Long id) {
+		synchronized (this) {
+			EntityManager em = EMFService.get().createEntityManager();
+			Post post = em.find(Post.class, id);
+			return post;
+		}
+	}
+	
 
 	public void remove(long id) {
-		EntityManager em = EMFService.get().createEntityManager();
-		try {
-			Post post = em.find(Post.class, id);
-			em.remove(post);
-		} finally {
-			em.close();
+		synchronized (this) {
+			EntityManager em = EMFService.get().createEntityManager();
+			try {
+				Post post = em.find(Post.class, id);
+				em.remove(post);
+			} finally {
+				em.close();
+			}
 		}
 	}
 }

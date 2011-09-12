@@ -17,7 +17,8 @@ public class RemovePostController extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		String id = req.getParameter("id");
 		Dao.INSTANCE.remove(Long.parseLong(id));
-		resp.sendRedirect("/TheFridge.jsp");
+		resp.setContentType("text/html");
+		resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 	}
 }
 

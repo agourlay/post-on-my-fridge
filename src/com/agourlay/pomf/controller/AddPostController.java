@@ -11,10 +11,11 @@ import com.agourlay.pomf.tools.Validation;
 
 @SuppressWarnings("serial")
 public class AddPostController extends HttpServlet {
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
-		resp.sendRedirect("/TheFridge.jsp");
-		
+		resp.setContentType("text/html");
+		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
+				
 		int captchaNumberInSession = 0;
 		int captchaNumberSubmitted = 0;
 		
@@ -29,6 +30,7 @@ public class AddPostController extends HttpServlet {
 			String content = Validation.checkNull(req.getParameter("content"));
 			String author = Validation.checkNull(req.getParameter("author"));
 			Dao.INSTANCE.add(author, content);
+			resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		}
 
 	}
