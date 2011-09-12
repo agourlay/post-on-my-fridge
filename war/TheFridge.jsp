@@ -11,7 +11,6 @@
 		<script language="javascript" type="text/javascript" src = "/scripts/jquery-1.6.3.min.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/jquery-captcha.js"></script>
-		<script language="javascript" type="text/javascript" src = "/scripts/jYoutube.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>
 		
 		<script language="javascript" type="text/javascript" src = "/scripts/browser-update.js"></script>

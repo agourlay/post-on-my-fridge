@@ -81,7 +81,6 @@ function generateContent(elmt){
 	$.each(contentArray, function(index, value) {  
 		if (isRegExp(urlRegexp,value)){
 			if(isRegExp(youtubeRegexp,value)){
-				youtubeThumb = $.jYoutube(value,'small');
 				replacementThumb = generateYoutubeFrame(value);
 				content = content.replace(youtubeRegexp,replacementThumb);
 			}else if(isRegExp(pictureRegexp,value)){
@@ -109,7 +108,6 @@ function trim (myString){
 function extractYoutubeVideoId(url){
 	var youtube_id;
 	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
-	alert(youtube_id);
 	return youtube_id; 
 }
 
