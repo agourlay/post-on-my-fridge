@@ -82,7 +82,7 @@ function generateContent(elmt){
 		if (isRegExp(urlRegexp,value)){
 			if(isRegExp(youtubeRegexp,value)){
 				youtubeThumb = $.jYoutube(value,'small');
-				replacementThumb = "</br><a href="+value+" target= blank ><img src="+youtubeThumb+" /></a>";
+				replacementThumb = generateYoutubeFrame(value);
 				content = content.replace(youtubeRegexp,replacementThumb);
 			}else if(isRegExp(pictureRegexp,value)){
 				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
@@ -105,6 +105,18 @@ function isRegExp(regExp, content){
 function trim (myString){
 	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
 }	
+
+function extractYoutubeVideoId(url){
+	var youtube_id;
+	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
+	alert(youtube_id);
+	return youtube_id; 
+}
+
+function generateYoutubeFrame(url){
+	frame = "<iframe class='youtube-player' type='text/html' width='190' height='150' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?modestbranding=1&autohide=1 frameborder='0'></iframe>";
+	return frame;
+}
 
 function creationRequest(){
 	$.ajax({ 

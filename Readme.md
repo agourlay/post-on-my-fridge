@@ -13,11 +13,13 @@ Then you can move the post around by drag and drop on the fridge. To delete a po
 
 ## Technical infos
 
-The server side is written in java and hosted on google App Engine.
+The server side is written in java and hosted on google App Engine.(googleAppEngine SDK 1.5.2)
 
-The client side uses a lot of javascript to display and move objects around. It uses Jquery and Jquery UI.
+The client side uses a lot of javascript to display and move objects around.Jquery 1.6.3  and Jquery UI 1.8.16
 
 The position of a post on the fridge is saved in db using ajax requests everytime it changes. 
+
+The content of the fridge is refreshed automatically every 5 minutes.
 
 ## How to use it
 
@@ -35,7 +37,6 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 ## Futur features
 
 * Possibility to choose the color of the post (http://acko.net/dev/farbtastic and save color in db, then color PNG file).
-* Read youtube video on the post (extract video Id then http://apiblog.youtube.com/2010/07/new-way-to-embed-youtube-videos.html).
 * Add funny magnets to move around (put a magnet on a post to lock it?).
 * Add post with due date (use Jquery Datepicker and save it in db, then erase it when date expires).
 * Display last article from Rss feed on a post
