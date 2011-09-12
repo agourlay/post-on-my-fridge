@@ -21,14 +21,16 @@ public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOExc
 		Post post = Dao.INSTANCE.getPostById(id);
 		resp.setContentType("text/x-json");
 		
-		JSONObject jsonPosition = new JSONObject();
-		try {
-			jsonPosition.append("left", post.getPositionX());
-			jsonPosition.append("top", post.getPositionY());
-			jsonPosition.write(resp.getWriter());
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
+		if (post != null){
+			JSONObject jsonPosition = new JSONObject();
+			try {
+				jsonPosition.append("left", post.getPositionX());
+				jsonPosition.append("top", post.getPositionY());
+				jsonPosition.write(resp.getWriter());
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
+			}
 		}
 		resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		

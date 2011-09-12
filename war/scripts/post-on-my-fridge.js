@@ -1,7 +1,7 @@
 $(function() {
 	initPage();
 	//reload posts every 5 minutes
-	setInterval("refreshContent()", 300000);
+	setInterval("initPage()", 300000);
 });
 
 function initPage(){
@@ -17,7 +17,7 @@ function initPage(){
 				$.ajax({ 
 					url: "/remove?id="+ui.draggable.attr('id'),
 					success : function() {
-						refreshContent();
+						initPage();
 					}
 				});				
 			}
@@ -120,7 +120,7 @@ function creationRequest(){
 	$.ajax({ 
 		url: "/new?author="+$("#author").val()+"&content="+$("#content").val()+"&captcha="+$("#captcha").val(),
 		success : function() {
-			refreshContent();
+			initPage();
 		}
 	});	
 }

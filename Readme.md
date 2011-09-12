@@ -19,8 +19,6 @@ The client side uses a lot of javascript to display and move objects around.Jque
 
 The position of a post on the fridge is saved in db using ajax requests everytime it changes. 
 
-The content of the fridge is refreshed automatically every 5 minutes.
-
 ## How to use it
 
 Deploy it on your Google App Engine account or test it there www.post-on-my-fridge.appspot.com
@@ -40,6 +38,6 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Add funny magnets to move around (put a magnet on a post to lock it?).
 * Add post with due date (use Jquery Datepicker and save it in db, then erase it when date expires).
 * Display last article from Rss feed on a post
-* Display last message from a Twitter account on a post.
-* Display current played song on a LastFm account or other info (http://www.lastfm.fr/api possibility to stream the song?).
+* Display last message from a Twitter account on a post.(https://dev.twitter.com/docs/api/1/get/statuses/public_timeline)
+* Display current played song on a LastFm account or other info (http://www.lastfm.fr/api/show?service=278).
 * Think about the creation of account, 1 user = 1 fridge (use google account authentication).
