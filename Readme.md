@@ -13,7 +13,7 @@ Then you can move the post around by drag and drop on the fridge. To delete a po
 
 ## Technical infos
 
-The server side is written in java and hosted on google App Engine.(googleAppEngine SDK 1.5.2)
+The server side is written in java and hosted on google App Engine.(googleAppEngine SDK 1.5.3)
 
 The client side uses a lot of javascript to display and move objects around.Jquery 1.6.3  and Jquery UI 1.8.16
 
@@ -30,7 +30,6 @@ Deploy it on your Google App Engine account or test it there www.post-on-my-frid
 * Fix display for different resolution (remove most of fixed sizes). 
 * Redesign background (some cool kitchen wall?).
 * Mavenize the project (https://code.google.com/p/maven-gae-plugin/).
-* Update to App Engine 1.5.3 (http://googleappengine.blogspot.com/2011/08/app-engine-153-sdk-released.html).
 
 ## Futur features
 
