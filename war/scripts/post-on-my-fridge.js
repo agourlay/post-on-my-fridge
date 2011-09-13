@@ -5,6 +5,7 @@ $(function() {
 });
 
 function initPage(){
+	$( ".fridge" ).empty();
 	$.getJSON("/getPost", function(data) {
 		$.each(data.postPosition, function(index,value){
 			generatePost(value['id'],value['author'],value['date'],value['content']);
@@ -19,10 +20,7 @@ function initPage(){
 				$(this).effect("bounce",{ times:3 }, 300);
 				ui.draggable.effect("clip",{ times:1 }, 300);
 				$.ajax({ 
-					url: "/remove?id="+ui.draggable.attr('id'),
-					success : function() {
-						initPage();
-					}
+					url: "/remove?id="+ui.draggable.attr('id')
 				});				
 			}
 		});
