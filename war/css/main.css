@@ -13,18 +13,13 @@ hr {
 
 .global {
 	border-top :solid 10px white; 
-	background-image: -webkit-gradient(
-									    linear,
-									    left bottom,
-									    left top,
-									    color-stop(0.37, rgb(124,154,194)),
-									    color-stop(0.69, rgb(255,255,255))
-										);
-	background-image: -moz-linear-gradient(
-										    center bottom,
-										    rgb(124,154,194) 37%,
-										    rgb(255,255,255) 69%
-										);
+	background: -moz-linear-gradient(top, rgba(125,185,232,0) 0%, rgba(30,87,153,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,185,232,0)), color-stop(100%,rgba(30,87,153,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(30,87,153,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(30,87,153,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(125,185,232,0) 0%,rgba(30,87,153,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(125,185,232,0) 0%,rgba(30,87,153,1) 100%); /* W3C */
 	min-height:1500px;
 	max-height:2000px;
 	width: 100%;
@@ -35,7 +30,7 @@ hr {
 	margin-right: auto;
 	padding-top:5%;
 	width: 55%;
-	background-image:url(../images/fridgeBg.jpg);
+	background-image:url(../images/fridgeBg.png);
 	background-size:100%;
 	min-height:1500px;
 	max-height:2000px;
