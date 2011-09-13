@@ -49,9 +49,10 @@
 			<div class ="trash_bin"></div>
 		</div>
 			
-		<div id="injected_post">Loading posts...</div>
-		
-		
+		<div class="main">
+				<div class="fridge"></div>
+		</div>		
+				
 	</div>
 	</body>
 </html>

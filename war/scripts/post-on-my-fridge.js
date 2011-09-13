@@ -1,13 +1,15 @@
 $(function() {
 	initPage();
-	//reload age every 5 minutes
+	//reload page every 5 minutes
 	setInterval("initPage()", 300000);
-	//reload post content every minute
-	setInterval("refreshContent()", 600000);
 });
 
 function initPage(){
-	$("#injected_post").load("/posts.jsp #generated_post", function() {
+	$.getJSON("/getPost", function(data) {
+		$.each(data.postPosition, function(index,value){
+			generatePost(value['id'],value['author'],value['date'],value['content']);
+			setPositionPost(value);
+		});
 		
 		$( ".draggable" ).draggable({ revert: "invalid" , scroll: true });
 		
@@ -40,34 +42,7 @@ function initPage(){
 		
 		$( ".post" ).hide().fadeIn(1000);
 			
-		$( ".post" ).draggable({
-			stop: function() {
-			
-			}
-		});	
-		
-		$(".post").each(function(index,value) {
-			generateContent($(this));
-		});
-		
-		retrieveJsonPositionPost();
-	});	
-}
-
-function refreshContent(){
-	$("#injected_post").load("/posts.jsp #generated_post", function() {
-		$(".post").each(function(index,value) {
-			generateContent($(this));
-		});
-		retrievePositionPost();
-	});	
-}
-
-function retrieveJsonPositionPost(){
-	$.getJSON("/getPositionPost", function(data) {
-		$.each(data.postPosition, function(index,value){
-			setPositionPost(value);
-		});
+		$( ".post" ).draggable();	
 	});
 }
 
@@ -76,8 +51,7 @@ function setPositionPost(data){
 	$("#"+data['id']).css('top',data['top'] * $('.fridge').height());
 }	
 
-function generateContent(elmt){
-	content = elmt.find('.content').text();
+function generatePostContent(content){
 	content = trim(content);
 	
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
@@ -100,17 +74,16 @@ function generateContent(elmt){
 		 }
 	});
 	
-	elmt.find('.content').empty();
-	elmt.find('.content').append(content);
+	return content;
 }
 
-function isRegExp(regExp, content){
-	return regExp.test(content);
+function generatePost(id,author,date,content){
+	template = "<div id=${id} class='post draggable'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
+	content = generatePostContent(content);
+	postDiv = template.replace("${id}",id).replace("${content}",content).replace("${author}",author).replace("${date}",date);
+	$('.fridge').append(postDiv);
+
 }
-	
-function trim (myString){
-	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
-}	
 
 function extractYoutubeVideoId(url){
 	var youtube_id;
@@ -131,3 +104,12 @@ function creationRequest(){
 		}
 	});	
 }
+
+function isRegExp(regExp, content){
+	return regExp.test(content);
+}
+	
+function trim (myString){
+	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
+}
+

@@ -12,7 +12,7 @@ import com.agourlay.pomf.model.Post;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 
-public class GetPositionPostController extends HttpServlet {
+public class GetPostController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,9 @@ public class GetPositionPostController extends HttpServlet {
 				jsonPosition.put("id", post.getId());
 				jsonPosition.put("left", post.getPositionX());
 				jsonPosition.put("top", post.getPositionY());
+				jsonPosition.put("content", post.getContent());
+				jsonPosition.put("date", post.getFormatedDate());
+				jsonPosition.put("author", post.getAuthor());
 				jsonPositions.accumulate("postPosition", jsonPosition);
 			}
 			jsonPositions.write(resp.getWriter());
