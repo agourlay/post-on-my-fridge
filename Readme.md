@@ -18,7 +18,7 @@ You can insert an url in the content of a post:
 
 * a youtube video will embed a video player in the post.
 
-More to come, check the issues of the project.
+More to come, check the issues of the project. https://github.com/shagaan/PostOnMyFridge/issues?labels=Idea&sort=created&direction=desc&state=open&page=1
 
 Then you can move the post around by drag and drop on the fridge. To delete a post, just drop it in the trashbin.   
 
