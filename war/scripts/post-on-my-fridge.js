@@ -1,7 +1,9 @@
 $(function() {
 	initPage();
-	//reload posts every 5 minutes
+	//reload age every 5 minutes
 	setInterval("initPage()", 300000);
+	//reload post content every minute
+	setInterval("refreshContent()", 600000);
 });
 
 function initPage(){
@@ -45,29 +47,34 @@ function initPage(){
 		});	
 		
 		$(".post").each(function(index,value) {
-			getPositionPost($(this));
 			generateContent($(this));
 		});
 		
+		retrieveJsonPositionPost();
 	});	
 }
 
 function refreshContent(){
 	$("#injected_post").load("/posts.jsp #generated_post", function() {
 		$(".post").each(function(index,value) {
-			getPositionPost($(this));
 			generateContent($(this));
 		});
+		retrievePositionPost();
 	});	
 }
 
-function getPositionPost(elmt){
-	$.getJSON("/getPositionPost?id="+elmt.attr('id'), function(data) {
-		elmt.css('left',data['left'] * $('.fridge').width());
-		elmt.css('top',data['top'] * $('.fridge').height());
+function retrieveJsonPositionPost(){
+	$.getJSON("/getPositionPost", function(data) {
+		$.each(data.postPosition, function(index,value){
+			setPositionPost(value);
+		});
 	});
-}	
+}
 
+function setPositionPost(data){
+	$("#"+data['id']).css('left',data['left'] * $('.fridge').width());
+	$("#"+data['id']).css('top',data['top'] * $('.fridge').height());
+}	
 
 function generateContent(elmt){
 	content = elmt.find('.content').text();

@@ -1,6 +1,7 @@
 package com.agourlay.pomf.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,26 +15,30 @@ import com.google.appengine.repackaged.org.json.JSONObject;
 public class GetPositionPostController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	
-public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
-		Long id = Long.parseLong(req.getParameter("id"));
-		Post post = Dao.INSTANCE.getPostById(id);
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+
 		resp.setContentType("text/x-json");
+		List<Post> posts = Dao.INSTANCE.getPosts();
 		
-		if (post != null){
-			JSONObject jsonPosition = new JSONObject();
-			try {
-				jsonPosition.append("left", post.getPositionX());
-				jsonPosition.append("top", post.getPositionY());
-				jsonPosition.write(resp.getWriter());
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
+		JSONObject jsonPositions = new JSONObject();
+		try {
+			for (Post post : posts) {
+				JSONObject jsonPosition = new JSONObject();
+				jsonPosition.put("id", post.getId());
+				jsonPosition.put("left", post.getPositionX());
+				jsonPosition.put("top", post.getPositionY());
+				jsonPositions.accumulate("postPosition", jsonPosition);
 			}
+			jsonPositions.write(resp.getWriter());
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
-		resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		
+		resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+
 	}
 
 }
