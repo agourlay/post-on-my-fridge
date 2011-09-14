@@ -4,7 +4,7 @@
 
 ## Features 
 
-The application allows any user to let a message on a fridge :D.
+The application allows any user to leave a message on a fridge :D.
 
 There is no authentication, everyone can add or delete stuff.
 
@@ -18,16 +18,19 @@ You can insert an url in the content of a post:
 
 * a youtube video will embed a video player in the post.
 
-More to come, check the issues of the project. https://github.com/shagaan/PostOnMyFridge/issues?labels=Idea&sort=created&direction=desc&state=open&page=1
+You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
 
-Then you can move the post around by drag and drop on the fridge. To delete a post, just drop it in the trashbin.   
+More features to come, check the issues of the project :
+
+https://github.com/shagaan/PostOnMyFridge/issues?labels=Idea&sort=created&direction=desc&state=open&page=1
 
 ## Technical infos
 
 The server side is written in java and hosted on google App Engine. (GoogleAppEngine SDK 1.5.3).
 
-The client side uses a lot of javascript to display and move objects around. (Jquery 1.6.3  and Jquery UI 1.8.16).
+The client side uses a lot of javascript to build all the  interactions. (Jquery 1.6.3  and Jquery UI 1.8.16).
 
+All the content is built dynamically on the client from a JSON object requested every 5 minutes from the server.
 
 ## How to use it
 
