@@ -117,9 +117,7 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 		tweetText = tweetText.substring(0,110) + "..."
 	}
 	replacement = "<a href="+value+" target= blank >"+extractTwitterUser(value)+"</a> tweets :</br>"+ tweetText;
-	alert(content);
 	content = content.replace(twitterRegexp,replacement);
-	alert(content);
 	updatePostContent(id,content);
 }
 
