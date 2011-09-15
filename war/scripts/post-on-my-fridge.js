@@ -8,11 +8,9 @@ function initPage(){
 	$( ".fridge" ).empty();
 	$.getJSON("/getPost", function(data) {
 		$.each(data.postPosition, function(index,value){
-			generatePost(value['id'],value['author'],value['date'],value['content']);
+			buildPost(value['id'],value['author'],value['date'],value['content']);
 			setPositionPost(value);
 		});
-		
-		$( ".draggable" ).draggable({ revert: "invalid" , scroll: true });
 		
 		$( ".trash_bin" ).droppable({
 			accept: ".post",
@@ -41,6 +39,8 @@ function initPage(){
 		$( ".post" ).hide().fadeIn(1000);
 			
 		$( ".post" ).draggable();	
+		
+		$( ".post" ).draggable({ revert: "invalid" , scroll: true });
 	});
 }
 
@@ -49,14 +49,18 @@ function setPositionPost(data){
 	$("#"+data['id']).css('top',data['top'] * $('.fridge').height());
 }	
 
-function generatePostContent(content){
-	content = trim(content);
-	
+function generatePostContent(id,author,date,content){
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
 	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
 	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
-		
+	
+	content = trim(content);
 	var contentArray = content.split(' ');
+	if (contentArray.length == 0){
+		contentArray[0] = content;
+	}
+	
 	$.each(contentArray, function(index, value) {  
 		if (isRegExp(urlRegexp,value)){
 			if(isRegExp(youtubeRegexp,value)){
@@ -65,28 +69,72 @@ function generatePostContent(content){
 			}else if(isRegExp(pictureRegexp,value)){
 				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
 				content = content.replace(pictureRegexp,replacementPict);
-			}else{
+			}else if(isRegExp(twitterRegexp,value)){
+				$.ajax({
+					  url: "http://api.twitter.com/1/statuses/user_timeline.json",
+					  dataType: "jsonp",
+					  cache: false,
+					  data : buildTwitterDataUrl(value),
+					  success: function(data) { 
+						  buildTweet(data,value,id,author,date,content,twitterRegexp);
+					  }
+					});
+			}
+			else{
 				replacement = "<a href="+value+" target= blank>"+value+"</a> ";
 				content = content.replace(urlRegexp,replacement);
 			}	
-		 }
-	});
-	
+		}	
+	});	
 	return content;
 }
 
-function generatePost(id,author,date,content){
-	template = "<div id=${id} class='post draggable'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
-	content = generatePostContent(content);
+function buildPostContent(id,author,date,content){
+	template = "<div id=${id} class='post'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
 	postDiv = template.replace("${id}",id).replace("${content}",content).replace("${author}",author).replace("${date}",date);
 	$('.fridge').append(postDiv);
+}
 
+function buildPost(id,author,date,content){
+	content = generatePostContent(id,author,date,content);
+	buildPostContent(id,author,date,content)
 }
 
 function extractYoutubeVideoId(url){
-	var youtube_id;
 	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
 	return youtube_id; 
+}
+
+function extractTwitterUser(url){
+	var contentArray = url.split('/#!/');
+	return contentArray[1];
+}
+
+function buildTweet(data,value,id,author,date,content,twitterRegexp){
+	tweet = data[0];
+	tweetText = tweet['text'];
+	if (tweetText.length > 110){
+		tweetText = tweetText.substring(0,110) + "..."
+	}
+	replacement = "<a href="+value+" target= blank >"+extractTwitterUser(value)+"</a> tweets :</br>"+ tweetText;
+	alert(content);
+	content = content.replace(twitterRegexp,replacement);
+	alert(content);
+	updatePostContent(id,content);
+}
+
+function updatePostContent(id,content){
+	$('#'+id).find('.content').empty();
+	$('#'+id).find('.content').append(content);
+}
+
+function buildTwitterDataUrl(url){
+	var myData = {};
+	myData ["count"] = "1";
+	myData ["user"] = extractTwitterUser(url);
+	myData ["trim_user"] = "true";
+	myData ["callback"] = "?";
+	return myData;
 }
 
 function generateYoutubeFrame(url){
@@ -95,8 +143,13 @@ function generateYoutubeFrame(url){
 }
 
 function creationRequest(){
+	var myData = {};
+	myData ["author"] = $("#author").val();
+	myData ["content"] = $("#content").val();
+	myData ["captcha"] = $("#captcha").val();
 	$.ajax({ 
-		url: "/new?author="+$("#author").val()+"&content="+$("#content").val()+"&captcha="+$("#captcha").val(),
+		url: "/new",
+		data : myData,
 		success : function() {
 			initPage();
 		}

@@ -18,6 +18,8 @@ You can insert an url in the content of a post:
 
 * a youtube video will embed a video player in the post.
 
+* a link to a twitter account will display the last tweet. (ex : http://twitter.com/#!/BarackObama ).
+
 You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
 
 More features to come, check the issues of the project :
