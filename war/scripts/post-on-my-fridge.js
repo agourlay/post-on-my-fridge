@@ -37,9 +37,7 @@ function initPage(){
 		});
 		
 		$( ".post" ).hide().fadeIn(1000);
-			
-		$( ".post" ).draggable();	
-		
+					
 		$( ".post" ).draggable({ revert: "invalid" , scroll: true });
 	});
 }
@@ -52,6 +50,7 @@ function setPositionPost(data){
 function generatePostContent(id,author,date,content){
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
+	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\.xml)$/
 	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
 	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
 	
@@ -63,24 +62,29 @@ function generatePostContent(id,author,date,content){
 	
 	$.each(contentArray, function(index, value) {  
 		if (isRegExp(urlRegexp,value)){
-			if(isRegExp(youtubeRegexp,value)){
-				replacementThumb = generateYoutubeFrame(value);
-				content = content.replace(youtubeRegexp,replacementThumb);
+			if(isRegExp(xmlRegexp,value)){
+				$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22"+
+						encodeURIComponent(value)+"%22&format=xml'&callback=?",function(data) {
+			        	buildRssFeed(data.results[0],value,id,author,date,content,xmlRegexp);
+					  }
+					);
+			}else if(isRegExp(twitterRegexp,value)){
+				$.ajax({
+					url: "http://api.twitter.com/1/statuses/user_timeline.json",
+					dataType: "jsonp",
+					cache: false,
+					data : buildTwitterDataUrl(value),
+					success: function(data) { 
+						buildTweet(data,value,id,author,date,content,twitterRegexp);
+					  }
+					});
 			}else if(isRegExp(pictureRegexp,value)){
 				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
 				content = content.replace(pictureRegexp,replacementPict);
-			}else if(isRegExp(twitterRegexp,value)){
-				$.ajax({
-					  url: "http://api.twitter.com/1/statuses/user_timeline.json",
-					  dataType: "jsonp",
-					  cache: false,
-					  data : buildTwitterDataUrl(value),
-					  success: function(data) { 
-						  buildTweet(data,value,id,author,date,content,twitterRegexp);
-					  }
-					});
-			}
-			else{
+			}else if(isRegExp(youtubeRegexp,value)){
+				replacementThumb = generateYoutubeFrame(value);
+				content = content.replace(youtubeRegexp,replacementThumb);				
+			}else{
 				replacement = "<a href="+value+" target= blank>"+value+"</a> ";
 				content = content.replace(urlRegexp,replacement);
 			}	
@@ -118,6 +122,16 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	}
 	replacement = "<a href="+value+" target= blank >"+extractTwitterUser(value)+"</a> tweets :</br>"+ tweetText;
 	content = content.replace(twitterRegexp,replacement);
+	updatePostContent(id,content);
+}
+
+function buildRssFeed(feed,value,id,author,date,content,xmlRegexp){
+	title = $(feed).children(":first").find("title:first").text();
+	item = $(feed).children(":first").find("item:first");
+	link = $(item).find("link").text();
+	itemTitle = $(item).find("title").text();
+	replacement = "<a href="+link+" target= blank >"+title+"</a> Rss :</br>"+ itemTitle;
+	content = content.replace(xmlRegexp,replacement);
 	updatePostContent(id,content);
 }
 
@@ -161,4 +175,3 @@ function isRegExp(regExp, content){
 function trim (myString){
 	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
 }
-
