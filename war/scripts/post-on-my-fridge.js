@@ -50,7 +50,7 @@ function setPositionPost(data){
 function generatePostContent(id,author,date,content){
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
-	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\.xml)$/
+	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\.xml|rss)$/
 	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
 	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
 	
