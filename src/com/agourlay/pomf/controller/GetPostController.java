@@ -23,6 +23,7 @@ public class GetPostController extends HttpServlet {
 		List<Post> posts = Dao.INSTANCE.getPosts();
 		
 		JSONObject jsonPositions = new JSONObject();
+		
 		try {
 			for (Post post : posts) {
 				JSONObject jsonPosition = new JSONObject();
@@ -32,7 +33,15 @@ public class GetPostController extends HttpServlet {
 				jsonPosition.put("content", post.getContent());
 				jsonPosition.put("date", post.getFormatedDate());
 				jsonPosition.put("author", post.getAuthor());
-				jsonPositions.accumulate("postPosition", jsonPosition);
+				
+				//quick dirty fix
+				if (posts.size() == 1){
+					JSONObject[] array = new JSONObject[] {jsonPosition};
+					jsonPositions.accumulate("postPosition", array);
+				}else{
+					jsonPositions.accumulate("postPosition", jsonPosition);
+				}
+				
 			}
 			jsonPositions.write(resp.getWriter());
 		} catch (JSONException e1) {

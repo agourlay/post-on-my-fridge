@@ -20,39 +20,44 @@
 	</head>
 	<body>
 	
-	<div class="global">
-		<div class="info">
-			Ingredients in the fridge :<br/>
-			<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">https://github.com/shagaan/PostOnMyFridge</a>
-			<div class="work-in-progress"></div>
-			<img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
-		</div>
-		<div class ="input_zone">
-			<div class="headline">New post</div>
+	<div class="header"></div>
+	
+	<div class="global">				
+		<div class ="leftPanel">
+			<div class="headline">
+				<ol>
+	  				<li>Fill in the post. </li>
+					<li>Solve the captcha.</li>
+					<li>Drop the post on the fridge.</li>
+				</ol>
+			</div>
 			
 			<form id="postForm" accept-charset="utf-8">
-				<table class="input">
-					<tr>
-						<td>Content</td>
-						<td><textarea name=content id="content" rows="3" cols="30"></textarea></td>
-					</tr>
-					<tr>
-						<td>Author</td>
-						<td><input type="text" name=author id="author" size="25"/></td>
-					</tr>
-					<tr>
-						<td colspan="2" align="right"><input type="button" value="Create" onclick="creationRequest()"/></td>
-					</tr>
-				</table>
+				<div class="newPost">
+					<div class="content">
+						<textarea name=content id="content" rows="5" cols="20" maxlength="100">Content</textarea>
+					</div>
+					<div class="author">
+						<input type="text" name=author id="author" maxlength="15" size="15" value="Author"/>
+					</div>		
+				</div>
 				<div class="ajax-fc-container"></div>
 			</form>
-			<div class ="trash_bin"></div>
-		</div>
 			
-		<div class="main">
-				<div class="fridge"></div>
-		</div>		
+			<div class ="trash_bin"></div>
+			
+			<div class="info">
+				<img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
+				&nbsp;&&nbsp;
+				<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">
+					<img src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6.svg" alt="Powered by Google App Engine" />
+				</a>
+			</div>
+			
+		</div>	
 				
+		<div class="fridge"></div>
+											
 	</div>
 	</body>
 </html>

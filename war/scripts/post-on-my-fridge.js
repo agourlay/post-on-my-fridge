@@ -7,10 +7,16 @@ $(function() {
 function initPage(){
 	$( ".fridge" ).empty();
 	$.getJSON("/getPost", function(data) {
-		$.each(data.postPosition, function(index,value){
-			buildPost(value['id'],value['author'],value['date'],value['content']);
-			setPositionPost(value);
-		});
+		if (data.postPosition != undefined){
+			$.each(data.postPosition, function(index,value){
+				buildPost(value['id'],value['author'],value['date'],value['content']);
+				setPositionPost(value['id'],value['left'],value['top']);
+			});
+		}
+	
+		$( ".post" ).hide().fadeIn(1000);
+		$( ".post" ).draggable({ revert: "invalid" , scroll: true });
+		$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 		
 		$( ".trash_bin" ).droppable({
 			accept: ".post",
@@ -28,23 +34,31 @@ function initPage(){
 		});
 		
 		$( ".fridge" ).droppable({
-			accept: ".post",
+			accept: ".post,.newPost",
 			drop: function( event, ui ) {
-				var posX = (parseInt(ui.draggable.css('left')))/$('.fridge').width();
-				var posY = (parseInt(ui.draggable.css('top')))/$('.fridge').height();
-				$.ajax({ url: "/update?id="+ui.draggable.attr('id')+"&positionX="+posX+"&positionY="+posY});
+				if ( ui.draggable.hasClass('newPost')){
+					var myData = {};
+					myData ["author"] = $("#author").val();
+					myData ["content"] = $("#content").val();
+					myData ["captcha"] = $("#captcha").val();
+					myData ["positionX"] = (parseInt(ui.draggable.css('left')))/$('.fridge').width();
+					myData ["positionY"] = (parseInt(ui.draggable.css('top')))/$('.fridge').height();
+					$.ajax({url: "/new",data : myData,success : location.reload()});	
+				}else{
+					var myData = {};
+					myData ["id"] = ui.draggable.attr('id');
+					myData ["positionX"] = (parseInt(ui.draggable.css('left')))/$('.fridge').width();
+					myData ["positionY"] = (parseInt(ui.draggable.css('top')))/$('.fridge').height();
+					$.ajax({ url: "/update",data : myData});	
+				}	
 			}
-		});
-		
-		$( ".post" ).hide().fadeIn(1000);
-					
-		$( ".post" ).draggable({ revert: "invalid" , scroll: true });
+		});		
 	});
 }
 
-function setPositionPost(data){
-	$("#"+data['id']).css('left',data['left'] * $('.fridge').width());
-	$("#"+data['id']).css('top',data['top'] * $('.fridge').height());
+function setPositionPost(id,left,top){
+	$("#"+id).css('left',left * $('.fridge').width());
+	$("#"+id).css('top',top * $('.fridge').height());
 }	
 
 function generatePostContent(id,author,date,content){
@@ -152,20 +166,6 @@ function buildTwitterDataUrl(url){
 function generateYoutubeFrame(url){
 	frame = "<iframe class='youtube-player' type='text/html' width='190' height='150' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?modestbranding=1&autohide=1 frameborder='0'></iframe>";
 	return frame;
-}
-
-function creationRequest(){
-	var myData = {};
-	myData ["author"] = $("#author").val();
-	myData ["content"] = $("#content").val();
-	myData ["captcha"] = $("#captcha").val();
-	$.ajax({ 
-		url: "/new",
-		data : myData,
-		success : function() {
-			initPage();
-		}
-	});	
 }
 
 function isRegExp(regExp, content){

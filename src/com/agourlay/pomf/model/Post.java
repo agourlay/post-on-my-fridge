@@ -26,7 +26,7 @@ public class Post {
 	private Double positionX;
 	private Double positionY;
 
-	public Post(String author, String content) {
+	public Post(String author, String content, Double positionX,Double positionY) {
 		
 		if (Validation.isNoTNullOrEmpty(author)){
 			this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();
@@ -41,8 +41,8 @@ public class Post {
 		}
 		
 		this.date = new Date();
-		this.positionX = new Double(0.5);
-		this.positionY = new Double(0.5);
+		this.positionX = positionX;
+		this.positionY = positionY;
 	}
 
 	public Long getId() {

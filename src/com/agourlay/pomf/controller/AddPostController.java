@@ -29,7 +29,10 @@ public class AddPostController extends HttpServlet {
 		if (captchaNumberInSession == captchaNumberSubmitted){
 			String content = Validation.checkNull(req.getParameter("content"));
 			String author = Validation.checkNull(req.getParameter("author"));
-			Dao.INSTANCE.add(author, content);
+			Double positionX = Double.parseDouble(req.getParameter("positionX"));
+			Double positionY = Double.parseDouble(req.getParameter("positionY"));
+			
+			Dao.INSTANCE.add(author, content,positionX,positionY);
 			resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		}
 
