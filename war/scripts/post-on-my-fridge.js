@@ -29,7 +29,7 @@ function initPage(){
 			}
 		});
 		
-		$('.trash_bin').mouseover(function() {
+		$('.trash_bin').mouseout(function() {
 			$(this).effect("shake",{ times:1 }, 300);
 		});
 		

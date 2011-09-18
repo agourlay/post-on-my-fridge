@@ -32,6 +32,7 @@ $.fn.captcha = function(options){
 	}
 	$(".ajax-fc-container, .ajax-fc-rtop *, .ajax-fc-rbottom *").css("background-color", options.borderColor);
 	$("#ajax-fc-circle").droppable({
+		accept: ".ajax-fc-" + rand,
 		drop: function(event, ui) {
 			$(".ajax-fc-" + rand).draggable("disable");
 			$("#" + options.formId).append("<input type=\"hidden\" style=\"display: none;\" name=\"captcha\"  id=\"captcha\" value=\"" + rand + "\">");
