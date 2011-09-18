@@ -5,7 +5,8 @@ $(function() {
 });
 
 function initPage(){
-	$( ".fridge" ).empty();
+	var fridge = $('.fridge');
+	fridge.empty();
 	$.getJSON("/getPost", function(data) {
 		if (data.postPosition != undefined){
 			$.each(data.postPosition, function(index,value){
@@ -14,8 +15,8 @@ function initPage(){
 			});
 		}
 	
-		$( ".post" ).hide().fadeIn(1000);
-		$( ".post" ).draggable({ revert: "invalid" , scroll: true });
+		$( ".post" ).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
+		
 		$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 		
 		$( ".trash_bin" ).droppable({
@@ -41,14 +42,14 @@ function initPage(){
 					myData ["author"] = $("#author").val();
 					myData ["content"] = $("#content").val();
 					myData ["captcha"] = $("#captcha").val();
-					myData ["positionX"] = (parseInt(ui.draggable.css('left')))/$('.fridge').width();
-					myData ["positionY"] = (parseInt(ui.draggable.css('top')))/$('.fridge').height();
+					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
+					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({url: "/new",data : myData,success : location.reload()});	
 				}else{
 					var myData = {};
 					myData ["id"] = ui.draggable.attr('id');
-					myData ["positionX"] = (parseInt(ui.draggable.css('left')))/$('.fridge').width();
-					myData ["positionY"] = (parseInt(ui.draggable.css('top')))/$('.fridge').height();
+					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
+					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({ url: "/update",data : myData});	
 				}	
 			}
@@ -57,18 +58,22 @@ function initPage(){
 }
 
 function setPositionPost(id,left,top){
-	$("#"+id).css('left',left * $('.fridge').width());
-	$("#"+id).css('top',top * $('.fridge').height());
+	var fridge = $('.fridge');
+	$("#"+id).css({
+		'left':left * fridge.width(),
+		'top':top * fridge.height()
+		});
+	
 }	
 
 function generatePostContent(id,author,date,content){
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
-	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\.xml|rss)$/
+	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/
 	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
 	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
 	
-	content = trim(content);
+	content = jQuery.trim(content);
 	var contentArray = content.split(' ');
 	if (contentArray.length == 0){
 		contentArray[0] = content;
@@ -77,11 +82,11 @@ function generatePostContent(id,author,date,content){
 	$.each(contentArray, function(index, value) {  
 		if (isRegExp(urlRegexp,value)){
 			if(isRegExp(xmlRegexp,value)){
-				$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D%22"+
-						encodeURIComponent(value)+"%22&format=xml'&callback=?",function(data) {
-			        	buildRssFeed(data.results[0],value,id,author,date,content,xmlRegexp);
+				yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
+				$.getJSON( yql,	function(data) {
+			        	buildRssFeed(filterData(data.results[0]),value,id,author,date,content,xmlRegexp);
 					  }
-					);
+				);
 			}else if(isRegExp(twitterRegexp,value)){
 				$.ajax({
 					url: "http://api.twitter.com/1/statuses/user_timeline.json",
@@ -140,9 +145,12 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 }
 
 function buildRssFeed(feed,value,id,author,date,content,xmlRegexp){
-	title = $(feed).children(":first").find("title:first").text();
-	item = $(feed).children(":first").find("item:first");
-	link = $(item).find("link").text();
+	channel = $(feed).children("channel:first");
+	title = channel.find("title:first").html();
+	item = channel.find("item:first");
+	link = jQuery.trim(item.find("link:first").html());
+	console.log(item);
+	console.log(link);
 	itemTitle = $(item).find("title").text();
 	replacement = "<a href="+link+" target= blank >"+title+"</a> Rss :</br>"+ itemTitle;
 	content = content.replace(xmlRegexp,replacement);
@@ -150,8 +158,7 @@ function buildRssFeed(feed,value,id,author,date,content,xmlRegexp){
 }
 
 function updatePostContent(id,content){
-	$('#'+id).find('.content').empty();
-	$('#'+id).find('.content').append(content);
+	$('#'+id).find('.content').empty().append(content);
 }
 
 function buildTwitterDataUrl(url){
@@ -172,6 +179,20 @@ function isRegExp(regExp, content){
 	return regExp.test(content);
 }
 	
-function trim (myString){
-	return myString.replace(/^\s+/g,'').replace(/\s+$/g,'')
-}
+function filterData(data){
+    // filter all the nasties out
+    // no body tags
+    data = data.replace(/<?\/body[^>]*>/g,'');
+    // no linebreaks
+    data = data.replace(/[\r|\n]+/g,'');
+    // no comments
+    data = data.replace(/<--[\S\s]*?-->/g,'');
+    // no noscript blocks
+    data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
+    // no script blocks
+    data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
+    // no self closing scripts
+    data = data.replace(/<script.*\/>/,'');
+    // [... add as needed ...]
+    return data;
+  }
