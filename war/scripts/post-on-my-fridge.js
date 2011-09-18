@@ -149,8 +149,6 @@ function buildRssFeed(feed,value,id,author,date,content,xmlRegexp){
 	title = channel.find("title:first").html();
 	item = channel.find("item:first");
 	link = jQuery.trim(item.find("link:first").html());
-	console.log(item);
-	console.log(link);
 	itemTitle = $(item).find("title").text();
 	replacement = "<a href="+link+" target= blank >"+title+"</a> Rss :</br>"+ itemTitle;
 	content = content.replace(xmlRegexp,replacement);

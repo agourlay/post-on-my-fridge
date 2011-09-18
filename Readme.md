@@ -20,7 +20,7 @@ You can insert an url in the content of a post:
 
 * a link to a twitter account will display the last tweet. (ex : http://twitter.com/#!/BarackObama ).
 
-* a link to a rss feed will display the last feed. (ex: http://blablabla.xml or http://blabla/feed/ or http://blabla.....rss ).
+* a link to a rss feed will display the last feed. (ex: http://blablabla.xml or http://blabla/feed(s)/ or http://blabla.....rss ).
 
 You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
 
