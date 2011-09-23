@@ -33,7 +33,7 @@ public class GetPostController extends HttpServlet {
 				jsonPosition.put("content", post.getContent());
 				jsonPosition.put("date", post.getFormatedDate());
 				jsonPosition.put("author", post.getAuthor());
-				
+				jsonPosition.put("color", post.getColor());
 				//quick dirty fix
 				if (posts.size() == 1){
 					JSONObject[] array = new JSONObject[] {jsonPosition};

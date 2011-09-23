@@ -31,8 +31,9 @@ public class AddPostController extends HttpServlet {
 			String author = Validation.checkNull(req.getParameter("author"));
 			Double positionX = Double.parseDouble(req.getParameter("positionX"));
 			Double positionY = Double.parseDouble(req.getParameter("positionY"));
+			String color = Validation.checkNull(req.getParameter("color"));
 			
-			Dao.INSTANCE.add(author, content,positionX,positionY);
+			Dao.INSTANCE.add(author, content,positionX,positionY,color);
 			resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		}
 

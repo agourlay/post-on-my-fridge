@@ -7,10 +7,11 @@ $(function() {
 function initPage(){
 	var fridge = $('.fridge');
 	fridge.empty();
+	colorPickerManagement();
 	$.getJSON("/getPost", function(data) {
 		if (data.postPosition != undefined){
 			$.each(data.postPosition, function(index,value){
-				buildPost(value['id'],value['author'],value['date'],value['content']);
+				buildPost(value['id'],value['author'],value['date'],value['content'],value['color']);
 				setPositionPost(value['id'],value['left'],value['top']);
 			});
 		}
@@ -42,6 +43,7 @@ function initPage(){
 					myData ["author"] = $("#author").val();
 					myData ["content"] = $("#content").val();
 					myData ["captcha"] = $("#captcha").val();
+					myData ["color"] = $("#postColor").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({url: "/new",data : myData,success : location.reload()});	
@@ -112,15 +114,18 @@ function generatePostContent(id,author,date,content){
 	return content;
 }
 
-function buildPostContent(id,author,date,content){
-	template = "<div id=${id} class='post'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
-	postDiv = template.replace("${id}",id).replace("${content}",content).replace("${author}",author).replace("${date}",date);
+function buildPostContent(id,author,date,content,color){
+	if (color == undefined){
+		color = "f7f083"
+	}
+	template = "<div id=${id} class='post' style='background-color:${color}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
+	postDiv = template.replace("${id}",id).replace("${color}",color).replace("${content}",content).replace("${author}",author).replace("${date}",date);
 	$('.fridge').append(postDiv);
 }
 
-function buildPost(id,author,date,content){
+function buildPost(id,author,date,content,color){
 	content = generatePostContent(id,author,date,content);
-	buildPostContent(id,author,date,content)
+	buildPostContent(id,author,date,content,color)
 }
 
 function extractYoutubeVideoId(url){
@@ -166,6 +171,38 @@ function buildTwitterDataUrl(url){
 	myData ["trim_user"] = "true";
 	myData ["callback"] = "?";
 	return myData;
+}
+
+function colorPickerManagement(){
+	$("#newPost").css("background-color","f7f083");
+	
+	colorPicker = $.farbtastic("#color-picker").setColor($("#postColor").val());
+	$( "#color-dialog" ).dialog({
+		autoOpen: false,
+		show: "blind",
+		hide: "blind",
+		zIndex: 1000,
+		modal: true,
+		buttons: {
+			"Pick color": function() {
+				updatePostColor(colorPicker.color);
+				$( this ).dialog( "close" );
+			},
+			Cancel: function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	
+	$('#changeColor').click(function() {
+		$( "#color-dialog" ).dialog( "open" );
+	});
+	
+}
+
+function updatePostColor(color){
+	$("#postColor").val(color);
+	$("#newPost").css("background-color",color);
 }
 
 function generateYoutubeFrame(url){

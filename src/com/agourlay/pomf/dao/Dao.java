@@ -12,10 +12,10 @@ public enum Dao {
 
 	INSTANCE;
 
-	public void add(String author, String content, Double positionX,Double positionY) {
+	public void add(String author, String content, Double positionX,Double positionY,String color) {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			Post Post = new Post(author,content,positionX,positionY);
+			Post Post = new Post(author,content,positionX,positionY,color);
 			em.persist(Post);
 			em.close();
 		}

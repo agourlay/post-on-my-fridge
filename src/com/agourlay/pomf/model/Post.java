@@ -22,11 +22,12 @@ public class Post {
 	private Long id;
 	private String author;
 	private String content;
+	private String color;
 	private Date date;
 	private Double positionX;
 	private Double positionY;
 
-	public Post(String author, String content, Double positionX,Double positionY) {
+	public Post(String author, String content, Double positionX,Double positionY,String color) {
 		
 		if (Validation.isNoTNullOrEmpty(author)){
 			this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();
@@ -43,6 +44,7 @@ public class Post {
 		this.date = new Date();
 		this.positionX = positionX;
 		this.positionY = positionY;
+		this.color = color;
 	}
 
 	public Long getId() {
@@ -98,4 +100,12 @@ public class Post {
 		this.id = id;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
 }

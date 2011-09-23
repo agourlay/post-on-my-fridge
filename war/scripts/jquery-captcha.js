@@ -2,7 +2,7 @@ $(function() {
 	
 	$(".ajax-fc-container").captcha({
 		borderColor: "silver",
-		captchaDir: "css/captcha-images", 
+		captchaDir: "css/images/captcha-images", 
 		formId: "postForm",
 		url : "/getCaptchaNumber",
 		text: "Verify that you are a human,<br />drag <span>scissors</span> into the circle.",
