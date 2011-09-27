@@ -21,6 +21,7 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
+	<a href="http://github.com/shagaan/PostOnMyFridge"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
 	
 	<div class="header"></div>
 	
@@ -55,10 +56,6 @@
 			
 			<div class="info">
 				<img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
-				&nbsp;&nbsp;
-				<a href="https://github.com/shagaan/PostOnMyFridge" target="blank">
-					<img src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov6.svg" alt="Powered by Google App Engine" />
-				</a>
 			</div>
 			
 		</div>	
