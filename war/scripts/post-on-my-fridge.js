@@ -114,12 +114,13 @@ function generatePostContent(id,author,date,content){
 	return content;
 }
 
-function buildPostContent(id,author,date,content,color){
-	if (color == undefined){
-		color = "f7f083"
+function buildPostContent(id,author,date,content,bgColor){
+	if (bgColor == undefined){
+		bgColor = "f7f083"
 	}
-	template = "<div id=${id} class='post' style='background-color:${color}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
-	postDiv = template.replace("${id}",id).replace("${color}",color).replace("${content}",content).replace("${author}",author).replace("${date}",date);
+	textColor = getTxtColorFromBg(bgColor);
+	template = "<div id=${id} class='post' style='background-color:${bgColor};color:${textColor}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
+	postDiv = template.replace("${id}",id).replace("${bgColor}",bgColor).replace("${textColor}",textColor).replace("${content}",content).replace("${author}",author).replace("${date}",date);
 	$('.fridge').append(postDiv);
 }
 
@@ -203,12 +204,28 @@ function colorPickerManagement(){
 function updatePostColor(color){
 	$("#postColor").val(color);
 	$("#newPost").css("background-color",color);
+	textColor = getTxtColorFromBg(color);
+	$("#newPost").find("#content").css("color", textColor);
+	$("#newPost").find("#author").css("color", textColor);
 }
 
 function generateYoutubeFrame(url){
 	frame = "<iframe class='youtube-player' type='text/html' width='190' height='150' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?modestbranding=1&autohide=1&wmode=opaque frameborder='0'></iframe>";
 	return frame;
 }
+
+function getTxtColorFromBg(color){
+	return isDark(color) ? 'white' : 'black';
+}
+
+function isDark( color ) {
+    R = parseInt((cutHex(color)).substring(0,2),16);
+    G = parseInt((cutHex(color)).substring(2,4),16);
+    B = parseInt((cutHex(color)).substring(4,6),16);
+    return R + G + B < 3 * 256 / 2; // r+g+b should be less than half of max (3 * 256)
+}
+
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
 
 function isRegExp(regExp, content){
 	return regExp.test(content);
