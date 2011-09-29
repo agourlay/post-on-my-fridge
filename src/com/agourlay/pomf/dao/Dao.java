@@ -1,6 +1,7 @@
 package com.agourlay.pomf.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,10 +13,10 @@ public enum Dao {
 
 	INSTANCE;
 
-	public void add(String author, String content, Double positionX,Double positionY,String color) {
+	public void add(String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
 		synchronized (this) {
 			EntityManager em = EMFService.get().createEntityManager();
-			Post Post = new Post(author,content,positionX,positionY,color);
+			Post Post = new Post(author,content,positionX,positionY,color,dueDate);
 			em.persist(Post);
 			em.close();
 		}

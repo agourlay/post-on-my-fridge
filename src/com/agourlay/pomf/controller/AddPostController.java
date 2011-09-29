@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.agourlay.pomf.dao.Dao;
+import com.agourlay.pomf.tools.Utils;
 import com.agourlay.pomf.tools.Validation;
 
 @SuppressWarnings("serial")
@@ -32,8 +33,8 @@ public class AddPostController extends HttpServlet {
 			Double positionX = Double.parseDouble(req.getParameter("positionX"));
 			Double positionY = Double.parseDouble(req.getParameter("positionY"));
 			String color = Validation.checkNull(req.getParameter("color"));
-			
-			Dao.INSTANCE.add(author, content,positionX,positionY,color);
+			String dueDateString = req.getParameter("dueDate");
+			Dao.INSTANCE.add(author, content,positionX,positionY,color,Utils.stringToDate(dueDateString, "MM/dd/yyyy"));
 			resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
 		}
 

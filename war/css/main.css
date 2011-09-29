@@ -115,6 +115,17 @@ hr {
 	z-index: 999;
 	}
 
+.newPost .datePicker{
+	height: 20px;
+ 	width: 20px;
+ 	background-size: 100%;
+ 	z-index: 1000;
+ 	float: right;
+ 	padding-bottom: 5px;
+ 	padding-left: 5px;
+	}
+
+
 .newPost .changeColor{
 	background: transparent url(../images/colorButton.png) no-repeat 0 0;
 	height: 20px;
@@ -126,7 +137,7 @@ hr {
  	padding-left: 5px;
 	}
 	
-.newPost .changeColor:hover {
+.newPost .changeColor:hover,.newPost .ui-datepicker-trigger:hover {
 	cursor: pointer;
 }
 

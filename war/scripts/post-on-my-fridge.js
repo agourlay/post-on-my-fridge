@@ -1,13 +1,14 @@
 $(function() {
 	initPage();
-	//reload page every 5 minutes
-	setInterval("initPage()", 300000);
+	//reload page every 10 minutes
+	setInterval("initPage()", 600000);
 });
 
 function initPage(){
 	var fridge = $('.fridge');
 	fridge.empty();
 	colorPickerManagement();
+	datePickerManagement();
 	$.getJSON("/getPost", function(data) {
 		if (data.postPosition != undefined){
 			$.each(data.postPosition, function(index,value){
@@ -44,6 +45,7 @@ function initPage(){
 					myData ["content"] = $("#content").val();
 					myData ["captcha"] = $("#captcha").val();
 					myData ["color"] = $("#postColor").val();
+					myData ["dueDate"] = $("#dueDate").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({url: "/new",data : myData,success : location.reload()});	
@@ -223,6 +225,15 @@ function isDark( color ) {
     G = parseInt((cutHex(color)).substring(2,4),16);
     B = parseInt((cutHex(color)).substring(4,6),16);
     return R + G + B < 3 * 256 / 2; // r+g+b should be less than half of max (3 * 256)
+}
+
+function datePickerManagement(){
+		$( "#dueDate" ).datepicker({
+			showOn: "button",
+			buttonImage: "/css/images/calendar.gif",
+			buttonText: 'Choose a due date',
+			buttonImageOnly: true
+		});
 }
 
 function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}

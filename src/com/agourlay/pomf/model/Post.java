@@ -26,8 +26,9 @@ public class Post {
 	private Date date;
 	private Double positionX;
 	private Double positionY;
+	private Date dueDate;
 
-	public Post(String author, String content, Double positionX,Double positionY,String color) {
+	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
 		
 		if (Validation.isNoTNullOrEmpty(author)){
 			this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();
@@ -45,6 +46,7 @@ public class Post {
 		this.positionX = positionX;
 		this.positionY = positionY;
 		this.color = color;
+		this.dueDate = dueDate;
 	}
 
 	public Long getId() {
@@ -108,4 +110,13 @@ public class Post {
 		this.color = color;
 	}
 	
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
 }

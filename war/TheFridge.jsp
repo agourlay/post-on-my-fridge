@@ -30,6 +30,8 @@
 			<div class="headline">
 				<ol>
 	  				<li>Fill in the post. </li>
+	  				<li>Choose a due date. (optionnal) </li>
+	  				<li>Choose a color. (optionnal) </li>
 					<li>Solve the captcha.</li>
 					<li>Drop the post on the fridge.</li>
 				</ol>
@@ -42,12 +44,13 @@
 					<div class="author">
 						<input type="text" name=author id="author" maxlength="15" size="15" title="Who are u?"/>
 						<input type="hidden" id="postColor" maxlength="15" size="15" value="f7f083"/>
+						<input type="hidden" id="dueDate"/>
 					</div>
 					<div id="changeColor" class="changeColor" title="Click here to change the post color">
 						<div id="color-dialog" title="Choose the color of your post">
 								<div id="color-picker"></div>
 						</div>
-					</div>		
+					</div>	
 				</div>				
 				<div class="ajax-fc-container"></div>
 			</form>
