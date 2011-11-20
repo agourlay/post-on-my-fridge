@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Post;
+import com.agourlay.pomf.tools.Validation;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 
@@ -31,7 +32,7 @@ public class GetPostController extends HttpServlet {
 				jsonPosition.put("left", post.getPositionX());
 				jsonPosition.put("top", post.getPositionY());
 				jsonPosition.put("content", post.getContent());
-				jsonPosition.put("date", post.getFormatedDate());
+				jsonPosition.put("date", Validation.getPrettyElapsedTime(post.getDate()));
 				jsonPosition.put("author", post.getAuthor());
 				jsonPosition.put("color", post.getColor());
 				//quick dirty fix
