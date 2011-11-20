@@ -12,7 +12,9 @@ To create a post :
 
 * fill out the form on the right side.
 
-* you can change the color of the post as well.
+* change the color of the post as well. (optionnal)
+
+* choose a due date using the calendar. (optionnal)
 
 * solve the captcha.
 
@@ -32,15 +34,13 @@ You can insert an url in the content of a post:
 
 You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
 
-More features to come, check the issues of the project :
-
-https://github.com/shagaan/PostOnMyFridge/issues?labels=Idea&sort=created&direction=desc&state=open&page=1
+More features to come (check the issues of the project)
 
 ## Technical infos
 
-The server side is written in java and hosted on google App Engine. (GoogleAppEngine SDK 1.5.3).
+The server side is written in java and hosted on Google App Engine.
 
-The client side uses a lot of javascript to build all the  interactions. (Jquery 1.6.3  and Jquery UI 1.8.16).
+The client side uses a lot of javascript to build all the  interactions. (Jquery / Jquery UI).
 
 All the content is built dynamically on the client from a JSON object requested every 5 minutes from the server.
 
