@@ -12,7 +12,7 @@ function initPage(){
 	$.getJSON("/getPost", function(data) {
 		if (data.postPosition != undefined){
 			$.each(data.postPosition, function(index,value){
-				buildPost(value['id'],value['author'],value['date'],value['content'],value['color']);
+				buildPost(value['id'],value['author'],value['date'],value['content'],value['color'],value['dueDate']);
 				setPositionPost(value['id'],value['left'],value['top']);
 			});
 		}
@@ -116,19 +116,25 @@ function generatePostContent(id,author,date,content){
 	return content;
 }
 
-function buildPostContent(id,author,date,content,bgColor){
+function buildPostContent(id,author,date,content,bgColor,dueDate){
 	if (bgColor == undefined){
 		bgColor = "f7f083"
 	}
+	
 	textColor = getTxtColorFromBg(bgColor);
-	template = "<div id=${id} class='post' style='background-color:${bgColor};color:${textColor}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>${date}</i></div></div>";
+	
+	if (dueDate != ""){
+		date = date +" and due "+dueDate;
+	}
+	
+	template = "<div id=${id} class='post' style='background-color:${bgColor};color:${textColor}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>posted ${date}</i></div></div>";	
 	postDiv = template.replace("${id}",id).replace("${bgColor}",bgColor).replace("${textColor}",textColor).replace("${content}",content).replace("${author}",author).replace("${date}",date);
 	$('.fridge').append(postDiv);
 }
 
-function buildPost(id,author,date,content,color){
+function buildPost(id,author,date,content,color,dueDate){
 	content = generatePostContent(id,author,date,content);
-	buildPostContent(id,author,date,content,color)
+	buildPostContent(id,author,date,content,color,dueDate)
 }
 
 function extractYoutubeVideoId(url){

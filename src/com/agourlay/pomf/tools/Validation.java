@@ -1,8 +1,5 @@
 package com.agourlay.pomf.tools;
 
-import java.util.Date;
-
-import com.ocpsoft.pretty.time.PrettyTime;
 
 public class Validation {
 
@@ -15,10 +12,5 @@ public class Validation {
 			return "";
 		}
 		return s;
-	}
-	
-	public static String getPrettyElapsedTime(Date date){
-		PrettyTime p = new PrettyTime();
-		return p.format(date);
 	}
 }
