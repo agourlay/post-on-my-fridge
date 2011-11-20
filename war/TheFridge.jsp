@@ -57,10 +57,6 @@
 			
 			<div class ="trash_bin"></div>
 			
-			<div class="info">
-				<img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" />
-			</div>
-			
 		</div>	
 				
 		<div class="fridge"></div>

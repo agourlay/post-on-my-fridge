@@ -163,7 +163,7 @@ hr {
 
 .trash_bin {
 	position: fixed;
-  	top: 75%;
+  	top: 80%;
   	padding: 10px;
   	background: transparent url(../images/trash.png) no-repeat 0 0;
  	height: 150px;
@@ -171,8 +171,3 @@ hr {
  	background-size:60%;
 	}
 	
-.info {
-	position: fixed;
-	top: 90%;
-  	padding: 10px
-	}
