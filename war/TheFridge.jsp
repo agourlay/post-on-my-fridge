@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="css/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="css/farbtastic.css"/>
 		
-		<script language="javascript" type="text/javascript" src = "/scripts/jquery-1.6.3.min.js"></script>
+		<script language="javascript" type="text/javascript" src = "/scripts/jquery-1.7.min.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/jquery-ui-1.8.16.custom.min.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/jquery-captcha.js"></script>
 		<script language="javascript" type="text/javascript" src = "/scripts/farbtastic.js"></script>
