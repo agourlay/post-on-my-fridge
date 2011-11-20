@@ -21,7 +21,7 @@ public class EraseDuePostController extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		List<Post> posts = Dao.INSTANCE.getPosts();		
 		for (Post post : posts) {
-			if (post.getDueDate() != null && post.getDueDate().after(new Date())){
+			if (post.getDueDate() != null && post.getDueDate().before(new Date())){
 				Dao.INSTANCE.remove(post.getId());
 			}
 		}
