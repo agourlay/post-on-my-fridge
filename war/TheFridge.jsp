@@ -42,7 +42,7 @@
 						<textarea name=content id="content" rows="8" cols="20" maxlength="100" title="Content goes there"></textarea>
 					</div>
 					<div class="author">
-						<input type="text" name=author id="author" maxlength="15" size="15" title="Who are u?"/>
+						<input type="text" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
 						<input type="hidden" id="postColor" maxlength="15" size="15" value="f7f083"/>
 						<input type="hidden" id="dueDate"/>
 					</div>
