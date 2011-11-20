@@ -50,7 +50,7 @@ hr {
 	height:228px;
 	padding-top: 5px;
 	position: absolute;
-	z-index: 1000;
+	z-index: 999;
 	font-size: small;
 	}
 
