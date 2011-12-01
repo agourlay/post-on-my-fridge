@@ -14,7 +14,7 @@ To create a post :
 
 * change the color of the post as well. (optionnal)
 
-* choose a due date using the calendar. (optionnal)
+* choose a due date using the calendar, the post will be automatically delete. (optionnal)
 
 * solve the captcha.
 
