@@ -47,3 +47,7 @@ All the content is built dynamically on the client from a JSON object requested 
 ## How to use it
 
 Deploy it on your Google App Engine account or test it there www.post-on-my-fridge.appspot.com
+
+## Donation
+
+If you like the application [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=shagaan&url=https://github.com/shagaan&title=PostOnMyFridge&language=en_GB&tags=github&category=software)
