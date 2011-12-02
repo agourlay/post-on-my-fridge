@@ -1,6 +1,6 @@
 # Post On My Fridge
 
-*This is a project i made to have fun with javascript and learn how to deploy a web application on google Paas (Google App Engine) .*
+*This is a project i made to have fun with javascript and google Paas (Google App Engine).*
 
 ## Features 
 
@@ -34,7 +34,7 @@ You can insert an url in the content of a post:
 
 You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
 
-More features to come (check the issues of the project)
+More features to come...
 
 ## Technical infos
 
@@ -42,11 +42,8 @@ The server side is written in java and hosted on Google App Engine.
 
 The client side uses a lot of javascript to build all the  interactions. (Jquery / Jquery UI).
 
-All the content is built dynamically on the client from a JSON object requested every 5 minutes from the server.
+All the content is built dynamically on the client from a JSON object requested every 10 minutes from the server.
 
-## How to use it
-
-Deploy it on your Google App Engine account or test it there www.post-on-my-fridge.appspot.com
 
 ## Donation
 
