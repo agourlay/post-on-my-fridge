@@ -8,18 +8,6 @@ The application allows any user to leave a message on a fridge :D.
 
 There is no authentication, everyone can add or delete stuff.
 
-To create a post :
-
-* fill out the form on the right side.
-
-* change the color of the post as well. (optionnal)
-
-* choose a due date using the calendar, the post will be automatically delete. (optionnal)
-
-* solve the captcha.
-
-* drag & drop your post where you want on the fridge.
-
 You can insert an url in the content of a post:
 
 * a simple url to a website will create a href link.
