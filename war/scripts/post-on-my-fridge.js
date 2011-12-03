@@ -28,7 +28,8 @@ function initPage(){
 				ui.draggable.effect("clip",{ times:1 }, 300);
 				$.ajax({ 
 					url: "/remove?id="+ui.draggable.attr('id')
-				});				
+				});
+				$.jGrowl("Post from "+ui.draggable.find('.author').text()+" deleted");
 			}
 		});
 		
