@@ -12,7 +12,9 @@
 		<meta charset="utf-8">
 	</head>
 	<body>	
-		<div class="header"></div>
+		<div class="header">
+		
+		</div>
 		
 		<div class="global">				
 			<div class ="leftPanel">

@@ -12,6 +12,10 @@ hr {
 
 .header{
 	width: 100%;
+	height: 5px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: transparent;
 }
 
 .centered{
