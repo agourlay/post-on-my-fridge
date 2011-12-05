@@ -1,35 +1,28 @@
 $(function() {
 	initPage();
-	//reload page every 10 minutes
-	setInterval("initPage()", 600000);
+	setInterval("initPage()", 20000);
 });
 
 function initPage(){
 	var fridge = $('.fridge');
-	fridge.empty();
 	colorPickerManagement();
 	datePickerManagement();
 	$.getJSON("/getPost", function(data) {
-		if (data.postPosition != undefined){
-			$.each(data.postPosition, function(index,value){
-				buildPost(value['id'],value['author'],value['date'],value['content'],value['color'],value['dueDate']);
-				setPositionPost(value['id'],value['left'],value['top']);
-			});
+		if (data.postList != undefined){
+			deleteProcedure(data);
+			createOrUpdate(data);
 		}
 	
-		$( ".post" ).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
-		
 		$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 		
 		$( ".trash_bin" ).droppable({
 			accept: ".post",
 			drop: function( event, ui ) {
 				$(this).effect("bounce",{ times:3 }, 300);
-				ui.draggable.effect("clip",{ times:1 }, 300);
 				$.ajax({ 
 					url: "/remove?id="+ui.draggable.attr('id')
 				});
-				$.jGrowl("Post from "+ui.draggable.find('.author').text()+" deleted");
+				deleteAnimationPost(ui.draggable);
 			}
 		});
 		
@@ -62,13 +55,69 @@ function initPage(){
 	});
 }
 
+function deleteProcedure(data){
+	$.each($('.post'),function(indexPost,valuePost){
+		remove = true;
+		$.each(data.postList, function(index,value){
+			if (valuePost['id'] == value['id'] ){
+				remove = false;
+			}
+		});
+		if (remove){
+			deleteAnimationPost(valuePost);
+		}
+	});
+}
+
+function isFridgeContaining(postId){
+	result = false;
+	$.each($('.post'),function(indexPost,valuePost){
+		if (valuePost['id'] == postId ){
+			result = true;
+		}
+	});
+	return result;
+}
+
+function deleteAnimationPost(element){
+	element.effect("clip",{ times:1 }, 300);
+	$.jGrowl("Post from "+element.find('.author').text()+" deleted");
+	element.remove();
+}
+
+function createOrUpdate(data){
+	$.each(data.postList, function(index,value){
+		if (!isFridgeContaining(value['id'])){
+			buildPost(value['id'],value['author'],value['date'],value['content'],value['color'],value['dueDate']);
+			setPositionPost(value['id'],value['left'],value['top']);
+			$("#"+value['id']).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
+		}else{
+			updatePosition(value['id'],value['left'],value['top']);
+		}
+	});
+}
+
+function updatePosition(id,left,top){
+	var fridge = $('.fridge');
+
+	xTranslation = (left * fridge.width() - parseInt($("#"+id).css('left'))); 
+	yTranslation = ( top * fridge.height() - parseInt($("#"+id).css('top')));
+	
+	if (xTranslation > 1 || xTranslation < -1 ){
+		$("#"+id).animate({'left': "+="+xTranslation},'slow','linear');
+	}
+	
+	if (yTranslation > 1 || yTranslation < -1 ){
+		$("#"+id).animate({'top': "+="+yTranslation},'slow','linear');
+	}
+}	
+
 function setPositionPost(id,left,top){
 	var fridge = $('.fridge');
 	$("#"+id).css({
 		'left':left * fridge.width(),
 		'top':top * fridge.height()
 		});
-	
 }	
 
 function generatePostContent(id,author,date,content){

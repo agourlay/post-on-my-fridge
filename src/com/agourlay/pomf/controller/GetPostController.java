@@ -39,9 +39,9 @@ public class GetPostController extends HttpServlet {
 				//quick dirty fix before using real marshalling lib
 				if (posts.size() == 1){
 					JSONObject[] array = new JSONObject[] {jsonPosition};
-					jsonPositions.accumulate("postPosition", array);
+					jsonPositions.accumulate("postList", array);
 				}else{
-					jsonPositions.accumulate("postPosition", jsonPosition);
+					jsonPositions.accumulate("postList", jsonPosition);
 				}
 				
 			}
