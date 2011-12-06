@@ -1,60 +1,3 @@
-$(function() {
-	initPage();
-	setInterval("initPage()", 20000);
-});
-
-function initPage(){
-	var fridge = $('.fridge');
-	colorPickerManagement();
-	datePickerManagement();
-	$.getJSON("/getPost", function(data) {
-		if (data.postList != undefined){
-			deleteProcedure(data);
-			createOrUpdate(data);
-		}
-	
-		$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
-		
-		$( ".trash_bin" ).droppable({
-			accept: ".post",
-			drop: function( event, ui ) {
-				$(this).effect("bounce",{ times:3 }, 300);
-				$.ajax({ 
-					url: "/remove?id="+ui.draggable.attr('id')
-				});
-				deleteAnimationPost(ui.draggable);
-			}
-		});
-		
-		$('.trash_bin').mouseout(function() {
-			$(this).effect("shake",{ times:1 }, 300);
-		});
-		
-		$( ".fridge" ).droppable({
-			accept: ".post,.newPost",
-			drop: function( event, ui ) {
-				if ( ui.draggable.hasClass('newPost')){
-					var myData = {};
-					myData ["author"] = $("#author").val();
-					myData ["content"] = $("#content").val();
-					myData ["captcha"] = $("#captcha").val();
-					myData ["color"] = $("#postColor").val();
-					myData ["dueDate"] = $("#dueDate").val();
-					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
-					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					$.ajax({url: "/new",data : myData,success : location.reload()});	
-				}else{
-					var myData = {};
-					myData ["id"] = ui.draggable.attr('id');
-					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
-					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					$.ajax({ url: "/update",data : myData});	
-				}	
-			}
-		});		
-	});
-}
-
 function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
 		remove = true;
@@ -64,7 +7,7 @@ function deleteProcedure(data){
 			}
 		});
 		if (remove){
-			deleteAnimationPost(valuePost);
+			deleteAnimationPost(valuePost['id']);
 		}
 	});
 }
@@ -79,7 +22,8 @@ function isFridgeContaining(postId){
 	return result;
 }
 
-function deleteAnimationPost(element){
+function deleteAnimationPost(elementId){
+	element = $("#"+elementId);
 	element.effect("clip",{ times:1 }, 300);
 	$.jGrowl("Post from "+element.find('.author').text()+" deleted");
 	element.remove();
@@ -92,24 +36,20 @@ function createOrUpdate(data){
 			setPositionPost(value['id'],value['left'],value['top']);
 			$("#"+value['id']).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
 		}else{
-			updatePosition(value['id'],value['left'],value['top']);
+			updateDisplayedPosition(value['id'],value['left'],value['top']);
 		}
 	});
 }
 
-function updatePosition(id,left,top){
+function updateDisplayedPosition(id,left,top){
 	var fridge = $('.fridge');
-
+	
 	xTranslation = (left * fridge.width() - parseInt($("#"+id).css('left'))); 
 	yTranslation = ( top * fridge.height() - parseInt($("#"+id).css('top')));
 	
-	if (xTranslation > 1 || xTranslation < -1 ){
-		$("#"+id).animate({'left': "+="+xTranslation},'slow','linear');
-	}
-	
-	if (yTranslation > 1 || yTranslation < -1 ){
-		$("#"+id).animate({'top': "+="+yTranslation},'slow','linear');
-	}
+	$("#"+id).animate({'left': "+="+xTranslation,
+					   'top': "+="+yTranslation
+					   },'slow','linear');
 }	
 
 function setPositionPost(id,left,top){
@@ -187,16 +127,6 @@ function buildPost(id,author,date,content,color,dueDate){
 	buildPostContent(id,author,date,content,color,dueDate)
 }
 
-function extractYoutubeVideoId(url){
-	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
-	return youtube_id; 
-}
-
-function extractTwitterUser(url){
-	var contentArray = url.split('/#!/');
-	return contentArray[1];
-}
-
 function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	tweet = data[0];
 	tweetText = tweet['text'];
@@ -266,52 +196,3 @@ function updatePostColor(color){
 	$("#newPost").find("#content").css("color", textColor);
 	$("#newPost").find("#author").css("color", textColor);
 }
-
-function generateYoutubeFrame(url){
-	frame = "<iframe class='youtube-player' type='text/html' width='190' height='150' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?modestbranding=1&autohide=1&wmode=opaque frameborder='0'></iframe>";
-	return frame;
-}
-
-function getTxtColorFromBg(color){
-	return isDark(color) ? 'white' : 'black';
-}
-
-function isDark( color ) {
-    R = parseInt((cutHex(color)).substring(0,2),16);
-    G = parseInt((cutHex(color)).substring(2,4),16);
-    B = parseInt((cutHex(color)).substring(4,6),16);
-    return R + G + B < 3 * 256 / 2; // r+g+b should be less than half of max (3 * 256)
-}
-
-function datePickerManagement(){
-		$( "#dueDate" ).datepicker({
-			showOn: "button",
-			buttonImage: "/css/images/calendar.gif",
-			buttonText: 'Choose a due date',
-			buttonImageOnly: true
-		});
-}
-
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
-
-function isRegExp(regExp, content){
-	return regExp.test(content);
-}
-	
-function filterData(data){
-    // filter all the nasties out
-    // no body tags
-    data = data.replace(/<?\/body[^>]*>/g,'');
-    // no linebreaks
-    data = data.replace(/[\r|\n]+/g,'');
-    // no comments
-    data = data.replace(/<--[\S\s]*?-->/g,'');
-    // no noscript blocks
-    data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
-    // no script blocks
-    data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
-    // no self closing scripts
-    data = data.replace(/<script.*\/>/,'');
-    // [... add as needed ...]
-    return data;
-  }

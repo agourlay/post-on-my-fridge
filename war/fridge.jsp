@@ -4,11 +4,13 @@
 	<head>
 		<title>Posts on the fridge</title>
 		
-		<link rel="stylesheet" type="text/css" href="css/main.css"/>
-		<link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.16.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="css/jquery.jgrowl.css"/>
-		<link rel="stylesheet" type="text/css" href="css/captcha.css"/>
-		<link rel="stylesheet" type="text/css" href="css/farbtastic.css"/>
+		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
+		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
+		
+		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui-1.8.16.custom.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/jquery.jgrowl.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
 		
 		<meta charset="utf-8">
 	</head>
@@ -63,5 +65,8 @@
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>	
 	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/google-analytics.js"></script>
-	<script type="text/javascript" src = "/scripts/post-on-my-fridge.js"></script>	
+	
+	<script type="text/javascript" src = "/scripts/pomf/init.js"></script>
+	<script type="text/javascript" src = "/scripts/pomf/post.js"></script>	
+	<script type="text/javascript" src = "/scripts/pomf/tools.js"></script>		
 </html>
