@@ -110,7 +110,6 @@ public class Post {
 		this.color = color;
 	}
 	
-
 	public Date getDueDate() {
 		return dueDate;
 	}
@@ -118,5 +117,5 @@ public class Post {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
-
+	
 }
