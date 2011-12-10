@@ -10,4 +10,18 @@
 	
 	<sessions-enabled>true</sessions-enabled>
 	
+	<static-files>
+        <include path="/css/pomf/**.css" expiration="10d" />
+        <include path="/css/lib/**.css" expiration="30d" />
+        
+        <include path="/scripts/pomf/**.js" expiration="10d" />
+        <include path="/scripts/lib/**.js" expiration="30d" />
+        
+        <include path="/images/pomf/**.*" expiration="10d" />
+        <include path="/images/lib/**.*" expiration="30d" />
+        
+        <include path="favicon.ico" expiration="30d" />
+        
+    </static-files>
+    	
 </appengine-web-app>
