@@ -1,17 +1,3 @@
-$(function() {
-	
-	$(".ajax-fc-container").captcha({
-		borderColor: "silver",
-		captchaDir: "images/lib/captcha-images", 
-		formId: "postForm",
-		url : "/getCaptchaNumber",
-		text: "Verify that you are a human,<br />drag <span>scissors</span> into the circle.",
-		items: Array("pencil", "scissors", "clock", "heart", "note") 
-	});
-	
-})
-
-
 $.fn.captcha = function(options){
 					
 	$(this).html("<b class='ajax-fc-rtop'><b class='ajax-fc-r1'></b> <b class='ajax-fc-r2'></b> <b class='ajax-fc-r3'></b> <b class='ajax-fc-r4'></b></b><img class='ajax-fc-border' id='ajax-fc-left' src='" + options.captchaDir + "/border-left.png' /><img class='ajax-fc-border' id='ajax-fc-right' src='" + options.captchaDir + "/border-right.png' /><div id='ajax-fc-content'><div id='ajax-fc-left'><p id='ajax-fc-task'>" + options.text + "</p><ul id='ajax-fc-task'><li class='ajax-fc-0'><img src='" + options.captchaDir + "/item-none.png' alt='' /></li><li class='ajax-fc-1'><img src='" + options.captchaDir + "/item-none.png' alt='' /></li><li class='ajax-fc-2'><img src='" + options.captchaDir + "/item-none.png' alt='' /></li><li class='ajax-fc-3'><img src='" + options.captchaDir + "/item-none.png' alt='' /></li><li class='ajax-fc-4'><img src='" + options.captchaDir + "/item-none.png' alt='' /></li></ul></div><div id='ajax-fc-right'><a target='_blank' href='http://www.webdesignbeach.com'><img id='ajax-fc-backlink' src='" + options.captchaDir + "/wdb.png' alt='Web Design Beach' /></a><p id='ajax-fc-circle'></p></div></div><div id='ajax-fc-corner-spacer'></div><b class='ajax-fc-rbottom'><b class='ajax-fc-r4'></b> <b class='ajax-fc-r3'></b> <b class='ajax-fc-r2'></b> <b class='ajax-fc-r1'></b></b>");

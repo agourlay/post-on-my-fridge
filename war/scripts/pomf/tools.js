@@ -1,3 +1,14 @@
+function generateCaptcha(){
+    $(".ajax-fc-container").captcha({
+		borderColor: "silver",
+		captchaDir: "images/lib/captcha-images", 
+		formId: "postForm",
+		url : "/getCaptchaNumber",
+		text: "Verify that you are a human,<br />drag <span>scissors</span> into the circle.",
+		items: Array("pencil", "scissors", "clock", "heart", "note") 
+	});
+}
+
 function extractYoutubeVideoId(url){
 	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
 	return youtube_id; 
