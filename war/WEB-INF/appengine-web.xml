@@ -21,7 +21,7 @@
         <include path="/images/lib/**.*" expiration="30d" />
         
         <include path="favicon.ico" expiration="30d" />
-        
+        <include path="Robots.txt"/>
     </static-files>
     	
 </appengine-web-app>
