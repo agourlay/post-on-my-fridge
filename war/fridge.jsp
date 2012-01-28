@@ -13,6 +13,7 @@
 		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
 		
 		<meta charset="utf-8">
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
 	</head>
 	<body>	
 		<div class="header">
