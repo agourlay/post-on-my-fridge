@@ -60,7 +60,7 @@
 	</body>
 	
 	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.16.custom.min.js"></script>
+	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.17.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>	
