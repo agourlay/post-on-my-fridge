@@ -9,6 +9,20 @@ function generateCaptcha(){
 	});
 }
 
+function setRandomBackGround(){
+	path = "/images/pomf/global-bg/";
+	myImages = ['bright_squares.png', 'circles.png', 'diagonal-noise.png', 'elastoplast.png',
+	            'elegant_grid.png','gold_scale.png','light_checkered_tiles.png',
+	            'noise_pattern_with_crosslines.png','plaid.png','ravenna.png',
+	            'roughcloth.png','silver_scales.png','soft_circle_scales.png',
+	            'wavecut.png','xv.png'] 
+	imageFileNumber = myImages.length;
+	randomNumber = Math.floor(Math.random() * imageFileNumber);
+	imageToAssign = myImages[randomNumber];
+	imageFullPath = path + imageToAssign;
+	$('body').css('background-image', 'url(' + imageFullPath + ')');
+}
+
 function extractYoutubeVideoId(url){
 	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
 	return youtube_id; 

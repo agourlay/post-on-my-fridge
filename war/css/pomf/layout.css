@@ -1,6 +1,7 @@
 body {
 	margin: 5px; 
 	font-family: Arial, Helvetica, sans-serif;
+	background-image: url(../../images/pomf/global-bg/diagonal-noise.png);
 }
 
 hr {
@@ -23,9 +24,9 @@ hr {
 	margin-right: auto;
 }
 
-.global {
-	border-top :solid 10px white; 
+.global { 
 	width: 100%;
+	height: 100%;
 	}
 
 .fridge {

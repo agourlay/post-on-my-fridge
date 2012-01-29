@@ -8,6 +8,7 @@ function initPage(){
     generateCaptcha();
 	colorPickerManagement();
 	datePickerManagement();
+	setRandomBackGround();
 	$.getJSON("/getPost", function(data) {
 		if (data.postList != undefined){
 			deleteProcedure(data);
