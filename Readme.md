@@ -20,7 +20,9 @@ You can insert an url in the content of a post:
 
 * a link to a rss feed will display the last feed. (ex: http://blablabla.xml or http://blabla/feed(s)/ or http://blabla.....rss ).
 
-You can move posts around by drag and drop. To delete a post, just drop it in the trashbin.   
+You can move posts around by drag and drop. To delete a post, just drop it in the trashbin. 
+
+It's also possible to follow the content of your fridge by RSS.
 
 More features to come...
 
