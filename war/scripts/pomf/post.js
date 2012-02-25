@@ -30,13 +30,13 @@ function deleteAnimationPost(elementId){
 }
 
 function createOrUpdate(data){
-	$.each(data.postList, function(index,value){
+	$.each(data, function(index,value){
 		if (!isFridgeContaining(value['id'])){
 			buildPost(value['id'],value['author'],value['date'],value['content'],value['color'],value['dueDate']);
-			setPositionPost(value['id'],value['left'],value['top']);
+			setPositionPost(value['id'],value['positionX'],value['positionY']);
 			$("#"+value['id']).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
 		}else{
-			updateDisplayedPosition(value['id'],value['left'],value['top']);
+			updateDisplayedPosition(value['id'],value['positionX'],value['positionY']);
 		}
 	});
 }
@@ -113,7 +113,9 @@ function buildPostContent(id,author,date,content,bgColor,dueDate){
 	
 	textColor = getTxtColorFromBg(bgColor);
 	
-	if (dueDate != ""){
+	date = humaneDate(date);
+	if (dueDate != undefined){
+		dueDate = humaneDate(dueDate);
 		date = date +" and due "+dueDate;
 	}
 	

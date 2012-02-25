@@ -10,7 +10,7 @@ function initPage(){
 	datePickerManagement();
 	setRandomBackGround();
 	$.getJSON("/getPost", function(data) {
-		if (data.postList != undefined){
+		if (data != undefined){
 			deleteProcedure(data);
 			createOrUpdate(data);
 		}
