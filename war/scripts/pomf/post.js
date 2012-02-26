@@ -1,8 +1,8 @@
 function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
 		remove = true;
-		$.each(data.postList, function(index,value){
-			if (valuePost['id'] == value['id'] ){
+		$.each(data, function(index,value){
+			if (valuePost['id'] == value.id ){
 				remove = false;
 			}
 		});
@@ -31,12 +31,12 @@ function deleteAnimationPost(elementId){
 
 function createOrUpdate(data){
 	$.each(data, function(index,value){
-		if (!isFridgeContaining(value['id'])){
-			buildPost(value['id'],value['author'],value['date'],value['content'],value['color'],value['dueDate']);
-			setPositionPost(value['id'],value['positionX'],value['positionY']);
-			$("#"+value['id']).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
+		if (!isFridgeContaining(value.id)){
+			buildPost(value);
+			setPositionPost(value.id,value.positionX,value.positionY);
+			$("#"+value.id).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
 		}else{
-			updateDisplayedPosition(value['id'],value['positionX'],value['positionY']);
+			updateDisplayedPosition(value.id,value.positionX,value.positionY);
 		}
 	});
 }
@@ -60,14 +60,19 @@ function setPositionPost(id,left,top){
 		});
 }	
 
-function generatePostContent(id,author,date,content){
+function generatePostContent(post){
+	var id = post.id;
+	var author = post.author;
+	var date = post.date;
+	var content = jQuery.trim(post.content);
+	
 	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
 	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/
 	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
 	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
 	
-	content = jQuery.trim(content);
+	
 	var contentArray = content.split(' ');
 	if (contentArray.length == 0){
 		contentArray[0] = content;
@@ -106,27 +111,28 @@ function generatePostContent(id,author,date,content){
 	return content;
 }
 
-function buildPostContent(id,author,date,content,bgColor,dueDate){
-	if (bgColor == undefined){
-		bgColor = "f7f083"
+function buildPostContent(post){
+	if (post.color == undefined){
+		post.color = "f7f083"
 	}
 	
-	textColor = getTxtColorFromBg(bgColor);
+	post.textColor = getTxtColorFromBg(post.color);
+	post.relativeDate = function() {
+	    return function(text, render) {
+	        return render(humaneDate(text));
+	      }
+	    }	
+	var template = $('#postTemplate').html();
+	var output = $.mustache(template, post);
+	$('.fridge').append(output);
+	//TODO change ugly fix for not escaped html 
+	updatePostContent(post.id,post.content)
 	
-	date = humaneDate(date);
-	if (dueDate != undefined){
-		dueDate = humaneDate(dueDate);
-		date = date +" and due "+dueDate;
-	}
-	
-	template = "<div id=${id} class='post' style='background-color:${bgColor};color:${textColor}'><div class='content'>${content}</div><div class='author'>${author}</div><div class='date'><i>posted ${date}</i></div></div>";	
-	postDiv = template.replace("${id}",id).replace("${bgColor}",bgColor).replace("${textColor}",textColor).replace("${content}",content).replace("${author}",author).replace("${date}",date);
-	$('.fridge').append(postDiv);
 }
 
-function buildPost(id,author,date,content,color,dueDate){
-	content = generatePostContent(id,author,date,content);
-	buildPostContent(id,author,date,content,color,dueDate)
+function buildPost(post){
+	post.content = generatePostContent(post);
+	buildPostContent(post)
 }
 
 function buildTweet(data,value,id,author,date,content,twitterRegexp){

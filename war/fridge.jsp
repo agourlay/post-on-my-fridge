@@ -6,7 +6,6 @@
 		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
-		
 		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui-1.8.16.custom.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/jquery.jgrowl.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
@@ -17,9 +16,7 @@
 	</head>
 	<body>	
 		<div class="header">
-		
 		</div>
-		
 		<div class="global">				
 			<div class ="leftPanel">
 				<div class="headline">
@@ -49,13 +46,9 @@
 					</div>				
 					<div class="ajax-fc-container"></div>
 				</form>
-				
 				<div class ="trash_bin"></div>
-				
-			</div>	
-					
-			<div class="fridge"></div>
-												
+			</div>
+			<div class="fridge"></div>							
 		</div>
 	</body>
 	
@@ -64,11 +57,21 @@
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>		
+	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/google-analytics.js"></script>
-	
-	<script type="text/javascript" src = "/scripts/pomf/init.js"></script>
+	<script type="text/javascript" src = "/scripts/lib/mustache.js"></script>	
 	<script type="text/javascript" src = "/scripts/pomf/post.js"></script>	
-	<script type="text/javascript" src = "/scripts/pomf/tools.js"></script>		
+	<script type="text/javascript" src = "/scripts/pomf/tools.js"></script>	
+	<script type="text/javascript" src = "/scripts/pomf/init.js"></script>	
+	
+	<script id="postTemplate" type="text/html">
+	<div id={{id}} class='post' style='background-color:{{color}};color:{{textColor}}'>
+		<div class='content'>{{content}}</div>
+		<div class='author'>{{author}}</div>
+		<div class='date'><i>posted {{#relativeDate}} {{date}} {{/relativeDate}}
+		{{#dueDate}} and due {{#relativeDate}} {{dueDate}} {{/relativeDate}} {{/dueDate}}</i></div>
+	</div>
+	</script>
+	
 </html>

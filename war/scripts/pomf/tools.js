@@ -63,7 +63,7 @@ function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
 function isRegExp(regExp, content){
 	return regExp.test(content);
 }
-	
+
 function filterData(data){
     // filter all the nasties out
     // no body tags

@@ -28,10 +28,6 @@ function initPage(){
 			}
 		});
 		
-		$('.trash_bin').mouseout(function() {
-			$(this).effect("shake",{ times:1 }, 300);
-		});
-		
 		$( ".fridge" ).droppable({
 			accept: ".post, .newPost",
 			drop: function( event, ui ) {
