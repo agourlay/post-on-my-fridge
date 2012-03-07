@@ -1,14 +1,14 @@
 $(function() {
 	initPage();
+	setRandomBackGround();
 	setInterval("initPage()", 120000);
 });
 
 function initPage(){
 	var fridge = $('.fridge');
-    generateCaptcha();
+    	generateCaptcha();
 	colorPickerManagement();
 	datePickerManagement();
-	setRandomBackGround();
 	$.getJSON("/getPost", function(data) {
 		if (data != undefined){
 			deleteProcedure(data);
