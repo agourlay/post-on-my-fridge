@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 
 <html>
 	<head>
@@ -11,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
 		
-		<meta charset="utf-8">
+		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
 	</head>
 	<body>	
