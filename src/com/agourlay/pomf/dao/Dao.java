@@ -35,6 +35,7 @@ public enum Dao {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Post> getPosts() {
 		synchronized (this) {
 			List<Post> posts = new ArrayList<Post>();

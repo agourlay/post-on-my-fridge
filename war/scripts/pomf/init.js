@@ -6,7 +6,7 @@ $(function() {
 
 function initPage(){
 	var fridge = $('.fridge');
-    	generateCaptcha();
+    generateCaptcha();
 	colorPickerManagement();
 	datePickerManagement();
 	$.getJSON("/getPost", function(data) {

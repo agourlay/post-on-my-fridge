@@ -113,9 +113,9 @@ function generatePostContent(post){
 
 function buildPostContent(post){
 	if (post.color == undefined){
-		post.color = "f7f083"
+		post.color = "#f7f083"
 	}
-	
+
 	post.textColor = getTxtColorFromBg(post.color);
 	post.relativeDate = function() {
 	    return function(text, render) {
@@ -171,7 +171,7 @@ function buildTwitterDataUrl(url){
 }
 
 function colorPickerManagement(){
-	$("#newPost").css("background-color","f7f083");
+	$("#newPost").css("background-color","#f7f083");
 	
 	colorPicker = $.farbtastic("#color-picker").setColor($("#postColor").val());
 	$( "#color-dialog" ).dialog({
