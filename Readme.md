@@ -1,6 +1,6 @@
 # Post On My Fridge
 
-*This is a project i made to have fun with javascript and google Paas (Google App Engine).*
+*This is a project i made for fun with javascript.*
 
 ## Features 
 
