@@ -3,7 +3,10 @@
 <html>
 	<head>
 		<title>Posts on the fridge</title>
-		
+		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
+                <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
+       		<meta http-equiv="content-type" content="text/html; charset=utf-8">  
+     		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui-1.8.16.custom.css"/>
@@ -11,7 +14,6 @@
 		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
 		
-		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
 	</head>
 	<body>	
