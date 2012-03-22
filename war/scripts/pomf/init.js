@@ -1,7 +1,7 @@
 $(function() {
 	initPage();
 	setRandomBackGround();
-	setInterval("initPage()", 120000);
+	setInterval("initPage()", 10000);
 });
 
 function initPage(){
