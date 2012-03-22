@@ -32,7 +32,7 @@ The server side is written in java and hosted on Google App Engine.
 
 The client side uses a lot of javascript to build all the  interactions. (Jquery / Jquery UI).
 
-All the content is built dynamically on the client from a JSON object requested every 2 minutes from the server.
+All the content is built dynamically on the client from a JSON object requested every 10 seconds from the server.
 
 
 ## Donation
