@@ -59,6 +59,13 @@
  	padding-left: 5px;
 	}
 
+.newPost .iconBox{
+	float: right;
+	position: relative;
+	padding: 5px;
+	display : inline-block;
+	width : 20%;
+	}
 
 .newPost .changeColor{
 	background: transparent url(../../images/pomf/colorButton.png) no-repeat 0 0;
@@ -67,8 +74,6 @@
  	background-size: 100%;
  	z-index: 1000;
  	float: right;
- 	padding-bottom: 5px;
- 	padding-left: 5px;
 	}
 	
 .newPost .changeColor:hover,.newPost .ui-datepicker-trigger:hover {

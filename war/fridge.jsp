@@ -4,8 +4,8 @@
 	<head>
 		<title>Posts on the fridge</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
-                <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
-       		<meta http-equiv="content-type" content="text/html; charset=utf-8">  
+        <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
+       	<meta http-equiv="content-type" content="text/html; charset=utf-8">  
      		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
@@ -36,15 +36,18 @@
 							<textarea name=content id="content" rows="8" cols="20" maxlength="100" title="Content goes there"></textarea>
 						</div>
 						<div class="author">
-							<input type="text" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
+							by 
+							<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
 							<input type="hidden" id="postColor" maxlength="15" size="15" value="f7f083"/>
-							<input type="hidden" id="dueDate"/>
 						</div>
-						<div id="changeColor" class="changeColor" title="Click here to change the post color">
-							<div id="color-dialog" title="Choose the color of your post">
-									<div id="color-picker"></div>
-							</div>
-						</div>	
+						<div class="iconBox">
+							<input type="hidden" id="dueDate"/>
+							<div id="changeColor" class="changeColor" title="Click here to change the post color">
+								<div id="color-dialog" title="Choose the color of your post">
+										<div id="color-picker"></div>
+								</div>
+							</div>	
+						</div>
 					</div>				
 					<div class="ajax-fc-container"></div>
 				</form>
@@ -54,7 +57,7 @@
 		</div>
 	</body>
 	
-	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.18.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
