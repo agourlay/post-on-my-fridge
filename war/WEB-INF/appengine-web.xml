@@ -9,7 +9,8 @@
 	</system-properties>
 	
 	<sessions-enabled>true</sessions-enabled>
-	
+	<threadsafe>true</threadsafe>
+	 
 	<static-files>
         <include path="/css/pomf/**.css" expiration="10d" />
         <include path="/css/lib/**.css" expiration="30d" />
