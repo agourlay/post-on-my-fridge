@@ -1,7 +1,5 @@
 # Post On My Fridge
 
-*This is a project i made for fun with javascript.*
-
 ## Features 
 
 The application allows any user to leave a message on a fridge :D.
