@@ -1,10 +1,11 @@
 $(function() {
 	setRandomBackGround();
-    generateCaptcha();
 	colorPickerManagement();
 	datePickerManagement();
+	generateCaptcha();
 	initPage();
 	setInterval("initPage()", 10000);
+	setTimeout(showPage, 5000);
 });
 
 function initPage(){
@@ -40,7 +41,7 @@ function initPage(){
 					myData ["dueDate"] = $("#dueDate").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					$.ajax({url: "/new",data : myData,success : location.reload()});	
+					$.ajax({url: "/new",data : myData,success : cleanAndReload(ui.draggable)});	
 				}else{
 					var myData = {};
 					myData ["id"] = ui.draggable.attr('id');
@@ -51,4 +52,19 @@ function initPage(){
 			}
 		});		
 	});
+}
+
+function showPage(){
+	$('#loading').hide();
+    $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0})
+}
+
+function cleanAndReload(elmt){
+	xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
+	yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top')));
+	elmt.animate({'left': "+="+xTranslation,
+				   'top': "+="+yTranslation
+				  },'slow','linear');
+
+	initPage();
 }

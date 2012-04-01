@@ -16,10 +16,13 @@
 		
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
 	</head>
-	<body>	
-		<div class="header">
-		</div>
-		<div class="global">				
+	<body>
+		<div id="loading">
+			<div id="loading-sign"></div>
+			Loading fridge content...
+		</div>	
+		<div id="global">
+			<div id="header"></div>	
 			<div class ="leftPanel">
 				<div class="headline">
 					<ol>
