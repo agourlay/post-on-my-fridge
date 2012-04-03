@@ -41,7 +41,15 @@ function initPage(){
 					myData ["dueDate"] = $("#dueDate").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					$.ajax({url: "/new",data : myData,success : cleanAndReload(ui.draggable)});	
+					$.ajax({
+                        url: "/new",
+                        data : myData,
+                        complete: replaceNewPost(ui.draggable),
+                        success : initPage(),
+                        statusCode: {
+                            400: $.jGrowl("Please solve the captcha!"),
+                          }
+                        });	
 				}else{
 					var myData = {};
 					myData ["id"] = ui.draggable.attr('id');
@@ -59,14 +67,12 @@ function showPage(){
     $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0})
 }
 
-function cleanAndReload(elmt){
-	xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
+function replaceNewPost(elmt){
+    xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
 	yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top')));
 	elmt.animate({'left': "+="+xTranslation,
 				   'top': "+="+yTranslation
 				  },'slow','linear');
-
-	initPage();
 }
 
 function konami(){
