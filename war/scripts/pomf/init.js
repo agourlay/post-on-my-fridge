@@ -3,6 +3,7 @@ $(function() {
 	colorPickerManagement();
 	datePickerManagement();
 	generateCaptcha();
+	konami();
 	initPage();
 	setInterval("initPage()", 10000);
 	setTimeout(showPage, 3000);
@@ -42,14 +43,16 @@ function initPage(){
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({
-			                        url: "/new",
-			                        data : myData,
-			                        complete: replaceNewPost(ui.draggable),
-			                        success : initPage(),
-			                        statusCode: {
-			                            400: $.jGrowl("Please solve the captcha!"),
-			                          }
-			                        });	
+			                url: "/new",
+			                data : myData,
+			                dataType: "html",
+			                type:'get',
+			                complete: replaceNewPost(ui.draggable),
+			                success : initPage(),
+			                error:function (xhr, ajaxOptions, thrownError){
+			                	$.jGrowl("Please solve the captcha!")
+			                }
+			               });	
 				}else{
 					var myData = {};
 					myData ["id"] = ui.draggable.attr('id');

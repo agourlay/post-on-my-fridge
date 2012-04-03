@@ -15,7 +15,6 @@ public class AddPostController extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
 		resp.setContentType("text/html");
-		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
 				
 		int captchaNumberInSession = 0;
 		int captchaNumberSubmitted = 0;
@@ -24,6 +23,7 @@ public class AddPostController extends HttpServlet {
 			captchaNumberInSession = (Integer) req.getSession().getAttribute("captchaNumber");
 			captchaNumberSubmitted = Integer.parseInt(req.getParameter("captcha"));
 		} catch (Exception e) {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
 			return;
 		}
 		
@@ -34,8 +34,10 @@ public class AddPostController extends HttpServlet {
 			Double positionY = Double.parseDouble(req.getParameter("positionY"));
 			String color = Validation.checkNull(req.getParameter("color"));
 			String dueDateString = req.getParameter("dueDate");
-			Dao.INSTANCE.add(author, content,positionX,positionY,color,Utils.stringToDate(dueDateString, "MM/dd/yyyy"));
-			resp.setStatus(HttpServletResponse.SC_ACCEPTED);	
+			Dao.INSTANCE.add(author, content,positionX,positionY,color,Utils.stringToDate(dueDateString, "MM/dd/yyyy"));	
+			resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+		}else{
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	
 		}
 
 	}
