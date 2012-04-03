@@ -5,7 +5,7 @@ $(function() {
 	generateCaptcha();
 	initPage();
 	setInterval("initPage()", 10000);
-	setTimeout(showPage, 5000);
+	setTimeout(showPage, 3000);
 });
 
 function initPage(){
