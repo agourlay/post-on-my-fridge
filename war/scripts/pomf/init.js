@@ -68,3 +68,12 @@ function cleanAndReload(elmt){
 
 	initPage();
 }
+
+function konami(){
+    $(window).konami(function(){
+        jQuery('body').addClass('barrel_roll');
+        setTimeout(function(){
+            jQuery('body').removeClass('barrel_roll');
+        },4000);  
+    }); 
+}    
