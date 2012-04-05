@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Posts on the fridge</title>
+		<title>Post on your fridge</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
         <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
        	<meta http-equiv="content-type" content="text/html; charset=utf-8">  
@@ -25,15 +25,6 @@
 		<div id="global">
 			<div id="header"></div>	
 			<div class ="leftPanel">
-				<div class="headline">
-					<ol>
-		  				<li>Fill in the post. </li>
-		  				<li>Choose a due date. (optionnal) </li>
-		  				<li>Choose a color. (optionnal) </li>
-						<li>Solve the captcha.</li>
-						<li>Drop the post on the fridge.</li>
-					</ol>
-				</div>
 				<form id="postForm" accept-charset="utf-8">
 					<div id ="newPost" class="newPost">
 						<div class="content">
@@ -46,7 +37,7 @@
 						</div>
 						<div class="iconBox">
 							<input type="hidden" id="dueDate"/>
-							<div id="changeColor" class="changeColor" title="Click here to change the post color">
+							<div id="changeColor" class="changeColor" title="Click here to change the post's color">
 								<div id="color-dialog" title="Choose the color of your post">
 										<div id="color-picker"></div>
 								</div>

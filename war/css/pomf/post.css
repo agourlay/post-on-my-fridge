@@ -1,6 +1,6 @@
 .post {
 	background: transparent url(../../images/pomf/postIt.png) no-repeat 0 0;
-	box-shadow: 15px 15px 12px #aaa;
+	box-shadow: 5px 5px 4px #aaa;
 	width:228px;
 	height:228px;
 	padding-top: 5px;
@@ -41,7 +41,7 @@
 
 .newPost {
 	background: transparent url(../../images/pomf/postIt.png) no-repeat 0 0;
-	box-shadow: 15px 15px 12px #aaa;
+	box-shadow: 5px 5px 4px #aaa;
 	width:228px;
 	height:228px;
 	padding-top: 10px;
@@ -98,4 +98,5 @@
 .newPost input, .newPost textarea{
 	background-color: transparent;
 	border: dotted;
+	border-width: thin;
 	}
