@@ -13,7 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="css/lib/jquery.jgrowl.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
-		
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
+
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
 	</head>
 	<body>
