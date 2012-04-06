@@ -56,7 +56,7 @@
 	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.18.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
-    <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
+        <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>
