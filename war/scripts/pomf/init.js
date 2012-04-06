@@ -43,15 +43,15 @@ function initPage(){
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
 					$.ajax({
-			                url: "/new",
-			                data : myData,
-			                dataType: "html",
-			                type:'get',
-			                complete: replaceNewPost(ui.draggable),
-			                success : initPage(),
-			                error:function (xhr, ajaxOptions, thrownError){
-			                	$.jGrowl("Please solve the captcha!")
-			                }
+				                url: "/new",
+				                data : myData,
+				                dataType: "html",
+				                type:'get',
+				                complete: replaceNewPost(ui.draggable),
+				                success : initPage(),
+				                error:function (xhr, ajaxOptions, thrownError){
+				                	$.jGrowl("Please solve the captcha!")
+				                }
 			               });	
 				}else{
 					var myData = {};
