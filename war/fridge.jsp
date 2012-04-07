@@ -32,7 +32,7 @@
 						<div class="author">
 							by 
 							<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
-							<input type="hidden" id="postColor" maxlength="15" size="15" value="f7f083"/>
+							<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
 						</div>
 						<div class="iconBox">
 							<input type="hidden" id="dueDate"/>
@@ -55,7 +55,7 @@
 	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.18.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
-        <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
+    <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>
