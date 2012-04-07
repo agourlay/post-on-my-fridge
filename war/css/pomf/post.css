@@ -18,8 +18,9 @@
 	font-weight: bold;
 	padding: 3px;
 	padding-left : 20px;
-    	width: 200px;
-    	height: 130px;
+    width: 200px;
+    height: 130px;
+    text-align: middle;
 	}
 	
 .post .author{
