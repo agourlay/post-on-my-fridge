@@ -8,10 +8,10 @@
      		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui-1.8.16.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/jquery.jgrowl.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/captcha.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/farbtastic.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui/jquery-ui-1.8.19.custom.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/jgrowl.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/captcha/captcha.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
 
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
@@ -52,10 +52,11 @@
 	</body>
 	
 	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.18.custom.min.js"></script>
+	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.19.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
     <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
+    <script type="text/javascript" src = "/scripts/lib/underscore-min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>

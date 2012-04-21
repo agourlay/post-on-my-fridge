@@ -11,7 +11,7 @@ body {
 }
 
 #loading-sign {
-    background-image: url(../../images/pomf/loading.gif);
+    background-image: url(../../images/loading.gif);
     height: 128px;
     width: 128px;
     margin-left: auto;
@@ -36,7 +36,7 @@ body {
 	text-align:center;
 	width: 70%;
 	padding-top:5%;
-	background-image:url(../../images/pomf/fridgeBg.png);
+	background-image:url(../../images/fridgeBg.png);
 	background-size:100%;
 	min-height:1500px;
 	max-height:1500px;
@@ -52,7 +52,7 @@ body {
 	position: fixed;
   	top: 80%;
   	padding: 10px;
-  	background: transparent url(../../images/pomf/trash.png) no-repeat 0 0;
+  	background: transparent url(../../images/trash.png) no-repeat 0 0;
  	height: 150px;
  	width: 150px;
  	background-size:60%;

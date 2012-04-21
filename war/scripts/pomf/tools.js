@@ -1,7 +1,7 @@
 function generateCaptcha(){
     $(".ajax-fc-container").captcha({
 		borderColor: "silver",
-		captchaDir: "images/lib/captcha-images", 
+		captchaDir: "/css/lib/captcha/images", 
 		formId: "postForm",
 		url : "/getCaptchaNumber",
 		text: "Verify that you are a human,<br />drag <span>scissors</span> into the circle.",
@@ -10,7 +10,7 @@ function generateCaptcha(){
 }
 
 function setRandomBackGround(){
-	path = "/images/pomf/global-bg/";
+	path = "/images/background/";
 	myImages = ['bright_squares.png', 'circles.png', 'diagonal-noise.png', 'elastoplast.png',
 	            'elegant_grid.png','gold_scale.png','light_checkered_tiles.png',
 	            'noise_pattern_with_crosslines.png','plaid.png','ravenna.png',
@@ -52,7 +52,7 @@ function isDark( color ) {
 function datePickerManagement(){
 		$( "#dueDate" ).datepicker({
 			showOn: "button",
-			buttonImage: "/images/pomf/calendar.gif",
+			buttonImage: "/images/calendar.gif",
 			buttonText: 'Choose a due date',
 			buttonImageOnly: true
 		});

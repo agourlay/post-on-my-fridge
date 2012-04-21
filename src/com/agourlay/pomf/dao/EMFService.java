@@ -7,7 +7,7 @@ public class EMFService {
 
 	private static final EntityManagerFactory emfInstance = Persistence .createEntityManagerFactory("transactions-optional");
 
-	private EMFService() {
+	public EMFService() {
 	}
 
 	public static EntityManagerFactory get() {

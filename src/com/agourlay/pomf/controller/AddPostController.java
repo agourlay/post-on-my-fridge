@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.tools.Utils;
 import com.agourlay.pomf.tools.Validation;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @SuppressWarnings("serial")
 public class AddPostController extends HttpServlet {
@@ -35,6 +37,8 @@ public class AddPostController extends HttpServlet {
 			String color = Validation.checkNull(req.getParameter("color"));
 			String dueDateString = req.getParameter("dueDate");
 			Dao.INSTANCE.add(author, content,positionX,positionY,color,Utils.stringToDate(dueDateString, "MM/dd/yyyy"));	
+		    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+			syncCache.delete("fridgeContent");
 			resp.setStatus(HttpServletResponse.SC_ACCEPTED);
 		}else{
 			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);	

@@ -1,5 +1,5 @@
 .post {
-	background: transparent url(../../images/pomf/postIt.png) no-repeat 0 0;
+	background: transparent url(../../images/postIt.png) no-repeat 0 0;
 	box-shadow: 5px 5px 4px #aaa;
 	width:228px;
 	height:228px;
@@ -40,7 +40,7 @@
 	}
 
 .newPost {
-	background: transparent url(../../images/pomf/postIt.png) no-repeat 0 0;
+	background: transparent url(../../images/postIt.png) no-repeat 0 0;
 	box-shadow: 5px 5px 4px #aaa;
 	width:228px;
 	height:228px;
@@ -68,7 +68,7 @@
 	}
 
 .newPost .changeColor{
-	background: transparent url(../../images/pomf/colorButton.png) no-repeat 0 0;
+	background: transparent url(../../images/colorButton.png) no-repeat 0 0;
 	height: 20px;
  	width: 20px;
  	background-size: 100%;

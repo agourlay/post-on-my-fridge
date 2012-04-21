@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.agourlay.pomf.dao.Dao;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 public class UpdatePostController extends HttpServlet {
 		/**
@@ -21,9 +23,11 @@ public class UpdatePostController extends HttpServlet {
 			Double positionY = Double.parseDouble(req.getParameter("positionY"));
 			
 			Dao.INSTANCE.updatePosition(id, positionX, positionY);
+			MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+			syncCache.delete("fridgeContent");
 			
 			resp.setContentType("text/html");
 			resp.setStatus(HttpServletResponse.SC_FOUND);	
-			}
+		}
 	}
 

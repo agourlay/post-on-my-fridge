@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Post;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.gson.Gson;
 
 public class GetPostController extends HttpServlet {
@@ -18,13 +20,21 @@ public class GetPostController extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
 		resp.setContentType("application/json");
-		List<Post> posts = Dao.INSTANCE.getPosts();	
-		Gson gson = new Gson();
-		String jsonResult = gson.toJson(posts);
-		PrintWriter out = resp.getWriter();
-		out.print(jsonResult);
-		out.flush();
 		resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+		PrintWriter out = resp.getWriter();
+		
+	    MemcacheService syncCache = MemcacheServiceFactory.getMemcacheService();
+	    String postCached = (String) syncCache.get("fridgeContent"); 
+	    
+	    if (postCached == null) {
+	    	List<Post> posts = Dao.INSTANCE.getPosts();	
+			Gson gson = new Gson();
+			String jsonResult = gson.toJson(posts);
+			syncCache.put("fridgeContent", jsonResult);
+			out.print(jsonResult);
+	    }else{
+	    	out.print(postCached);
+	    }
+		out.flush();	
 	}
-
 }

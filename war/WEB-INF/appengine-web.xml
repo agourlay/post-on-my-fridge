@@ -12,14 +12,13 @@
 	<threadsafe>true</threadsafe>
 	 
 	<static-files>
-        <include path="/css/pomf/**.css" expiration="10d" />
-        <include path="/css/lib/**.css" expiration="30d" />
+        <include path="/css/pomf/**.*" expiration="5d" />
+        <include path="/css/lib/**.*" expiration="10d" />
         
-        <include path="/scripts/pomf/**.js" expiration="10d" />
-        <include path="/scripts/lib/**.js" expiration="30d" />
+        <include path="/scripts/pomf/**.js" expiration="5d" />
+        <include path="/scripts/lib/**.js" expiration="10d" />
         
-        <include path="/images/pomf/**.*" expiration="10d" />
-        <include path="/images/lib/**.*" expiration="30d" />
+        <include path="/images/**.*" expiration="5d" />
         
         <include path="favicon.ico" expiration="30d" />
         <include path="robots.txt"/>
