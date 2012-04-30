@@ -17,15 +17,15 @@
 	position: relative;
 	font-weight: bold;
 	padding: 3px;
-	padding-left : 15px;
-        width: 200px;
-        height: 130px;
+    width: 222px;
+    height: 162px;
+    vertical-align: middle;
 	}
 	
 .post .author{
 	position: relative;
 	padding: 3px;
-	padding-top : 30px;
+	padding-top : 10px;
 	}
 	
 .post .date{

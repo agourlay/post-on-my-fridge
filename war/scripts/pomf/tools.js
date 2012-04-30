@@ -48,7 +48,7 @@ function extractTwitterUser(url){
 }
 
 function generateYoutubeFrame(url){
-	frame = "<iframe class='youtube-player' type='text/html' width='190' height='150' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
+	frame = "<iframe class='youtube-player' type='text/html' width='218' height='160' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
 	return frame;
 }
 
