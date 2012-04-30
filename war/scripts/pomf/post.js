@@ -12,6 +12,12 @@ function deleteProcedure(data){
 	});
 }
 
+function replaceNewPost(elmt){
+    xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
+    yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top')));
+    elmt.animate({'left': "+="+xTranslation, 'top': "+="+yTranslation },'slow','linear');
+}
+
 function isFridgeContaining(postId){
 	result = false;
 	$.each($('.post'),function(indexPost,valuePost){

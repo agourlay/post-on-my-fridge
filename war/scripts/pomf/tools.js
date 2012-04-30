@@ -1,3 +1,17 @@
+function showPage(){
+    $('#loading').hide();
+    $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0})
+}
+
+function konami(){
+    $(window).konami(function(){
+        jQuery('body').addClass('barrel_roll');
+        setTimeout(function(){
+            jQuery('body').removeClass('barrel_roll');
+        },4000);  
+    }); 
+}    
+
 function generateCaptcha(){
     $(".ajax-fc-container").captcha({
 		borderColor: "silver",

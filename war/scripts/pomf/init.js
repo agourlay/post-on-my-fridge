@@ -64,23 +64,3 @@ function initPage(){
 		});		
 	});
 }
-
-function showPage(){
-    $('#loading').hide();
-    $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0})
-}
-
-function replaceNewPost(elmt){
-    xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
-    yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top')));
-    elmt.animate({'left': "+="+xTranslation, 'top': "+="+yTranslation },'slow','linear');
-}
-
-function konami(){
-    $(window).konami(function(){
-        jQuery('body').addClass('barrel_roll');
-        setTimeout(function(){
-            jQuery('body').removeClass('barrel_roll');
-        },4000);  
-    }); 
-}    
