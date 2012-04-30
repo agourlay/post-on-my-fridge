@@ -3,8 +3,8 @@
 	<head>
 		<title>Post on your fridge</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
-        	<meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
-       		<meta http-equiv="content-type" content="text/html; charset=utf-8">  
+        <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
+       	<meta http-equiv="content-type" content="text/html; charset=utf-8">  
      		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
@@ -55,7 +55,7 @@
 	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.19.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
-    	<script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
+    <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
    	<script type="text/javascript" src = "/scripts/lib/underscore-min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
@@ -74,5 +74,5 @@
 			{{#dueDate}} and due {{#relativeDate}} {{dueDate}} {{/relativeDate}} {{/dueDate}}</i></div>
 		</div>
 	</script>
-	
+	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>
