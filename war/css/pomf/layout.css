@@ -3,22 +3,22 @@ body {
 }
 
 #loading {
-    position: absolute;
-    top: 30%;
-    left: 25%; 
-    width: 50%;
-    text-align: center;
+	position: absolute;
+	top: 30%;
+    	left: 25%; 
+    	width: 50%;
+    	text-align: center;
 }
 
 #loading-sign {
-    background-image: url(../../images/loading.gif);
-    height: 128px;
-    width: 128px;
-    margin-left: auto;
+    	background-image: url(../../images/loading.gif);
+    	height: 128px;
+    	width: 128px;
+    	margin-left: auto;
 	margin-right: auto;
 }
 
-#header{
+#header {
 	width: 100%;
 	height: 5px;
 	font-weight: bold;
@@ -59,13 +59,13 @@ body {
 	}
 	
 .barrel_roll {
-    -webkit-transition: -webkit-transform 4s ease;
-    -webkit-transform: rotate(360deg);
-    -moz-transition: -moz-transform 4s ease;
-    -moz-transform: rotate(360deg);
-    -o-transition: -o-transform 4s ease;
-    -o-transform: rotate(360deg);
-    transition: transform 4s ease;
-    transform: rotate(360deg);
+    	-webkit-transition: -webkit-transform 4s ease;
+    	-webkit-transform: rotate(360deg);
+    	-moz-transition: -moz-transform 4s ease;
+    	-moz-transform: rotate(360deg);
+    	-o-transition: -o-transform 4s ease;
+    	-o-transform: rotate(360deg);
+    	transition: transform 4s ease;
+    	transform: rotate(360deg);
     }    
     
