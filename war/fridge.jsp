@@ -8,7 +8,7 @@
      		
 		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui/jquery-ui-1.8.19.custom.css"/>
+		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/jgrowl.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/captcha/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="css/lib/farbastic/farbtastic.css"/>
@@ -52,7 +52,7 @@
 	</body>
 	
 	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.19.custom.min.js"></script>
+	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.20.custom.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
     <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
