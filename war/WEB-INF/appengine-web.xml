@@ -15,8 +15,8 @@
         <include path="/css/pomf/**.*" expiration="5d" />
         <include path="/css/lib/**.*" expiration="10d" />
         
-        <include path="/scripts/pomf/**.js" expiration="5d" />
-        <include path="/scripts/lib/**.js" expiration="10d" />
+        <include path="/js/pomf/**.js" expiration="5d" />
+        <include path="/js/lib/**.js" expiration="10d" />
         
         <include path="/images/**.*" expiration="5d" />
         
@@ -24,4 +24,8 @@
         <include path="robots.txt"/>
     </static-files>
     	
+    <static-error-handlers>
+    	<handler file="errors.html"/>
+    </static-error-handlers>
+  	
 </appengine-web-app>

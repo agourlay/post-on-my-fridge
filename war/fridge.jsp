@@ -6,15 +6,15 @@
         <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
        	<meta http-equiv="content-type" content="text/html; charset=utf-8">  
      		
-		<link rel="stylesheet" type="text/css" href="css/pomf/layout.css"/>
-		<link rel="stylesheet" type="text/css" href="css/pomf/post.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/jgrowl.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/captcha/captcha.css"/>
-		<link rel="stylesheet" type="text/css" href="css/lib/farbastic/farbtastic.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/pomf/layout.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/pomf/post.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/jgrowl.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/captcha/captcha.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
 
-		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss" />
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/rss/fridge.rss?fridgeId=${fridgeId}" />
 	</head>
 	<body>
 		<div id="loading">
@@ -33,6 +33,7 @@
 							by 
 							<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
 							<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
+							<input type="hidden" id="fridgeId" value="${fridgeId}"/>
 						</div>
 						<div class="iconBox">
 							<input type="hidden" id="dueDate"/>
@@ -50,29 +51,22 @@
 			<div class="fridge"></div>							
 		</div>
 	</body>
+	<%@ include file="/template/template.jsp" %>
 	
-	<script type="text/javascript" src = "/scripts/lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery-ui-1.8.20.custom.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery.jgrowl.min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/jquery-captcha.js"></script>
-    <script type="text/javascript" src = "/scripts/lib/jquery.konami.js"></script>
-   	<script type="text/javascript" src = "/scripts/lib/underscore-min.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/farbtastic.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/humane.js"></script>			
-	<script type="text/javascript" src = "/scripts/lib/browser-update.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/google-analytics.js"></script>
-	<script type="text/javascript" src = "/scripts/lib/mustache.js"></script>	
-	<script type="text/javascript" src = "/scripts/pomf/post.js"></script>	
-	<script type="text/javascript" src = "/scripts/pomf/tools.js"></script>	
-	<script type="text/javascript" src = "/scripts/pomf/init.js"></script>	
+	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.20.custom.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/jquery.jgrowl.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/jquery-captcha.js"></script>
+    <script type="text/javascript" src = "/js/lib/jquery.konami.js"></script>
+   	<script type="text/javascript" src = "/js/lib/underscore-min.js"></script>
+	<script type="text/javascript" src = "/js/lib/farbtastic.js"></script>
+	<script type="text/javascript" src = "/js/lib/humane.js"></script>			
+	<script type="text/javascript" src = "/js/lib/browser-update.js"></script>
+	<script type="text/javascript" src = "/js/lib/google-analytics.js"></script>
+	<script type="text/javascript" src = "/js/lib/mustache.js"></script>	
+	<script type="text/javascript" src = "/js/pomf/post.js"></script>	
+	<script type="text/javascript" src = "/js/pomf/tools.js"></script>	
+	<script type="text/javascript" src = "/js/pomf/init.js"></script>	
 	
-	<script id="postTemplate" type="text/html">
-		<div id={{id}} class='post' style='background-color:{{color}};color:{{textColor}}'>
-			<div class='content'>{{content}}</div>
-			<div class='author'>{{author}}</div>
-			<div class='date'><i>posted {{#relativeDate}} {{date}} {{/relativeDate}}
-			{{#dueDate}} and due {{#relativeDate}} {{dueDate}} {{/relativeDate}} {{/dueDate}}</i></div>
-		</div>
-	</script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>

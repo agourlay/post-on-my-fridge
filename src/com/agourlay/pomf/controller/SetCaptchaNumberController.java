@@ -16,7 +16,7 @@ public class SetCaptchaNumberController extends HttpServlet{
 	private int max = 4;
 	private Random rand = new Random();
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)	throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		int captchaNumber = rand.nextInt(max - min + 1) + min;
 		req.getSession().setAttribute("captchaNumber", captchaNumber);
 		

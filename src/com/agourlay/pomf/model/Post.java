@@ -1,22 +1,28 @@
 package com.agourlay.pomf.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.agourlay.pomf.dao.ObjectifyDao;
+import com.agourlay.pomf.tools.Constantes;
 import com.agourlay.pomf.tools.Validation;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
 
-/**
- * Model class which will store the Post Items
- * 
- * 
- */
 @Entity
-public class Post {
+public class Post implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -27,11 +33,12 @@ public class Post {
 	private Double positionX;
 	private Double positionY;
 	private Date dueDate;
+	private String fridgeId;
 
-	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
+	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate,String fridgeId) {
 		
 		if (Validation.isNoTNullOrEmpty(author)){
-			this.author = author.substring(0, 1).toUpperCase() + author.substring(1).toLowerCase();
+			this.author = author;
 		}else{
 			this.author = "Anonymous";
 		}
@@ -47,8 +54,53 @@ public class Post {
 		this.positionY = positionY;
 		this.color = color;
 		this.dueDate = dueDate;
+		this.fridgeId = fridgeId;
 	}
 
+	// DAO METHODS 
+	
+	public static void add(String fridgeId,String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
+			Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
+			savePost(post);
+	}
+
+	public static void savePost(Post post){
+		ObjectifyDao dao = new ObjectifyDao();
+        dao.ofy().put(post);
+        MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
+	}
+	
+	public static void updatePosition(Long id, Double positionX,Double positionY) {
+			Post postToUpdate = getPostById(id);
+			if (postToUpdate != null){
+				postToUpdate.setPositionX(positionX);
+				postToUpdate.setPositionY(positionY);
+				savePost(postToUpdate);
+			}
+	}
+		
+	public static Post getPostById(Long id) {
+		Objectify ofy = ObjectifyService.begin();
+		Post post = ofy.get(Post.class, id);
+		return post;
+	}
+	
+	public static List<Post> getAllPost() {
+		ObjectifyDao dao = new ObjectifyDao();
+        List<Post> posts = dao.ofy().query(Post.class).order("-date").limit(100).list();
+		return posts;
+	}
+	
+	public static void remove(long id) {
+		Objectify ofy = ObjectifyService.begin();
+		Post post = ofy.get(Post.class, id);
+		String currentFridgeId = post.getFridgeId();
+		ofy.delete(post);
+		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
+	}
+	
+	//GETTERS & SETTERS
+	
 	public Long getId() {
 		return id;
 	}
@@ -116,6 +168,14 @@ public class Post {
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	public String getFridgeId() {
+		return fridgeId;
+	}
+
+	public void setFridgeId(String fridgeId) {
+		this.fridgeId = fridgeId;
 	}
 	
 }

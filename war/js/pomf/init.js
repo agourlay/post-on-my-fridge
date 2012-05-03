@@ -11,7 +11,7 @@ $(function() {
 
 function initPage(){
 	var fridge = $('.fridge');
-	$.getJSON("/getPost", function(data) {
+	$.getJSON("/resources/fridge/demo", function(data) {
 		if (data != undefined){
 			deleteProcedure(data);
 			createOrUpdate(data);
@@ -23,8 +23,9 @@ function initPage(){
 			accept: ".post",
 			drop: function( event, ui ) {
 				$(this).effect("bounce",{ times:3 }, 300);
-				$.ajax({ 
-					url: "/remove?id="+ui.draggable.attr('id')
+				$.ajax({
+					type:'DELETE',
+					url: "/resources/post/"+ui.draggable.attr('id')
 				});
 				deleteAnimationPost(ui.draggable.attr('id'));
 			}
@@ -42,23 +43,27 @@ function initPage(){
 					myData ["dueDate"] = $("#dueDate").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
+					myData ["fridgeId"] = $("#fridgeId").val();
 					$.ajax({
-				                url: "/new",
-				                data : myData,
-				                dataType: "html",
-				                type:'get',
-				                complete: replaceNewPost(ui.draggable),
-				                success : initPage(),
-				                error:function (xhr, ajaxOptions, thrownError){
-				                	$.jGrowl("Please solve the captcha!")
-				                }
+				            url: "/resources/post",
+				            data : myData,
+				            dataType: "html",
+				            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				            type:"post",
+				            complete: replaceNewPost(ui.draggable),
+				            success : initPage(),
+				            error:function (xhr, ajaxOptions, thrownError){
+				               	$.jGrowl("Please solve the captcha!")
+				             	}
 			               });	
 				}else{
 					var myData = {};
-					myData ["id"] = ui.draggable.attr('id');
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					$.ajax({ url: "/update",data : myData});	
+					$.ajax({ 
+						url: "/resources/post/"+ui.draggable.attr('id'),
+						type: "put",
+						data : myData});	
 				}	
 			}
 		});		

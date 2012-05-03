@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agourlay.pomf.dao.Dao;
+import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.tools.rss.Feed;
 import com.agourlay.pomf.tools.rss.FeedMessage;
@@ -26,11 +26,11 @@ public class GetRssFeedController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/xml");
-		Feed rssFeeder = createRssFeed();
-		rssFeeder.getMessages().addAll(getRssEntry());
+		String fridgeId = req.getParameter("fridgeId");
+		Feed rssFeeder = createRssFeed(fridgeId);
+		rssFeeder.getMessages().addAll(getRssEntry(fridgeId));
 		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
 		PrintWriter printWriter = resp.getWriter();
 		try {
@@ -42,12 +42,12 @@ public class GetRssFeedController extends HttpServlet {
 		}
 	}
 
-	public Feed createRssFeed() {
+	public Feed createRssFeed(String fridgeId) {
 		String copyright = "Nya";
 		String title = "Post On My Fridge";
-		String description = "Content of your fridge";
+		String description = "Content of the fridge "+fridgeId;
 		String language = "en";
-		String link = "http://post-on-my-fridge.appspot.com/";
+		String link = "http://post-on-my-fridge.appspot.com/"+fridgeId;
 		Calendar cal = new GregorianCalendar();
 		Date creationDate = cal.getTime();
 		SimpleDateFormat date_format = new SimpleDateFormat(
@@ -58,9 +58,9 @@ public class GetRssFeedController extends HttpServlet {
 		return rssFeeder;
 	}
 
-	public List<FeedMessage> getRssEntry() {
+	public List<FeedMessage> getRssEntry(String fridgeId) {
 		List<FeedMessage> listFeed = new ArrayList<FeedMessage>();
-		List<Post> posts = Dao.INSTANCE.getPosts();
+		List<Post> posts = Fridge.getPosts(fridgeId);
 		for (Post post : posts) {
 			listFeed.add(RssUtils.createFeedMessageFromPost(post));
 		}
