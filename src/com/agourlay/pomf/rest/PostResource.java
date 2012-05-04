@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.*;
 
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.tools.Utils;
@@ -54,7 +55,12 @@ public class PostResource {
 			captchaNumberInSession = (Integer) req.getSession().getAttribute("captchaNumber");
 			captchaNumberSubmitted = Integer.parseInt(captcha);
 		} catch (Exception e) {
-			return;
+			throw new WebApplicationException(
+			        Response
+			          .status(Status.BAD_REQUEST)
+			          .entity("Captcha invalid")
+			          .build()
+			      );
 		}
 		
 		if (captchaNumberInSession == captchaNumberSubmitted){
