@@ -11,7 +11,8 @@ $(function() {
 
 function initPage(){
 	var fridge = $('.fridge');
-	$.getJSON("/resources/fridge/demo", function(data) {
+    var fridgeId = $("#fridgeId").val();
+	$.getJSON("/resources/fridge/"+fridgeId, function(data) {
 		if (data != undefined){
 			deleteProcedure(data);
 			createOrUpdate(data);
@@ -43,7 +44,7 @@ function initPage(){
 					myData ["dueDate"] = $("#dueDate").val();
 					myData ["positionX"] = (parseInt(ui.draggable.css('left'))) / fridge.width();
 					myData ["positionY"] = (parseInt(ui.draggable.css('top'))) / fridge.height();
-					myData ["fridgeId"] = $("#fridgeId").val();
+					myData ["fridgeId"] = fridgeId;
 					$.ajax({
 				            url: "/resources/post",
 				            data : myData,
