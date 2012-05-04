@@ -34,16 +34,7 @@
 		<servlet-name>EraseDuePostController</servlet-name>
 		<url-pattern>/outdated</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>GetRssFeedController</servlet-name>
-		<servlet-class>com.agourlay.pomf.controller.GetRssFeedController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GetRssFeedController</servlet-name>
-		<url-pattern>/rss/fridge.rss</url-pattern>
-	</servlet-mapping>
-	
+		
 	<servlet>
 		<servlet-name>FridgeController</servlet-name>
 		<servlet-class>com.agourlay.pomf.controller.FridgeController</servlet-class>

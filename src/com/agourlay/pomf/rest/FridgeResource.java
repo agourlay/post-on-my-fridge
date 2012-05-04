@@ -21,6 +21,14 @@ public class FridgeResource {
 		Gson gson = new Gson();
 		return gson.toJson(posts);
 	}
+    
+    @GET
+    @Path("/rss")
+	@Produces("application/xml")
+	public String getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
+	    Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
+		return rssFeeder.getMessages().addAll(RssUtils.getRssEntry(fridgeId));
+	}
 }	
 
 
