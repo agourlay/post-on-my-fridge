@@ -27,7 +27,9 @@ public class FridgeResource {
 	@Produces("application/xml")
 	public String getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
 	    Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
-		return rssFeeder.getMessages().addAll(RssUtils.getRssEntry(fridgeId));
+		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(fridgeId));
+		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
+		return writer.write().toString();
 	}
 }	
 
