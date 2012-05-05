@@ -22,7 +22,15 @@
 			Loading fridge content...
 		</div>	
 		<div id="global">
-			<div id="header"></div>	
+			<div id="header">
+				<div id="fridge-title">
+					Interact with "${fridgeId}"
+				</div>
+				<div id="search-area">
+					<input type="text" value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+				</div>
+		
+				</div>	
 			<div class ="leftPanel">
 				<form id="postForm" accept-charset="utf-8">
 					<div id ="newPost" class="newPost">

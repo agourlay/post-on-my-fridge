@@ -24,8 +24,4 @@
         <include path="robots.txt"/>
     </static-files>
     	
-    <static-error-handlers>
-    	<handler file="errors.html"/>
-    </static-error-handlers>
-  	
 </appengine-web-app>

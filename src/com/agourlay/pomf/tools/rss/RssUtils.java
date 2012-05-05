@@ -16,14 +16,14 @@ public class RssUtils {
 		feed.setTitle(post.getAuthor()+" posted on your fridge");
 		feed.setDescription(post.getContent());
 		feed.setAuthor(post.getAuthor());
-		feed.setGuid("http://post-on-my-fridge.appspot.com/#"+post.getId());
+		feed.setGuid("http://post-on-my-fridge.appspot.com/"+post.getFridgeId()+"#"+post.getId());
 		feed.setLink("http://post-on-my-fridge.appspot.com/");
 		return feed;
 	}
     
     public static Feed createRssFeed(String fridgeId) {
 		String copyright = "Nya";
-		String title = "Post On My Fridge";
+		String title = "Post On My Fridge : "+fridgeId;
 		String description = "Content of the fridge "+fridgeId;
 		String language = "en";
 		String link = "http://post-on-my-fridge.appspot.com/"+fridgeId;
