@@ -1,5 +1,12 @@
 package com.agourlay.pomf.tools.rss;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
 
 public class RssUtils {
@@ -20,8 +27,7 @@ public class RssUtils {
 		String description = "Content of the fridge "+fridgeId;
 		String language = "en";
 		String link = "http://post-on-my-fridge.appspot.com/"+fridgeId;
-		Calendar cal = new GregorianCalendar();
-		Date creationDate = cal.getTime();
+		Date creationDate = new Date();
 		SimpleDateFormat date_format = new SimpleDateFormat(
 				"EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Locale.US);
 		String pubdate = date_format.format(creationDate);
