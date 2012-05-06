@@ -28,9 +28,9 @@
 				</div>
 				<div id="search-area">
 					<input type="text" value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
-		
-				</div>	
+			</div>	
 			<div class ="leftPanel">
 				<form id="postForm" accept-charset="utf-8">
 					<div id ="newPost" class="newPost">

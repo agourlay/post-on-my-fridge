@@ -3,6 +3,7 @@ $(function() {
 	colorPickerManagement();
 	datePickerManagement();
 	generateCaptcha();
+	setupSearchAutocomplete();
 	konami();
 	initPage();
 	setInterval("initPage()", 10000);

@@ -1,6 +1,7 @@
 package com.agourlay.pomf.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.tools.Constantes;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.googlecode.objectify.Key;
 
 @Entity
 public class Fridge implements Serializable{
@@ -17,6 +19,8 @@ public class Fridge implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final ObjectifyDao<Fridge> dao = new ObjectifyDao<Fridge>(Fridge.class);
+	
 	@Id
 	private String name;
 	private FridgeUser owner;	
@@ -28,12 +32,50 @@ public class Fridge implements Serializable{
 		 MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
          List<Post> posts = (List<Post>) cache.get(Constantes.CACHE_FRIDGE_KEY+fridgeName);
          if (posts == null) {
-                 ObjectifyDao dao = new ObjectifyDao();
                  posts = dao.ofy().query(Post.class).filter("fridgeId", fridgeName).order("-date").limit(100).list();
                  if (posts != null)
                          cache.put(Constantes.CACHE_FRIDGE_KEY+fridgeName, posts); 
          }
          return posts;
+	}
+	
+	public static Fridge getFridgeById(String fridgeId){
+		return dao.ofy().query(Fridge.class).filter("name", fridgeId).get();
+	}
+	
+	public static Fridge createFridge(String fridgeId){
+		Fridge newFridge = new Fridge();
+		newFridge.setName(fridgeId);
+		dao.put(newFridge);
+		return newFridge;
+	}
+	
+	public static Fridge getOrCreateFridge(String fridgeId) {
+		  Fridge fetched = getFridgeById(fridgeId);
+          if (fetched == null) {
+                  fetched = createFridge(fridgeId);
+          }
+          return fetched;
+    }
+
+
+	
+	public static List<String> getFridgeIds(){
+		List<String> listId = new ArrayList<String>();
+		List<Key<Fridge>> listKey = dao.listKeysByProperty("name", Fridge.class);
+		for(Key<Fridge> key : listKey){
+			listId.add(String.valueOf(key.getId()));
+		}
+		return listId;	 
+	}
+	
+	public static List<String> searchFridgeLike(String fridgeName){
+		List<Fridge> result = dao.ofy().query(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
+		List<String> listName = new ArrayList<String>();
+		for(Fridge fridge : result){
+			listName.add(fridge.getName());
+		}
+		return listName;
 	}
 	
 	//GETTERS & SETTERS

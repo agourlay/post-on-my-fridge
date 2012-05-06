@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
@@ -34,6 +35,13 @@ public class FridgeResource {
 		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(fridgeId));
 		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
 		return writer.write().toString();
+	}
+    
+    @GET
+    @Path("/search")
+	public String getFridgeIds(@QueryParam("term") String term)  {
+    	Gson gson = new Gson();
+    	return gson.toJson(Fridge.searchFridgeLike(term));
 	}
 }	
 

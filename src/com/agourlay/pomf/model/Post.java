@@ -13,9 +13,8 @@ import javax.persistence.Id;
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.tools.Constantes;
 import com.agourlay.pomf.tools.Validation;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
 
 @Entity
 public class Post implements Serializable{
@@ -23,6 +22,8 @@ public class Post implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final ObjectifyDao<Post> dao = new ObjectifyDao<Post>(Post.class);
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -65,37 +66,37 @@ public class Post implements Serializable{
 	}
 
 	public static void savePost(Post post){
-		ObjectifyDao dao = new ObjectifyDao();
         dao.ofy().put(post);
         MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
 	}
 	
 	public static void updatePosition(Long id, Double positionX,Double positionY) {
-			Post postToUpdate = getPostById(id);
-			if (postToUpdate != null){
-				postToUpdate.setPositionX(positionX);
-				postToUpdate.setPositionY(positionY);
-				savePost(postToUpdate);
-			}
+		Post postToUpdate = getPostById(id);
+		if (postToUpdate != null){
+			postToUpdate.setPositionX(positionX);
+			postToUpdate.setPositionY(positionY);
+			savePost(postToUpdate);
+		}
 	}
 		
 	public static Post getPostById(Long id) {
-		Objectify ofy = ObjectifyService.begin();
-		Post post = ofy.get(Post.class, id);
-		return post;
+		try {
+			return dao.get(id);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static List<Post> getAllPost() {
-		ObjectifyDao dao = new ObjectifyDao();
         List<Post> posts = dao.ofy().query(Post.class).order("-date").limit(100).list();
 		return posts;
 	}
 	
 	public static void remove(long id) {
-		Objectify ofy = ObjectifyService.begin();
-		Post post = ofy.get(Post.class, id);
+		Post post = getPostById(id);
 		String currentFridgeId = post.getFridgeId();
-		ofy.delete(post);
+		dao.delete(post);
 		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
 	}
 	

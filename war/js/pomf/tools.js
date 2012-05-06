@@ -12,6 +12,18 @@ function konami(){
     }); 
 }    
 
+function redirectAfterSearch(){
+	var fridgeId = $("#search").val();
+	window.location = "/fridge/"+fridgeId;
+}
+
+function setupSearchAutocomplete(){
+	$( "#search" ).autocomplete({
+	    source: "/resources/fridge/noid/search",
+	    minLength: 2
+	});
+}
+
 function generateCaptcha(){
     $(".ajax-fc-container").captcha({
 		borderColor: "silver",
