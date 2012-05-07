@@ -24,6 +24,11 @@ function setupSearchAutocomplete(){
 	});
 }
 
+function clearText(thefield){
+    if (thefield.defaultValue==thefield.value)
+    thefield.value = ""
+} 
+
 function generateCaptcha(){
     $(".ajax-fc-container").captcha({
 		borderColor: "silver",
