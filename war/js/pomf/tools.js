@@ -20,6 +20,7 @@ function redirectAfterSearch(){
 function setupSearchAutocomplete(){
 	$( "#search" ).autocomplete({
 	    source: "/resources/fridge/noid/search",
+	    delay: 1000,
 	    minLength: 2
 	});
 }
