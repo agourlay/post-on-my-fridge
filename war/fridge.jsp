@@ -28,7 +28,7 @@
 				</div>
 				<div id="search-area">
 					<input type="text" value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
-					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
+					<button type="button" onFocus="clearText(this)" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
 			</div>	
 			<div class ="leftPanel">
