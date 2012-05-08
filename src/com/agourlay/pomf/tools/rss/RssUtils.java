@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
 
 public class RssUtils {
@@ -36,9 +35,8 @@ public class RssUtils {
 		return rssFeeder;
 	}
 
-	public static List<FeedMessage> getRssEntry(String fridgeId) {
+	public static List<FeedMessage> getRssEntry(List<Post> posts) {
 		List<FeedMessage> listFeed = new ArrayList<FeedMessage>();
-		List<Post> posts = Fridge.getPosts(fridgeId);
 		for (Post post : posts) {
 			listFeed.add(RssUtils.createFeedMessageFromPost(post));
 		}

@@ -5,4 +5,10 @@
     <description>Delete post with expired due date</description>
     <schedule>every day 00:00</schedule>
   </cron>
+  
+  <cron>
+    <url>/generate-daily-stats</url>
+    <description>Generate daily statistics</description>
+    <schedule>every day 00:10</schedule>
+  </cron>
 </cronentries>

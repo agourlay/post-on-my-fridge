@@ -32,16 +32,17 @@ public class FridgeResource {
 	@Produces("application/xml")
 	public String getFridgeRssContent(@PathParam ("fridgeId") String fridgeId) throws Exception  {
 	    Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
-		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(fridgeId));
+		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getPosts(fridgeId)));
 		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
 		return writer.write().toString();
 	}
     
     @GET
     @Path("/search")
+    @Produces("application/json")
 	public String getFridgeIds(@QueryParam("term") String term)  {
     	Gson gson = new Gson();
-    	return gson.toJson(Fridge.searchFridgeLike(term));
+    	return gson.toJson(Fridge.searchFridgeNamesWithNameLike(term));
 	}
 }	
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.FridgeUser;
 import com.agourlay.pomf.model.Post;
+import com.agourlay.pomf.model.Stat;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
@@ -25,6 +26,7 @@ public class ObjectifyDao<T> extends DAOBase {
 		ObjectifyService.register(Post.class);
 		ObjectifyService.register(Fridge.class);
 		ObjectifyService.register(FridgeUser.class);
+		ObjectifyService.register(Stat.class);
 	}
 	
 	public ObjectifyDao(Class<T> clazz)
@@ -71,6 +73,10 @@ public class ObjectifyDao<T> extends DAOBase {
 	public T get(Key<T> key) throws EntityNotFoundException
 	{
 		return ofy().get(key);
+	}
+	
+	public int count(){
+		return ofy().query(this.clazz).count();
 	}
 
 	/**

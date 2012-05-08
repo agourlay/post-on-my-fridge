@@ -1,7 +1,6 @@
 package com.agourlay.pomf.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,7 +10,8 @@ import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.tools.Constantes;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.googlecode.objectify.Key;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 @Entity
 public class Fridge implements Serializable{
@@ -43,6 +43,10 @@ public class Fridge implements Serializable{
 		return dao.ofy().query(Fridge.class).filter("name", fridgeId).get();
 	}
 	
+	public static int countFridge(){
+		return dao.count();
+	}
+	
 	public static Fridge createFridge(String fridgeId){
 		Fridge newFridge = new Fridge();
 		newFridge.setName(fridgeId);
@@ -57,25 +61,19 @@ public class Fridge implements Serializable{
           }
           return fetched;
     }
-
-
 	
-	public static List<String> getFridgeIds(){
-		List<String> listId = new ArrayList<String>();
-		List<Key<Fridge>> listKey = dao.listKeysByProperty("name", Fridge.class);
-		for(Key<Fridge> key : listKey){
-			listId.add(String.valueOf(key.getId()));
-		}
-		return listId;	 
+	public static List<Fridge> searchFridgeLike(String fridgeName){
+		return dao.ofy().query(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
 	}
 	
-	public static List<String> searchFridgeLike(String fridgeName){
-		List<Fridge> result = dao.ofy().query(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
-		List<String> listName = new ArrayList<String>();
-		for(Fridge fridge : result){
-			listName.add(fridge.getName());
-		}
-		return listName;
+	public static List<String> searchFridgeNamesWithNameLike(String fridgeName){
+		return Lists.transform(searchFridgeLike(fridgeName),  new Function<Fridge, String>(){
+            @Override
+            public String apply(final Fridge input){
+                return input.getName();
+            }
+        });
+		
 	}
 	
 	//GETTERS & SETTERS

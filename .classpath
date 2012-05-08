@@ -18,5 +18,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jersey-servlet-1.12.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jettison-1.1.jar"/>
 	<classpathentry kind="con" path="com.google.appengine.eclipse.core.GAE_CONTAINER/App Engine"/>
+	<classpathentry kind="lib" path="/home/bigboss/workspace/Post-On-My-Fridge/war/WEB-INF/lib/guava-12.0.jar"/>
+	<classpathentry kind="lib" path="/home/bigboss/workspace/Post-On-My-Fridge/war/WEB-INF/lib/joda-time-2.1.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

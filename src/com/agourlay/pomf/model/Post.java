@@ -89,7 +89,7 @@ public class Post implements Serializable{
 	}
 	
 	public static List<Post> getAllPost() {
-        List<Post> posts = dao.ofy().query(Post.class).order("-date").limit(100).list();
+        List<Post> posts = dao.ofy().query(Post.class).order("-date").limit(1000).list();
 		return posts;
 	}
 	
@@ -98,6 +98,16 @@ public class Post implements Serializable{
 		String currentFridgeId = post.getFridgeId();
 		dao.delete(post);
 		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
+	}
+	
+	public static void remove(List<Long> ids){
+		for (Long id : ids){
+			remove(id);
+		}
+	}
+	
+	public static int countPost(){
+		return dao.count();
 	}
 	
 	//GETTERS & SETTERS
