@@ -22,41 +22,44 @@
 			Loading fridge content...
 		</div>	
 		<div id="global">
-			<div id="header">
+			<header>
 				<div id="fridge-title">
 					Interact with "${fridgeId}"
 				</div>
 				<div id="search-area">
-					<input type="text" value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
-					<button type="button" onFocus="clearText(this)" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
+					<input type="text" onFocus="JavaScript: clearText(this)"  value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
-			</div>	
-			<div class ="leftPanel">
-				<form id="postForm" accept-charset="utf-8">
-					<div id ="newPost" class="newPost">
-						<div class="content">
-							<textarea name=content id="content" rows="8" cols="20" maxlength="100" title="Content goes there"></textarea>
-						</div>
-						<div class="author">
-							by 
-							<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
-							<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
-							<input type="hidden" id="fridgeId" value="${fridgeId}"/>
-						</div>
-						<div class="iconBox">
-							<input type="hidden" id="dueDate"/>
-							<div id="changeColor" class="changeColor" title="Click here to change the post's color">
-								<div id="color-dialog" title="Choose the color of your post">
-										<div id="color-picker"></div>
-								</div>
-							</div>	
-						</div>
-					</div>				
-					<div class="ajax-fc-container"></div>
-				</form>
-				<div class ="trash_bin"></div>
+			</header>
+			<div id="main-content">	
+				<div class ="leftPanel">
+					<form id="postForm" accept-charset="utf-8">
+						<div id ="newPost" class="newPost">
+							<div class="content">
+								<textarea name=content id="content" rows="8" cols="20" maxlength="100" title="Content goes there"></textarea>
+							</div>
+							<div class="author">
+								by 
+								<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
+								<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
+								<input type="hidden" id="fridgeId" value="${fridgeId}"/>
+							</div>
+							<div class="iconBox">
+								<input type="hidden" id="dueDate"/>
+								<div id="changeColor" class="changeColor" title="Click here to change the post's color">
+									<div id="color-dialog" title="Choose the color of your post">
+											<div id="color-picker"></div>
+									</div>
+								</div>	
+							</div>
+						</div>				
+						<div class="ajax-fc-container"></div>
+					</form>
+					<div class ="trash_bin"></div>
+				</div>
+				<div class="fridge"></div>		
 			</div>
-			<div class="fridge"></div>							
+			<footer></footer>					
 		</div>
 	</body>
 	<%@ include file="/template/template.jsp" %>

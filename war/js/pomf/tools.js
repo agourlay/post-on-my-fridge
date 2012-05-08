@@ -1,13 +1,13 @@
 function showPage(){
     $('#loading').hide();
-    $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0})
+    $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0});
 }
 
 function konami(){
     $(window).konami(function(){
-        jQuery('body').addClass('barrel_roll');
+        jQuery('.post').addClass('barrel_roll');
         setTimeout(function(){
-            jQuery('body').removeClass('barrel_roll');
+            jQuery('.post').removeClass('barrel_roll');
         },4000);  
     }); 
 }    
@@ -27,7 +27,7 @@ function setupSearchAutocomplete(){
 
 function clearText(thefield){
     if (thefield.defaultValue==thefield.value)
-    thefield.value = ""
+    	thefield.value = ""
 } 
 
 function generateCaptcha(){
@@ -52,7 +52,7 @@ function setRandomBackGround(){
 	randomNumber = Math.floor(Math.random() * imageFileNumber);
 	imageToAssign = myImages[randomNumber];
 	imageFullPath = path + imageToAssign;
-	$('body').css('background-image', 'url(' + imageFullPath + ')');
+	$('#global').css('background-image', 'url(' + imageFullPath + ')');
 }
 
 function extractYoutubeVideoId(url){
