@@ -6,12 +6,10 @@
 	padding-top: 5px;
 	position: absolute;
 	z-index: 999;
-	font-size: small;
-	}
+	font-size: small; }
 
 .post:hover,.newPost:hover {
-	cursor: move;
-}
+	cursor: move; }
 
 .post .content{
 	position: relative;
@@ -19,25 +17,21 @@
 	padding: 3px;
     width: 222px;
     height: 162px;
-    vertical-align: middle;
-	}
+    vertical-align: middle;	}
 	
 .post .author{
 	position: relative;
 	padding: 3px;
-	padding-top : 10px;
-	}
+	padding-top : 10px;	}
 	
 .post .date{
 	position: relative;
 	font-weight: lighter;
-	padding: 3px;
-	}	
+	padding: 3px; }	
 	
 .post_picture {
 	height : 100%;
-	width: 80%;
-	}
+	width: 80%;	}
 
 .newPost {
 	background: transparent url(../../images/postIt.png) no-repeat 0 0;
@@ -46,8 +40,7 @@
 	height:228px;
 	padding-top: 10px;
 	margin-bottom : 30px;
-	z-index: 999;
-	}
+	z-index: 999; }
 
 .newPost .datePicker{
 	height: 20px;
@@ -56,16 +49,14 @@
  	z-index: 1000;
  	float: right;
  	padding-bottom: 5px;
- 	padding-left: 5px;
-	}
+ 	padding-left: 5px; }
 
 .newPost .iconBox{
 	float: right;
 	position: relative;
 	padding: 5px;
 	display : inline-block;
-	width : 20%;
-	}
+	width : 20%; }
 
 .newPost .changeColor{
 	background: transparent url(../../images/colorButton.png) no-repeat 0 0;
@@ -73,30 +64,25 @@
  	width: 20px;
  	background-size: 100%;
  	z-index: 1000;
- 	float: right;
-	}
+ 	float: right; }
 	
 .newPost .changeColor:hover,.newPost .ui-datepicker-trigger:hover {
-	cursor: pointer;
-}
+	cursor: pointer; }
 
 .newPost .content{
 	position: relative;
 	font-weight: bold;
 	padding-bottom: 3px;
 	padding-top: 10px;
-	margin-left : 30px;
-	}
+	margin-left : 30px; }
 	
 .newPost .author{
 	position: relative;
 	margin-left : 25px;
 	padding: 3px;
-	padding-top : 10px;
-	}
+	padding-top : 10px;	}
 
 .newPost input, .newPost textarea{
 	background-color: transparent;
 	border: dotted;
-	border-width: thin;
-	}
+	border-width: thin;	}

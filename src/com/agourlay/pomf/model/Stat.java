@@ -22,7 +22,7 @@ public class Stat implements Serializable{
 	private Long id;
 	private Date generationDate;
 	private Integer fridgeNumber;
-	private Integer PostNumber;
+	private Integer postNumber;
 	
 	public static List<Stat> getAllStats(){
 	    List<Stat> stats = dao.ofy().query(Stat.class).limit(1000).list();
@@ -44,10 +44,10 @@ public class Stat implements Serializable{
 	/* GETTERS & SETTERS */
 	
 	public Integer getPostNumber() {
-		return PostNumber;
+		return postNumber;
 	}
 	public void setPostNumber(Integer postNumber) {
-		PostNumber = postNumber;
+		this.postNumber = postNumber;
 	}
 	public Date getGenerationDate() {
 		return generationDate;

@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
+	  <!-- ——————————————————————————————————————————————————————————————————— META -->
 		<title>Post on your fridge</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
         <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
-       	<meta http-equiv="content-type" content="text/html; charset=utf-8">  
-     		
+       	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+       	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
+	 
+       <!-- ——————————————————————————————————————————————————————————————————— CSS -->		
 		<link rel="stylesheet" type="text/css" href="/css/pomf/layout.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/pomf/post.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
@@ -14,7 +17,18 @@
 		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
 
-		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
+	  <!-- ——————————————————————————————————————————————————————————————————— JS -->
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-25345034-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
 	</head>
 	<body>
 		<div id="loading">
@@ -64,6 +78,7 @@
 	</body>
 	<%@ include file="/template/template.jsp" %>
 	
+	<!-- ——————————————————————————————————————————————————————————————————— JS -->
 	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.20.custom.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery.jgrowl.min.js"></script>
@@ -73,7 +88,6 @@
 	<script type="text/javascript" src = "/js/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/js/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/js/lib/browser-update.js"></script>
-	<script type="text/javascript" src = "/js/lib/google-analytics.js"></script>
 	<script type="text/javascript" src = "/js/lib/mustache.js"></script>	
 	<script type="text/javascript" src = "/js/pomf/post.js"></script>	
 	<script type="text/javascript" src = "/js/pomf/tools.js"></script>	
