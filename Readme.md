@@ -6,7 +6,9 @@ The application allows any user to leave a message on a fridge :D.
 
 There is no authentication, everyone can add or delete stuff.
 
-You can insert an url in the content of a post:
+To access or create a fridge use the search box or type directly the fridge name in the url.
+
+The post can contain dynamique media content. Just insert an url in the content of a post:
 
 * a simple url to a website will create a href link.
 
