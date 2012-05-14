@@ -83,12 +83,13 @@
 	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.20.custom.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery.jgrowl.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery-captcha.js"></script>
-    <script type="text/javascript" src = "/js/lib/jquery.konami.js"></script>
+    	<script type="text/javascript" src = "/js/lib/jquery.konami.js"></script>
    	<script type="text/javascript" src = "/js/lib/underscore-min.js"></script>
 	<script type="text/javascript" src = "/js/lib/farbtastic.js"></script>
 	<script type="text/javascript" src = "/js/lib/humane.js"></script>			
 	<script type="text/javascript" src = "/js/lib/browser-update.js"></script>
-	<script type="text/javascript" src = "/js/lib/mustache.js"></script>	
+	<script type="text/javascript" src = "/js/lib/mustache.js"></script>
+
 	<script type="text/javascript" src = "/js/pomf/post.js"></script>	
 	<script type="text/javascript" src = "/js/pomf/tools.js"></script>	
 	<script type="text/javascript" src = "/js/pomf/init.js"></script>	
