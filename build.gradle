@@ -1,0 +1,49 @@
+description = "Post on my fridge"
+
+apply plugin: 'java'
+apply plugin: 'gae'
+
+repositories {
+    mavenCentral()
+    mavenRepo name:'objectify-appengine-releases', url:'http://objectify-appengine.googlecode.com/svn/maven'
+}
+
+buildscript {
+    repositories {
+        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+            name = 'GitHub'
+            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+        }
+    }
+
+    dependencies {
+        classpath 'bmuschko:gradle-gae-plugin:0.6.1'
+    }
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.1'
+    compile 'javax.servlet:servlet-api:2.5'
+    compile 'joda-time:joda-time:1.6.1'
+    compile 'com.sun.jersey:jersey-bundle:1.12'
+    compile 'com.google.guava:guava:12.0'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.6'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.6'
+    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.6'
+    compile 'org.codehaus.jackson:jackson-xc:1.9.7'
+    compile 'com.googlecode.objectify:objectify:3.0' 
+    compile 'javax.persistence:persistence-api:1.0-rev-1'  
+	compile 'asm:asm:3.3.1'
+    testCompile 'junit:junit:4.5'    
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.6.5' 
+	gaeSdk 'com.google.appengine:appengine-java-sdk:1.6.5'
+}
+
+gae {
+  disableUpdateCheck = true
+  downloadSdk = true
+ 
+  appcfg {
+    email = 'arnaud.gourlay@gmail.com'
+  }
+}
