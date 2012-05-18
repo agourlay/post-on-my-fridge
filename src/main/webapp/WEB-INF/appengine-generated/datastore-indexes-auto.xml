@@ -1,0 +1,11 @@
+<!-- Indices written at Thu, 10 May 2012 21:35:29 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Post" ancestor="false" source="auto">
+        <property name="fridgeId" direction="asc"/>
+        <property name="date" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>

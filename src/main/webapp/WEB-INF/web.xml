@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+	
+	<servlet>
+        <servlet-name>Rest</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>com.sun.jersey.config.property.packages</param-name>
+            <param-value>com.agourlay.pomf.rest</param-value>
+        </init-param>
+         <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Rest</servlet-name>
+        <url-pattern>/resources/*</url-pattern>
+    </servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SetCaptchaNumberController</servlet-name>
+		<servlet-class>com.agourlay.pomf.controller.SetCaptchaNumberController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SetCaptchaNumberController</servlet-name>
+		<url-pattern>/getCaptchaNumber</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>EraseDuePostController</servlet-name>
+		<servlet-class>com.agourlay.pomf.controller.EraseDuePostController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EraseDuePostController</servlet-name>
+		<url-pattern>/outdated</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GenerateDailyStatisticsController</servlet-name>
+		<servlet-class>com.agourlay.pomf.controller.GenerateDailyStatisticsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GenerateDailyStatisticsController</servlet-name>
+		<url-pattern>/generate-daily-stats</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>FridgeController</servlet-name>
+		<servlet-class>com.agourlay.pomf.controller.FridgeController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FridgeController</servlet-name>
+		<url-pattern>/fridge/*</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<mime-mapping> 
+ 		<extension>css</extension> 
+ 		<mime-type>text/css</mime-type> 
+	</mime-mapping> 
+	
+</web-app>
