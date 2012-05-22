@@ -1,49 +1,90 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-apply plugin: 'gae'
 
 repositories {
-    mavenCentral()
-    mavenRepo name:'objectify-appengine-releases', url:'http://objectify-appengine.googlecode.com/svn/maven'
+	mavenCentral()
+	mavenRepo name:'objectify-appengine-releases', url:'http://objectify-appengine.googlecode.com/svn/maven'
 }
 
 buildscript {
-    repositories {
-        add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-            name = 'GitHub'
-            addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-        }
-    }
+	repositories { mavenCentral() }
+	dependencies {
+		classpath 'com.eriwen:gradle-js-plugin:0.4.1'
+		classpath 'com.eriwen:gradle-css-plugin:0.3'
+	}
+}
 
-    dependencies {
-        classpath 'bmuschko:gradle-gae-plugin:0.6.1'
-    }
+apply plugin: 'js'
+
+task combinejs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
+	source = [
+		"${projectDir}/src/main/webapp/js/pomf/init.js",
+		"${projectDir}/src/main/webapp/js/pomf/post.js",
+		"${projectDir}/src/main/webapp/js/pomf/tools.js",
+		"${projectDir}/src/main/webapp/js/pomf/captcha.js",
+		"${projectDir}/src/main/webapp/js/pomf/konami.js"
+	]
+	dest = file("${buildDir}/exploded-war/js/pomf/all.js")
+}
+
+task minifyjs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'combinejs') {
+	source = file("${buildDir}/exploded-war/js/pomf/all.js")
+	dest = file("${buildDir}/exploded-war/js/pomf/all.min.js")
+}
+
+apply plugin: 'css'
+
+task combinecss(type: com.eriwen.gradle.css.tasks.CombineCssTask) {
+	source = [
+		"${projectDir}/src/main/webapp/css/pomf/post.css",
+		"${projectDir}/src/main/webapp/css/pomf/layout.css"
+	]
+	dest = file("${buildDir}/exploded-war/css/pomf/all.css")
+}
+
+task minifycss(type: com.eriwen.gradle.css.tasks.MinifyCssTask, dependsOn: 'combinecss') {
+	source = file("${buildDir}/exploded-war/css/pomf/all.css")
+	dest = file("${buildDir}/exploded-war/css/pomf/all.min.css")
+}
+
+
+buildscript {
+	repositories {
+		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+			name = 'GitHub'
+			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+		}
+	}
+
+	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.6.2' }
+}
+
+apply plugin: 'gae'
+
+gae {
+	httpPort = 8888
+	disableUpdateCheck = true
+	downloadSdk = true
+	warDir = file('build/exploded-war/')
+
+	appcfg { email = 'arnaud.gourlay@gmail.com' }
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.1'
-    compile 'javax.servlet:servlet-api:2.5'
-    compile 'joda-time:joda-time:1.6.1'
-    compile 'com.sun.jersey:jersey-bundle:1.12'
-    compile 'com.google.guava:guava:12.0'
-    compile 'org.codehaus.jackson:jackson-core-asl:1.9.6'
-    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.6'
-    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.6'
-    compile 'org.codehaus.jackson:jackson-xc:1.9.7'
-    compile 'com.googlecode.objectify:objectify:3.0' 
-    compile 'javax.persistence:persistence-api:1.0-rev-1'  
+	compile 'com.google.code.gson:gson:2.1'
+	compile 'javax.servlet:servlet-api:2.5'
+	compile 'joda-time:joda-time:1.6.1'
+	compile 'com.sun.jersey:jersey-bundle:1.12'
+	compile 'com.google.guava:guava:12.0'
+	compile 'org.codehaus.jackson:jackson-core-asl:1.9.6'
+	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.6'
+	compile 'org.codehaus.jackson:jackson-jaxrs:1.9.6'
+	compile 'org.codehaus.jackson:jackson-xc:1.9.7'
+	compile 'com.googlecode.objectify:objectify:3.0'
+	compile 'javax.persistence:persistence-api:1.0-rev-1'
 	compile 'asm:asm:3.3.1'
-    testCompile 'junit:junit:4.5'    
-    compile 'com.google.appengine:appengine-api-1.0-sdk:1.6.5' 
+	testCompile 'junit:junit:4.5'
+	compile 'com.google.appengine:appengine-api-1.0-sdk:1.6.5'
 	gaeSdk 'com.google.appengine:appengine-java-sdk:1.6.5'
-}
-
-gae {
-  disableUpdateCheck = true
-  downloadSdk = true
- 
-  appcfg {
-    email = 'arnaud.gourlay@gmail.com'
-  }
 }

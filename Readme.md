@@ -28,11 +28,11 @@ More features to come...
 
 ## Technical infos
 
-The server side is written in java and hosted on Google App Engine.
+* server side in java & hosted on Google App Engine.
 
-The client side uses a lot of javascript to build all the  interactions. (Jquery / Jquery UI).
+* tons of JS on client side to build content dynamically from Jersey REST api.
 
-All the content is built dynamically on the client using REST api.
+* web application built with Gradle.
 
 ## Donation
 
