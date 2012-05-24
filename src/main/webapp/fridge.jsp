@@ -14,20 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/lib/jgrowl.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/captcha/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
-
-	  <!-- JS -->
-	  <script type="text/javascript">
-	    var _gaq = _gaq || [];
-	    _gaq.push(['_setAccount', 'UA-25345034-1']);
-	    _gaq.push(['_trackPageview']);
-	    
-	    (function() {
-	      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	    })();
-	  </script>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	</head>
 	<body>
 		<div id="loading">
@@ -78,13 +65,25 @@
 	<%@ include file="/template/template.jsp" %>
 	
 	<!-- JS -->
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-25345034-1']);
+	  _gaq.push(['_trackPageview']);
+	   
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	</script>
+	
 	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.20.custom.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery.jgrowl.min.js"></script>
    	<script type="text/javascript" src = "/js/lib/underscore.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/farbtastic.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/humane.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/mustache-0.4.2.js"></script>
+	<script type="text/javascript" src = "/js/lib/humane-date.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/mustache-0.4.2.min.js"></script>
 	
 	<script type="text/javascript" src = "/js/pomf/all.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>

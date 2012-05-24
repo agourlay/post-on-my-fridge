@@ -7,7 +7,7 @@ $(function() {
 	konami();
 	initPage();
 	setInterval("initPage()", 10000);
-	setTimeout(showPage, 3000);
+	setTimeout(showPage, 2000);
 });
 
 function initPage(){
