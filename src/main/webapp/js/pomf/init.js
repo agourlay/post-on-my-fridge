@@ -55,7 +55,8 @@ function initPage(){
 				            complete: replaceNewPost(ui.draggable),
 				            success : initPage(),
 				            error:function (xhr, ajaxOptions, thrownError){
-				               	$.jGrowl("Please solve the captcha!")
+				            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'})
+				            	jackedup.log("Please solve the captcha!")
 				             	}
 			               });	
 				}else{

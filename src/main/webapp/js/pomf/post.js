@@ -31,7 +31,8 @@ function isFridgeContaining(postId){
 function deleteAnimationPost(elementId){
 	element = $("#"+elementId);
 	element.effect("clip",{ times:1 }, 300);
-	$.jGrowl("Post from "+element.find('.author').text()+" deleted");
+	libnotify = humane.create({baseCls: 'humane-libnotify', addnCls: 'humane-libnotify-info'})
+	libnotify.log("Post from "+element.find('.author').text()+" deleted")
 	element.remove();
 }
 

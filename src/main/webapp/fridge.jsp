@@ -11,7 +11,8 @@
        <!-- CSS -->		
 		<link rel="stylesheet" type="text/css" href="/css/pomf/all.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/jgrowl.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/captcha/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
@@ -79,7 +80,7 @@
 	
 	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.20.custom.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/jquery.jgrowl.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/humane-3.0.0.min.js"></script>
    	<script type="text/javascript" src = "/js/lib/underscore.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/farbtastic.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/humane-date.min.js"></script>
