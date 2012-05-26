@@ -16,6 +16,10 @@
         <servlet-name>Rest</servlet-name>
         <url-pattern>/resources/*</url-pattern>
     </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>Rest</servlet-name>
+        <url-pattern>/_ah/*</url-pattern>
+    </servlet-mapping>
 	
 	<servlet>
 		<servlet-name>SetCaptchaNumberController</servlet-name>
@@ -52,7 +56,7 @@
 		<servlet-name>FridgeController</servlet-name>
 		<url-pattern>/fridge/*</url-pattern>
 	</servlet-mapping>
-	
+	 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

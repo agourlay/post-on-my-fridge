@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
+import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
 import com.agourlay.pomf.tools.Validation;
 import com.google.appengine.api.datastore.EntityNotFoundException;
@@ -65,6 +66,7 @@ public class Post implements Serializable{
 	public static void add(String fridgeId,String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
 			Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
 			savePost(post);
+			ClientRepository.notifyAllClientFromFridge(fridgeId);
 	}
 
 	public static void savePost(Post post){
@@ -78,6 +80,7 @@ public class Post implements Serializable{
 			postToUpdate.setPositionX(positionX);
 			postToUpdate.setPositionY(positionY);
 			savePost(postToUpdate);
+			ClientRepository.notifyAllClientFromFridge(postToUpdate.getFridgeId());
 		}
 	}
 		
@@ -100,6 +103,7 @@ public class Post implements Serializable{
 		String currentFridgeId = post.getFridgeId();
 		dao.delete(post);
 		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
+		ClientRepository.notifyAllClientFromFridge(currentFridgeId);
 	}
 	
 	public static void remove(List<Long> ids){

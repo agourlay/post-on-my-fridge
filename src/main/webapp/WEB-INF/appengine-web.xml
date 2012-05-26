@@ -10,10 +10,10 @@
 	
 	<sessions-enabled>true</sessions-enabled>
 	<threadsafe>true</threadsafe>
-	 
+	
 	<inbound-services>
     	<service>channel_presence</service>
-    </inbound-services> 
+    </inbound-services>  
 	 
 	<static-files>
 	    <include path="/css/pomf/**.*" expiration="7d" />

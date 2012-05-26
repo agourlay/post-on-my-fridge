@@ -1,3 +1,25 @@
+function channelManagement(){
+	var fridgeId = $("#fridgeId").val();
+	$.getJSON("/_ah/channel/"+fridgeId, function(tokenChannel) {
+		if (tokenChannel != undefined){
+			var channel = new goog.appengine.Channel(tokenChannel);
+			var socket = channel.open();
+			socket.onopen = function(){};
+			socket.onmessage = function(m){
+				var data = $.parseJSON(m.data);
+			    if (data == "#FRIDGE-UPATE#"){
+			    	initPage();
+			    }
+			};
+			socket.onerror =  function(err){
+            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'})
+            	jackedup.log("Websocket error :"+err.description)
+			};
+			socket.onclose =  function(){};
+		}
+	})
+}	
+
 function showPage(){
     $('#loading').hide();
     $('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0});

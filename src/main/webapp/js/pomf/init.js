@@ -6,7 +6,7 @@ $(function() {
 	setupSearchAutocomplete();
 	konami();
 	initPage();
-	setInterval("initPage()", 10000);
+	channelManagement();
 	setTimeout(showPage, 2000);
 });
 

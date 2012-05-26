@@ -12,7 +12,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.*;
+import javax.ws.rs.core.Response.Status;
 
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.tools.Utils;
