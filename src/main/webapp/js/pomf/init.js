@@ -7,7 +7,7 @@ $(function() {
 	konami();
 	initPage();
 	channelManagement();
-	setTimeout(showPage, 2000);
+	setTimeout(showPage, 1000);
 });
 
 function initPage(){
@@ -52,8 +52,8 @@ function initPage(){
 				            dataType: "html",
 				            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				            type:"post",
+				            success: initPage(),
 				            complete: replaceNewPost(ui.draggable),
-				            success : initPage(),
 				            error:function (xhr, ajaxOptions, thrownError){
 				            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'})
 				            	jackedup.log("Please solve the captcha!")
