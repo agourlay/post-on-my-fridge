@@ -20,7 +20,7 @@
  		<div id="global">
 			<header>
 				<div id="fridge-title">
-					Welcome on Post on my fridge</div>
+					Welcome to "Post on my fridge"</div>
 				<div id="search-area">
 					<input type="text" onFocus="JavaScript: clearText(this)"  value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
 					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
@@ -28,17 +28,17 @@
 			</header>
 			<div id ="index-content">
 				<div id ="index-description">
-				 	Post on my fridge is the new cool collaborative messaging system using sticky notes on virtual fridges.
+				 	Post on my fridge is a collaborative messaging system using sticky notes on virtual fridges.
 					<br/>
 					<br/>
-					There is no authentication, everyone can add or delete stuff.
+					There is no authentication, everyone can add or delete content.
 					<br/>
 					To access or create a fridge use the search box or type directly the fridge name in the url.
 					<br/>
-					You can share content on a fridge in real time with your friends.
+					You can share content on a fridge in real time with your friends!
 					<br/>
 					<br/>
-					The post can contain dynamic media content. Just insert an url in the content of a post:
+					Posts can contain dynamic media content. Just insert an url in the content of a post:
 					<br/>
 					<ul>
 						<li>a link to a gif/jpeg/png will display the picture in the post.</li>
@@ -50,14 +50,16 @@
 					Fridge urls can be shared, send them to your friend to share your latest web content.
 					<br/>	
 					<br/>		
-					Try right know the <a href="http://post-on-my-fridge.appspot.com/fridge/demo" target="_blank">demo fridge!</a>	
+					Try the <a href="http://post-on-my-fridge.appspot.com/fridge/demo" target="_blank">demo fridge</a> now!
 				</div>
 				<div id ="index-picture"></div>				
 			</div>
 		    <footer>
-		    	<a href="mailto:arnaud.gourlay@gmail.com" target="_blank">Contact</a>
+		    	<a href="mailto:arnaud.gourlay@gmail.com" target="_blank"> Contact </a>
 		    		 -
-		    	<a href="http://about.arnaud-gourlay.info/" target="_blank">About the author</a>
+		    	<a href="http://about.arnaud-gourlay.info/" target="_blank"> About the author </a>
+		    		 -
+		    	<a href="https://github.com/shagaan/Post-On-My-Fridge" target="_blank"> Github </a>	 
 		    </footer>						
 		</div>
 	</body>
