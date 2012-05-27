@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 	  <!-- META -->
-		<title>Post on your fridge</title>
-		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
+		<title>${fridgeId}'s fridge</title>
+		<meta name="description" content="This is ${fridgeId}'s interactive fridge">
         <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
        	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
        	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />

@@ -19,7 +19,7 @@
 	    <include path="/css/pomf/**.*" expiration="7d" />
         <include path="/css/lib/**.*" expiration="10d" />
         
-        <include path="/js/pomf/all.min.js" expiration="7d" />
+        <include path="/js/pomf/**.js" expiration="7d" />
         <include path="/js/lib/**.js" expiration="10d" />
 	
         <include path="/images/**.*" expiration="7d" />
