@@ -8,7 +8,7 @@ There is no authentication, everyone can add or delete stuff.
 
 To access or create a fridge use the search box or type directly the fridge name in the url.
 
-The posts can contain dynamic media content just by inserting an url in the content of a post:
+The posts can contain dynamic media content just by inserting an url in the content of a post.
 
 More features to come...
 
