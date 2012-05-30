@@ -6,7 +6,8 @@
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
         <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
        	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
-	 
+	 	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
+	 	
        <!-- CSS -->		
 		<link rel="stylesheet" type="text/css" href="/css/pomf/all.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.20.custom.css"/>
