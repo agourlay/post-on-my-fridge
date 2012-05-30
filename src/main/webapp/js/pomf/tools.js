@@ -1,7 +1,7 @@
 function channelManagement(){
 	var fridgeId = $("#fridgeId").val();
 	$.getJSON("/_ah/channel/"+fridgeId, function(tokenChannel) {
-		if (tokenChannel != undefined){
+		if (tokenChannel !== undefined){
 			var channel = new goog.appengine.Channel(tokenChannel);
 			var socket = channel.open();
 			socket.onopen = function(){};
@@ -12,12 +12,12 @@ function channelManagement(){
 			    }
 			};
 			socket.onerror =  function(err){
-            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'})
-            	jackedup.log("Websocket error :"+err.description)
+            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'});
+            	jackedup.log("Websocket error :"+err.description);
 			};
 			socket.onclose =  function(){};
 		}
-	})
+	});
 }	
 
 function showPage(){
@@ -60,7 +60,7 @@ function setRandomBackGround(){
 	            'elegant_grid.png','gold_scale.png','light_checkered_tiles.png',
 	            'noise_pattern_with_crosslines.png','plaid.png','ravenna.png',
 	            'roughcloth.png','silver_scales.png','soft_circle_scales.png',
-	            'wavecut.png','xv.png'] 
+	            'wavecut.png','xv.png'] ;
 	imageFileNumber = myImages.length;
 	randomNumber = Math.floor(Math.random() * imageFileNumber);
 	imageToAssign = myImages[randomNumber];
@@ -103,7 +103,7 @@ function datePickerManagement(){
 		});
 }
 
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h};
 
 function isRegExp(regExp, content){
 	return regExp.test(content);

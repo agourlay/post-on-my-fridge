@@ -2,26 +2,26 @@ function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
 		remove = true;
 		$.each(data, function(index,value){
-			if (valuePost['id'] == value.id ){
+			if (valuePost.id == value.id ){
 				remove = false;
 			}
 		});
 		if (remove){
-			deleteAnimationPost(valuePost['id']);
+			deleteAnimationPost(valuePost.id);
 		}
 	});
 }
 
 function replaceNewPost(elmt){
-    xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'))); 
-    yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top')));
+    xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'),10)); 
+    yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top'),10));
     elmt.animate({'left': "+="+xTranslation, 'top': "+="+yTranslation },'slow','linear');
 }
 
 function isFridgeContaining(postId){
 	result = false;
 	$.each($('.post'),function(indexPost,valuePost){
-		if (valuePost['id'] == postId ){
+		if (valuePost.id == postId ){
 			result = true;
 		}
 	});
@@ -31,8 +31,8 @@ function isFridgeContaining(postId){
 function deleteAnimationPost(elementId){
 	element = $("#"+elementId);
 	element.effect("clip",{ times:1 }, 300);
-	libnotify = humane.create({baseCls: 'humane-libnotify', addnCls: 'humane-libnotify-info'})
-	libnotify.log("Post from "+element.find('.author').text()+" deleted")
+	libnotify = humane.create({baseCls: 'humane-libnotify', addnCls: 'humane-libnotify-info'});
+	libnotify.log("Post from "+element.find('.author').text()+" deleted");
 	element.remove();
 }
 
@@ -51,8 +51,8 @@ function createOrUpdate(data){
 function updateDisplayedPosition(id,left,top){
 	var fridge = $('.fridge');
 	
-	xTranslation = (left * fridge.width() - parseInt($("#"+id).css('left'))); 
-	yTranslation = ( top * fridge.height() - parseInt($("#"+id).css('top')));
+	xTranslation = (left * fridge.width() - parseInt($("#"+id).css('left'),10)); 
+	yTranslation = ( top * fridge.height() - parseInt($("#"+id).css('top'),10));
 	
 	$("#"+id).animate({'left': "+="+xTranslation,
 					   'top': "+="+yTranslation
@@ -81,7 +81,7 @@ function generatePostContent(post){
 	
 	
 	var contentArray = content.split(' ');
-	if (contentArray.length == 0){
+	if (contentArray.length === 0){
 		contentArray[0] = content;
 	}
 	
@@ -119,32 +119,32 @@ function generatePostContent(post){
 }
 
 function buildPostContent(post){
-	if (post.color == undefined){
-		post.color = "#f7f083"
+	if (post.color === undefined){
+		post.color = "#f7f083";
 	}
 
 	post.textColor = getTxtColorFromBg(post.color);
 	post.relativeDate = function() {
 	    return function(text, render) {
 	        return render(humaneDate(text));
-	      }
-	    }	
+	      };
+	    };	
 	var template = $('#postTemplate').html();
 	var output = $.mustache(template, post);
 	$('.fridge').append(output);
 	//TODO change ugly fix for not escaped html 
-	updatePostContent(post.id,post.content)
+	updatePostContent(post.id,post.content);
 	
 }
 
 function buildPost(post){
 	post.content = generatePostContent(post);
-	buildPostContent(post)
+	buildPostContent(post);
 }
 
 function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	tweet = data[0];
-	tweetText = tweet['text'];
+	tweetText = tweet.text;
 	if (tweetText.length > 110){
 		tweetText = tweetText.substring(0,110) + "..."
 	}
@@ -170,10 +170,10 @@ function updatePostContent(id,content){
 
 function buildTwitterDataUrl(url){
 	var myData = {};
-	myData ["count"] = "1";
-	myData ["user"] = extractTwitterUser(url);
-	myData ["trim_user"] = "true";
-	myData ["callback"] = "?";
+	myData.count = "1";
+	myData.user = extractTwitterUser(url);
+	myData.trim_user = "true";
+	myData.callback = "?";
 	return myData;
 }
 
