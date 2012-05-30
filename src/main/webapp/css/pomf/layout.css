@@ -1,6 +1,6 @@
 html,body {
 	font-family: 'Open Sans', sans-serif;
-	margin: 0px; }
+	margin: 0; }
 
 #loading {
 	position: absolute;
@@ -32,8 +32,8 @@ header {
 
 footer {
    position:fixed;
-   left:0px;
-   bottom:0px;
+   left:0;
+   bottom:0;
    height:20px;
    width:20%;
    font-size : small;
@@ -65,7 +65,7 @@ footer a{
 	min-height: 100%;
 	visibility: hidden; }
 
-#global #main-content{
+#main-content{
 	position:relative;
 	width: 100%;
 	min-height: 100%;
