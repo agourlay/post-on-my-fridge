@@ -49,7 +49,7 @@ function initUiElement(){
 			            complete: replaceNewPost(ui.draggable),
 			            error:function (xhr, ajaxOptions, thrownError){
 			            	jackedup = humane.create({baseCls: 'humane-jackedup', addnCls: 'humane-jackedup-error'});
-			            	jackedup.log("Please solve the captcha!");
+			            	jackedup.log("Post not created!");
 			             	}
 		               });	
 			}else{

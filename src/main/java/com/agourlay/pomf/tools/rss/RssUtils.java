@@ -25,7 +25,7 @@ public class RssUtils {
 		String title = "Post On My Fridge : "+fridgeId;
 		String description = "Content of the fridge "+fridgeId;
 		String language = "en";
-		String link = "http://post-on-my-fridge.appspot.com/"+fridgeId;
+		String link = "http://post-on-my-fridge.appspot.com/fridge/"+fridgeId;
 		Date creationDate = new Date();
 		SimpleDateFormat date_format = new SimpleDateFormat(
 				"EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z", Locale.US);

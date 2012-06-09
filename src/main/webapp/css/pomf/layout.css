@@ -16,6 +16,11 @@ html,body {
     margin-left: auto;
 	margin-right: auto; }
 
+.rss {
+    background-image: url(../../images/feed-icon-14x14.png);
+    height: 15px;
+    width: 15px; }
+
 header {
 	width: 100%;
 	height: 40px;

@@ -27,6 +27,9 @@
 			<header>
 				<div id="fridge-title">
 					Interact with "${fridgeId}"
+					<a href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" target="_blank">
+						<img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
+					</a>
 				</div>
 				<div id="search-area">
 					<input type="text" onFocus="JavaScript: clearText(this)"  value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
@@ -38,7 +41,7 @@
 					<form id="postForm" accept-charset="utf-8">
 						<div id ="newPost" class="newPost">
 							<div class="content">
-								<textarea name=content id="content" rows="8" cols="20" maxlength="100" title="Content goes there"></textarea>
+								<textarea name=content id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 							</div>
 							<div class="author">
 								by 
