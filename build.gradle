@@ -1,6 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
+defaultTasks 'gaeDownloadSdk', 'gaeExplodeWar', 'minifycss', 'minifyjs', 'gaeRun'
 
 repositories {
 	mavenCentral()
@@ -74,6 +75,7 @@ apply plugin: 'gae'
 
 gae {
 	httpPort = 8888
+	stopKey = null
 	disableUpdateCheck = true
 	downloadSdk = true
 	warDir = file('build/exploded-war/')
