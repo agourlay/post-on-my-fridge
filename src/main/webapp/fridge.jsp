@@ -61,7 +61,7 @@
 					</form>
 					<div id="chatLog"></div>
 					<form id="chatPanel" accept-charset="utf-8">
-						<input type="text" value="" id="message" maxlength="15" size="12" title="Message"/>
+						<input type="text" value="" id="message" maxlength="50" size="15" title="Message"/>
 						<input type="text" value="Anonymous" id="pseudo" maxlength="15" size="12" title="Pseudo"/>
 						<button type="button" onclick="JavaScript: sendChatMessage()">Send</button> 
 					</form>
