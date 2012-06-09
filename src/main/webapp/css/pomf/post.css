@@ -18,13 +18,14 @@
 
 .post:hover .content:hover {
     width: 242px;
-    height: 182px;
+    height: 220px;
     z-index:300; }
 
 .post .content{
 	position: relative;
 	font-weight: bold;
 	padding: 3px;
+	margin:auto;
     width: 222px;
     height: 200px;
     vertical-align: middle;}
@@ -32,7 +33,7 @@
 .post .footer{
 	position: relative;
 	font-style:italic;
-	padding: 3px;}
+	margin: auto;}
 	
 .post_picture {
 	height : 80%;
