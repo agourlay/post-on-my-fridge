@@ -171,9 +171,12 @@ function buildTwitterDataUrl(url){
 }
 
 function colorPickerManagement(){
-	$("#newPost").css("background-color",$("#postColor").val());
+	var color = $("#postColor").val(),
+		textColor = getTxtColorFromBg(color);
 	
-	colorPicker = $.farbtastic("#color-picker").setColor($("#postColor").val());
+	updatePostColor(color);
+	
+	colorPicker = $.farbtastic("#color-picker").setColor(color);
 	$( "#color-dialog" ).dialog({
 		autoOpen: false,
 		show: "blind",

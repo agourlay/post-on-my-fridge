@@ -14,7 +14,8 @@ function initUiElement(){
 	var fridge = $('.fridge');
 	var fridgeId = $("#fridgeId").val();
 	$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
-	
+	$('.newPost [title]').tipsy({gravity: 'w'});
+
 	$( ".trash_bin" ).droppable({
 		accept: ".post",
 		drop: function( event, ui ) {
