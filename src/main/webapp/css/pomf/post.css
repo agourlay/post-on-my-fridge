@@ -26,22 +26,17 @@
 	font-weight: bold;
 	padding: 3px;
     width: 222px;
-    height: 162px;
+    height: 200px;
     vertical-align: middle;
     overflow:auto; }
 	
-.post .author{
+.post .footer{
 	position: relative;
-	padding: 3px;
-	padding-top : 10px;	}
-	
-.post .date{
-	position: relative;
-	font-weight: lighter;
-	padding: 3px; }	
+	font-style:italic;
+	padding: 3px;}
 	
 .post_picture {
-	height : 100%;
+	height : 80%;
 	width: 80%;	}
 
 .newPost {
