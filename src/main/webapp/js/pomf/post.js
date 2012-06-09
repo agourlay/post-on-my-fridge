@@ -1,13 +1,11 @@
 function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
-		remove = true;
-		$.each(data, function(index,value){
-			if (valuePost.id == value.id ){
-				remove = false;
-			}
-		});
+		var postId = valuePost['id'],
+			exist = _.find(data, function(dataPost){return dataPost['id'] == postId}),
+			remove = !exist;
+
 		if (remove){
-			deleteAnimationPost(valuePost.id);
+			deleteAnimationPost(postId);
 		}
 	});
 }
@@ -15,17 +13,12 @@ function deleteProcedure(data){
 function replaceNewPost(elmt){
     xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'),10)); 
     yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top'),10));
-    elmt.animate({'left': "+="+xTranslation, 'top': "+="+yTranslation },'slow','linear');
+    //elmt.animate({'left': "+="+xTranslation, 'top': "+="+yTranslation },'slow','linear');
+    elmt.animate({'left': '10', 'top': '10' },'slow','linear');
 }
 
 function isFridgeContaining(postId){
-	result = false;
-	$.each($('.post'),function(indexPost,valuePost){
-		if (valuePost.id == postId ){
-			result = true;
-		}
-	});
-	return result;
+	return _.find($('.post'), function(dataPost){return dataPost['id'] == postId});
 }
 
 function deleteAnimationPost(elementId){
@@ -68,19 +61,19 @@ function setPositionPost(id,left,top){
 }	
 
 function generatePostContent(post){
-	var id = post.id;
-	var author = post.author;
-	var date = post.date;
-	var content = jQuery.trim(post.content);
+	var id = post.id,
+	    author = post.author,
+	    date = post.date,
+	    content = jQuery.trim(post.content),
 	
-	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-	var twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/
-	var xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/
-	var youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/
-	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/
-	
-	
-	var contentArray = content.split(' ');
+	    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
+	    twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/,
+	    xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
+	    youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/,
+	    pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/,
+		
+	    contentArray = content.split(' ');
+	    
 	if (contentArray.length === 0){
 		contentArray[0] = content;
 	}
