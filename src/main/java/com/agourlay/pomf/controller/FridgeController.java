@@ -21,8 +21,14 @@ public class FridgeController extends HttpServlet{
 		validFridgeIdOrGoHome(req, resp, fridgeId);
 		fridgeId=fridgeId.substring(1);
 		validFridgeIdOrGoHome(req, resp, fridgeId);
-		Fridge fridge = Fridge.getOrCreateFridge(fridgeId);
-		req.setAttribute("fridgeId",fridge.getName());
+		String fridgeName = fridgeId;
+		
+		Fridge fridge = Fridge.getFridgeById(fridgeId);//getOrCreateFridge(fridgeId);
+		if(fridge != null){
+			fridgeName =fridge.getName();
+		}
+		
+		req.setAttribute("fridgeId",fridgeName);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/fridge.jsp");
 		rd.forward(req, resp);
 	}

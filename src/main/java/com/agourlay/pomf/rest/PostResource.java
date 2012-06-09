@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.tools.Utils;
 
@@ -45,31 +46,14 @@ public class PostResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public void addPost(@Context HttpServletRequest req,
 			@FormParam("fridgeId") final String fridgeId,
-			@FormParam("captcha") String captcha,
 			@FormParam("positionX") String positionX,@FormParam("positionY") String positionY,
 			@FormParam("author") String author,@FormParam("content") String content,
 			@FormParam("color") String color, @FormParam("dueDate") String dueDate) {
 		
-		int captchaNumberInSession = 0;
-		int captchaNumberSubmitted = 0;
-		
-		try {
-			captchaNumberInSession = (Integer) req.getSession().getAttribute("captchaNumber");
-			captchaNumberSubmitted = Integer.parseInt(captcha);
-		} catch (Exception e) {
-			throw new WebApplicationException(
-			        Response
-			          .status(Status.BAD_REQUEST)
-			          .entity("Captcha invalid")
-			          .build()
-			      );
-		}
-		
-		if (captchaNumberInSession == captchaNumberSubmitted){
 			Double posX = Double.parseDouble(positionX);
 			Double posY = Double.parseDouble(positionY);
+			Fridge.createFridgeIfNotExist(fridgeId);
 			Post.add(fridgeId,author, content,posX,posY,color,Utils.stringToDate(dueDate, "MM/dd/yyyy"));	
-		}
 	}
 
 }

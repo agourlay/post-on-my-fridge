@@ -22,15 +22,6 @@
     </servlet-mapping>
 	
 	<servlet>
-		<servlet-name>SetCaptchaNumberController</servlet-name>
-		<servlet-class>com.agourlay.pomf.controller.SetCaptchaNumberController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SetCaptchaNumberController</servlet-name>
-		<url-pattern>/getCaptchaNumber</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
 		<servlet-name>EraseDuePostController</servlet-name>
 		<servlet-class>com.agourlay.pomf.controller.EraseDuePostController</servlet-class>
 	</servlet>

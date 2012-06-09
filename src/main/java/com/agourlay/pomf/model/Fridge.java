@@ -56,14 +56,14 @@ public class Fridge implements Serializable{
 		return newFridge;
 	}
 	
-	public static Fridge getOrCreateFridge(String fridgeId) {
+	public static void createFridgeIfNotExist(String fridgeId) {
 		  Fridge fetched = getFridgeById(fridgeId);
           if (fetched == null) {
-                  fetched = createFridge(fridgeId);
+                  createFridge(fridgeId);
           }
-          return fetched;
     }
-	
+
+
 	public static List<Fridge> searchFridgeLike(String fridgeName){
 		return dao.ofy().query(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
 	}

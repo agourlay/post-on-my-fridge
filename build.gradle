@@ -23,7 +23,6 @@ task jshintjs(type: com.eriwen.gradle.js.tasks.JsHintTask) {
 		"${projectDir}/src/main/webapp/js/pomf/init.js",
 		"${projectDir}/src/main/webapp/js/pomf/post.js",
 		"${projectDir}/src/main/webapp/js/pomf/tools.js",
-		"${projectDir}/src/main/webapp/js/pomf/captcha.js",
 		"${projectDir}/src/main/webapp/js/pomf/konami.js"
 	]
 }
@@ -33,7 +32,6 @@ task combinejs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 		"${projectDir}/src/main/webapp/js/pomf/init.js",
 		"${projectDir}/src/main/webapp/js/pomf/post.js",
 		"${projectDir}/src/main/webapp/js/pomf/tools.js",
-		"${projectDir}/src/main/webapp/js/pomf/captcha.js",
 		"${projectDir}/src/main/webapp/js/pomf/konami.js"
 	]
 	dest = file("${buildDir}/exploded-war/js/pomf/all.js")

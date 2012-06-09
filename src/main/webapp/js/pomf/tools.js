@@ -43,16 +43,6 @@ function clearText(thefield){
     	thefield.value = "";
 } 
 
-function generateCaptcha(){
-    $(".ajax-fc-container").captcha({
-		borderColor: "silver",
-		captchaDir: "/css/lib/captcha/images", 
-		formId: "postForm",
-		url : "/getCaptchaNumber",
-		text: "Verify that you are a human,<br />drag <span>scissors</span> into the circle.",
-		items: Array("pencil", "scissors", "clock", "heart", "note") 
-	});
-}
 
 function setRandomBackGround(){
 	path = "/images/background/";

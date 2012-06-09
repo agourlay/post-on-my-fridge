@@ -2,7 +2,6 @@ $(function() {
 	setRandomBackGround();
 	colorPickerManagement();
 	datePickerManagement();
-	generateCaptcha();
 	setupSearchAutocomplete();
 	konami();
 	initUiElement();
@@ -35,7 +34,6 @@ function initUiElement(){
 			if ( ui.draggable.hasClass('newPost')){
 				myData.author = $("#author").val();
 				myData.content = $("#content").val();
-				myData.captcha= $("#captcha").val();
 				myData.color = $("#postColor").val();
 				myData.dueDate = $("#dueDate").val();
 				myData.positionX = (parseInt(ui.draggable.css('left'),10) - $('.leftPanel').width()) / fridge.width();

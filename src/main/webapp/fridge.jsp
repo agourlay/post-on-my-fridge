@@ -13,7 +13,6 @@
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/captcha/captcha.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	
@@ -56,7 +55,6 @@
 								</div>	
 							</div>
 						</div>				
-						<div class="ajax-fc-container"></div>
 					</form>
 					<div class ="trash_bin"></div>
 				</div>
