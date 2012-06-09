@@ -10,6 +10,16 @@ function deleteProcedure(data){
 	});
 }
 
+
+function dropPost(elmtId){
+	$.ajax({
+		type:'DELETE',
+		url: "/resources/post/"+elmtId,
+		success:deleteAnimationPost(elmtId)
+	});
+}
+
+
 function replaceNewPost(elmt){
     xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'),10)); 
     yTranslation = ( -0.006 * $(document).height() - parseInt(elmt.css('top'),10));
@@ -35,6 +45,11 @@ function createOrUpdate(data){
 			buildPost(value);
 			setPositionPost(value.id,value.positionX,value.positionY);
 			$("#"+value.id).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
+			$("#"+value.id+" .ui-icon-trash").click(function(){
+				if(confirm("Are you sure to delete post?")){
+					dropPost(value.id);
+				}
+			});
 		}else{
 			updateDisplayedPosition(value.id,value.positionX,value.positionY);
 		}
@@ -53,11 +68,16 @@ function updateDisplayedPosition(id,left,top){
 }	
 
 function setPositionPost(id,left,top){
-	var fridge = $('.fridge');
-	$("#"+id).css({
-		'left':left * fridge.width(),
-		'top':top * fridge.height()
+	var fridge = $('.fridge'),
+		elmt = $("#"+id),
+		leftPost = left * fridge.width(),
+		topPost = top * fridge.height();
+	
+	elmt.css({
+		'left':leftPost,
+		'top':topPost
 		});
+	
 }	
 
 function generatePostContent(post){
@@ -171,9 +191,12 @@ function buildTwitterDataUrl(url){
 }
 
 function colorPickerManagement(){
-	$("#newPost").css("background-color",$("#postColor").val());
+	var color = $("#postColor").val(),
+		textColor = getTxtColorFromBg(color);
 	
-	colorPicker = $.farbtastic("#color-picker").setColor($("#postColor").val());
+	updatePostColor(color);
+	
+	colorPicker = $.farbtastic("#color-picker").setColor(color);
 	$( "#color-dialog" ).dialog({
 		autoOpen: false,
 		show: "blind",

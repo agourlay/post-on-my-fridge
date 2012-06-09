@@ -14,6 +14,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/lib/tipsy/tipsy.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	
 		<script type="text/javascript" src = "/_ah/channel/jsapi"></script>
@@ -44,7 +45,6 @@
 								<textarea name=content id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 							</div>
 							<div class="author">
-								by 
 								<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
 								<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
 								<input type="hidden" id="fridgeId" value="${fridgeId}"/>
@@ -59,7 +59,6 @@
 							</div>
 						</div>				
 					</form>
-					<div class ="trash_bin"></div>
 				</div>
 				<div class="fridge"></div>		
 			</div>
@@ -87,6 +86,7 @@
 	<script type="text/javascript" src = "/js/lib/farbtastic.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/humane-date.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/mustache-0.4.2.min.js"></script>
+	<script type="text/javascript" src = "/js/lib/jquery.tipsy.js"></script>
 	
 	<script type="text/javascript" src = "/js/pomf/all.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>

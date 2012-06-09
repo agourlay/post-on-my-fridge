@@ -119,14 +119,6 @@ footer a{
 	width: 25%;
   	padding: 10px; }
 
-.trash_bin {
-	position: fixed;
-  	top: 76%;
-  	padding: 10px;
-  	background: transparent url(../../images/trash.png) no-repeat 0 0;
- 	height: 150px;
- 	width: 150px;
- 	background-size:60%; }
 	
 .barrel_roll {
     -webkit-transition: -webkit-transform 4s ease;
