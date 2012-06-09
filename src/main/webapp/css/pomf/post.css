@@ -5,11 +5,21 @@
 	height:228px;
 	padding-top: 5px;
 	position: absolute;
-	z-index: 999;
+	z-index: 200;
 	font-size: small; }
 
 .post:hover,.newPost:hover {
 	cursor: move; }
+
+.post:hover  {
+    width: 248px;
+    height: 248px;
+    z-index:300; }
+
+.post:hover .content:hover {
+    width: 242px;
+    height: 182px;
+    z-index:300; }
 
 .post .content{
 	position: relative;
@@ -17,7 +27,8 @@
 	padding: 3px;
     width: 222px;
     height: 162px;
-    vertical-align: middle;	}
+    vertical-align: middle;
+    overflow:auto; }
 	
 .post .author{
 	position: relative;
