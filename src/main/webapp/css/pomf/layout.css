@@ -119,6 +119,18 @@ footer a{
 	width: 25%;
   	padding: 10px; }
 
+#chatPanel {
+	position : fixed;
+	top : 80%; }	
+	
+#chatLog {
+	position : fixed;
+	width: 20%;
+	height: 30%;
+	top : 50%;
+	background-color : white;
+	border : 1px;
+	overflow:auto; }	
 	
 .barrel_roll {
     -webkit-transition: -webkit-transform 4s ease;

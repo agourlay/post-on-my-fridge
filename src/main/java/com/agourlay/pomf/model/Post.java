@@ -66,7 +66,7 @@ public class Post implements Serializable{
 	public static void add(String fridgeId,String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
 			Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
 			savePost(post);
-			ClientRepository.notifyAllClientFromFridge(fridgeId);
+			ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
 	}
 
 	public static void savePost(Post post){
@@ -80,7 +80,7 @@ public class Post implements Serializable{
 			postToUpdate.setPositionX(positionX);
 			postToUpdate.setPositionY(positionY);
 			savePost(postToUpdate);
-			ClientRepository.notifyAllClientFromFridge(postToUpdate.getFridgeId());
+			ClientRepository.notifyAllClientFromFridge(postToUpdate.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
 		}
 	}
 		
@@ -103,7 +103,7 @@ public class Post implements Serializable{
 		String currentFridgeId = post.getFridgeId();
 		dao.delete(post);
 		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
-		ClientRepository.notifyAllClientFromFridge(currentFridgeId);
+		ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
 	}
 	
 	public static void remove(List<Long> ids){

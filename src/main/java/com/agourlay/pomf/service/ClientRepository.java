@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.agourlay.pomf.model.ChatMessage;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
@@ -33,11 +34,11 @@ public class ClientRepository {
 		}
 	}
 	
-	public static synchronized void notifyAllClientFromFridge(String fridgeId){
+	public static synchronized void notifyAllClientFromFridge(String fridgeId, String command,String message,String user){
 		if (clientRepo.get(fridgeId) != null){
 			for (String channelId : clientRepo.get(fridgeId)){
 				Gson gson = new Gson();
-				String jsonMessage = gson.toJson("#FRIDGE-UPATE#");
+				String jsonMessage = gson.toJson(new ChatMessage(command, user, message));
 				channelService.sendMessage(new ChannelMessage(channelId,jsonMessage));
 			}
 		}

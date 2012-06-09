@@ -1,14 +1,36 @@
+function messageManagment(user,message){
+	$("#chatLog").append("<br/>" +user+" : "+message);
+	$("#chatLog").scrollTop(parseInt($("#chatLog").scrollHeight,10));
+}
+
+function sendChatMessage(){
+	var payload = {}; 
+	payload.fridgeId = $("#fridgeId").val();
+	payload.message = $("#message").val();
+	payload.user = $("#pseudo").val();
+	$.ajax({
+		type: "POST",
+		url: "/_ah/channel/"+payload.fridgeId+"/message",
+		data: payload
+	});
+}
+
 function channelManagement(){
 	var fridgeId = $("#fridgeId").val();
 	$.getJSON("/_ah/channel/"+fridgeId, function(tokenChannel) {
 		if (tokenChannel !== undefined){
 			var channel = new goog.appengine.Channel(tokenChannel);
 			var socket = channel.open();
-			socket.onopen = function(){};
+			socket.onopen = function(){
+				
+			};
 			socket.onmessage = function(m){
 				var data = $.parseJSON(m.data);
-			    if (data == "#FRIDGE-UPATE#"){
+			    if (data.command == "#FRIDGE-UPATE#"){
 			    	initPage();
+			    }
+			    if (data.command == "#FRIDGE-CHAT#"){
+			    	messageManagment(data.user,data.message);
 			    }
 			};
 			socket.onerror =  function(err){
@@ -19,6 +41,14 @@ function channelManagement(){
 		}
 	});
 }	
+
+function messageContain(message,test){
+	if (message.indexOf(test) != -1){
+		return true
+	}else{
+		return false;
+	}
+}
 
 function showPage(){
     $('#loading').hide();

@@ -18,18 +18,16 @@ function initUiElement(){
 	
 	$(".post").live({
         mouseenter:
-            function()
-            {
+            function(){
         		$(this).find(".header").css({'position':'absolute','left':0,'top':'-18px'}).fadeIn(300);
             },
          mouseleave:
-            function(event)
-            {
-        	 var uiElmt = event.currentTarget;
-        	 console.log(uiElmt);
-        	 if(!$(uiElmt).hasClass("header")){
-        		 $(this).find(".header").fadeOut(300);
-        	 }
+            function(event){
+	        	var uiElmt = event.currentTarget;
+	        	console.log(uiElmt);
+	        	if(!$(uiElmt).hasClass("header")){
+	        		 $(this).find(".header").fadeOut(300);
+	        	}
             }
         }
 	);

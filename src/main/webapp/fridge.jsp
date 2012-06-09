@@ -42,7 +42,7 @@
 					<form id="postForm" accept-charset="utf-8">
 						<div id ="newPost" class="newPost">
 							<div class="content">
-								<textarea name=content id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
+								<textarea name="content" id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 							</div>
 							<div class="author">
 								<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
@@ -58,6 +58,12 @@
 								</div>	
 							</div>
 						</div>				
+					</form>
+					<div id="chatLog"></div>
+					<form id="chatPanel" accept-charset="utf-8">
+						<input type="text" value="" id="message" maxlength="15" size="12" title="Message"/>
+						<input type="text" value="Anonymous" id="pseudo" maxlength="15" size="12" title="Pseudo"/>
+						<button type="button" onclick="JavaScript: sendChatMessage()">Send</button> 
 					</form>
 				</div>
 				<div class="fridge"></div>		
