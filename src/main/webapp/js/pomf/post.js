@@ -15,7 +15,9 @@ function dropPost(elmtId){
 	$.ajax({
 		type:'DELETE',
 		url: "/resources/post/"+elmtId,
-		success:deleteAnimationPost(elmtId)
+		success:function(){
+			$("#"+elmtId).effect("bounce",{ times:3 }, 300, function(){deleteAnimationPost(elmtId);});
+		}
 	});
 }
 
