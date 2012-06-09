@@ -15,19 +15,26 @@ function initUiElement(){
 	var fridgeId = $("#fridgeId").val();
 	$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 	$('.newPost [title]').tipsy({gravity: 'w'});
-
-	$( ".trash_bin" ).droppable({
-		accept: ".post",
-		drop: function( event, ui ) {
-			$(this).effect("bounce",{ times:3 }, 300);
-			$.ajax({
-				type:'DELETE',
-				url: "/resources/post/"+ui.draggable.attr('id')
-			});
-			deleteAnimationPost(ui.draggable.attr('id'));
-		}
-	});
 	
+	$(".post").live({
+        mouseenter:
+            function()
+            {
+        		$(this).find(".header").css({'position':'absolute','left':0,'top':'-18px'}).fadeIn(300);
+            },
+         mouseleave:
+            function(event)
+            {
+        	 var uiElmt = event.currentTarget;
+        	 console.log(uiElmt);
+        	 if(!$(uiElmt).hasClass("header")){
+        		 $(this).find(".header").fadeOut(300);
+        	 }
+            }
+        }
+	);
+			
+				
 	$( ".fridge" ).droppable({
 		accept: ".post, .newPost",
 		drop: function( event, ui ) {

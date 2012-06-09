@@ -56,7 +56,6 @@
 							</div>
 						</div>				
 					</form>
-					<div class ="trash_bin"></div>
 				</div>
 				<div class="fridge"></div>		
 			</div>
