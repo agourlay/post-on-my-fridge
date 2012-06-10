@@ -61,9 +61,9 @@
 					</form>
 					<div id="chatPanel">
 						<form id="chatInput" accept-charset="utf-8">
-							<input type="text" value="Anonymous" id="pseudo" maxlength="15" size="12" title="Choose yout pseduo"/>
+							<input type="text" value="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
 							<div id="chatLog"></div>
-							<textarea id="message" onkeypress="onChatTextAreaChange();" rows="3" cols="32" maxlength="200" title="Type your message here"></textarea>
+							<textarea id="message" rows="0" cols="0" maxlength="200" title="Type your message here"></textarea>
 						</form>
 					</div>
 				</div>
@@ -94,6 +94,7 @@
 	<script type="text/javascript" src = "/js/lib/humane-date.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/mustache-0.4.2.min.js"></script>
 	<script type="text/javascript" src = "/js/lib/jquery.tipsy.js"></script>
+	<script type="text/javascript" src = "/js/lib/date.min.js"></script>
 	
 	<script type="text/javascript" src = "/js/pomf/all.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>

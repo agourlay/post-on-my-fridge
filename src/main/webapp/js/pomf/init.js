@@ -16,6 +16,12 @@ function initUiElement(){
 	$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 	$('.newPost [title]').tipsy({gravity: 'w'});
 	$('#chatInput [title]').tipsy({gravity: 'w'});
+	$('#message').keyup(function(e){
+		if (e.which == 13 && !e.shiftKey && !e.ctrlKey){
+			onChatTextAreaChange();
+			e.preventDefault();
+		}
+	});
 	
 	$(".post").live({
         mouseenter:
@@ -44,7 +50,7 @@ function initUiElement(){
 				myData.color = $("#postColor").val();
 				myData.dueDate = $("#dueDate").val();
 				myData.positionX = (parseInt(ui.draggable.css('left'),10) - $('.leftPanel').width()) / fridge.width();
-				myData.positionY = (parseInt(ui.draggable.css('top'),10)) / fridge.height();
+				myData.positionY = (parseInt(ui.draggable.offset().top,10)) / fridge.height();
 				myData.fridgeId = fridgeId;
 				$.ajax({
 			            url: "/resources/post",
