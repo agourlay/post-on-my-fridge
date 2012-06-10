@@ -119,18 +119,28 @@ footer a{
 	width: 25%;
   	padding: 10px; }
 
-#chatPanel {
+#chatPanel{
 	position : fixed;
-	top : 80%; }	
+	top : 60%;
+	width: 20%;
+	height: 50%; }
+
+#chatInput {
+	position:relative;
+	width: 100%;
+	height: 100%; }	
 	
 #chatLog {
-	position : fixed;
-	width: 20%;
-	height: 30%;
-	top : 50%;
+	position:relative;
+	width: 100%;
+	height: 50%;
+	float :left;
 	background-color : white;
-	border : 1px;
-	overflow:auto; }	
+	border : 2px;
+	font-size: small;
+	opacity:0.8;
+	overflow-y : scroll;
+	overflow-x : hidden; }	
 	
 .barrel_roll {
     -webkit-transition: -webkit-transform 4s ease;

@@ -15,6 +15,7 @@ function initUiElement(){
 	var fridgeId = $("#fridgeId").val();
 	$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
 	$('.newPost [title]').tipsy({gravity: 'w'});
+	$('#chatInput [title]').tipsy({gravity: 'w'});
 	
 	$(".post").live({
         mouseenter:

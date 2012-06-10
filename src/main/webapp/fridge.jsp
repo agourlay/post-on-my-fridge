@@ -59,12 +59,13 @@
 							</div>
 						</div>				
 					</form>
-					<div id="chatLog"></div>
-					<form id="chatPanel" accept-charset="utf-8">
-						<input type="text" value="" id="message" maxlength="50" size="15" title="Message"/>
-						<input type="text" value="Anonymous" id="pseudo" maxlength="15" size="12" title="Pseudo"/>
-						<button type="button" onclick="JavaScript: sendChatMessage()">Send</button> 
-					</form>
+					<div id="chatPanel">
+						<form id="chatInput" accept-charset="utf-8">
+							<input type="text" value="Anonymous" id="pseudo" maxlength="15" size="12" title="Choose yout pseduo"/>
+							<div id="chatLog"></div>
+							<textarea id="message" onkeypress="onChatTextAreaChange();" rows="3" cols="32" maxlength="200" title="Type your message here"></textarea>
+						</form>
+					</div>
 				</div>
 				<div class="fridge"></div>		
 			</div>
