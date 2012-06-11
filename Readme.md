@@ -10,7 +10,7 @@ To access or create a fridge use the search box or type directly the fridge name
 
 The posts can contain dynamic media content just by inserting an url in the content of a post.
 
-Every fridge host is own chat room.
+Every fridge host its own chat room.
 
 More features to come...
 
