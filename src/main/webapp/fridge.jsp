@@ -9,7 +9,7 @@
        	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
 	 
        <!-- CSS -->		
-		<link rel="stylesheet" type="text/css" href="/css/pomf/all.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/pomf/fridge.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
@@ -68,8 +68,7 @@
 					</div>
 				</div>
 				<div class="fridge"></div>		
-			</div>
-			<footer></footer>					
+			</div>			
 		</div>
 	</body>
 	<%@ include file="/template/template.jsp" %>
@@ -86,16 +85,7 @@
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 	</script>
-	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/humane-3.0.0.min.js"></script>
-   	<script type="text/javascript" src = "/js/lib/underscore.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/farbtastic.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/humane-date.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/mustache-0.4.2.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/jquery.tipsy.js"></script>
-	<script type="text/javascript" src = "/js/lib/date.min.js"></script>
-	
-	<script type="text/javascript" src = "/js/pomf/all.min.js"></script>
+	<script type="text/javascript" src = "/js/pomf/lib.min.js"></script>
+	<script type="text/javascript" src = "/js/pomf/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>

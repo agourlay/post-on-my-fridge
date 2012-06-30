@@ -9,7 +9,7 @@
 	 	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 	 	
        <!-- CSS -->		
-		<link rel="stylesheet" type="text/css" href="/css/pomf/all.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/pomf/fridge.min.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
