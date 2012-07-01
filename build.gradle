@@ -11,7 +11,7 @@ repositories {
 buildscript {
 	repositories { mavenCentral() }
 	dependencies {
-		classpath 'com.eriwen:gradle-js-plugin:0.4.1'
+		classpath 'com.eriwen:gradle-js-plugin:1.0.3'
 		classpath 'com.eriwen:gradle-css-plugin:0.3'
 	}
 }
@@ -55,6 +55,9 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'combineFridgeJs') {
 	source = file("${buildDir}/exploded-war/js/pomf/fridge.js")
 	dest = file("${buildDir}/exploded-war/js/pomf/fridge.min.js")
+	closure {
+		closure.compilationLevel =  'ADVANCED_OPTIMIZATIONS'
+	}
 }
 
 apply plugin: 'css'
@@ -80,8 +83,7 @@ buildscript {
 			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
 		}
 	}
-
-	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.7.2' }
+	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.7.3' }
 }
 
 apply plugin: 'gae'
@@ -92,7 +94,6 @@ gae {
 	disableUpdateCheck = true
 	downloadSdk = true
 	warDir = file('build/exploded-war/')
-
 	appcfg { email = 'arnaud.gourlay@gmail.com' }
 }
 
@@ -102,14 +103,14 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.2.1'
 	compile 'javax.servlet:servlet-api:2.5'
 	compile 'joda-time:joda-time:2.1'
-	compile 'com.sun.jersey:jersey-bundle:1.12'
-	compile 'com.google.guava:guava:12.0'
+	compile 'com.sun.jersey:jersey-bundle:1.13-b01'
+	compile 'com.google.guava:guava:13.0-rc1'
 	compile 'org.codehaus.jackson:jackson-core-asl:1.9.7'
 	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.7'
 	compile 'org.codehaus.jackson:jackson-jaxrs:1.9.7'
 	compile 'org.codehaus.jackson:jackson-xc:1.9.7'
 	compile 'com.googlecode.objectify:objectify:3.1'
-	compile 'javax.persistence:persistence-api:1.0-rev-1'
+	compile 'javax.persistence:persistence-api:1.0.2'
 	compile 'asm:asm:3.3.1'
 	testCompile 'junit:junit:4.10'
 }
