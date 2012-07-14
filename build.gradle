@@ -103,7 +103,7 @@ dependencies {
 	compile 'com.google.code.gson:gson:2.2.2'
 	compile 'javax.servlet:servlet-api:2.5'
 	compile 'joda-time:joda-time:2.1'
-	compile 'com.sun.jersey:jersey-bundle:1.13-b01'
+	compile 'com.sun.jersey:jersey-bundle:1.13'
 	compile 'com.google.guava:guava:13.0-rc1'
 	compile 'org.codehaus.jackson:jackson-core-asl:1.9.7'
 	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.7'
