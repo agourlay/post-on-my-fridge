@@ -83,7 +83,7 @@ buildscript {
 			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
 		}
 	}
-	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.7.3' }
+	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.7.5' }
 }
 
 apply plugin: 'gae'
