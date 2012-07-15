@@ -18,9 +18,7 @@ function formatCurrentTime() {
 	hours = today.getHours();
 	minutes = today.getMinutes();
 	seconds = today.getSeconds();
-	return hours + (minutes < 10 ? ":0" : ":")
-	      + minutes + (seconds < 10 ? ":0" : ":")
-	      + seconds;
+	return hours + (minutes < 10 ? ":0" : ":") + minutes + (seconds < 10 ? ":0" : ":") + seconds;
 }
 
 function sendChatMessage(){
@@ -64,7 +62,7 @@ function channelManagement(){
 
 function messageContain(message,test){
 	if (message.indexOf(test) != -1){
-		return true
+		return true;
 	}else{
 		return false;
 	}
@@ -143,7 +141,9 @@ function datePickerManagement(){
 		});
 }
 
-function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h};
+function cutHex(h) {
+	return (h.charAt(0)=="#") ? h.substring(1,7):h;
+	}
 
 function isRegExp(regExp, content){
 	return regExp.test(content);

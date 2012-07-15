@@ -1,15 +1,14 @@
 function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
-		var postId = valuePost['id'],
-			exist = _.find(data, function(dataPost){return dataPost['id'] == postId}),
-			remove = !exist;
+		postId = valuePost.id;
+		exist = _.find(data, function(dataPost){return dataPost.id == postId});
+		remove = !exist;
 
 		if (remove){
 			deleteAnimationPost(postId);
 		}
 	});
 }
-
 
 function dropPost(elmtId){
 	$.ajax({
@@ -20,7 +19,6 @@ function dropPost(elmtId){
 		}
 	});
 }
-
 
 function replaceNewPost(elmt){
     xTranslation = ( 0.01 * $(document).width() - parseInt(elmt.css('left'),10)); 
@@ -161,7 +159,7 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	tweet = data[0];
 	tweetText = tweet.text;
 	if (tweetText.length > 110){
-		tweetText = tweetText.substring(0,110) + "..."
+		tweetText = tweetText.substring(0,110) + "...";
 	}
 	replacement = "<a href="+value+" target= blank >"+extractTwitterUser(value)+"</a> tweets :</br>"+ tweetText;
 	content = content.replace(twitterRegexp,replacement);

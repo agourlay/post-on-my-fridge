@@ -38,7 +38,6 @@ function initUiElement(){
             }
         }
 	);
-			
 				
 	$( ".fridge" ).droppable({
 		accept: ".post, .newPost",

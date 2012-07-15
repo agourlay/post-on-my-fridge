@@ -1,7 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-defaultTasks 'gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss', 'minifyFridgeJs','combineLibJs', 'gaeRun'
+defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','minifyFridgeJs','combineLibJs', 'gaeRun'
 
 repositories {
 	mavenCentral()
@@ -25,6 +25,7 @@ task jshintFridge(type: com.eriwen.gradle.js.tasks.JsHintTask) {
 		"${projectDir}/src/main/webapp/js/pomf/tools.js",
 		"${projectDir}/src/main/webapp/js/pomf/konami.js"
 	]
+	dest = file("${buildDir}/jshint.out")
 }
 
 task combineLibJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
@@ -56,7 +57,7 @@ task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'c
 	source = file("${buildDir}/exploded-war/js/pomf/fridge.js")
 	dest = file("${buildDir}/exploded-war/js/pomf/fridge.min.js")
 	closure {
-		closure.compilationLevel =  'ADVANCED_OPTIMIZATIONS'
+		closure.compilationLevel = 'WHITESPACE_ONLY'
 	}
 }
 
@@ -93,7 +94,6 @@ gae {
 	stopKey = null
 	disableUpdateCheck = true
 	downloadSdk = true
-	warDir = file('build/exploded-war/')
 	appcfg { email = 'arnaud.gourlay@gmail.com' }
 }
 
