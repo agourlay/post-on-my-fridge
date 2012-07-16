@@ -137,12 +137,8 @@ function buildPostContent(post){
 	}
 
 	post.textColor = getTxtColorFromBg(post.color);
-	post.relativeDate = function() {
-	    return function(text, render) {
-	        return render(humaneDate(text));
-	      };
-	    };	
-	    
+	post.relativeDate = humaneDate(post.date);
+	
 	var source = $("#postTemplate").html();
 	var template = Handlebars.compile(source); 
 	var output = template(post);
