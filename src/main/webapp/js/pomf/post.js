@@ -142,12 +142,11 @@ function buildPostContent(post){
 	        return render(humaneDate(text));
 	      };
 	    };	
-	var template = $('#postTemplate').html();
-	var output = $.mustache(template, post);
+	    
+	var source = $("#postTemplate").html();
+	var template = Handlebars.compile(source); 
+	var output = template(post);
 	$('.fridge').append(output);
-	//TODO change ugly fix for not escaped html 
-	updatePostContent(post.id,post.content);
-	
 }
 
 function buildPost(post){
