@@ -7,10 +7,11 @@ $(function() {
 	setupSearchAutocomplete();
 	konami();
 	channelManagement();
-	setTimeout(showPage, 1000);
+	setTimeout(showFridge, 1000);
 });
 
 function initUiElement(){
+	buildSpinner();
 	var fridge = $('.fridge');
 	var fridgeId = $("#fridgeId").val();
 	$( ".newPost" ).draggable({ revert: "invalid" ,scroll: true});
@@ -74,7 +75,6 @@ function initUiElement(){
 			}	
 		}
 	});		
-
 }
 
 function initPage(){

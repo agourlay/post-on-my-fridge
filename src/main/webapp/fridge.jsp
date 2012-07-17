@@ -20,10 +20,6 @@
 		<script type="text/javascript" src = "/_ah/channel/jsapi"></script>
 	</head>
 	<body>
-		<div id="loading">
-			<div id="loading-sign"></div>
-			Loading fridge content...
-		</div>	
 		<div id="global">
 			<header>
 				<div id="fridge-title">
@@ -67,7 +63,10 @@
 						</form>
 					</div>
 				</div>
-				<div class="fridge"></div>		
+				<div id="loaded-content">
+					<div id="loading"></div>	
+					<div class="fridge"></div>
+				</div>
 			</div>			
 		</div>
 	</body>

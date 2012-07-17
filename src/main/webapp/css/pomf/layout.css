@@ -2,25 +2,6 @@ html,body {
 	font-family: 'Open Sans', sans-serif;
 	margin: 0; }
 
-#loading {
-	position: absolute;
-	top: 30%;
-    left: 25%; 
-    width: 50%;
-    text-align: center; }
-
-#loading-sign {
-    background-image: url(../../images/loading.gif);
-    height: 128px;
-    width: 128px;
-    margin-left: auto;
-	margin-right: auto; }
-
-.rss {
-    background-image: url(../../images/feed-icon-14x14.png);
-    height: 15px;
-    width: 15px; }
-
 header {
 	position : fixed;
 	width: 100%;
@@ -52,8 +33,25 @@ footer {
 
 footer a{
 	color:white;
-	text-decoration: none;
-}
+	text-decoration: none;}
+
+#loaded-content{
+	position:relative;
+	float : right;
+	margin-top: 40px;
+	text-align:center;
+	width: 80%;
+	height : 100%;}
+
+#loading {
+	position:relative;
+	margin-top: 150px;
+    text-align: center; }
+
+.rss {
+    background-image: url(../../images/feed-icon-14x14.png);
+    height: 15px;
+    width: 15px; }
 
 #fridge-title{
 	width: 50%;
@@ -69,8 +67,7 @@ footer a{
 #global {
 	position:relative;
 	width: 100%;
-	min-height: 100%;
-	visibility: hidden; }
+	min-height: 100%; }
 
 #main-content{
 	position:relative;
@@ -109,13 +106,13 @@ footer a{
 
 .fridge {
 	position:relative;
-	float : right;
-	margin-top: 40px;
 	text-align:center;
-	width: 80%;
+	width: 100%;
 	background-image:url(../../images/fridgeBg.png);
 	background-size:100%;
-	height : 100%; }
+	height : 100%;
+	visibility: hidden;
+}
 
 .leftPanel {
 	position : fixed;
