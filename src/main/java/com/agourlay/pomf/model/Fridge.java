@@ -8,17 +8,19 @@ import javax.persistence.Id;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.tools.Constantes;
+import com.agourlay.pomf.tools.transformer.ExtractFridgeName;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
 @Entity
 public class Fridge implements Serializable{
+	
 	/**
-	 * 
+	 * serialVersionUID
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6461491688659114651L;
+	
 	private static final ObjectifyDao<Fridge> dao = new ObjectifyDao<Fridge>(Fridge.class);
 	
 	@Id
@@ -34,7 +36,7 @@ public class Fridge implements Serializable{
 		 MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
          List<Post> posts = (List<Post>) cache.get(Constantes.CACHE_FRIDGE_KEY+fridgeName);
          if (posts == null) {
-                 posts = dao.ofy().query(Post.class).filter("fridgeId", fridgeName).order("-date").limit(100).list();
+        	 posts = dao.ofy().query(Post.class).filter("fridgeId", fridgeName).order("-date").limit(100).list();
                  if (posts != null)
                          cache.put(Constantes.CACHE_FRIDGE_KEY+fridgeName, posts); 
          }
@@ -59,7 +61,7 @@ public class Fridge implements Serializable{
 	public static void createFridgeIfNotExist(String fridgeId) {
 		  Fridge fetched = getFridgeById(fridgeId);
           if (fetched == null) {
-                  createFridge(fridgeId);
+        	  createFridge(fridgeId);
           }
     }
 
@@ -69,13 +71,7 @@ public class Fridge implements Serializable{
 	}
 	
 	public static List<String> searchFridgeNamesWithNameLike(String fridgeName){
-		return Lists.transform(searchFridgeLike(fridgeName),  new Function<Fridge, String>(){
-            @Override
-            public String apply(final Fridge input){
-                return input.getName();
-            }
-        });
-		
+		return Lists.transform(searchFridgeLike(fridgeName),  new ExtractFridgeName());
 	}
 	
 	//GETTERS & SETTERS

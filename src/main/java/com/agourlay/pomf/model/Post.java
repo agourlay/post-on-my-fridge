@@ -2,6 +2,7 @@ package com.agourlay.pomf.model;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,16 +14,18 @@ import javax.persistence.Id;
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
-import com.agourlay.pomf.tools.Validation;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.common.base.Strings;
 
 @Entity
 public class Post implements Serializable{
+	
 	/**
-	 * 
+	 * serialVersionUID
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5300832520775741740L;
+
 	private static final ObjectifyDao<Post> dao = new ObjectifyDao<Post>(Post.class);
 
 	@Id
@@ -41,13 +44,13 @@ public class Post implements Serializable{
 
 	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate,String fridgeId) {
 		
-		if (Validation.isNoTNullOrEmpty(author)){
+		if (Strings.isNullOrEmpty(author)){
 			this.author = author;
 		}else{
 			this.author = "Anonymous";
 		}
 		
-		if (Validation.isNoTNullOrEmpty(content)){
+		if (Strings.isNullOrEmpty(content)){
 			this.content = content;
 		}else{
 			this.content = "What's up?";
@@ -106,7 +109,7 @@ public class Post implements Serializable{
 		ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
 	}
 	
-	public static void remove(List<Long> ids){
+	public static void remove(Collection<Long> ids){
 		for (Long id : ids){
 			remove(id);
 		}

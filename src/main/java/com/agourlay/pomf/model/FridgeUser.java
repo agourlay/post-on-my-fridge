@@ -11,9 +11,10 @@ import javax.persistence.Id;
 public class FridgeUser implements Serializable{
 	
 	/**
-	 * 
+	 * serialVersionUID
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3440636574318540914L;
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

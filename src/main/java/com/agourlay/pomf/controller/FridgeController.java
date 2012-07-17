@@ -13,19 +13,22 @@ import com.google.common.base.Strings;
 
 public class FridgeController extends HttpServlet{
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 779325282149978767L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException,ServletException {
 		//TODO add some string validation there
-		String fridgeId=req.getPathInfo();
+		String fridgeId = req.getPathInfo();
 		validFridgeIdOrGoHome(req, resp, fridgeId);
-		fridgeId=fridgeId.substring(1);
+		fridgeId = fridgeId.substring(1);
 		validFridgeIdOrGoHome(req, resp, fridgeId);
 		String fridgeName = fridgeId;
 		
-		Fridge fridge = Fridge.getFridgeById(fridgeId);//getOrCreateFridge(fridgeId);
+		Fridge fridge = Fridge.getFridgeById(fridgeId);
 		if(fridge != null){
-			fridgeName =fridge.getName();
+			fridgeName = fridge.getName();
 		}
 		
 		req.setAttribute("fridgeId",fridgeName);
