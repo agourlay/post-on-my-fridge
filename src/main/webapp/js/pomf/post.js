@@ -77,7 +77,6 @@ function setPositionPost(id,left,top){
 		'left':leftPost,
 		'top':topPost
 		});
-	
 }	
 
 function generatePostContent(post){
@@ -137,7 +136,7 @@ function buildPostContent(post){
 	}
 
 	post.textColor = getTxtColorFromBg(post.color);
-	post.relativeDate = humaneDate(post.date);
+	post.relativeDate = moment(post.date).fromNow();
 	
 	var source = $("#postTemplate").html();
 	var template = Handlebars.compile(source); 
@@ -212,7 +211,6 @@ function colorPickerManagement(){
 	$('#changeColor').click(function() {
 		$( "#color-dialog" ).dialog( "open" );
 	});
-	
 }
 
 function updatePostColor(color){

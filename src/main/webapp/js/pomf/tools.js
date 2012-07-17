@@ -1,5 +1,5 @@
 function messageManagment(user,message){
-	$("#chatLog").append("<br/><i>" + formatCurrentTime() + "</i></br>" +user+" : "+formatChatMessage(message));
+	$("#chatLog").append("<br/><i>" + moment().format('h:mm:ss') + "</i></br>" +user+" : "+formatChatMessage(message));
 	$("#chatLog").animate({ scrollTop: $("#chatLog").prop("scrollHeight") }, 3000);
 }
 
@@ -11,14 +11,6 @@ function formatChatMessage(message){
 function onChatTextAreaChange() {
     sendChatMessage();
     $("#message").val('');
-}
-
-function formatCurrentTime() {
-	today = Date.parse('now');
-	hours = today.getHours();
-	minutes = today.getMinutes();
-	seconds = today.getSeconds();
-	return hours + (minutes < 10 ? ":0" : ":") + minutes + (seconds < 10 ? ":0" : ":") + seconds;
 }
 
 function sendChatMessage(){

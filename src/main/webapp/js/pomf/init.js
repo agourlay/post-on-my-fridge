@@ -1,11 +1,11 @@
 $(function() {
+	initUiElement();
+	initPage();
 	setRandomBackGround();
 	colorPickerManagement();
 	datePickerManagement();
 	setupSearchAutocomplete();
 	konami();
-	initUiElement();
-	initPage();
 	channelManagement();
 	setTimeout(showPage, 1000);
 });
