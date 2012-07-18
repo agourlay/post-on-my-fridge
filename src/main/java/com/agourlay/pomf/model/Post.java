@@ -43,19 +43,8 @@ public class Post implements Serializable{
 	public Post() {}
 
 	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate,String fridgeId) {
-		
-		if (Strings.isNullOrEmpty(author)){
-			this.author = author;
-		}else{
-			this.author = "Anonymous";
-		}
-		
-		if (Strings.isNullOrEmpty(content)){
-			this.content = content;
-		}else{
-			this.content = "What's up?";
-		}
-		
+		this.author = Strings.isNullOrEmpty(author) ? "Anonymous" : author;
+		this.content = Strings.isNullOrEmpty(author) ? "What's up?" : content;		
 		this.date = new Date();
 		this.positionX = positionX;
 		this.positionY = positionY;
@@ -67,14 +56,14 @@ public class Post implements Serializable{
 	// DAO METHODS 
 	
 	public static void add(String fridgeId,String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
-			Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
-			savePost(post);
-			ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
+		Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
+		savePost(post);
+		ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
 	}
 
 	public static void savePost(Post post){
-        dao.ofy().put(post);
-        MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
+        	dao.ofy().put(post);
+        	MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
 	}
 	
 	public static void updatePosition(Long id, Double positionX,Double positionY) {
