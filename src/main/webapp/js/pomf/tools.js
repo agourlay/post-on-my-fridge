@@ -119,19 +119,13 @@ function setRandomBackGround(){
 	$('#global').css('background-image', 'url(' + imageFullPath + ')');
 }
 
-function extractYoutubeVideoId(url){
-	youtube_id = url.replace(/^[^v]+v.(.{11}).*/,"$1");
-	return youtube_id; 
-}
-
 function extractTwitterUser(url){
 	var contentArray = url.split('/#!/');
 	return contentArray[1];
 }
 
 function generateYoutubeFrame(url){
-	frame = "<iframe class='youtube-player' type='text/html' width='218' height='200' src='http://www.youtube.com/embed/"+extractYoutubeVideoId(url)+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
-	return frame;
+	return "<iframe class='youtube-player' type='text/html' width='218' height='200' src='http://www.youtube.com/embed/"+$.url(url).param('v')+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
 }
 
 function getTxtColorFromBg(color){

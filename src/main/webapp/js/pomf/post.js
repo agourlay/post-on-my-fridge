@@ -85,13 +85,13 @@ function generatePostContent(post){
 	    date = post.date,
 	    content = jQuery.trim(post.content),
 	
-	    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
-	    twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/,
-	    xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
-	    youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/,
-	    pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|jpeg|gif|png)$/,
-		
-	    contentArray = content.split(' ');
+    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
+    twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/,
+    xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
+    youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/,
+    pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
+	
+    contentArray = content.split(' ');
 	    
 	if (contentArray.length === 0){
 		contentArray[0] = content;
@@ -99,31 +99,37 @@ function generatePostContent(post){
 	
 	$.each(contentArray, function(index, value) {  
 		if (isRegExp(urlRegexp,value)){
-			if(isRegExp(xmlRegexp,value)){
+			var url = $.url(value); 
+			
+			if (url.attr('host') == "twitter.com"){
+				 $.ajax({
+						url: "http://api.twitter.com/1/statuses/user_timeline.json",
+						dataType: "jsonp",
+						cache: false,
+						data : buildTwitterDataUrl(value),
+						success: function(data) { 
+							buildTweet(data,value,id,author,date,content,twitterRegexp);
+						  }
+						});
+				 
+			}else if (url.attr('host') == "www.youtube.com"){
+				content = content.replace(youtubeRegexp,generateYoutubeFrame(value));
+				
+			}else if(isRegExp(xmlRegexp,value)){
 				yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
 				$.getJSON( yql,	function(data) {
 			        	buildRssFeed(filterData(data.results[0]),value,id,author,date,content,xmlRegexp);
 					  }
 				);
-			}else if(isRegExp(twitterRegexp,value)){
-				$.ajax({
-					url: "http://api.twitter.com/1/statuses/user_timeline.json",
-					dataType: "jsonp",
-					cache: false,
-					data : buildTwitterDataUrl(value),
-					success: function(data) { 
-						buildTweet(data,value,id,author,date,content,twitterRegexp);
-					  }
-					});
+				
 			}else if(isRegExp(pictureRegexp,value)){
 				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
 				content = content.replace(pictureRegexp,replacementPict);
-			}else if(isRegExp(youtubeRegexp,value)){
-				replacementThumb = generateYoutubeFrame(value);
-				content = content.replace(youtubeRegexp,replacementThumb);				
+				
 			}else{
 				replacement = "<a href="+value+" target= blank>"+value+"</a> ";
 				content = content.replace(urlRegexp,replacement);
+				
 			}	
 		}	
 	});	
