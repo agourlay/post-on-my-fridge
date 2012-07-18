@@ -44,7 +44,7 @@ public class Post implements Serializable{
 
 	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate,String fridgeId) {
 		this.author = Strings.isNullOrEmpty(author) ? "Anonymous" : author;
-		this.content = Strings.isNullOrEmpty(author) ? "What's up?" : content;		
+		this.content = Strings.isNullOrEmpty(content) ? "What's up?" : content;		
 		this.date = new Date();
 		this.positionX = positionX;
 		this.positionY = positionY;
