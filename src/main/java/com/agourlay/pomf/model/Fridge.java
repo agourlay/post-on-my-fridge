@@ -33,14 +33,16 @@ public class Fridge implements Serializable{
 
 	@SuppressWarnings("unchecked")
 	public static List<Post> getPosts(String fridgeName) {
-		 MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
-         List<Post> posts = (List<Post>) cache.get(Constantes.CACHE_FRIDGE_KEY+fridgeName);
-         if (posts == null) {
-        	 posts = dao.ofy().query(Post.class).filter("fridgeId", fridgeName).order("-date").limit(100).list();
-                 if (posts != null)
-                         cache.put(Constantes.CACHE_FRIDGE_KEY+fridgeName, posts); 
-         }
-         return posts;
+		MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
+         	List<Post> posts = (List<Post>) cache.get(Constantes.CACHE_FRIDGE_KEY+fridgeName);
+         	// if posts not in the cache, it's time to fetch
+         	if (posts == null) {
+        		 posts = dao.ofy().query(Post.class).filter("fridgeId", fridgeName).order("-date").limit(100).list();
+                 	// if we have posts, we cache it
+                 	if (posts != null)
+                         	cache.put(Constantes.CACHE_FRIDGE_KEY+fridgeName, posts); 
+         	}
+         	return posts;
 	}
 	
 	public static Fridge getFridgeById(String fridgeId){
@@ -59,11 +61,10 @@ public class Fridge implements Serializable{
 	}
 	
 	public static void createFridgeIfNotExist(String fridgeId) {
-		  Fridge fetched = getFridgeById(fridgeId);
-          if (fetched == null) {
-        	  createFridge(fridgeId);
-          }
-    }
+        	if (getFridgeById(fridgeId) == null) {
+        		createFridge(fridgeId);
+          	}
+	}
 
 
 	public static List<Fridge> searchFridgeLike(String fridgeName){
