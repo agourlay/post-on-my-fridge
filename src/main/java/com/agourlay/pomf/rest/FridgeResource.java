@@ -19,31 +19,31 @@ import com.google.gson.Gson;
 @Path("/fridge/{fridgeId}")
 public class FridgeResource {
 	
-	@GET
-	@Produces("application/json")
-	public String getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
-	    List<Post> posts = Fridge.getPosts(fridgeId);	
-		Gson gson = new Gson();
-		return gson.toJson(posts);
-	}
+    @GET
+    @Produces("application/json")
+    public String getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
+    	List<Post> posts = Fridge.getPosts(fridgeId);	
+	Gson gson = new Gson();
+	return gson.toJson(posts);
+     }
     
     @GET
     @Path("/rss")
-	@Produces("application/xml")
-	public String getFridgeRssContent(@PathParam ("fridgeId") String fridgeId) throws Exception  {
-	    Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
-		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getPosts(fridgeId)));
-		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
-		return writer.write().toString();
-	}
+    @Produces("application/xml")
+    public String getFridgeRssContent(@PathParam ("fridgeId") String fridgeId) throws Exception  {
+	Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
+	rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getPosts(fridgeId)));
+	RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
+	return writer.write().toString();
+    }
     
     @GET
     @Path("/search")
     @Produces("application/json")
-	public String getFridgeIds(@QueryParam("term") String term)  {
+    public String getFridgeIds(@QueryParam("term") String term)  {
     	Gson gson = new Gson();
     	return gson.toJson(Fridge.searchFridgeNamesWithNameLike(term));
-	}
+    }
 }	
 
 
