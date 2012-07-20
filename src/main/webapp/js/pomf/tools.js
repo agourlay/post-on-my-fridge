@@ -124,8 +124,8 @@ function extractTwitterUser(url){
 	return contentArray[1];
 }
 
-function generateYoutubeFrame(url){
-	return "<iframe class='youtube-player' type='text/html' width='218' height='200' src='http://www.youtube.com/embed/"+$.url(url).param('v')+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
+function generateYoutubeFrame(videoId){
+	return "<iframe class='youtube-player' type='text/html' width='218' height='200' src='http://www.youtube.com/embed/"+videoId+"?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
 }
 
 function getTxtColorFromBg(color){

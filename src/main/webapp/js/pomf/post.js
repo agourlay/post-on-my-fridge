@@ -2,9 +2,7 @@ function deleteProcedure(data){
 	$.each($('.post'),function(indexPost,valuePost){
 		postId = valuePost.id;
 		exist = _.find(data, function(dataPost){return dataPost.id == postId});
-		remove = !exist;
-
-		if (remove){
+		if (!exist){
 			deleteAnimationPost(postId);
 		}
 	});
@@ -46,7 +44,7 @@ function createOrUpdate(data){
 			setPositionPost(value.id,value.positionX,value.positionY);
 			$("#"+value.id).hide().fadeIn(1000).draggable({ revert: "invalid" , scroll: true });
 			$("#"+value.id+" .ui-icon-trash").click(function(){
-				if(confirm("Are you sure to delete post?")){
+				if(confirm("Are you sure you want to delete post?")){
 					dropPost(value.id);
 				}
 			});
@@ -79,6 +77,7 @@ function setPositionPost(id,left,top){
 		});
 }	
 
+// TODO Arnaud refactor this big sh*t 
 function generatePostContent(post){
 	var id = post.id,
 	    author = post.author,
@@ -87,7 +86,7 @@ function generatePostContent(post){
 	
     urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
     twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/,
-    xmlRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
+    rssRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
     youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/,
     pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
 	
@@ -102,6 +101,7 @@ function generatePostContent(post){
 			var url = $.url(value); 
 			
 			if (url.attr('host') == "twitter.com"){
+
 				 $.ajax({
 						url: "http://api.twitter.com/1/statuses/user_timeline.json",
 						dataType: "jsonp",
@@ -111,25 +111,29 @@ function generatePostContent(post){
 							buildTweet(data,value,id,author,date,content,twitterRegexp);
 						  }
 						});
-				 
+			
 			}else if (url.attr('host') == "www.youtube.com"){
-				content = content.replace(youtubeRegexp,generateYoutubeFrame(value));
-				
-			}else if(isRegExp(xmlRegexp,value)){
+
+				content = content.replace(youtubeRegexp,generateYoutubeFrame(url.param('v')));
+
+			}else if(isRegExp(rssRegexp,value)){
+
 				yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
 				$.getJSON( yql,	function(data) {
-			        	buildRssFeed(filterData(data.results[0]),value,id,author,date,content,xmlRegexp);
+			        	buildRssFeed(filterData(data.results[0]),value,id,author,date,content,rssRegexp);
 					  }
 				);
-				
+
 			}else if(isRegExp(pictureRegexp,value)){
+
 				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
 				content = content.replace(pictureRegexp,replacementPict);
 				
 			}else{
+
 				replacement = "<a href="+value+" target= blank>"+value+"</a> ";
-				content = content.replace(urlRegexp,replacement);
-				
+				content = content.replace(urlRegexp,replacement);	
+
 			}	
 		}	
 	});	
@@ -166,14 +170,14 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	updatePostContent(id,content);
 }
 
-function buildRssFeed(feed,value,id,author,date,content,xmlRegexp){
+function buildRssFeed(feed,value,id,author,date,content,rssRegexp){
 	channel = $(feed).children("channel:first");
 	title = channel.find("title:first").html();
 	item = channel.find("item:first");
 	link = jQuery.trim(item.find("link:first").html());
 	itemTitle = $(item).find("title").text();
 	replacement = "<a href="+link+" target= blank >"+title+"</a> Rss :</br>"+ itemTitle;
-	content = content.replace(xmlRegexp,replacement);
+	content = content.replace(rssRegexp,replacement);
 	updatePostContent(id,content);
 }
 
