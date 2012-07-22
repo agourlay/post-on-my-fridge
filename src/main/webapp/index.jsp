@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  <!-- META -->
+		<!-- META -->
 		<title>Post on my fridge : interactive fridge based messaging</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
-        <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
-       	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
-	 	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
+        	<meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,ajax,open source" />
+       		<meta charset="utf-8"> 
+		<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 	 	
-       <!-- CSS -->		
-		<link rel="stylesheet" type="text/css" href="/css/pomf/fridge.min.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
+        	<!-- CSS -->		
+		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
+		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
+		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
+		<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
+		<link rel="stylesheet" href="/css/lib/farbastic/farbtastic.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	</head>
 	<body>
@@ -65,10 +65,10 @@
 	</body>
 	
 	<!-- JS -->
-	<script type="text/javascript" src = "/js/lib/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src = "/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
-	<script type="text/javascript" src = "/js/pomf/tools.js"></script>
-	<script type="text/javascript">	
+	<script src="/js/lib/jquery-1.7.2.min.js"></script>
+	<script src="/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
+	<script src="/js/pomf/tools.js"></script>
+	<script>	
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-25345034-1']);
 	  _gaq.push(['_trackPageview']);

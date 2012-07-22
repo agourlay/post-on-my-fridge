@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  <!-- META -->
+		<!-- META -->
 		<title>${fridgeId}'s fridge</title>
 		<meta name="description" content="This is ${fridgeId}'s interactive fridge">
-        <meta name="keywords" content="post on my fridge,messaging,multimedia,fridge,post,dynamique,social,network,friend,interactive,ajax,javascript,open source" />
-       	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
-       	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
+        	<meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
+       		<meta charset="utf-8"> 
+       		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
 	 
-       <!-- CSS -->		
-		<link rel="stylesheet" type="text/css" href="/css/pomf/fridge.min.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/humane/jackedup.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/humane/libnotify.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/farbastic/farbtastic.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/lib/tipsy/tipsy.css"/>
+       		<!-- CSS -->		
+		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
+		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
+		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
+		<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
+		<link rel="stylesheet" href="/css/lib/farbastic/farbtastic.css"/>
+		<link rel="stylesheet" href="/css/lib/tipsy/tipsy.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	
-		<script type="text/javascript" src = "/_ah/channel/jsapi"></script>
+		<!-- JS -->
+		<script src="/_ah/channel/jsapi"></script>
 	</head>
 	<body>
 		<div id="global">
@@ -84,7 +85,7 @@
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
 	</script>
-	<script type="text/javascript" src = "/js/pomf/lib.min.js"></script>
-	<script type="text/javascript" src = "/js/pomf/fridge.min.js"></script>
+	<script src = "/js/pomf/lib.min.js"></script>
+	<script src = "/js/pomf/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>
