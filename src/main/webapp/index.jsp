@@ -26,7 +26,7 @@
 					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
 			</header>
-			<div id ="index-content">
+			<section id ="index-content">
 				<div id ="index-description">
 				 	Post on my fridge is a collaborative messaging system using sticky notes on virtual fridges.
 					<br/>
@@ -53,7 +53,7 @@
 					Try the <a href="http://post-on-my-fridge.appspot.com/fridge/demo" target="_blank">demo fridge</a> now!
 				</div>
 				<div id ="index-picture"></div>				
-			</div>
+			</section>
 		    <footer>
 		    	<a href="mailto:arnaud.gourlay@gmail.com" target="_blank"> Contact </a>
 		    		 -

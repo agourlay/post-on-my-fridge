@@ -35,7 +35,7 @@
 				</div>
 			</header>
 			<div id="main-content">	
-				<div class ="leftPanel">
+				<aside class ="leftPanel">
 					<form id="postForm" accept-charset="utf-8">
 						<div id ="newPost" class="newPost">
 							<div class="content">
@@ -63,10 +63,10 @@
 							<textarea id="message" rows="0" cols="0" maxlength="200" title="Type your message here"></textarea>
 						</form>
 					</div>
-				</div>
+				</aside>
 				<div id="loaded-content">
 					<div id="loading"></div>	
-					<div class="fridge"></div>
+					<section class="fridge"></section>
 				</div>
 			</div>			
 		</div>
