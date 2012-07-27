@@ -10,7 +10,7 @@
 	 
        		<!-- CSS -->		
 		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
-		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.21.custom.css"/>
+		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.22.custom.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
 		<link rel="stylesheet" href="/css/lib/farbastic/farbtastic.css"/>
