@@ -99,11 +99,6 @@ function setupSearchAutocomplete(){
 	});
 }
 
-function clearText(thefield){
-    if (thefield.defaultValue==thefield.value)
-    	thefield.value = "";
-} 
-
 
 function setRandomBackGround(){
 	path = "/images/background/";

@@ -22,7 +22,7 @@
 				<div id="fridge-title">
 					Welcome to "Post on my fridge"</div>
 				<div id="search-area">
-					<input type="text" onFocus="JavaScript: clearText(this)"  value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+					<input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
 					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
 			</header>

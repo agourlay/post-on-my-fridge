@@ -30,7 +30,7 @@
 					</a>
 				</div>
 				<div id="search-area">
-					<input type="text" onFocus="JavaScript: clearText(this)"  value="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+					<input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
 					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
 				</div>
 			</header>
@@ -42,7 +42,7 @@
 								<textarea name="content" id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 							</div>
 							<div class="author">
-								<input type="text" value="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
+								<input type="text" placeholder="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
 								<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
 								<input type="hidden" id="fridgeId" value="${fridgeId}"/>
 							</div>
@@ -71,7 +71,7 @@
 			</div>			
 		</div>
 	</body>
-	<%@ include file="/template/template.jsp" %>
+	<%@ include file="/template/post.jsp" %>
 	
 	<!-- JS -->
 	<script type="text/javascript">

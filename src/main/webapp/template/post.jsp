@@ -3,7 +3,7 @@
 		<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
 		<div class='content'>{{{content}}}</div>
 		<div class='footer'>
-			<span class="author">{{author}}</span> posted <span class="date">{{relativeDate}}</span>
+			<span class="author">{{author}}</span> posted <time class="date" datetime="{{date}}">{{relativeDate}}</time>
 		</div>
 	</article>
 </script>
