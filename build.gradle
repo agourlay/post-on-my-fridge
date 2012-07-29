@@ -1,7 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','minifyFridgeJs','combineLibJs', 'gaeRun'
+defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','minifyFridgeJs','csslint','combineLibJs', 'gaeRun'
 
 repositories {
 	mavenCentral()
@@ -12,7 +12,7 @@ buildscript {
 	repositories { mavenCentral() }
 	dependencies {
 		classpath 'com.eriwen:gradle-js-plugin:1.0.3'
-		classpath 'com.eriwen:gradle-css-plugin:0.3'
+		classpath 'com.eriwen:gradle-css-plugin:1.0'
 	}
 }
 
@@ -63,6 +63,19 @@ task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'c
 }
 
 apply plugin: 'css'
+
+csslint {
+	source = [
+		"${projectDir}/src/main/webapp/css/pomf/post.css",
+		"${projectDir}/src/main/webapp/css/pomf/layout.css"
+	]
+	dest = "${buildDir}/csslint.out"
+	options { // Optional
+		format = 'lint-xml'
+		warnings = ['box-model', 'empty-rules', 'duplicate-properties']
+		errors = []
+	}
+}
 
 task combineFridgeCss(type: com.eriwen.gradle.css.tasks.CombineCssTask) {
 	source = [
