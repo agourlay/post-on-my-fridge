@@ -4,11 +4,11 @@
 		<!-- META -->
 		<title>${fridgeId}'s fridge</title>
 		<meta name="description" content="This is ${fridgeId}'s interactive fridge">
-        	<meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
-       		<meta charset="utf-8"> 
-       		<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
+        <meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
+       	<meta charset="utf-8"> 
+       	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
 	 
-       		<!-- CSS -->		
+       	<!-- CSS -->		
 		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
 		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.22.custom.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
@@ -72,6 +72,7 @@
 		</div>
 	</body>
 	<%@ include file="/template/post.jsp" %>
+	<%@ include file="/template/chatMessage.jsp" %>
 	
 	<!-- JS -->
 	<script type="text/javascript">

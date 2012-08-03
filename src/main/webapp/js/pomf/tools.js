@@ -20,13 +20,16 @@ function buildSpinner(){
 }
 
 function messageManagment(user,message){
-	$("#chatLog").append("<br/><i>" + moment().format('h:mm:ss') + "</i></br>" +user+" : "+formatChatMessage(message));
-	$("#chatLog").animate({ scrollTop: $("#chatLog").prop("scrollHeight") }, 3000);
-}
-
-function formatChatMessage(message){
-	chatMessage = "<span class = 'chatMessage'>"+ message +"</span>";
-	return chatMessage ;
+	var chatModel = {};
+	chatModel.user = user;
+	chatModel.message = message;
+	chatModel.timestamp = moment().format('h:mm:ss');
+	
+	var source = $("#chatMessageTemplate").html();
+	var template = Handlebars.compile(source); 
+	var output = template(chatModel);
+	$('#chatLog').append(output);
+	$("#chatLog").animate({ scrollTop: $("#chatLog").prop("scrollHeight") }, 3000);	
 }
 
 function onChatTextAreaChange() {
@@ -99,7 +102,6 @@ function setupSearchAutocomplete(){
 	});
 }
 
-
 function setRandomBackGround(){
 	path = "/images/background/";
 	myImages = ['bright_squares.png', 'circles.png', 'diagonal-noise.png', 'elastoplast.png',
@@ -145,7 +147,7 @@ function datePickerManagement(){
 
 function cutHex(h) {
 	return (h.charAt(0)=="#") ? h.substring(1,7):h;
-	}
+}
 
 function isRegExp(regExp, content){
 	return regExp.test(content);

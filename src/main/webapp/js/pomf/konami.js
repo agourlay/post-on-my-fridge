@@ -22,6 +22,6 @@ function konami(){
 	          return callback();
 	        }
 	      });
-	    };
+	    }
 	  })(jQuery);
 	}).call(this);

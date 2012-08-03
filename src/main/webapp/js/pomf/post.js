@@ -26,7 +26,7 @@ function replaceNewPost(elmt){
 }
 
 function isFridgeContaining(postId){
-	return _.find($('.post'), function(dataPost){return dataPost['id'] == postId});
+	return _.find($('.post'), function(dataPost){return dataPost.id == postId});
 }
 
 function deleteAnimationPost(elementId){
