@@ -4,11 +4,12 @@
 		<!-- META -->
 		<title>Post on my fridge : interactive fridge based messaging</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
-        	<meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,ajax,open source" />
-       		<meta charset="utf-8"> 
+        <meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,ajax,open source" />
+       	<meta charset="utf-8"> 
+       	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 	 	
-        	<!-- CSS -->		
+        <!-- CSS -->		
 		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
 		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.22.custom.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>

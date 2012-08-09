@@ -16,11 +16,11 @@
     </inbound-services>  
 	 
 	<static-files>
-	    <include path="/css/pomf/**.*" expiration="7d" />
+	    <include path="/css/app/**.*" expiration="7d" />
         <include path="/css/lib/**.*" expiration="10d" />
         
-        <include path="/js/pomf/**.js" expiration="7d" />
-        <include path="/js/lib/**.js" expiration="10d" />
+        <include path="/js/app/**.*" expiration="7d" />
+        <include path="/js/lib/**.*" expiration="10d" />
 	
         <include path="/images/**.*" expiration="7d" />
         <include path="favicon.ico" expiration="30d" />

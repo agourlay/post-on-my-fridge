@@ -5,19 +5,30 @@
 		<title>${fridgeId}'s fridge</title>
 		<meta name="description" content="This is ${fridgeId}'s interactive fridge">
         <meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
-       	<meta charset="utf-8"> 
+       	<meta charset="utf-8">
+       	<meta name="viewport" content="width=device-width, initial-scale=1.0">
        	<link rel="alternate" type="application/rss+xml" title="RSS" href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" />
 	 
        	<!-- CSS -->		
-		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
+		<link rel="stylesheet" href="/css/app/fridge.min.css"/>
 		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.22.custom.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 		<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
 		<link rel="stylesheet" href="/css/lib/farbastic/farbtastic.css"/>
-		<link rel="stylesheet" href="/css/lib/tipsy/tipsy.css"/>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
 	
 		<!-- JS -->
+		<script type="text/javascript">
+	  	var _gaq = _gaq || [];
+	  	_gaq.push(['_setAccount', 'UA-25345034-1']);
+	  	_gaq.push(['_trackPageview']);
+	   
+	  	(function() {
+	    	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  	})();
+		</script>
 		<script src="/_ah/channel/jsapi"></script>
 	</head>
 	<body>
@@ -35,7 +46,7 @@
 				</div>
 			</header>
 			<div id="main-content">	
-				<aside class ="leftPanel">
+				<aside id ="leftPanel">
 					<form id="postForm" accept-charset="utf-8">
 						<div id ="newPost" class="newPost">
 							<div class="content">
@@ -66,27 +77,28 @@
 				</aside>
 				<div id="loaded-content">
 					<div id="loading"></div>	
-					<section class="fridge"></section>
+					<section id="fridge">
+						  <script type="text/x-handlebars">
+							    {{#each App.FridgeController}}
+									{{#view App.PostView contentBinding="this"}}
+											<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
+											<div class='content'>{{{content}}}</div>
+											<div class='footer'>
+												<span class="author">{{author}}</span> posted 
+												<time class="date" datetime="{{date}}">{{relativeDate}}</time>
+											</div>
+									 {{/view}}
+								{{/each}}
+    					  </script>
+					</section>
 				</div>
 			</div>			
 		</div>
 	</body>
-	<%@ include file="/template/post.jsp" %>
-	<%@ include file="/template/chatMessage.jsp" %>
-	
+	<%@ include file="/js/app/templates/chatMessage.jsp" %>
 	<!-- JS -->
-	<script type="text/javascript">
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-25345034-1']);
-	  _gaq.push(['_trackPageview']);
-	   
-	  (function() {
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
-	<script src = "/js/pomf/lib.min.js"></script>
-	<script src = "/js/pomf/fridge.min.js"></script>
+	<script src = "/js/app/lib.min.js"></script>
+	<script src = "/js/app/lib.jquery.min.js"></script>
+	<script src = "/js/app/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>

@@ -6,9 +6,9 @@ The code that powers http://post-on-my-fridge.appspot.com
 
 * server side in java hosted on Google App Engine exposing Jersey Rest API
 
-* tons of JS on client side to build content dynamically in realtime using GAE Channel API.
+* client side in Ember.js
 
-* web application built with Gradle.
+* web application built with Gradle
 
 ## Donation
 

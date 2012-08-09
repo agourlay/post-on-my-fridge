@@ -93,9 +93,11 @@ public class Post implements Serializable{
 	public static void remove(long id) {
 		Post post = getPostById(id);
 		String currentFridgeId = post.getFridgeId();
-		dao.delete(post);
-		MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
-		ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
+		if (post != null){
+			dao.delete(post);
+			MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
+			ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
+		}
 	}
 	
 	public static void remove(Collection<Long> ids){
