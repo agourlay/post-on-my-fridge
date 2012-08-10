@@ -53,7 +53,7 @@ App.FridgeController = Ember.ArrayController.create({
 						return dataPost.id == postId;
 					});
 				if (!exist){
-					me.deletePost(postId);
+					me.removeObject(me.findProperty('id', postId));
 				}
 		})},
 
