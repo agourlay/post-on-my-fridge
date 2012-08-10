@@ -4,85 +4,82 @@
 		<!-- META -->
 		<title>Post on my fridge : interactive fridge based messaging</title>
 		<meta name="description" content="Post on my fridge is an interactive fridge based messaging system">
-        <meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,ajax,open source" />
+        <meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
        	<meta charset="utf-8"> 
        	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 	 	
         <!-- CSS -->		
-		<link rel="stylesheet" href="/css/pomf/fridge.min.css"/>
-		<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.22.custom.css"/>
-		<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
-		<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
-		<link rel="stylesheet" href="/css/lib/farbastic/farbtastic.css"/>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>	
+		<link rel="stylesheet" href="/css/lib/bootstrap.min.css"/>
+
+		<!-- JS -->	
+		<script>	
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-25345034-1']);
+		  _gaq.push(['_trackPageview']);
+		   
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+
+		<noscript>This site requires JavaScript to function properly!</noscript>
+
 	</head>
 	<body>
- 		<div id="global">
-			<header>
-				<div id="fridge-title">
-					Welcome to "Post on my fridge"</div>
-				<div id="search-area">
-					<input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
-					<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button> 
+ 		<div class="container">
+				<div class="hero-unit">
+					<div class="row">
+						<div class="span12">
+							<h1>Post on my fridge</h1>
+				       		<p>A collaborative messaging system using sticky notes on virtual fridges.</p>
+						</div>
+					</div>
+					<div class="row">	
+						<div class="span2">
+							<a class="btn btn-primary btn-large" 
+								onClick="parent.location='http://post-on-my-fridge.appspot.com/fridge/demo'">
+								Try the demo &raquo;
+							</a>
+						</div>	
+						<div class="span8">
+							<a href="#" class="thumbnail">
+							    <img src="../../images/index-fridge.png" alt="">
+							</a>
+						</div>	
+					</div>
 				</div>
-			</header>
-			<section id ="index-content">
-				<div id ="index-description">
-				 	Post on my fridge is a collaborative messaging system using sticky notes on virtual fridges.
-					<br/>
-					<br/>
-					There is no authentication, everyone can add or delete content.
-					<br/>
-					To access or create a fridge use the search box or type directly the fridge name in the url.
-					<br/>
-					You can share content on a fridge in real time with your friends!
-					<br/>
-					<br/>
-					Posts can contain dynamic media content. Just insert an url in the content of a post:
-					<br/>
-					<ul>
-						<li>a link to a gif/jpeg/png will display the picture in the post.</li>
-						<li>a youtube video will embed a video player in the post.</li>
-						<li>a link to a twitter account will display the last tweet.</li>
-						<li>a link to a rss feed will display the last feed.</li>
-					</ul>				
-					<br/>
-					Fridge urls can be shared, send them to your friend to share your latest web content.
-					<br/>	
-					<br/>		
-					Try the <a href="http://post-on-my-fridge.appspot.com/fridge/demo" target="_blank">demo fridge</a> now!
-				</div>
-				<div id ="index-picture"></div>				
-			</section>
+				<div class="row-fluid">
+			        <div class="span6 well">
+			          <h2>Freedom</h2>
+			          <p>Tired of authentication and access management? There is nothing like this here, everyone can add or delete content. Enjoy freedom and chaos.</p>
+			        </div>
+			        <div class="span5 well">
+			          <h2>Easy</h2>
+			           <p>To access or create a fridge use the search box or type directly the fridge name in the url /fridge/<em>fridge name</em>. Yes, urls are friendly here.</p>
+			       </div>
+			    </div>
+			    <div class="row-fluid">   
+			       <div class="span5 well">
+			          <h2>Share</h2>
+			          <p>You can share content on a fridge in real time with your friends while chatting.</p>
+			        </div>
+			        <div class="span6 well">
+			          <h2>Multimedia</h2>
+			          <p>Wanna share a link, a youtube video or a twitter account? Just insert an url in the content and we'll do the rest for you.</p>
+			        </div> 
+			    </div>    
+ 			</div>	
 		    <footer>
-		    	<a href="mailto:arnaud.gourlay@gmail.com" target="_blank"> Contact </a>
-		    		 -
-		    	<a href="http://about.arnaud-gourlay.info/" target="_blank"> About the author </a>
-		    		 -
-		    	<a href="https://github.com/shagaan/Post-On-My-Fridge" target="_blank"> Github </a>	 
+		    	<div class="row">
+			        <div class="span4 offset2">
+			        	<a href="https://github.com/shagaan/Post-On-My-Fridge" target="_blank"> Source on Github </a>	 
+			        </div> 
+ 				</div>				    	
 		    </footer>						
 		</div>
 	</body>
-	
-	<!-- JS -->
-	<script src = "/js/pomf/lib.min.js"></script>
-	<script src="/js/pomf/tools.js"></script>
-	<script>	
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-25345034-1']);
-	  _gaq.push(['_trackPageview']);
-	   
-	  (function() {
-		$('#global').css({opacity: 0.0, visibility: "visible"}).animate({opacity: 1.0});
-		setupSearchAutocomplete();
-		setRandomBackGround();
-		
-	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-	</script>
-	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>
 

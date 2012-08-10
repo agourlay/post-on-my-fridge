@@ -16,6 +16,7 @@
     </inbound-services>  
 	 
 	<static-files>
+		<include path="/css/index/**.*" expiration="7d" />
 	    <include path="/css/app/**.*" expiration="7d" />
         <include path="/css/lib/**.*" expiration="10d" />
         
