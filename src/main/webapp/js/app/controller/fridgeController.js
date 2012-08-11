@@ -55,7 +55,8 @@ App.FridgeController = Ember.ArrayController.create({
 				if (!exist){
 					me.removeObject(me.findProperty('id', postId));
 				}
-		})},
+			});
+		},
 
   		retrievePost : function(){
   			var me = this;

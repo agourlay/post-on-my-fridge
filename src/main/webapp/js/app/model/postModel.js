@@ -17,12 +17,14 @@ App.Post = Em.Object.extend({
 		      return positionX + ' ' + positionY;
 		    // setter
 		    } else {
-		      var name = value.split(" ");
-		      this.set('positionX', name[0]);
-		      this.set('positionY', name[1]);
-		      return value;
-		    }
-		  }.property('positionX', 'positionY'),
+			    var position = value.split(" ");
+			    Ember.beginPropertyChanges();
+			    this.set('positionX', position[0]);
+			    this.set('positionY', position[1]);
+			    Ember.endPropertyChanges();
+			    return value;
+			}
+		}.property('positionX', 'positionY'),
 
 		resourceUrl : "/resources/post/",
 

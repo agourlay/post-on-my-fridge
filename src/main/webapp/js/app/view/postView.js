@@ -51,9 +51,9 @@ App.PostView = Em.View.extend(App.Draggable,{
 			this.$().animate({'left': "+="+xTranslation,
 					   		   'top': "+="+yTranslation
 					  		 },'slow','linear');
-		},	
+		},
 
-		updatePosition : function(){
+		updatePhysicalPosition : function(){
 			this.animate();
 		}.observes('content.fullPosition'),
 
