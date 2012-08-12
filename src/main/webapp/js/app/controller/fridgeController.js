@@ -19,19 +19,8 @@ App.FridgeController = Ember.ArrayController.create({
 
 		updateExistingPost : function(postInput){
 			post = this.findProperty('id', postInput.id);
-			post.set('positionX', postInput.positionX);
-			post.set('positionY', postInput.positionY);
-		},
-
-		addPost : function(post) {
-			post.textColor = getTxtColorFromBg(post.color);
-			post.relativeDate = moment(post.date).fromNow();
-			post.content = generatePostContent(post);
-			this.pushObject(App.Post.create(post));
-  		},
-
-		updateExistingPost : function(postInput){
-			post = this.findProperty('id', postInput.id);
+			post.set('content', postInput.content);
+			post.set('color', postInput.color);
 			post.set('positionX', postInput.positionX);
 			post.set('positionY', postInput.positionY);
 		},
@@ -39,7 +28,7 @@ App.FridgeController = Ember.ArrayController.create({
   		createOrUpdate : function (post){
   			var exists = this.filterProperty('id', post.id).length;
   			if (exists === 0) {
-				this.addPost(post);
+				this.pushObject(App.Post.create(post));
 			}else{
 				this.updateExistingPost(post);
 			}

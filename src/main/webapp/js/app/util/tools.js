@@ -48,70 +48,7 @@ function initUIElement(){
 	});
 }
 
-// TODO Arnaud refactor this big sh*t 
-function generatePostContent(post){
-	var id = post.id,
-	    author = post.author,
-	    date = post.date,
-	    content = jQuery.trim(post.content),
-	
-    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
-    twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/,
-    rssRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/,
-    youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/,
-    pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
-	
-    contentArray = content.split(' ');
-	    
-	if (contentArray.length === 0){
-		contentArray[0] = content;
-	}
-	
-	$.each(contentArray, function(index, value) {  
-		if (isRegExp(urlRegexp,value)){
-			var url = $.url(value); 
-			
-			if (url.attr('host') == "twitter.com"){
-
-				 $.ajax({
-						url: "http://api.twitter.com/1/statuses/user_timeline.json",
-						dataType: "jsonp",
-						cache: false,
-						data : buildTwitterDataUrl(value),
-						success: function(data) { 
-							buildTweet(data,value,id,author,date,content,twitterRegexp);
-						  }
-						});
-			
-			}else if (url.attr('host') == "www.youtube.com"){
-
-				content = content.replace(youtubeRegexp,generateYoutubeFrame(url.param('v')));
-
-			}else if(isRegExp(rssRegexp,value)){
-
-				yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
-				$.getJSON( yql,	function(data) {
-			        	buildRssFeed(filterData(data.results[0]),value,id,author,date,content,rssRegexp);
-					  }
-				);
-
-			}else if(isRegExp(pictureRegexp,value)){
-
-				replacementPict = "</br><a href="+value+" target= blank ><img  class='post_picture' src="+value+" /></a>";
-				content = content.replace(pictureRegexp,replacementPict);
-				
-			}else{
-
-				replacement = "<a href="+value+" target= blank>"+value+"</a> ";
-				content = content.replace(urlRegexp,replacement);	
-
-			}	
-		}	
-	});	
-	return content;
-}
-
-function buildTweet(data,value,id,author,date,content,twitterRegexp){
+function buildTweet(data,value,content,twitterRegexp){
 	tweet = data[0];
 	tweetText = tweet.text;
 	if (tweetText.length > 110){
@@ -119,10 +56,10 @@ function buildTweet(data,value,id,author,date,content,twitterRegexp){
 	}
 	replacement = "<a href="+value+" target= blank >"+extractTwitterUser(value)+"</a> tweets :</br>"+ tweetText;
 	content = content.replace(twitterRegexp,replacement);
-	updatePostContent(id,content);
+	return content;
 }
 
-function buildRssFeed(feed,value,id,author,date,content,rssRegexp){
+function buildRssFeed(feed,content,rssRegexp){
 	channel = $(feed).children("channel:first");
 	title = channel.find("title:first").html();
 	item = channel.find("item:first");
@@ -130,7 +67,7 @@ function buildRssFeed(feed,value,id,author,date,content,rssRegexp){
 	itemTitle = $(item).find("title").text();
 	replacement = "<a href="+link+" target= blank >"+title+"</a> Rss :</br>"+ itemTitle;
 	content = content.replace(rssRegexp,replacement);
-	updatePostContent(id,content);
+	return content;
 }
 
 function buildTwitterDataUrl(url){

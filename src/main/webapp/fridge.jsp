@@ -80,12 +80,12 @@
 					<section id="fridge">
 						  <script type="text/x-handlebars">
 							    {{#each App.FridgeController}}
-									{{#view App.PostView contentBinding="this"}}
+									{{#view App.PostView postBinding="this"}}
 											<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
-											<div class='content'>{{{content}}}</div>
+											<div class='content'>{{{view.generatedContent}}}</div>
 											<div class='footer'>
 												<span class="author">{{author}}</span> posted 
-												<time class="date" datetime="{{date}}">{{relativeDate}}</time>
+												<time class="date" datetime="{{date}}">{{view.relativeDate}}</time>
 											</div>
 									 {{/view}}
 								{{/each}}

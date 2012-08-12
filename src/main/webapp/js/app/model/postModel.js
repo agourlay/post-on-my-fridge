@@ -24,7 +24,7 @@ App.Post = Em.Object.extend({
 			    Ember.endPropertyChanges();
 			    return value;
 			}
-		}.property('positionX', 'positionY'),
+		}.property('positionX', 'positionY').cacheable(),
 
 		resourceUrl : "/resources/post/",
 
