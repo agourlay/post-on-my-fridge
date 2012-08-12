@@ -69,7 +69,7 @@ task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'c
 	source = file("${buildDir}/exploded-war/js/app/fridge.js")
 	dest = file("${buildDir}/exploded-war/js/app/fridge.min.js")
 	closure {
-		closure.compilationLevel = 'WHITESPACE_ONLY'
+		closure.compilationLevel = 'SIMPLE_OPTIMIZATIONS'
 	}
 }
 
