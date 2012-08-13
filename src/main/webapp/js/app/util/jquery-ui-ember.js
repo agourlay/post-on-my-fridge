@@ -47,7 +47,8 @@ App.Base = Ember.Mixin.create({
   // with SproutCore bindings, any time the SproutCore property for a
   // given jQuery UI option changes, we update the jQuery UI widget.
   _gatherOptions: function() {
-    var uiOptions = this.get('uiOptions'), options = {};
+    var uiOptions = this.get('uiOptions'),
+      options = {};
 
     // The view can specify a list of jQuery UI options that should be treated
     // as SproutCore properties.
@@ -58,9 +59,9 @@ App.Base = Ember.Mixin.create({
       // call jQuery UI's `setOption` method to reflect the property onto
       // the jQuery UI widget.
       var observer = function() {
-        var value = this.get(key);
-        this.get('ui')._setOption(key, value);
-      };
+          var value = this.get(key);
+          this.get('ui')._setOption(key, value);
+        };
 
       this.addObserver(key, observer);
 
@@ -79,7 +80,8 @@ App.Base = Ember.Mixin.create({
   // could implement the `complete` method to be notified when the jQuery
   // UI widget triggered the event.
   _gatherEvents: function(options) {
-    var uiEvents = this.get('uiEvents') || [], self = this;
+    var uiEvents = this.get('uiEvents') || [],
+      self = this;
 
     uiEvents.forEach(function(event) {
       var callback = self[event];
@@ -88,17 +90,17 @@ App.Base = Ember.Mixin.create({
         // You can register a handler for a jQuery UI event by passing
         // it in along with the creation options. Update the options hash
         // to include any event callbacks.
-        options[event] = function(event, ui) { callback.call(self, event, ui); };
+        options[event] = function(event, ui) {
+          callback.call(self, event, ui);
+        };
       }
     });
   }
 });
 
 
-App.Draggable = Ember.Mixin.create( App.Base, {
-    uiType: 'draggable',
-    uiOptions: ['disabled', 'addClasses', 'appendTo', 'axis', 'cancel', 'connectToSortable', 'containment', 'cursor', 
-              'delay', 'distance', 'grid', 'handle', 'snap', 'snapMode', 'stack'],
-    uiEvents: ['create', 'start', 'drag', 'dragstop']
+App.Draggable = Ember.Mixin.create(App.Base, {
+  uiType: 'draggable',
+  uiOptions: ['disabled', 'addClasses', 'appendTo', 'axis', 'cancel', 'connectToSortable', 'containment', 'cursor', 'delay', 'distance', 'grid', 'handle', 'snap', 'snapMode', 'stack'],
+  uiEvents: ['create', 'start', 'drag', 'dragstop']
 });
-
