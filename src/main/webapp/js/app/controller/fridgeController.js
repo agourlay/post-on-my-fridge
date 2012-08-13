@@ -21,8 +21,7 @@ App.FridgeController = Ember.ArrayController.create({
 		post = this.findProperty('id', postInput.id);
 		post.set('content', postInput.content);
 		post.set('color', postInput.color);
-		post.set('positionX', postInput.positionX);
-		post.set('positionY', postInput.positionY);
+		post.set('fullPosition',  postInput.positionX + ' ' + postInput.positionY );
 	},
 
 	createOrUpdate: function(post) {
