@@ -2,4 +2,8 @@
 .settings
 war/WEB-INF/appengine-generated/
 war/WEB-INF/classes/
+.gradle/
+.classpath
+bin/
+build/
 
