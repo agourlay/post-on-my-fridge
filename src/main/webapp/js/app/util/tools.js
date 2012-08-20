@@ -41,8 +41,8 @@ function initUIElement() {
 				newPostData.content = $("#content").val();
 				newPostData.color = $("#postColor").val();
 				newPostData.dueDate = $("#dueDate").val();
-				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / fridge.width();
-				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / fridge.height();
+				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(fridge.css("width"), 10);
+				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(fridge.css("height"), 10);
 				newPostData.fridgeId = App.FridgeController.get('fridgeId');
 				App.FridgeController.createPost(newPostData);
 				ui.draggable.animate({
