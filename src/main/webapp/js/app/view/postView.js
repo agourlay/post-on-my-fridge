@@ -114,7 +114,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 		$.each(contentArray, function(index, value) {
 			if (isRegExp(urlRegexp, value)) {
-				var url = $.url(value);
+				var url = purl(value);
 
 				if (url.attr('host') == "twitter.com") {
 
