@@ -123,8 +123,8 @@ gae {
 }
 
 dependencies {
-	gaeSdk 'com.google.appengine:appengine-java-sdk:1.7.0'
-	compile 'com.google.appengine:appengine-api-1.0-sdk:1.7.0'
+	gaeSdk 'com.google.appengine:appengine-java-sdk:1.7.1'
+	compile 'com.google.appengine:appengine-api-1.0-sdk:1.7.1'
 	compile 'com.google.code.gson:gson:2.2.2'
 	compile 'javax.servlet:servlet-api:2.5'
 	compile 'joda-time:joda-time:2.1'
