@@ -61,7 +61,7 @@
 							<input type="hidden" id="dueDate"/>
 							<div id="changeColor" class="changeColor" title="Click here to change the post's color">
 								<div id="color-dialog" title="Choose the color of your post">
-									<div id="color-picker"></div>
+									<input type="color" id="postColor" maxlength="15" size="15" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
 								</div>
 							</div>
 						</div>

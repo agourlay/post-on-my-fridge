@@ -88,30 +88,8 @@ function buildTwitterDataUrl(url) {
 function colorPickerManagement() {
 	var color = $("#postColor").val(),
 		textColor = getTxtColorFromBg(color);
-
+		
 	updatePostFormColor(color);
-
-	colorPicker = $.farbtastic("#color-picker").setColor(color);
-	$("#color-dialog").dialog({
-		autoOpen: false,
-		show: "blind",
-		hide: "blind",
-		zIndex: 1000,
-		modal: true,
-		buttons: {
-			"Pick color": function() {
-				updatePostFormColor(colorPicker.color);
-				$(this).dialog("close");
-			},
-			Cancel: function() {
-				$(this).dialog("close");
-			}
-		}
-	});
-
-	$('#changeColor').click(function() {
-		$("#color-dialog").dialog("open");
-	});
 }
 
 function updatePostFormColor(color) {

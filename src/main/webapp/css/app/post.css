@@ -76,12 +76,11 @@
 	position: relative;
 	padding: 5px;
 	display : inline-block;
-	width : 20%; }
+	width : 30%; }
 
 .newPost .changeColor{
-	background: transparent url(../../images/colorButton.png) no-repeat 0 0;
 	height: 20px;
- 	width: 20px;
+ 	width: 40px;
  	background-size: 100%;
  	z-index: 1000;
  	float: right; }
