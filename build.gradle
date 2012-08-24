@@ -45,7 +45,6 @@ task combineLibJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 
 task combineLibJqueryDependent(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
-		"${projectDir}/src/main/webapp/js/lib/farbtastic-1.3.min.js",
 		"${projectDir}/src/main/webapp/js/lib/ember-1.0.pre.min.js",
 		"${projectDir}/src/main/webapp/js/lib/konami.js"
 	]
