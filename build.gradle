@@ -102,7 +102,6 @@ task minifyFridgeCss(type: com.eriwen.gradle.css.tasks.MinifyCssTask, dependsOn:
 	dest = file("${buildDir}/exploded-war/css/app/fridge.min.css")
 }
 
-
 buildscript {
 	repositories {
 		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
