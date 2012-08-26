@@ -21,7 +21,10 @@ App.FridgeController = Ember.ArrayController.create({
 		post = this.findProperty('id', postInput.id);
 		post.set('content', postInput.content);
 		post.set('color', postInput.color);
-		post.set('fullPosition',  postInput.positionX + ' ' + postInput.positionY );
+		newFullPosition = postInput.positionX + ' ' + postInput.positionY;
+		if (post.get('fullPosition') != newFullPosition){
+			post.set('fullPosition', newFullPosition);
+		}
 	},
 
 	createOrUpdate: function(post) {

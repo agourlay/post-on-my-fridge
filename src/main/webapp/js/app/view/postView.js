@@ -37,7 +37,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 		view.initTrash();
 		view.colorize();
-		view.animate();
+		view.updatePhysicalPosition();
 
 		view.$().draggable({
 			revert: 'invalid',
@@ -64,7 +64,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 		libnotify.log("Post from " + this.get('post').get('author') + " deleted");
 	},
 
-	animate: function() {
+	updatePhysicalPosition: function() {
 		var left = this.get('post').get('positionX');
 		var top = this.get('post').get('positionY');
 		var fridge = $('#fridge');
@@ -72,14 +72,12 @@ App.PostView = Em.View.extend(App.Draggable, {
 		xTranslation = (left * fridge.width() - parseInt(this.$().offset().left, 10));
 		yTranslation = (top * fridge.height() - parseInt(this.$().offset().top, 10));
 
-		this.$().animate({
-			'left': "+=" + xTranslation,
-			'top': "+=" + yTranslation
-		}, 'slow', 'linear');
-	},
-
-	updatePhysicalPosition: function() {
-		this.animate();
+		if (xTranslation != 0 || yTranslation != 0){
+			this.$().animate({
+				'left': "+=" + xTranslation,
+				'top': "+=" + yTranslation
+			}, 'slow', 'linear');
+		}
 	}.observes('post.fullPosition'),
 
 	colorize: function() {
