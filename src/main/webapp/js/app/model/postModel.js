@@ -8,6 +8,7 @@ App.Post = Em.Object.extend({
 	positionY: null,
 	dueDate: null,
 	fridgeId: null,
+	resourceUrl: "/resources/post/",
 
 	fullPosition: function(key, value) {
 		// getter
@@ -15,7 +16,7 @@ App.Post = Em.Object.extend({
 			var positionX = this.get('positionX');
 			var positionY = this.get('positionY');
 			return positionX + ' ' + positionY;
-			// setter
+		// setter
 		} else {
 			var position = value.split(" ");
 			Ember.beginPropertyChanges();
@@ -25,8 +26,6 @@ App.Post = Em.Object.extend({
 			return value;
 		}
 	}.property('positionX', 'positionY').cacheable(),
-
-	resourceUrl: "/resources/post/",
 
 	deletePost: function() {
 		$.ajax({

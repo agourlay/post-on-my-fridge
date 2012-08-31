@@ -10,7 +10,7 @@
 	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="/css/lib/bootstrap.min.css"/>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-combined.min.css"/>
 
 	<!-- JS -->
 	<script>	
@@ -83,7 +83,7 @@
 	<footer>
 		<div class="row">
 			<div class="span4 offset2">
-				<a href="https://github.com/shagaan/Post-On-My-Fridge" target="_blank">Source on Github</a>
+				<a href="https://github.com/agourlay/Post-On-My-Fridge" target="_blank">Source on Github</a>
 			</div>
 		</div>
 	</footer>
