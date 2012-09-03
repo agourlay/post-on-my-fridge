@@ -88,7 +88,7 @@
 	<footer>
 		<div class="row">
 			<div class="span4 offset2">
-				<a href="https://github.com/agourlay/Post-On-My-Fridge" target="_blank">Source on Github</a>
+				<a href="https://github.com/agourlay/post-on-my-fridge" target="_blank">Source on Github</a>
 			</div>
 		</div>
 	</footer>

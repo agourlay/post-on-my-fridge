@@ -1,6 +1,6 @@
-# Post On My Fridge
-
 The code that powers http://post-on-my-fridge.appspot.com
+
+A Collaborative messaging system using sticky notes on fridges.
 
 ## Technical infos
 
