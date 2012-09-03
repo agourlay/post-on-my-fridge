@@ -50,6 +50,11 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="alert">
+		 	<h4>Warning!</h4> The application is still under heavy developement, the data are likely to be lost..
+		</div>
+
 		<div class="row-fluid">
 			<div class="span6 well">
 				<h2>Freedom</h2>

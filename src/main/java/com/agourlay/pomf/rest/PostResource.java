@@ -1,19 +1,16 @@
 package com.agourlay.pomf.rest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
-import com.agourlay.pomf.tools.Utils;
 
 @Path("/post")
 public class PostResource {
@@ -25,32 +22,17 @@ public class PostResource {
 	}
 	
 	@PUT
-	@Path("/{postId}")
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void updatePost(@PathParam ("postId") String postId,
-			@FormParam("positionX") String positionX,
-			@FormParam("positionY") String positionY) {
-		
-		Long id = Long.parseLong(postId);
-
-		Double posX = Double.parseDouble(positionX);
-		Double posY = Double.parseDouble(positionY);
-		
-		Post.updatePosition(id, posX, posY);
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void updatePost(Post post) {
+		Post.savePost(post);	
 	}
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public void addPost(@Context HttpServletRequest req,
-			@FormParam("fridgeId") final String fridgeId,
-			@FormParam("positionX") String positionX,@FormParam("positionY") String positionY,
-			@FormParam("author") String author,@FormParam("content") String content,
-			@FormParam("color") String color, @FormParam("dueDate") String dueDate) {
-		
-			Double posX = Double.parseDouble(positionX);
-			Double posY = Double.parseDouble(positionY);
-			Fridge.createFridgeIfNotExist(fridgeId);
-			Post.add(fridgeId,author, content,posX,posY,color,Utils.stringToDate(dueDate, "MM/dd/yyyy"));	
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public void addPost(Post post) {
+		Fridge.createFridgeIfNotExist(post.getFridgeId());
+		Post.savePost(post);	
 	}
-
 }

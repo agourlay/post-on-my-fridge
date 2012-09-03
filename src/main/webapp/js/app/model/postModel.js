@@ -30,37 +30,41 @@ App.Post = Em.Object.extend({
 	deletePost: function() {
 		$.ajax({
 			type: 'DELETE',
-			url: this.resourceUrl + this.id
+			url: this.resourceUrl + this.id,
+			error: function(xhr, ajaxOptions, thrownError) {
+				jackedup = humane.create({
+					baseCls: 'humane-jackedup',
+					addnCls: 'humane-jackedup-error'
+				});
+				jackedup.log("Post not deleted!");
+			}
 		});
 	},
 
 	updatePosition: function() {
-		var postPosition = {};
-		postPosition.positionX = this.get('positionX');
-		postPosition.positionY = this.get('positionY');
 		$.ajax({
-			url: this.resourceUrl + this.id,
+			url: this.resourceUrl,
 			type: "PUT",
-			data: postPosition
+			dataType: "json",
+			contentType: "application/json",
+			data: JSON.stringify(this),
+			error: function(xhr, ajaxOptions, thrownError) {
+				jackedup = humane.create({
+					baseCls: 'humane-jackedup',
+					addnCls: 'humane-jackedup-error'
+				});
+				jackedup.log("Post not updated!");
+			}
 		});
 	}.observes('fullPosition'),
 
 	createPost: function() {
-		var postData = {};
-		postData.author = this.get('author');
-		postData.content = this.get('content');
-		postData.color = this.get('color');
-		postData.dueDate = this.get('dueDate');
-		postData.positionX = this.get('positionX');
-		postData.positionY = this.get('positionY');
-		postData.fridgeId = this.get('fridgeId');
-
 		$.ajax({
 			url: this.resourceUrl,
-			data: postData,
-			dataType: "html",
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			data: JSON.stringify(this),
+			dataType: "json",
 			type: "POST",
+        	contentType: "application/json",
 			success: App.FridgeController.retrievePost(),
 			error: function(xhr, ajaxOptions, thrownError) {
 				jackedup = humane.create({

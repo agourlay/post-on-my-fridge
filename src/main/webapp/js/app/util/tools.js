@@ -17,13 +17,6 @@ function initUIElement() {
 		}
 	});
 
-	$("#dueDate").datepicker({
-		showOn: "button",
-		buttonImage: "/images/calendar.gif",
-		buttonText: 'Choose a due date',
-		buttonImageOnly: true
-	});
-
 	$("#search").autocomplete({
 		source: "/resources/fridge/noid/search",
 		delay: 1000,

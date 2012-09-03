@@ -52,12 +52,12 @@
 							<textarea name="content" id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 						</div>
 						<div class="author">
-							<input type="text" placeholder="Anonymous" name=author id="author" maxlength="15" size="12" title="Who are u?"/>
+							<input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12" title="Who are u?"/>
 							<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
 							<input type="hidden" id="fridgeId" value="${fridgeId}"/>
 						</div>
 						<div class="iconBox">
-							<input type="hidden" id="dueDate"/>
+							<input type="date" id="dueDate"/>
 							<div id="changeColor" class="changeColor" title="Click here to change the post's color">
 								<div id="color-dialog" title="Choose the color of your post">
 									<input type="color" id="postColor" maxlength="15" size="15" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>

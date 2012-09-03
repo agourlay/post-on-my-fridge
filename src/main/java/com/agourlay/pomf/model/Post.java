@@ -40,42 +40,18 @@ public class Post implements Serializable{
 	private Date dueDate;
 	private String fridgeId;
 
-	public Post() {}
-
-	public Post(String author, String content, Double positionX,Double positionY,String color,Date dueDate,String fridgeId) {
-		this.author = Strings.isNullOrEmpty(author) ? "Anonymous" : author;
-		this.content = Strings.isNullOrEmpty(content) ? "What's up?" : content;		
+	public Post() {
 		this.date = new Date();
-		this.positionX = positionX;
-		this.positionY = positionY;
-		this.color = color;
-		this.dueDate = dueDate;
-		this.fridgeId = fridgeId;
 	}
 
 	// DAO METHODS 
-	
-	public static void add(String fridgeId,String author, String content, Double positionX,Double positionY,String color,Date dueDate) {
-		Post post = new Post(author,content,positionX,positionY,color,dueDate,fridgeId);
-		savePost(post);
-		ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
-	}
 
 	public static void savePost(Post post){
         	dao.ofy().put(post);
         	MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
+        	ClientRepository.notifyAllClientFromFridge(post.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
 	}
-	
-	public static void updatePosition(Long id, Double positionX,Double positionY) {
-		Post postToUpdate = getPostById(id);
-		if (postToUpdate != null){
-			postToUpdate.setPositionX(positionX);
-			postToUpdate.setPositionY(positionY);
-			savePost(postToUpdate);
-			ClientRepository.notifyAllClientFromFridge(postToUpdate.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
-		}
-	}
-		
+			
 	public static Post getPostById(Long id) {
 		try {
 			return dao.get(id);
