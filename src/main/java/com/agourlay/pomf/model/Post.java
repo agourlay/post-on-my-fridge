@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.service.ClientRepository;
@@ -34,6 +35,7 @@ public class Post implements Serializable{
 	private String author;
 	private String content;
 	private String color;
+	@JsonIgnore
 	private Date date;
 	private Double positionX;
 	private Double positionY;

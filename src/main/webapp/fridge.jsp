@@ -96,6 +96,6 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
-	<script src = "/js/app/fridge.js"></script>
+	<script src = "/js/app/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>
