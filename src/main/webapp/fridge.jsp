@@ -57,12 +57,8 @@
 							<input type="hidden" id="fridgeId" value="${fridgeId}"/>
 						</div>
 						<div class="iconBox">
-							<input type="date" id="dueDate"/>
-							<div id="changeColor" class="changeColor" title="Click here to change the post's color">
-								<div id="color-dialog" title="Choose the color of your post">
-									<input type="color" id="postColor" maxlength="15" size="15" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
-								</div>
-							</div>
+							<input type="date" id="dueDate" title="Pick a due date"/>
+							<input type="color" id="postColor" class="changeColor" maxlength="15" size="15" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)" title="Change the color"/>
 						</div>
 					</div>
 				</form>
@@ -97,9 +93,9 @@
 	<%@ include file="/js/app/templates/chatMessage.jsp" %>
 	<!-- JS -->
 	<script src = "/js/app/lib.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
-	<script src = "/js/app/fridge.min.js"></script>
+	<script src = "/js/app/fridge.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>

@@ -21,7 +21,6 @@
     height: 220px;
     z-index:300; }
 
-
 .post .header{
 	position: absolute;
 	left:0;
@@ -40,6 +39,7 @@
 	margin:auto;
     width: 222px;
     height: 200px;
+    word-wrap : break-word;
     vertical-align: middle;}
 	
 .post .footer{
