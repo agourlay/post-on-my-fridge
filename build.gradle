@@ -5,7 +5,7 @@ defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshin
 
 repositories {
 	mavenCentral()
-	mavenRepo name:'objectify-appengine-releases', url:'http://objectify-appengine.googlecode.com/svn/maven'
+	mavenRepo name:'objectify-appengine-releases', url:'http://maven.objectify-appengine.googlecode.com/git/'
 }
 
 buildscript {

@@ -12,17 +12,18 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Query;
+import com.googlecode.objectify.impl.conv.joda.JodaTimeConverters;
 import com.googlecode.objectify.util.DAOBase;
 
 /**
  * DAO Objectify
- * 
  */
 public class ObjectifyDao<T> extends DAOBase {
 	
  protected Class<T> clazz;
 
 	static {
+		JodaTimeConverters.add(ObjectifyService.factory().getConversions());
 		ObjectifyService.register(Post.class);
 		ObjectifyService.register(Fridge.class);
 		ObjectifyService.register(FridgeUser.class);

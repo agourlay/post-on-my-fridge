@@ -1,10 +1,11 @@
 package com.agourlay.pomf.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Id;
+
+import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.googlecode.objectify.annotation.Cached;
@@ -20,7 +21,7 @@ public class Stat implements Serializable{
 	
 	@Id
 	private Long id;
-	private Date generationDate;
+	private DateTime generationDate;
 	private Integer fridgeNumber;
 	private Integer postNumber;
 	
@@ -37,7 +38,7 @@ public class Stat implements Serializable{
 	
 	public static void generateDailyStat(){
 		Stat newStat = new Stat();
-		newStat.setGenerationDate(new Date());
+		newStat.setGenerationDate(new DateTime());
 		newStat.setFridgeNumber(Fridge.countFridge());
 		newStat.setPostNumber(Post.countPost());
 		Stat.createStat(newStat);
@@ -51,10 +52,10 @@ public class Stat implements Serializable{
 	public void setPostNumber(Integer postNumber) {
 		this.postNumber = postNumber;
 	}
-	public Date getGenerationDate() {
+	public DateTime getGenerationDate() {
 		return generationDate;
 	}
-	public void setGenerationDate(Date generationDate) {
+	public void setGenerationDate(DateTime generationDate) {
 		this.generationDate = generationDate;
 	}
 	public Integer getFridgeNumber() {

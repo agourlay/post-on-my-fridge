@@ -1,23 +1,22 @@
 package com.agourlay.pomf.model;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.google.common.base.Strings;
 
 @Entity
 public class Post implements Serializable{
@@ -36,14 +35,14 @@ public class Post implements Serializable{
 	private String content;
 	private String color;
 	@JsonIgnore
-	private Date date;
+	private DateTime date;
 	private Double positionX;
 	private Double positionY;
-	private Date dueDate;
+	private DateTime dueDate;
 	private String fridgeId;
 
 	public Post() {
-		this.date = new Date();
+		this.date = new DateTime();
 	}
 
 	// DAO METHODS 
@@ -110,16 +109,11 @@ public class Post implements Serializable{
 		this.content = content;
 	}
 	
-	public Date getDate() {
+	public DateTime getDate() {
 		return date;
 	}
-	
-	public String getFormatedDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		return sdf.format(date);
-	}
 
-	public void setDate(Date date) {
+	public void setDate(DateTime date) {
 		this.date = date;
 	}
 
@@ -151,11 +145,11 @@ public class Post implements Serializable{
 		this.color = color;
 	}
 	
-	public Date getDueDate() {
+	public DateTime getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 
