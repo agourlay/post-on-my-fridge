@@ -1,5 +1,5 @@
 ---
 before_script:
   - "wget http://services.gradle.org/distributions/gradle-1.1-bin.zip"
-  - "unzip gradle-1.0* > /dev/null"
-script: "gradle-1.0*/bin/gradle"
+  - "unzip gradle-1.1* > /dev/null"
+script: "gradle-1.1*/bin/gradle"
