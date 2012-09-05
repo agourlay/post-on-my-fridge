@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](http://travis-ci.org/agourlay/post-on-my-fridge)
+
 The code that powers http://post-on-my-fridge.appspot.com
 
 A Collaborative messaging system using sticky notes on fridges.
