@@ -41,7 +41,6 @@
 			</div>
 			<div id="search-area">
 				<input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
-				<button type="button" onclick="JavaScript: redirectAfterSearch()">Go!</button>
 			</div>
 		</header>
 		<div id="main-content">

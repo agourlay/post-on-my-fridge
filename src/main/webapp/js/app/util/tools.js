@@ -20,7 +20,10 @@ function initUIElement() {
 	$("#search").autocomplete({
 		source: "/resources/fridge/noid/search",
 		delay: 1000,
-		minLength: 2
+		minLength: 2,
+		select: function(event, ui) {
+			 window.location = "/fridge/" + ui.item.label;
+		 }
 	});
 
 	var fridge = $('#fridge');
@@ -198,11 +201,6 @@ function showFridge() {
 	}).animate({
 		opacity: 1.0
 	});
-}
-
-function redirectAfterSearch() {
-	var fridgeId = $("#search").val();
-	window.location = "/fridge/" + fridgeId;
 }
 
 function setRandomBackGround() {
