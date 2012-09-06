@@ -19,7 +19,7 @@ function initUIElement() {
 
 	$("#search").autocomplete({
 		source: "/resources/fridge/noid/search",
-		delay: 1000,
+		delay: 500,
 		minLength: 2,
 		select: function(event, ui) {
 			 window.location = "/fridge/" + ui.item.label;
