@@ -3,8 +3,8 @@ App.FridgeController = Ember.ArrayController.create({
 	fridgeId: $("#fridgeId").val(),
 
 	init: function() {
+		this._super();
 		this.retrievePost();
-		return this._super();
 	},
 
 	createPost: function(postData) {

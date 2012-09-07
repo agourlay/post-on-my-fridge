@@ -48,7 +48,6 @@ function initUIElement() {
 					'left': '10',
 					'top': '10'
 				}, 'slow', 'linear');
-				App.FridgeController.retrievePost();
 			}
 		}
 	});

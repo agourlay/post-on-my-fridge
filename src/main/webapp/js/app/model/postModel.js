@@ -19,13 +19,12 @@ App.Post = Em.Object.extend({
 		// setter
 		} else {
 			var position = value.split(" ");
-			Ember.beginPropertyChanges();
 			this.set('positionX', position[0]);
 			this.set('positionY', position[1]);
-			Ember.endPropertyChanges();
+			this.notifyPropertyChange('fullPosition');
 			return value;
 		}
-	}.property('positionX', 'positionY').cacheable(),
+	}.property().cacheable(),
 
 	deletePost: function() {
 		$.ajax({
