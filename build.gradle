@@ -120,6 +120,7 @@ gae {
 	disableUpdateCheck = true
 	downloadSdk = true
 	appcfg { email = 'arnaud.gourlay@gmail.com' }
+	jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000']
 }
 
 dependencies {
