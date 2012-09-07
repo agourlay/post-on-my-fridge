@@ -167,32 +167,34 @@ function sendChatMessage() {
 }
 
 function channelManagement() {
-	var fridgeId = $("#fridgeId").val();
-	$.getJSON("/_ah/channel/" + fridgeId, function(tokenChannel) {
-		if (tokenChannel !== undefined) {
-			var channel = new goog.appengine.Channel(tokenChannel);
-			var socket = channel.open();
-			socket.onopen = function() {
-
-			};
-			socket.onmessage = function(m) {
-				var data = $.parseJSON(m.data);
-				if (data.command == "#FRIDGE-UPATE#") {
-					App.FridgeController.retrievePost();
-				}
-				if (data.command == "#FRIDGE-CHAT#") {
-					messageManagment(data.user, data.message);
-				}
-			};
-			socket.onerror = function(err) {
-				jackedup = humane.create({
-					baseCls: 'humane-jackedup',
-					addnCls: 'humane-jackedup-error'
-				});
-				jackedup.log("Channel error :" + err.description);
-			};
-			socket.onclose = function() {};
-		}
+	$.ajax({
+		url:"/_ah/channel/" + $("#fridgeId").val(),
+		type: "GET",
+		dataType:'text',
+		success: function(tokenChannel) {
+			if (tokenChannel !== undefined) {
+				var channel = new goog.appengine.Channel(tokenChannel);
+				var socket = channel.open();
+				socket.onopen = function() {};
+				socket.onclose = function() {};
+				socket.onmessage = function(m) {
+					var data = $.parseJSON(m.data);
+					if (data.command == "#FRIDGE-UPATE#") {
+						App.FridgeController.retrievePost();
+					}
+					if (data.command == "#FRIDGE-CHAT#") {
+						messageManagment(data.user, data.message);
+					}
+				};
+				socket.onerror = function(err) {
+					jackedup = humane.create({
+						baseCls: 'humane-jackedup',
+						addnCls: 'humane-jackedup-error'
+					});
+					jackedup.log("Channel error :" + err.description);
+				};
+			}
+		}	
 	});
 }
 

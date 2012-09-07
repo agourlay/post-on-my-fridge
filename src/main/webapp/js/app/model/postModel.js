@@ -24,7 +24,7 @@ App.Post = Em.Object.extend({
 			this.notifyPropertyChange('fullPosition');
 			return value;
 		}
-	}.property().cacheable(),
+	}.property(),
 
 	deletePost: function() {
 		$.ajax({
@@ -64,7 +64,6 @@ App.Post = Em.Object.extend({
 			dataType: "json",
 			type: "POST",
         	contentType: "application/json",
-			success: App.FridgeController.retrievePost(),
 			error: function(xhr, ajaxOptions, thrownError) {
 				jackedup = humane.create({
 					baseCls: 'humane-jackedup',

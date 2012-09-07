@@ -20,8 +20,7 @@ public class ChannelResource {
 	@Produces("application/json")
 	public String createChannel(@PathParam("fridgeId") String fridgeId) {
 		String channelId = UUID.randomUUID().toString();
-		String token = ClientRepository.addChannelToFridge(fridgeId, channelId);
-		return token;
+		return  ClientRepository.addChannelToFridge(fridgeId, channelId);
 	}
 	
 	@POST

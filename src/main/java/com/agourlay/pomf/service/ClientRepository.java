@@ -44,7 +44,8 @@ public class ClientRepository {
 				ChatMessage chatMessage = new ChatMessage(command, user, message);
 				ObjectMapper mapper = new ObjectMapper();
 				try {
-					channelService.sendMessage(new ChannelMessage(channelId,mapper.writeValueAsString(chatMessage)));
+					String chatMessageJson = mapper.writeValueAsString(chatMessage);
+					channelService.sendMessage(new ChannelMessage(channelId,chatMessageJson));
 				} catch (JsonGenerationException e) {
 					e.printStackTrace();
 				} catch (JsonMappingException e) {
