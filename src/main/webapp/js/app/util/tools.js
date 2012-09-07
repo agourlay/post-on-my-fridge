@@ -37,6 +37,9 @@ function initUIElement() {
 				newPostData.content = $("#content").val();
 				newPostData.color = $("#postColor").val();
 				newPostData.dueDate = $("#dueDate").val();
+				if (newPostData.dueDate != ""){
+					newPostData.dueDate = newPostData.dueDate+'T00:00:00';	
+				}
 				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(fridge.css("width"), 10);
 				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(fridge.css("height"), 10);
 				newPostData.fridgeId = App.FridgeController.get('fridgeId');
@@ -45,6 +48,7 @@ function initUIElement() {
 					'left': '10',
 					'top': '10'
 				}, 'slow', 'linear');
+				App.FridgeController.retrievePost();
 			}
 		}
 	});
