@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
 	<link rel="stylesheet" href="/css/lib/jquery-powertip/jquery.powertip.css"/>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet'>
 
 	<!-- JS -->
 	<script type="text/javascript">
@@ -65,7 +65,7 @@
 					<form id="chatInput" accept-charset="utf-8">
 						<input type="text" value="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
 						<div id="chatLog"></div>
-						<textarea id="message" rows="0" cols="0" maxlength="200" title="Type your message here"></textarea>
+						<textarea id="message" rows="0" cols="0" maxlength="200"></textarea>
 					</form>
 				</div>
 			</aside>
