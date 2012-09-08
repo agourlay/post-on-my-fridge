@@ -1,6 +1,6 @@
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 .humane,
 .humane-libnotify {
@@ -18,7 +18,7 @@ body {
   font-family: Ubuntu, Arial, sans-serif;
   text-align: center;
   font-size: 15px;
-  top: 50px;
+  top: 10px;
   right: 10px;
   opacity: 0;
   width: 150px;
