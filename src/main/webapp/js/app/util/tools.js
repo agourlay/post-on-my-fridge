@@ -4,6 +4,7 @@ function initUIElement() {
 	setRandomBackGround();
 	colorPickerManagement();
 	channelManagement();
+	setTooltips();
 
 	$(".newPost").draggable({
 		revert: "invalid",
@@ -50,6 +51,28 @@ function initUIElement() {
 				}, 'slow', 'linear');
 			}
 		}
+	});
+}
+
+function setTooltips(){
+	$('#content').powerTip({
+    	placement: 'e'
+	});
+
+	$('#newPost').powerTip({
+    	placement: 'e'
+	});
+
+	$('#author').powerTip({
+    	placement: 'e'
+	});
+
+	$('#dueDate').powerTip({
+    	placement: 'e'
+	});
+
+	$('#postColor').powerTip({
+    	placement: 'e'
 	});
 }
 

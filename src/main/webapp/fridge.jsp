@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.23.custom.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
+	<link rel="stylesheet" href="/css/lib/jquery-powertip/jquery.powertip.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet' type='text/css'>
 
 	<!-- JS -->
@@ -46,13 +47,12 @@
 		<div id="main-content">
 			<aside id ="leftPanel">
 				<form id="postForm" accept-charset="utf-8">
-					<div id ="newPost" class="newPost">
+					<div id ="newPost" class="newPost" title="Fill the post and drop it on the fridge">
 						<div class="content">
 							<textarea name="content" id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
 						</div>
 						<div class="author">
 							<input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12" title="Who are u?"/>
-							<input type="hidden" id="postColor" maxlength="15" size="15" value="#f7f083"/>
 							<input type="hidden" id="fridgeId" value="${fridgeId}"/>
 						</div>
 						<div class="iconBox">

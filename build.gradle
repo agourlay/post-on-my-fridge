@@ -46,6 +46,7 @@ task combineLibJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 task combineLibJqueryDependent(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
 		"${projectDir}/src/main/webapp/js/lib/ember-1.0.pre.min.js",
+		"${projectDir}/src/main/webapp/js/lib/jquery.powertip-1.1.0.min.js",
 		"${projectDir}/src/main/webapp/js/lib/konami.js"
 	]
 	dest = file("${buildDir}/exploded-war/js/app/lib.jquery.min.js")

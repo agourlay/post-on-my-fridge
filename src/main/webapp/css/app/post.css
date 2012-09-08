@@ -58,7 +58,7 @@
 	height:228px;
 	padding-top: 10px;
 	margin-bottom : 40px;
-	z-index: 999; }
+	z-index: 200; }
 
 .newPost .iconBox{
 	float: right;
