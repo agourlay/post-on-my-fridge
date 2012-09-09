@@ -49,7 +49,7 @@
 				<form id="postForm" accept-charset="utf-8">
 					<div id ="newPost" class="newPost" title="Fill the post and drop it on the fridge">
 						<div class="content">
-							<textarea name="content" id="content" rows="8" cols="20" maxlength="140" title="Content goes there"></textarea>
+							<textarea name="content" id="content" rows="9" cols="23" maxlength="200" title="Content goes there"></textarea>
 						</div>
 						<div class="author">
 							<input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12" title="Who are u?"/>
