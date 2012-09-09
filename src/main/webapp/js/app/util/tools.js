@@ -177,7 +177,7 @@ function messageManagment(user, message) {
 	var chatModel = {};
 	chatModel.user = user;
 	chatModel.message = message;
-	chatModel.timestamp = moment().format('h:mm:ss');
+	chatModel.timestamp = moment().format('HH:mm');
 
 	var source = $("#chatMessageTemplate").html();
 	var template = Handlebars.compile(source);
