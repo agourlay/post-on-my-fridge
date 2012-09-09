@@ -122,7 +122,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 						cache: false,
 						data: buildTwitterDataUrl(value),
 						success: function(data) {
-							content = buildTweet(data, value, author, date, content, twitterRegexp);
+							buildTweet(data, value, author, date, content, twitterRegexp);
 						}
 					});
 

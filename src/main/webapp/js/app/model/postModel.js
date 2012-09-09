@@ -55,7 +55,7 @@ App.Post = Em.Object.extend({
 				jackedup.log("Post not updated!");
 			}
 		});
-	}.observes('fullPosition'),
+	}.observes('fullPosition','content','color'),
 
 	createPost: function() {
 		$.ajax({
