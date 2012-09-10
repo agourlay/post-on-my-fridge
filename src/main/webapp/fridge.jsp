@@ -11,7 +11,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/app/fridge.min.css"/>
-	<link rel="stylesheet" href="/css/lib/jquery-ui/jquery-ui-1.8.23.custom.css"/>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
 	<link rel="stylesheet" href="/css/lib/jquery-powertip/jquery.powertip.css"/>
