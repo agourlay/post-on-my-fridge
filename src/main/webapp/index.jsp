@@ -52,7 +52,7 @@
 		</div>
 
 		<div class="alert">
-		 	<h4>Warning!</h4> The application is still under heavy developement, the data are likely to be lost..
+		 	<h4>Warning!</h4> The application is still under heavy development, the data are likely to be lost..
 		</div>
 
 		<div class="row-fluid">
