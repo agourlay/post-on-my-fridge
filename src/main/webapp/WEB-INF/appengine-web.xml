@@ -3,7 +3,6 @@
 	<application>post-on-my-fridge</application>
 	<version>1</version>
 	
-	<!-- Configure java.util.logging -->
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
 	</system-properties>
@@ -26,6 +25,6 @@
         <include path="/images/**.*" expiration="7d" />
         <include path="favicon.ico" expiration="30d" />
         <include path="robots.txt"/>
-    </static-files>
-    	
+        <include path="sitemap.xml"/>
+    </static-files>   	
 </appengine-web-app>
