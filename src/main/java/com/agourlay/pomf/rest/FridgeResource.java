@@ -14,17 +14,15 @@ import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.tools.rss.Feed;
 import com.agourlay.pomf.tools.rss.RSSFeedWriter;
 import com.agourlay.pomf.tools.rss.RssUtils;
-import com.google.gson.Gson;
 
 @Path("/fridge/{fridgeId}")
 public class FridgeResource {
 	
     @GET
     @Produces("application/json")
-    public String getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
+    public List<Post> getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
     	List<Post> posts = Fridge.getPosts(fridgeId);	
-    	Gson gson = new Gson();
-    	return gson.toJson(posts);
+    	return posts;
      }
     
     @GET
@@ -40,8 +38,7 @@ public class FridgeResource {
     @GET
     @Path("/search")
     @Produces("application/json")
-    public String getFridgeIds(@QueryParam("term") String term)  {
-    	Gson gson = new Gson();
-    	return gson.toJson(Fridge.searchFridgeNamesWithNameLike(term));
+    public List<String> getFridgeIds(@QueryParam("term") String term)  {
+    	return Fridge.searchFridgeNamesWithNameLike(term);
     }
 }

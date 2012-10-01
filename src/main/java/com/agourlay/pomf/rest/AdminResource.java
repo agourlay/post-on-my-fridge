@@ -1,6 +1,7 @@
 package com.agourlay.pomf.rest;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,7 +12,6 @@ import com.agourlay.pomf.model.Stat;
 import com.agourlay.pomf.tools.rss.Feed;
 import com.agourlay.pomf.tools.rss.RSSFeedWriter;
 import com.agourlay.pomf.tools.rss.RssUtils;
-import com.google.gson.Gson;
 
 @Path("/admin")
 public class AdminResource {
@@ -29,9 +29,8 @@ public class AdminResource {
 	@GET
     @Path("fridges/stats")
 	@Produces("application/json")
-	public String getFridgesStats()  {
-		Gson gson = new Gson();
-		return gson.toJson(Stat.getAllStats());
+	public List<Stat> getFridgesStats()  {
+		return Stat.getAllStats();
 	}
 	
 }

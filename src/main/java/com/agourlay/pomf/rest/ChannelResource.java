@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 
 import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
-import com.google.gson.Gson;
 
 @Path("/channel")
 public class ChannelResource {
@@ -22,8 +21,7 @@ public class ChannelResource {
 	public String createChannel(@PathParam("fridgeId") String fridgeId) {
 		String channelId = UUID.randomUUID().toString();
 		String token = ClientRepository.addChannelToFridge(fridgeId, channelId);
-		Gson gson = new Gson();
-		return gson.toJson(token);
+		return token;
 	}
 	
 	@POST

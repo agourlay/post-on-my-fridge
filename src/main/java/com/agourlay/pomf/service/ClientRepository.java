@@ -1,16 +1,20 @@
 package com.agourlay.pomf.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.agourlay.pomf.model.ChatMessage;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
-import com.google.gson.Gson;
 
 public class ClientRepository {
 
@@ -37,9 +41,17 @@ public class ClientRepository {
 	public static synchronized void notifyAllClientFromFridge(String fridgeId, String command,String message,String user){
 		if (clientRepo.get(fridgeId) != null){
 			for (String channelId : clientRepo.get(fridgeId)){
-				Gson gson = new Gson();
-				String jsonMessage = gson.toJson(new ChatMessage(command, user, message));
-				channelService.sendMessage(new ChannelMessage(channelId,jsonMessage));
+				ChatMessage chatMessage = new ChatMessage(command, user, message);
+				ObjectMapper mapper = new ObjectMapper();
+				try {
+					channelService.sendMessage(new ChannelMessage(channelId,mapper.writeValueAsString(chatMessage)));
+				} catch (JsonGenerationException e) {
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

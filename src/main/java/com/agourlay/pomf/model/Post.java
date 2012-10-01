@@ -9,12 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
+import com.agourlay.pomf.tools.CustomDateTimeDeserializer;
+import com.agourlay.pomf.tools.CustomDateTimeSerializer;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
@@ -34,7 +37,6 @@ public class Post implements Serializable{
 	private String author;
 	private String content;
 	private String color;
-	@JsonIgnore
 	private DateTime date;
 	private Double positionX;
 	private Double positionY;
@@ -109,10 +111,12 @@ public class Post implements Serializable{
 		this.content = content;
 	}
 	
+	@JsonSerialize(using=CustomDateTimeSerializer.class)
 	public DateTime getDate() {
 		return date;
 	}
 
+	@JsonDeserialize(using = CustomDateTimeDeserializer.class)
 	public void setDate(DateTime date) {
 		this.date = date;
 	}
@@ -145,10 +149,12 @@ public class Post implements Serializable{
 		this.color = color;
 	}
 	
+	@JsonSerialize(using=CustomDateTimeSerializer.class)
 	public DateTime getDueDate() {
 		return dueDate;
 	}
 
+	@JsonDeserialize(using = CustomDateTimeDeserializer.class)
 	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
