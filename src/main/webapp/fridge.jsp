@@ -35,7 +35,7 @@
 	<div id="global">
 		<header>
 			<div id="fridge-title">
-				Interact with "${fridgeId}"
+				<i>Interact with</i> ${fridgeId}
 				<a href="http://post-on-my-fridge.appspot.com/resources/fridge/${fridgeId}/rss" target="_blank">
 					<img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
 				</a>
