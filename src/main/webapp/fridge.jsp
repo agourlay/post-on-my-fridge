@@ -11,7 +11,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/app/fridge.min.css"/>
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/ui-lightness/jquery-ui.css"/>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/ui-lightness/jquery-ui.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
 	<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
 	<link rel="stylesheet" href="/css/lib/jquery-powertip/jquery.powertip.css"/>
@@ -92,8 +92,8 @@
 	<%@ include file="/js/app/templates/chatMessage.jsp" %>
 	<!-- JS -->
 	<script src = "/js/app/lib.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
 	<script src = "/js/app/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
