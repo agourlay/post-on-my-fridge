@@ -94,6 +94,11 @@
 	<script src = "/js/app/lib.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.pre/ember-1.0.pre.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
 	<script src = "/js/app/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
