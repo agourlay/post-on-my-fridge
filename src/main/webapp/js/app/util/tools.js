@@ -18,13 +18,18 @@ function initUIElement() {
 		}
 	});
 
-	$("#search").autocomplete({
+    $("#search").autocomplete({
 		source: "/resources/fridge/noid/search",
-		delay: 500,
+		delay: 300,
 		minLength: 2,
 		select: function(event, ui) {
-			 window.location = "/fridge/" + ui.item.label;
-		 }
+            window.location = "/fridge/" + ui.item.value;
+        },
+	    response: function(event, ui) {
+	        if (ui.content.length === 0) {
+                ui.content.push({ label: "Click to create", value: $("#search").val()});
+	        }
+	    }
 	});
 
 	var fridge = $('#fridge');
