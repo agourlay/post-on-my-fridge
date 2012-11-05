@@ -122,7 +122,7 @@ dependencies {
 	compile 'com.google.appengine:appengine-api-1.0-sdk:1.7.3'
 	compile 'javax.servlet:servlet-api:2.5'
 	compile 'joda-time:joda-time:2.1'
-	compile 'com.sun.jersey:jersey-bundle:1.13'
+	compile 'com.sun.jersey:jersey-bundle:1.15'
 	compile 'com.google.guava:guava:13.0.1'
 	compile 'org.codehaus.jackson:jackson-core-asl:1.9.9'
 	compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.9'
