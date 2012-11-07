@@ -3,19 +3,11 @@ function initUIElement() {
 	konami();
 	setRandomBackGround();
 	colorPickerManagement();
-	channelManagement();
 	setTooltips();
 
 	$(".newPost").draggable({
 		revert: "invalid",
 		scroll: true
-	});
-
-	$('#message').keyup(function(e) {
-		if (e.which == 13 && !e.shiftKey && !e.ctrlKey) {
-			onChatTextAreaChange();
-			e.preventDefault();
-		}
 	});
 
     $("#search").autocomplete({
@@ -45,7 +37,7 @@ function initUIElement() {
 				newPostData.dueDate = $("#dueDate").val();
 				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(fridge.css("width"), 10);
 				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(fridge.css("height"), 10);
-				newPostData.fridgeId = App.FridgeController.get('fridgeId');
+				newPostData.fridgeId = App.get('fridgeId');
 				newPostValidation(newPostData);
 				App.FridgeController.createPost(newPostData);
 				ui.draggable.animate({
@@ -176,70 +168,6 @@ function buildSpinner() {
 	};
 	var target = document.getElementById('loading');
 	var spinner = new Spinner(opts).spin(target);
-}
-
-function messageManagment(user, message) {
-	var chatModel = {};
-	chatModel.user = user;
-	chatModel.message = message;
-	chatModel.timestamp = moment().format('HH:mm');
-
-	var source = $("#chatMessageTemplate").html();
-	var template = Handlebars.compile(source);
-	var output = template(chatModel);
-	$('#chatLog').append(output);
-	$("#chatLog").animate({
-		scrollTop: $("#chatLog").prop("scrollHeight")
-	}, 3000);
-}
-
-function onChatTextAreaChange() {
-	sendChatMessage();
-	$("#message").val('');
-}
-
-function sendChatMessage() {
-	var payload = {};
-	payload.fridgeId = $("#fridgeId").val();
-	payload.message = $("#message").val();
-	payload.user = $("#pseudo").val();
-	$.ajax({
-		type: "POST",
-		url: "/_ah/channel/" + payload.fridgeId + "/message",
-		data: payload
-	});
-}
-
-function channelManagement() {
-	$.ajax({
-		url:"/_ah/channel/" + $("#fridgeId").val(),
-		type: "GET",
-		dataType:'text',
-		success: function(tokenChannel) {
-			if (tokenChannel !== undefined) {
-				var channel = new goog.appengine.Channel(tokenChannel);
-				var socket = channel.open();
-				socket.onopen = function() {};
-				socket.onclose = function() {};
-				socket.onmessage = function(m) {
-					var data = $.parseJSON(m.data);
-					if (data.command == "#FRIDGE-UPATE#") {
-						App.FridgeController.retrievePost();
-					}
-					if (data.command == "#FRIDGE-CHAT#") {
-						messageManagment(data.user, data.message);
-					}
-				};
-				socket.onerror = function(err) {
-					jackedup = humane.create({
-						baseCls: 'humane-jackedup',
-						addnCls: 'humane-jackedup-error'
-					});
-					jackedup.log("Channel error :" + err.description);
-				};
-			}
-		}	
-	});
 }
 
 function showFridge() {

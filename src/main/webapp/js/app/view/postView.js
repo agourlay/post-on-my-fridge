@@ -1,17 +1,17 @@
 App.PostView = Em.View.extend(App.Draggable, {
-	post: null,
 	tagName: 'article',
 	classNames: ['post'],
 	uiType: 'draggable',
+    templateName: 'post-template',
 
 	relativeDate: function() {
-		var date = this.get('post').get('date');
+		var date = this.get('content').get('date');
 		return moment(date).fromNow();
-	}.property('post.date').cacheable(),
+	}.property('content.date').cacheable(),
 
 	generatedContent: function() {
 		return this.generateContent();
-	}.property('post.content').cacheable(),
+	}.property('content.content').cacheable(),
 
 	mouseEnter: function(event) {
 		this.$().find(".header").css({
@@ -44,8 +44,8 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 			stop: function(event) {
 				var fridge = $('#fridge');
-				var fullPosition = (parseInt(view.$().offset().left, 10)) / parseInt(fridge.css("width"), 10) + ' ' + (parseInt(view.$().offset().top, 10)) / parseInt(fridge.css("height"), 10);
-				view.get('post').set('fullPosition', fullPosition);
+				var fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
+				view.get('content').set('fullPosition', fullPosition);
 			}
 		});
 	},
@@ -53,20 +53,20 @@ App.PostView = Em.View.extend(App.Draggable, {
 	willDestroyElement: function() {
 		this.$().effect("bounce", {
 			times: 3
-		}, 300);
-		this.$().effect("clip", {
+		}, 300).effect("clip", {
 			times: 1
 		}, 300);
+
 		libnotify = humane.create({
 			baseCls: 'humane-libnotify',
 			addnCls: 'humane-libnotify-info'
 		});
-		libnotify.log("Post from " + this.get('post').get('author') + " deleted");
+		libnotify.log("Post from " + this.get('content').get('author') + " deleted");
 	},
 
 	updatePhysicalPosition: function() {
-		var left = this.get('post').get('positionX');
-		var top = this.get('post').get('positionY');
+		var left = this.get('content').get('positionX');
+		var top = this.get('content').get('positionY');
 		var fridge = $('#fridge');
 
 		xTranslation = (left * fridge.width() - parseInt(this.$().offset().left, 10));
@@ -78,10 +78,10 @@ App.PostView = Em.View.extend(App.Draggable, {
 				'top': "+=" + yTranslation
 			}, 'slow', 'linear');
 		}
-	}.observes('post.fullPosition'),
+	}.observes('content.fullPosition'),
 
 	colorize: function() {
-		var color = this.get('post').get('color');
+		var color = this.get('content').get('color');
 		this.$().css("background-color", color);
 		this.$().css("color", getTxtColorFromBg(color));
 	},
@@ -90,14 +90,14 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var view = this;
 		view.$().find(" .ui-icon-trash").click(function() {
 			if (confirm("Are you sure you want to delete post?")) {
-				App.FridgeController.deletePost(view.get('post').get('id'));
+				App.FridgeController.deletePost(view.get('content').get('id'));
 			}
 		});
 	},
 
 	// TODO Arnaud refactor this big sh*t 
 	generateContent: function() {
-		content = jQuery.trim(this.get('post').get('content'));
+		content = jQuery.trim(this.get('content').get('content'));
 		urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 		twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/;
 		rssRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/;

@@ -41,8 +41,7 @@
 			</div>
 			<div class="row">
 				<div class="span2">
-					<a class="btn btn-primary btn-large" 
-								onClick="parent.location='http://post-on-my-fridge.appspot.com/fridge/demo'">Try the demo &raquo;</a>
+					<a class="btn btn-primary btn-large" href="/fridge/demo" >Try the demo &raquo;</a>
 				</div>
 				<div class="span8">
 					<a href="#" class="thumbnail">

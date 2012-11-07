@@ -1,0 +1,1 @@
+App.HeaderController = Ember.Controller.create({});

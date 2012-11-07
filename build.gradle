@@ -23,9 +23,16 @@ task jshintFridge(type: com.eriwen.gradle.js.tasks.JsHintTask) {
 		"${projectDir}/src/main/webapp/js/app/util/tools.js",
 		"${projectDir}/src/main/webapp/js/app/app.js",
 		"${projectDir}/src/main/webapp/js/app/util/jquery-ui-ember.js",
+		"${projectDir}/src/main/webapp/js/app/controller/headerController.js",
+		"${projectDir}/src/main/webapp/js/app/view/headerView.js",
 		"${projectDir}/src/main/webapp/js/app/model/postModel.js",
 		"${projectDir}/src/main/webapp/js/app/view/postView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js"
+		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js",
+		"${projectDir}/src/main/webapp/js/app/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/app/model/messageModel.js",
+		"${projectDir}/src/main/webapp/js/app/view/messageView.js",
+		"${projectDir}/src/main/webapp/js/app/view/chatView.js",
+		"${projectDir}/src/main/webapp/js/app/controller/chatController.js"
 	]
 	dest = file("${buildDir}/jshint.out")
 }
@@ -49,9 +56,16 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 		"${projectDir}/src/main/webapp/js/app/util/tools.js",
 		"${projectDir}/src/main/webapp/js/app/app.js",
 		"${projectDir}/src/main/webapp/js/app/util/jquery-ui-ember.js",
+		"${projectDir}/src/main/webapp/js/app/controller/headerController.js",
+		"${projectDir}/src/main/webapp/js/app/view/headerView.js",
 		"${projectDir}/src/main/webapp/js/app/model/postModel.js",
 		"${projectDir}/src/main/webapp/js/app/view/postView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js"		
+		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js",
+		"${projectDir}/src/main/webapp/js/app/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/app/model/messageModel.js",
+		"${projectDir}/src/main/webapp/js/app/view/messageView.js",
+		"${projectDir}/src/main/webapp/js/app/view/chatView.js",
+		"${projectDir}/src/main/webapp/js/app/controller/chatController.js"
 	]
 	dest = file("${buildDir}/exploded-war/js/app/fridge.js")
 }
