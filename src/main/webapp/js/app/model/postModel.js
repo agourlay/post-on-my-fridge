@@ -21,10 +21,9 @@ App.Post = Em.Object.extend({
 			var position = value.split(" ");
 			this.set('positionX', position[0]);
 			this.set('positionY', position[1]);
-			this.notifyPropertyChange('fullPosition');
 			return value;
 		}
-	}.property(),
+	}.property().cacheable(),
 
 	deletePost: function() {
 		$.ajax({
