@@ -99,6 +99,7 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/humane-3.0.5.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
 	<script src = "/js/app/fridge.min.js"></script>
 	<noscript>This site requires JavaScript to function properly!</noscript>
