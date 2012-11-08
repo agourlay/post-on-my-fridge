@@ -92,4 +92,5 @@
 .newPost input, .newPost textarea{
 	background-color: transparent;
 	border: dotted;
+    resize: none;
 	border-width: thin;	}
