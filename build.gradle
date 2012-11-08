@@ -1,7 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','csslint','minifyFridgeJs','combineLibJs','combineLibJqueryDependent', 'gaeRun'
+defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','csslint','minifyFridgeJs','combineLibJqueryDependent', 'gaeRun'
 
 repositories {
 	mavenCentral()
@@ -35,13 +35,6 @@ task jshintFridge(type: com.eriwen.gradle.js.tasks.JsHintTask) {
 		"${projectDir}/src/main/webapp/js/app/controller/chatController.js"
 	]
 	dest = file("${buildDir}/jshint.out")
-}
-
-task combineLibJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
-	source = [
-		"${projectDir}/src/main/webapp/js/lib/purl-2.2.1.min.js"
-	]
-	dest = file("${buildDir}/exploded-war/js/app/lib.min.js")
 }
 
 task combineLibJqueryDependent(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
