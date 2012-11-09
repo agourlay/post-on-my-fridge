@@ -30,6 +30,7 @@
 	<script src="/_ah/channel/jsapi"></script>
 </head>
 <body>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.2.1/purl.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
     <script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min.js"></script>
@@ -38,7 +39,6 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/humane-3.0.5.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.2.1/purl.min.js"></script>
 	<script src = "/js/app/lib.jquery.min.js"></script>
 	<script src = "/js/app/fridge.min.js"></script>
 	
