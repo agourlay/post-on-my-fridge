@@ -8,11 +8,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- CSS -->
-	<link rel="stylesheet" href="/css/app/fridge.min.css"/>
+	<link rel="stylesheet" href="/css/fridge.min.css"/>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/ui-lightness/jquery-ui.css"/>
-	<link rel="stylesheet" href="/css/lib/humane/jackedup.css"/>
-	<link rel="stylesheet" href="/css/lib/humane/libnotify.css"/>
-	<link rel="stylesheet" href="/css/lib/jquery-powertip/jquery.powertip.css"/>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/themes/jackedup.css"/>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/themes/libnotify.css"/>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip.css"/>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet'>
 
 	<!-- JS -->
@@ -39,8 +39,8 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/humane-3.0.5.min.js"></script>
-	<script src = "/js/app/lib.jquery.min.js"></script>
-	<script src = "/js/app/fridge.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip-1.1.0.min.js"></script>
+	<script src = "/js/fridge.min.js"></script>
 	
 	<script type="text/x-handlebars" data-template-name="application">
         <div id="global">

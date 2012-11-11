@@ -15,13 +15,8 @@
     </inbound-services>  
 	 
 	<static-files>
-		<include path="/css/index/**.*" expiration="7d" />
-	    <include path="/css/app/**.*" expiration="7d" />
-        <include path="/css/lib/**.*" expiration="10d" />
-        
-        <include path="/js/app/**.*" expiration="7d" />
-        <include path="/js/lib/**.*" expiration="10d" />
-	
+	    <include path="/css/**.*" expiration="7d" />
+        <include path="/js/**.*" expiration="7d" />
         <include path="/images/**.*" expiration="7d" />
         <include path="favicon.ico" expiration="30d" />
         <include path="robots.txt"/>

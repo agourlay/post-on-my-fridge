@@ -2,4 +2,4 @@
 before_script:
   - "wget http://services.gradle.org/distributions/gradle-1.2-bin.zip"
   - "unzip gradle-1.2* > /dev/null"
-script: "gradle-1.2*/bin/gradle clean gaeDownloadSdk gaeExplodeWar minifyFridgeCss jshintFridge csslint minifyFridgeJs combineLibJqueryDependent"
+script: "gradle-1.2*/bin/gradle clean gaeDownloadSdk gaeExplodeWar minifyFridgeCss jshintFridge csslint minifyFridgeJs"

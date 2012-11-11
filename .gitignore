@@ -6,4 +6,17 @@ war/WEB-INF/classes/
 .classpath
 bin/
 build/
+logs
+project/project
+project/target
+target
+.target
+tmp
+.history
+dist
+bin
+.project
+.cache
+.classpath
+.settings
 

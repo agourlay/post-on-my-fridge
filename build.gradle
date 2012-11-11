@@ -1,7 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','csslint','minifyFridgeJs','combineLibJqueryDependent', 'gaeRun'
+defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','csslint','minifyFridgeJs','gaeRun'
 
 repositories {
 	mavenCentral()
@@ -20,52 +20,45 @@ apply plugin: 'js'
 
 task jshintFridge(type: com.eriwen.gradle.js.tasks.JsHintTask) {
 	source = [
-		"${projectDir}/src/main/webapp/js/app/util/tools.js",
-		"${projectDir}/src/main/webapp/js/app/app.js",
-		"${projectDir}/src/main/webapp/js/app/util/jquery-ui-ember.js",
-		"${projectDir}/src/main/webapp/js/app/controller/headerController.js",
-		"${projectDir}/src/main/webapp/js/app/view/headerView.js",
-		"${projectDir}/src/main/webapp/js/app/model/postModel.js",
-		"${projectDir}/src/main/webapp/js/app/view/postView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js",
-		"${projectDir}/src/main/webapp/js/app/view/fridgeView.js",
-		"${projectDir}/src/main/webapp/js/app/model/messageModel.js",
-		"${projectDir}/src/main/webapp/js/app/view/messageView.js",
-		"${projectDir}/src/main/webapp/js/app/view/chatView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/chatController.js"
+		"${projectDir}/src/main/webapp/js/util/tools.js",
+		"${projectDir}/src/main/webapp/js/app.js",
+		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
+		"${projectDir}/src/main/webapp/js/controller/headerController.js",
+		"${projectDir}/src/main/webapp/js/view/headerView.js",
+		"${projectDir}/src/main/webapp/js/model/postModel.js",
+		"${projectDir}/src/main/webapp/js/view/postView.js",
+		"${projectDir}/src/main/webapp/js/controller/fridgeController.js",
+		"${projectDir}/src/main/webapp/js/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/model/messageModel.js",
+		"${projectDir}/src/main/webapp/js/view/messageView.js",
+		"${projectDir}/src/main/webapp/js/view/chatView.js",
+		"${projectDir}/src/main/webapp/js/controller/chatController.js"
 	]
 	dest = file("${buildDir}/jshint.out")
 }
 
-task combineLibJqueryDependent(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
-	source = [
-		"${projectDir}/src/main/webapp/js/lib/jquery.powertip-1.1.0.min.js"
-	]
-	dest = file("${buildDir}/exploded-war/js/app/lib.jquery.min.js")
-}
-
 task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
-		"${projectDir}/src/main/webapp/js/app/util/tools.js",
-		"${projectDir}/src/main/webapp/js/app/app.js",
-		"${projectDir}/src/main/webapp/js/app/util/jquery-ui-ember.js",
-		"${projectDir}/src/main/webapp/js/app/controller/headerController.js",
-		"${projectDir}/src/main/webapp/js/app/view/headerView.js",
-		"${projectDir}/src/main/webapp/js/app/model/postModel.js",
-		"${projectDir}/src/main/webapp/js/app/view/postView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/fridgeController.js",
-		"${projectDir}/src/main/webapp/js/app/view/fridgeView.js",
-		"${projectDir}/src/main/webapp/js/app/model/messageModel.js",
-		"${projectDir}/src/main/webapp/js/app/view/messageView.js",
-		"${projectDir}/src/main/webapp/js/app/view/chatView.js",
-		"${projectDir}/src/main/webapp/js/app/controller/chatController.js"
+		"${projectDir}/src/main/webapp/js/util/tools.js",
+		"${projectDir}/src/main/webapp/js/app.js",
+		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
+		"${projectDir}/src/main/webapp/js/controller/headerController.js",
+		"${projectDir}/src/main/webapp/js/view/headerView.js",
+		"${projectDir}/src/main/webapp/js/model/postModel.js",
+		"${projectDir}/src/main/webapp/js/view/postView.js",
+		"${projectDir}/src/main/webapp/js/controller/fridgeController.js",
+		"${projectDir}/src/main/webapp/js/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/model/messageModel.js",
+		"${projectDir}/src/main/webapp/js/view/messageView.js",
+		"${projectDir}/src/main/webapp/js/view/chatView.js",
+		"${projectDir}/src/main/webapp/js/controller/chatController.js"
 	]
-	dest = file("${buildDir}/exploded-war/js/app/fridge.js")
+	dest = file("${buildDir}/exploded-war/js/fridge.js")
 }
 
 task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'combineFridgeJs') {
 	source = combineFridgeJs
-	dest = file("${buildDir}/exploded-war/js/app/fridge.min.js")
+	dest = file("${buildDir}/exploded-war/js/fridge.min.js")
 	closure {
 		closure.compilationLevel = 'SIMPLE_OPTIMIZATIONS'
 	}
@@ -76,7 +69,7 @@ apply plugin: 'css'
 css.source {
     app {
         css {
-            srcDir "${projectDir}/src/main/webapp/css/app"
+            srcDir "${projectDir}/src/main/webapp/css/"
             include "*.css"
         }
     }
@@ -94,12 +87,12 @@ csslint {
 
 task combineFridgeCss(type: com.eriwen.gradle.css.tasks.CombineCssTask) {
 	source = css.source.app.css.files
-	dest = file("${buildDir}/exploded-war/css/app/fridge.css")
+	dest = file("${buildDir}/exploded-war/css/fridge.css")
 }
 
 task minifyFridgeCss(type: com.eriwen.gradle.css.tasks.MinifyCssTask, dependsOn: 'combineFridgeCss') {
 	source = combineFridgeCss
-	dest = file("${buildDir}/exploded-war/css/app/fridge.min.css")
+	dest = file("${buildDir}/exploded-war/css/fridge.min.css")
 }
 
 buildscript {
