@@ -1,7 +1,7 @@
 description = "Post on my fridge"
 
 apply plugin: 'java'
-defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','jshintFridge','csslint','minifyFridgeJs','gaeRun'
+defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','csslint','minifyFridgeJs','gaeRun'
 
 repositories {
 	mavenCentral()
@@ -17,25 +17,6 @@ buildscript {
 }
 
 apply plugin: 'js'
-
-task jshintFridge(type: com.eriwen.gradle.js.tasks.JsHintTask) {
-	source = [
-		"${projectDir}/src/main/webapp/js/util/tools.js",
-		"${projectDir}/src/main/webapp/js/app.js",
-		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
-		"${projectDir}/src/main/webapp/js/controller/headerController.js",
-		"${projectDir}/src/main/webapp/js/view/headerView.js",
-		"${projectDir}/src/main/webapp/js/model/postModel.js",
-		"${projectDir}/src/main/webapp/js/view/postView.js",
-		"${projectDir}/src/main/webapp/js/controller/fridgeController.js",
-		"${projectDir}/src/main/webapp/js/view/fridgeView.js",
-		"${projectDir}/src/main/webapp/js/model/messageModel.js",
-		"${projectDir}/src/main/webapp/js/view/messageView.js",
-		"${projectDir}/src/main/webapp/js/view/chatView.js",
-		"${projectDir}/src/main/webapp/js/controller/chatController.js"
-	]
-	dest = file("${buildDir}/jshint.out")
-}
 
 task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
