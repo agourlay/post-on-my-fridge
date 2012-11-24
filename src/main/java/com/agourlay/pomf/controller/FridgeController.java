@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.agourlay.pomf.model.Fridge;
-
 public class FridgeController extends HttpServlet{
 
 	/**
