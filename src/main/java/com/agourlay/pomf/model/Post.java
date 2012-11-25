@@ -8,9 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.ObjectifyDao;
@@ -18,10 +17,13 @@ import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
 import com.agourlay.pomf.tools.CustomDateTimeDeserializer;
 import com.agourlay.pomf.tools.CustomDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 @Entity
+@XmlRootElement
 public class Post implements Serializable{
 	
 	/**
