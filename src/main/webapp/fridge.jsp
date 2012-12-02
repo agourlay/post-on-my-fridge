@@ -63,7 +63,7 @@
                             </div>
                             <div class="iconBox">
                                 <input type="date" id="dueDate" title="Pick a due date"/>
-                                <input type="color" id="postColor" class="changeColor" maxlength="15" size="15" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)" title="Change the color"/>
+                                <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)" title="Change the color"/>
                             </div>
                         </form>
                     </div>
