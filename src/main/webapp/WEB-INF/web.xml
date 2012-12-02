@@ -3,6 +3,15 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	
+	<filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	        <filter-name>ObjectifyFilter</filter-name>
+	        <url-pattern>/*</url-pattern>
+	</filter-mapping> 
+	 
 	<servlet>
         <servlet-name>Rest</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -51,6 +60,12 @@
 		<servlet-name>FridgeController</servlet-name>
 		<url-pattern>/fridge/*</url-pattern>
 	</servlet-mapping>
+	 
+	<servlet>
+	    <servlet-name>ConfigServlet</servlet-name>
+	    <servlet-class>com.agourlay.pomf.conf.Config</servlet-class>
+	    <load-on-startup>0</load-on-startup>
+	</servlet>  
 	 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

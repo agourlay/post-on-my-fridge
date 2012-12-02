@@ -1,39 +1,35 @@
 package com.agourlay.pomf.model;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Id;
-
 import org.joda.time.DateTime;
 
-import com.agourlay.pomf.dao.ObjectifyDao;
-import com.googlecode.objectify.annotation.Cached;
+import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
-@Cached
+@Cache
 public class Stat implements Serializable{
 
-	private static final long serialVersionUID = 1025020018320400913L;
-	private static final ObjectifyDao<Stat> dao = new ObjectifyDao<Stat>(Stat.class);
+	private static final long serialVersionUID = 1025020018320400913L;	
 	
-	
-	@Id
-	private Long id;
+	@Id	private Long id;
 	private DateTime generationDate;
 	private Integer fridgeNumber;
 	private Integer postNumber;
 	
 	public Stat() {}
-
+	
 	public static List<Stat> getAllStats(){
-	    List<Stat> stats = dao.ofy().query(Stat.class).limit(1000).list();
-		return stats;
+	    return ofy().load().type(Stat.class).limit(1000).list();
 	}
 	
 	public static void createStat(Stat stat){
-		dao.put(stat);
+		ofy().save().entity(stat).now();
 	}
 	
 	public static void generateDailyStat(){

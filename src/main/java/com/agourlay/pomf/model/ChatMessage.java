@@ -12,6 +12,9 @@ public class ChatMessage {
 		this.user = user;
 		this.message = message;
 	}
+	
+	//GETTERS & SETTERS
+	
 	public String getCommand() {
 		return command;
 	}

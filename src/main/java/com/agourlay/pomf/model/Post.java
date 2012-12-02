@@ -1,28 +1,28 @@
 package com.agourlay.pomf.model;
 
+import static com.googlecode.objectify.ObjectifyService.ofy;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.DateTime;
 
-import com.agourlay.pomf.dao.ObjectifyDao;
 import com.agourlay.pomf.service.ClientRepository;
 import com.agourlay.pomf.tools.Constantes;
 import com.agourlay.pomf.tools.CustomDateTimeDeserializer;
 import com.agourlay.pomf.tools.CustomDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.googlecode.objectify.annotation.Cache;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
+@Cache
 @XmlRootElement
 public class Post implements Serializable{
 	
@@ -31,11 +31,7 @@ public class Post implements Serializable{
 	 */
 	private static final long serialVersionUID = -5300832520775741740L;
 
-	private static final ObjectifyDao<Post> dao = new ObjectifyDao<Post>(Post.class);
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id private Long id;
 	private String author;
 	private String content;
 	private String color;
@@ -43,40 +39,30 @@ public class Post implements Serializable{
 	private Double positionX;
 	private Double positionY;
 	private DateTime dueDate;
-	private String fridgeId;
+	@Index private String fridgeId;
 
-	public Post() {
-		this.date = new DateTime();
-	}
-
+	public Post() {	this.date = new DateTime(); }
+	
 	// DAO METHODS 
 
 	public static void savePost(Post post){
-        	dao.ofy().put(post);
-        	MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+post.getFridgeId());
-        	ClientRepository.notifyAllClientFromFridge(post.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
+		ofy().save().entity(post).now();
+        ClientRepository.notifyAllClientFromFridge(post.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
 	}
 			
 	public static Post getPostById(Long id) {
-		try {
-			return dao.get(id);
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return ofy().load().type(Post.class).id(id).get();
 	}
 	
 	public static List<Post> getAllPost() {
-        List<Post> posts = dao.ofy().query(Post.class).order("-date").limit(1000).list();
-		return posts;
+        return ofy().load().type(Post.class).limit(10000).list();
 	}
 	
 	public static void remove(long id) {
 		Post post = getPostById(id);
 		String currentFridgeId = post.getFridgeId();
 		if (post != null){
-			dao.delete(post);
-			MemcacheServiceFactory.getMemcacheService().delete(Constantes.CACHE_FRIDGE_KEY+currentFridgeId);
+			ofy().delete().entity(post).now();
 			ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
 		}
 	}
@@ -88,7 +74,7 @@ public class Post implements Serializable{
 	}
 	
 	public static int countPost(){
-		return dao.count();
+		return ofy().load().type(Post.class).count();
 	}
 	
 	//GETTERS & SETTERS

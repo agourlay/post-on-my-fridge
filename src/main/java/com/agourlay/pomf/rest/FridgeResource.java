@@ -21,8 +21,7 @@ public class FridgeResource {
     @GET
     @Produces("application/json")
     public List<Post> getFridgeContent(@PathParam ("fridgeId") String fridgeId)  {
-    	List<Post> posts = Fridge.getPosts(fridgeId);	
-    	return posts;
+    	return Fridge.getPosts(fridgeId);
      }
     
     @GET

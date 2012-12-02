@@ -2,10 +2,8 @@ package com.agourlay.pomf.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class FridgeUser implements Serializable{
@@ -13,12 +11,9 @@ public class FridgeUser implements Serializable{
 	/**
 	 * serialVersionUID
 	 */
-	private static final long serialVersionUID = 3440636574318540914L;
+	private static final long serialVersionUID = 3440636574318540914L;	
 	
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Id	private Long id;
 
 	public FridgeUser() {}
 
