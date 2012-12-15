@@ -25,7 +25,7 @@ public class EraseDuePostController extends HttpServlet {
 	       .from(Post.getAllPost())
 	       .filter(new DuePost())
 	       .transform(new ExtractPostId())
-	       .toImmutableList();
+	       .toList();
 		
 		Post.remove(postIdToDelete);
 
