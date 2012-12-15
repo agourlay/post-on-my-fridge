@@ -3,15 +3,19 @@ description = "Post on my fridge"
 apply plugin: 'java'
 defaultTasks 'clean','gaeDownloadSdk', 'gaeExplodeWar', 'minifyFridgeCss','minifyFridgeJs','gaeRun'
 
-repositories {
-	mavenCentral()
-}
-
 buildscript {
-	repositories { mavenCentral() }
+	repositories { 
+		mavenCentral()
+		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
+			name = 'GitHub'
+			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
+		}
+	}
+
 	dependencies {
 		classpath 'com.eriwen:gradle-js-plugin:1.1'
 		classpath 'com.eriwen:gradle-css-plugin:1.1.2'
+		classpath 'bmuschko:gradle-gae-plugin:0.8' 
 	}
 }
 
@@ -39,9 +43,6 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 task minifyFridgeJs(type: com.eriwen.gradle.js.tasks.MinifyJsTask, dependsOn: 'combineFridgeJs') {
 	source = combineFridgeJs
 	dest = file("${buildDir}/exploded-war/js/fridge.min.js")
-	closure {
-		closure.compilationLevel = 'SIMPLE_OPTIMIZATIONS'
-	}
 }
 
 apply plugin: 'css'
@@ -65,16 +66,6 @@ task minifyFridgeCss(type: com.eriwen.gradle.css.tasks.MinifyCssTask, dependsOn:
 	dest = file("${buildDir}/exploded-war/css/fridge.min.css")
 }
 
-buildscript {
-	repositories {
-		add(new org.apache.ivy.plugins.resolver.URLResolver()) {
-			name = 'GitHub'
-			addArtifactPattern 'http://cloud.github.com/downloads/[organisation]/[module]/[module]-[revision].[ext]'
-		}
-	}
-	dependencies { classpath 'bmuschko:gradle-gae-plugin:0.8' }
-}
-
 apply plugin: 'gae'
 
 gae {
@@ -88,7 +79,6 @@ gae {
 
 dependencies {
 	gaeSdk  'com.google.appengine:appengine-java-sdk:1.7.4'
-	compile 'com.google.appengine:appengine-api-1.0-sdk:1.7.4'
 	compile 'com.googlecode.objectify:objectify:4.0b1'
 	compile 'com.google.guava:guava:13.0.1'
 	compile 'com.sun.jersey:jersey-core:1.16'
