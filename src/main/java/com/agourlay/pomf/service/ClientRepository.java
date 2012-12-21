@@ -2,44 +2,46 @@ package com.agourlay.pomf.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.agourlay.pomf.model.ChatMessage;
+import com.agourlay.pomf.tools.Constantes;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
+import com.google.appengine.api.memcache.Expiration;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheService.SetPolicy;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 public class ClientRepository {
 
-	private static final Map<String, List<String>> clientRepo = new ConcurrentHashMap<String,  List<String>>();
 	private static ChannelService channelService = ChannelServiceFactory.getChannelService();
+	private static MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
 	
+	@SuppressWarnings("unchecked")
 	public static synchronized String addChannelToFridge(String fridgeId,String channelId){
+		String key = Constantes.CACHE_CHANNEL_KEY + fridgeId;
 		String token = channelService.createChannel(channelId);
-		if (clientRepo.get(fridgeId) == null){
-			clientRepo.put(fridgeId, new ArrayList<String>());
+		List<String> addChannel = new ArrayList<String>() ;
+		addChannel.add(channelId);
+		if (cache.get(key) != null){
+			addChannel.addAll((Collection<? extends String>) cache.get(key));
 		}
-		clientRepo.get(fridgeId).add(channelId);
+		cache.put(key,addChannel,Expiration.byDeltaSeconds(1440),SetPolicy.SET_ALWAYS);
 		return token;
 	}
 	
-	public static synchronized void removeChannelFromFridge(String channelId){
-		for (Entry<String, List<String>> entry : clientRepo.entrySet())	{
-			if (entry.getValue().remove(channelId)){
-				break;
-			}
-		}
-	}
-	
-	public static synchronized void notifyAllClientFromFridge(String fridgeId, String command,String message,String user){
-		if (clientRepo.get(fridgeId) != null){
-			for (String channelId : clientRepo.get(fridgeId)){
+	@SuppressWarnings("unchecked")
+	public static synchronized void notifyAllClientFromFridge(String fridgeId, String command,String message,String user){		
+		String key = Constantes.CACHE_CHANNEL_KEY + fridgeId;
+		List<String> channels = (List<String>) cache.get(key);
+		if (channels != null && !channels.isEmpty()){
+			for (String channelId : channels){
 				ChatMessage chatMessage = new ChatMessage(command, user, message);
 				ObjectMapper mapper = new ObjectMapper();
 				try {

@@ -6,16 +6,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
 
 public class RssUtils {
 
-	public static FeedMessage createFeedMessageFromPost(Post post) {
+	public static FeedMessage createFeedMessageFromPost(Post post,String fridgeId) {
 		FeedMessage feed = new FeedMessage();
 		feed.setTitle(post.getAuthor()+" posted on your fridge");
 		feed.setDescription(post.getContent());
 		feed.setAuthor(post.getAuthor());
-		feed.setGuid("http://post-on-my-fridge.appspot.com/"+post.getFridgeId()+"#"+post.getId());
+		feed.setGuid("http://post-on-my-fridge.appspot.com/"+fridgeId+"#"+post.getId());
 		feed.setLink("http://post-on-my-fridge.appspot.com/");
 		return feed;
 	}
@@ -35,10 +36,12 @@ public class RssUtils {
 		return rssFeeder;
 	}
 
-	public static List<FeedMessage> getRssEntry(List<Post> posts) {
+	public static List<FeedMessage> getRssEntry(List<Fridge> fridges) {
 		List<FeedMessage> listFeed = new ArrayList<FeedMessage>();
-		for (Post post : posts) {
-			listFeed.add(RssUtils.createFeedMessageFromPost(post));
+		for(Fridge fridge : fridges){
+			for (Post post : fridge.getPosts()) {
+				listFeed.add(RssUtils.createFeedMessageFromPost(post,fridge.getName()));
+			}
 		}
 		return listFeed;
 	}

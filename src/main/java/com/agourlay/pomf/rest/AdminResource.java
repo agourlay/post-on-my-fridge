@@ -7,7 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import com.agourlay.pomf.model.Post;
+import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Stat;
 import com.agourlay.pomf.tools.rss.Feed;
 import com.agourlay.pomf.tools.rss.RSSFeedWriter;
@@ -21,7 +21,7 @@ public class AdminResource {
 	@Produces("application/xml")
 	public String getFridgesRssContent() throws Exception  {
 	    Feed rssFeeder = RssUtils.createRssFeed("admin");
-		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Post.getAllPost()));
+		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getAllFridge()));
 		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
 		return writer.write().toString();
 	}

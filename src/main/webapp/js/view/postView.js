@@ -115,35 +115,25 @@ App.PostView = Em.View.extend(App.Draggable, {
 				var url = purl(value);
 
 				if (url.attr('host') == "twitter.com") {
-
 					$.ajax({
 						url: "http://api.twitter.com/1/statuses/user_timeline.json",
 						dataType: "jsonp",
 						cache: false,
 						data: buildTwitterDataUrl(value),
 						success: function(data) {
-							buildTweet(data, value, author, date, content, twitterRegexp);
+							return buildTweet(data, value, author, date, content, twitterRegexp);
 						}
 					});
-
 				} else if (url.attr('host') == "www.youtube.com") {
-
-					content = content.replace(youtubeRegexp, generateYoutubeFrame(url.param('v')));
-
+					return generateYoutubeFrame(url.param('v'));
 				} else if (isRegExp(rssRegexp, value)) {
-
 					yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
 					$.getJSON(yql, function(data) {
-						content = buildRssFeed(filterData(data.results[0]), content, rssRegexp);
+						return buildRssFeed(filterData(data.results[0]), content, rssRegexp);
 					});
-
 				} else if (isRegExp(pictureRegexp, value)) {
-
-					replacementPict = "</br><a href=" + value + " target= blank ><img  class='post_picture' src=" + value + " /></a>";
-					content = content.replace(pictureRegexp, replacementPict);
-
+					return "</br><a href=" + value + " target= blank ><img  class='post_picture' src=" + value + " /></a>";
 				} else {
-
 					replacement = "<a href=" + value + " target= blank>" + value + "</a> ";
 					content = content.replace(urlRegexp, replacement);
 

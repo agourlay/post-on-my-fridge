@@ -20,7 +20,7 @@ public class EraseDuePostController extends HttpServlet {
 	private static final long serialVersionUID = -3523137355230182591L;
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
+		// waiting for filter on date to be implemented on delete in Objectify
 		List<Long> postIdToDelete = FluentIterable
 	       .from(Post.getAllPost())
 	       .filter(new DuePost())

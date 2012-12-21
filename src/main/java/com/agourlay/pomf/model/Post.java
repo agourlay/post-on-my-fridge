@@ -58,6 +58,10 @@ public class Post implements Serializable{
         return ofy().load().type(Post.class).limit(10000).list();
 	}
 	
+	public static List<Post> getPostByFridge(String fridgeName) {
+        return ofy().load().type(Post.class).filter("fridgeId", fridgeName).limit(100).list();
+	}
+	
 	public static void remove(long id) {
 		Post post = getPostById(id);
 		String currentFridgeId = post.getFridgeId();

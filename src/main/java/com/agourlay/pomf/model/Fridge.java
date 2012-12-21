@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Load;
 
 @Entity
 @Cache
@@ -21,15 +22,12 @@ public class Fridge implements Serializable{
 	private static final long serialVersionUID = -6461491688659114651L;
 	
 	@Id	private String name;
-	private FridgeUser owner;	
+	private String description;
+	@Load private List<Post> posts;
 	
 	public Fridge() {}
 		
-	//DAO METHODS
-	public static List<Post> getPosts(String fridgeName) {
-        return ofy().load().type(Post.class).filter("fridgeId", fridgeName).limit(100).list();
-	}
-	
+	//DAO METHODS	
 	public static Fridge getFridgeById(String fridgeId){
 		return ofy().load().type(Fridge.class).id(fridgeId).get();
 	}
@@ -51,7 +49,6 @@ public class Fridge implements Serializable{
         }
 	}
 
-
 	public static List<Fridge> searchFridgeLike(String fridgeName){
 		return ofy().load().type(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
 	}
@@ -59,6 +56,15 @@ public class Fridge implements Serializable{
 	public static List<String> searchFridgeNamesWithNameLike(String fridgeName){
 		return Lists.transform(searchFridgeLike(fridgeName),  new ExtractFridgeName());
 	}
+	
+	public static List<Fridge> getAllFridge(){
+		return ofy().load().type(Fridge.class).limit(10000).list();
+	}
+	
+	public static void saveFridge(Fridge fridge){
+		ofy().save().entity(fridge).now();
+	}
+	
 	
 	//GETTERS & SETTERS
 	
@@ -70,11 +76,20 @@ public class Fridge implements Serializable{
 		this.name = name;
 	}
 
-	public FridgeUser getOwner() {
-		return owner;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setOwner(FridgeUser owner) {
-		this.owner = owner;
+	public void setDescription(String description) {
+		this.description = description;
 	}
+
+	public List<Post> getPosts() {
+		return Post.getPostByFridge(this.name);
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+
 }

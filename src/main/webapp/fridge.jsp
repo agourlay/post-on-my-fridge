@@ -6,6 +6,7 @@
 	<meta name="keywords" content="post on my fridge,social network,messaging,multimedia,fridge,post,interactive,open source" />
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>a super fridge</title>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/fridge.min.css"/>
@@ -31,10 +32,11 @@
 	<script src="/_ah/channel/jsapi"></script>
 </head>
 <body>
+	<noscript>This site requires JavaScript to function properly!</noscript>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.2.1/purl.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-    	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min.js"></script>
+    <script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.2/ember-1.0.0-pre.2.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
@@ -104,6 +106,4 @@
 		</div>
     </script> 
 </body>
-	<!-- JS -->
-	<noscript>This site requires JavaScript to function properly!</noscript>
 </html>

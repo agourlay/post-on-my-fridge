@@ -3,7 +3,6 @@ package com.agourlay.pomf.conf;
 import javax.servlet.http.HttpServlet;
 
 import com.agourlay.pomf.model.Fridge;
-import com.agourlay.pomf.model.FridgeUser;
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.model.Stat;
 import com.googlecode.objectify.ObjectifyService;
@@ -17,7 +16,6 @@ public class Config extends HttpServlet {
 		JodaTimeTranslators.add(ObjectifyService.factory());
 		ObjectifyService.register(Post.class);
 		ObjectifyService.register(Fridge.class);
-		ObjectifyService.register(FridgeUser.class);
 		ObjectifyService.register(Stat.class);
 	}
 	

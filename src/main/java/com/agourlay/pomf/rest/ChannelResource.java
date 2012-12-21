@@ -26,7 +26,7 @@ public class ChannelResource {
 	@POST
 	@Path("/disconnected")
 	public void disconnectChannel(@FormParam("from") final String channelId) {
-		ClientRepository.removeChannelFromFridge(channelId);
+
 	}
 	
 	@POST
