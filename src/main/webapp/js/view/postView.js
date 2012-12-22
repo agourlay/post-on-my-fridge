@@ -95,51 +95,25 @@ App.PostView = Em.View.extend(App.Draggable, {
 		});
 	},
 
-	// TODO Arnaud refactor this big sh*t 
 	generateContent: function() {
 		content = jQuery.trim(this.get('content').get('content'));
 		urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-		twitterRegexp = /(http|https):\/\/(twitter.com)\/(#!)\/(\w*)/;
-		rssRegexp = /(http|https):\/\/(.)+(\/feed\/|\/feeds\/|\.xml|rss)$/;
-		youtubeRegexp = /(http|https):\/\/(?:www\.)?\w*\.\w*\/(?:watch\?v=)?((?:p\/)?[\w\-]+)/;
 		pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/;
 
-		contentArray = content.split(' ');
-
-		if (contentArray.length === 0) {
-			contentArray[0] = content;
-		}
-
-		$.each(contentArray, function(index, value) {
-			if (isRegExp(urlRegexp, value)) {
-				var url = purl(value);
-
-				if (url.attr('host') == "twitter.com") {
-					$.ajax({
-						url: "http://api.twitter.com/1/statuses/user_timeline.json",
-						dataType: "jsonp",
-						cache: false,
-						data: buildTwitterDataUrl(value),
-						success: function(data) {
-							return buildTweet(data, value, author, date, content, twitterRegexp);
-						}
-					});
-				} else if (url.attr('host') == "www.youtube.com") {
-					return generateYoutubeFrame(url.param('v'));
-				} else if (isRegExp(rssRegexp, value)) {
-					yql = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from xml where url="' + value + '"') + '&format=xml&callback=?';
-					$.getJSON(yql, function(data) {
-						return buildRssFeed(filterData(data.results[0]), content, rssRegexp);
-					});
-				} else if (isRegExp(pictureRegexp, value)) {
-					return "</br><a href=" + value + " target= blank ><img  class='post_picture' src=" + value + " /></a>";
-				} else {
-					replacement = "<a href=" + value + " target= blank>" + value + "</a> ";
-					content = content.replace(urlRegexp, replacement);
-
-				}
+		var firstWordUrl = _.find(content.split(' '), function(word){ return isRegExp(urlRegexp, word); });
+		if (firstWordUrl == undefined){
+			return content
+		}else{
+			var url = purl(firstWordUrl);
+			if (url.attr('host') == "www.youtube.com") {
+				return generateYoutubeFrame(url.param('v'));
+			} else if (url.attr('host') == "vimeo.com") {
+				return generateVimeoFrame(url.segment(1));
+			} else if (isRegExp(pictureRegexp, firstWordUrl)) {
+				return generatePictureLink(firstWordUrl);
+			} else {
+				return generateHrefLink(url);
 			}
-		});
-		return content;
+		}	
 	}
 });

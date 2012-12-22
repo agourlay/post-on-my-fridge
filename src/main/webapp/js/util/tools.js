@@ -90,37 +90,6 @@ function setTooltips(){
 	});
 }
 
-function buildTweet(data, value, content, twitterRegexp) {
-	tweet = data[0];
-	tweetText = tweet.text;
-	if (tweetText.length > 110) {
-		tweetText = tweetText.substring(0, 110) + "...";
-	}
-	replacement = "<a href=" + value + " target= blank >" + extractTwitterUser(value) + "</a> tweets :</br>" + tweetText;
-	content = content.replace(twitterRegexp, replacement);
-	return content;
-}
-
-function buildRssFeed(feed, content, rssRegexp) {
-	channel = $(feed).children("channel:first");
-	title = channel.find("title:first").html();
-	item = channel.find("item:first");
-	link = jQuery.trim(item.find("link:first").html());
-	itemTitle = $(item).find("title").text();
-	replacement = "<a href=" + link + " target= blank >" + title + "</a> Rss :</br>" + itemTitle;
-	content = content.replace(rssRegexp, replacement);
-	return content;
-}
-
-function buildTwitterDataUrl(url) {
-	var myData = {};
-	myData.count = "1";
-	myData.user = extractTwitterUser(url);
-	myData.trim_user = "true";
-	myData.callback = "?";
-	return myData;
-}
-
 function colorPickerManagement() {
 	var color = $("#postColor").val(),
 		textColor = getTxtColorFromBg(color);
@@ -135,7 +104,6 @@ function updatePostFormColor(color) {
 	$("#newPost").find("#content").css("color", textColor);
 	$("#newPost").find("#author").css("color", textColor);
 }
-
 
 function buildSpinner() {
 	var opts = {
@@ -191,13 +159,20 @@ function setRandomBackGround() {
 	$('#global').css('background-image', 'url(' + imageFullPath + ')');
 }
 
-function extractTwitterUser(url) {
-	var contentArray = url.split('/#!/');
-	return contentArray[1];
+function generateYoutubeFrame(videoId) {
+	return "<iframe class='youtube-player' type='text/html' width='225' height='210' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1' frameborder='0'></iframe>";
 }
 
-function generateYoutubeFrame(videoId) {
-	return "<iframe class='youtube-player' type='text/html' width='225' height='210' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1 frameborder='0'></iframe>";
+function generateVimeoFrame(videoId) {
+	return "<iframe src='http://player.vimeo.com/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
+}
+
+function generatePictureLink(url) {
+	return "</br><a href=" + url + " target= blank ><img  class='post_picture' src=" + url + " /></a>";
+}
+
+function generateHrefLink(url) {
+	return "<a href=" + url + " target= blank>" + url + "</a> ";;
 }
 
 function getTxtColorFromBg(color) {

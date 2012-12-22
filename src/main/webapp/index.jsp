@@ -84,7 +84,7 @@
 					<div class="span6 well">
 						<h2>Multimedia</h2>
 						<p>
-							Wanna share a link, a youtube video or a twitter account? Just insert an url in the content and we'll do the rest for you.
+							Wanna share a video (youtube/vimeo) or a picture? Just insert an url in the content and we'll do the rest for you.
 						</p>
 					</div>
 				</div>
