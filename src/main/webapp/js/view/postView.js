@@ -112,7 +112,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 			} else if (isRegExp(pictureRegexp, firstWordUrl)) {
 				return generatePictureLink(firstWordUrl);
 			} else {
-				return generateHrefLink(url);
+				return generateHrefLink(firstWordUrl);
 			}
 		}	
 	}
