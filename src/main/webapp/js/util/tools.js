@@ -172,7 +172,7 @@ function generatePictureLink(url) {
 }
 
 function generateHrefLink(url) {
-	return "<a href=" + url + " target= blank>" + url + "</a> ";;
+	return "<a href=" + url + " target= blank>" + url + "</a> ";
 }
 
 function getTxtColorFromBg(color) {
