@@ -67,8 +67,7 @@
 					<div class="span6 well">
 						<h2>Easy</h2>
 						<p>
-							To access or create a fridge use the search box or type directly the fridge name in the url /fridge/ <em>fridge name</em>
-							. Yes, urls are friendly here.
+							To access or create a fridge use the search box or type directly the fridge name in the url /fridge/ <em>fridge name</em>.
 						</p>
 					</div>
 				</div>
@@ -84,7 +83,7 @@
 					<div class="span6 well">
 						<h2>Multimedia</h2>
 						<p>
-							Wanna share a video (youtube/vimeo) or a picture? Just insert an url in the content and we'll do the rest for you.
+							To share a video (youtube/vimeo/dailymotion) or a picture, just insert the url in the content.
 						</p>
 					</div>
 				</div>

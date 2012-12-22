@@ -109,6 +109,8 @@ App.PostView = Em.View.extend(App.Draggable, {
 				return generateYoutubeFrame(url.param('v'));
 			} else if (url.attr('host') == "vimeo.com") {
 				return generateVimeoFrame(url.segment(1));
+			} else if (url.attr('host') == "www.dailymotion.com") {
+				return generateDailyMotionLink((url.segment(2)).split('_')[0]);	
 			} else if (isRegExp(pictureRegexp, firstWordUrl)) {
 				return generatePictureLink(firstWordUrl);
 			} else {

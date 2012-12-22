@@ -167,6 +167,10 @@ function generateVimeoFrame(videoId) {
 	return "<iframe src='http://player.vimeo.com/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
 }
 
+function generateDailyMotionLink(videoId) {
+	return "<iframe src='http://www.dailymotion.com/embed/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
+}
+
 function generatePictureLink(url) {
 	return "</br><a href=" + url + " target= blank ><img  class='post_picture' src=" + url + " /></a>";
 }
