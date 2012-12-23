@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.agourlay.pomf.model.ChatMessage;
-import com.agourlay.pomf.tools.Constantes;
+import com.agourlay.pomf.util.Constantes;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

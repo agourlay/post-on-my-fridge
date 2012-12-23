@@ -11,9 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.joda.time.DateTime;
 
 import com.agourlay.pomf.service.ClientRepository;
-import com.agourlay.pomf.tools.Constantes;
-import com.agourlay.pomf.tools.CustomDateTimeDeserializer;
-import com.agourlay.pomf.tools.CustomDateTimeSerializer;
+import com.agourlay.pomf.util.Constantes;
+import com.agourlay.pomf.util.CustomDateTimeDeserializer;
+import com.agourlay.pomf.util.CustomDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.googlecode.objectify.annotation.Cache;

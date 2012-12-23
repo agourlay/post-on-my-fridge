@@ -17,11 +17,11 @@ import javax.ws.rs.core.MediaType;
 
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Post;
+import com.agourlay.pomf.rss.Feed;
+import com.agourlay.pomf.rss.RSSFeedWriter;
+import com.agourlay.pomf.rss.RssUtils;
 import com.agourlay.pomf.service.ClientRepository;
-import com.agourlay.pomf.tools.Constantes;
-import com.agourlay.pomf.tools.rss.Feed;
-import com.agourlay.pomf.tools.rss.RSSFeedWriter;
-import com.agourlay.pomf.tools.rss.RssUtils;
+import com.agourlay.pomf.util.Constantes;
 
 @Path("/fridge/{fridgeId}")
 public class FridgeResource {

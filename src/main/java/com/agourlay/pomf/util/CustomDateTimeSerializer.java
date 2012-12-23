@@ -1,4 +1,4 @@
-package com.agourlay.pomf.tools;
+package com.agourlay.pomf.util;
 
 import java.io.IOException;
 

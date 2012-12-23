@@ -9,9 +9,9 @@ import javax.ws.rs.Produces;
 
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.Stat;
-import com.agourlay.pomf.tools.rss.Feed;
-import com.agourlay.pomf.tools.rss.RSSFeedWriter;
-import com.agourlay.pomf.tools.rss.RssUtils;
+import com.agourlay.pomf.rss.Feed;
+import com.agourlay.pomf.rss.RSSFeedWriter;
+import com.agourlay.pomf.rss.RssUtils;
 
 @Path("/admin")
 public class AdminResource {

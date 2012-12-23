@@ -1,4 +1,4 @@
-package com.agourlay.pomf.tools;
+package com.agourlay.pomf.util;
 
 public interface Constantes {
 	public static String CACHE_CHANNEL_KEY = "fridgeChannel:";

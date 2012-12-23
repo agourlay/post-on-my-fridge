@@ -1,4 +1,4 @@
-package com.agourlay.pomf.tools.rss;
+package com.agourlay.pomf.rss;
 
 import java.util.ArrayList;
 import java.util.List;

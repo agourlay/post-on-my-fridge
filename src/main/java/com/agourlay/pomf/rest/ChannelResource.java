@@ -10,7 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.agourlay.pomf.service.ClientRepository;
-import com.agourlay.pomf.tools.Constantes;
+import com.agourlay.pomf.util.Constantes;
 
 @Path("/channel")
 public class ChannelResource {
