@@ -20,6 +20,7 @@
         <include path="/images/**.*" expiration="7d" />
         <include path="favicon.ico" expiration="30d" />
         <include path="robots.txt"/>
+        <include path="human.txt"/>
         <include path="sitemap.xml"/>
     </static-files>   	
 </appengine-web-app>
