@@ -5,7 +5,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.io.Serializable;
 import java.util.List;
 
-import com.agourlay.pomf.tools.transformer.ExtractFridgeName;
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -14,60 +14,68 @@ import com.googlecode.objectify.annotation.Load;
 
 @Entity
 @Cache
-public class Fridge implements Serializable{
-	
+public class Fridge implements Serializable {
+
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = -6461491688659114651L;
-	
-	@Id	private String name;
+
+	@Id
+	private String name;
 	private String description;
-	@Load private List<Post> posts;
-	
-	public Fridge() {}
-		
-	//DAO METHODS	
-	public static Fridge getFridgeById(String fridgeId){
-		return ofy().load().type(Fridge.class).id(fridgeId).get();
-	}
-	
-	public static int countFridge(){
-		return ofy().load().type(Fridge.class).count();
-	}
-	
-	public static Fridge createFridge(String fridgeId){
-		Fridge newFridge = new Fridge();
-		newFridge.setName(fridgeId);
-		ofy().save().entity(newFridge).now();
-		return newFridge;
-	}
-	
-	public static void createFridgeIfNotExist(String fridgeId) {
-        if (getFridgeById(fridgeId) == null) {
-        	createFridge(fridgeId);
-        }
+	@Load
+	private List<Post> posts;
+
+	public Fridge() {
 	}
 
-	public static List<Fridge> searchFridgeLike(String fridgeName){
-		return ofy().load().type(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list(); 
+	// DAO METHODS
+	public static Fridge getFridgeById(String fridgeId) {
+		return ofy().load().type(Fridge.class).id(fridgeId).get();
 	}
-	
-	public static List<String> searchFridgeNamesWithNameLike(String fridgeName){
-		return Lists.transform(searchFridgeLike(fridgeName),  new ExtractFridgeName());
+
+	public static int countFridge() {
+		return ofy().load().type(Fridge.class).count();
 	}
-	
-	public static List<Fridge> getAllFridge(){
+
+	public static Long createFridge(String fridgeId) {
+		Fridge newFridge = new Fridge();
+		newFridge.setName(fridgeId);
+		return ofy().save().entity(newFridge).now().getId();
+	}
+
+	public static void createFridgeIfNotExist(String fridgeId) {
+		if (getFridgeById(fridgeId) == null) {
+			createFridge(fridgeId);
+		}
+	}
+
+	public static List<Fridge> searchFridgeLike(String fridgeName) {
+		return ofy().load().type(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list();
+	}
+
+	// TODO : get the names back using an objectify request, we don't need the
+	// full fridge objects.
+	public static List<String> searchFridgeNamesWithNameLike(String fridgeName) {
+		return Lists.transform(searchFridgeLike(fridgeName), new Function<Fridge, String>() {
+			@Override
+			public String apply(Fridge fridge) {
+				return fridge.getName();
+			}
+		});
+	}
+
+	public static List<Fridge> getAllFridge() {
 		return ofy().load().type(Fridge.class).limit(10000).list();
 	}
-	
-	public static void saveFridge(Fridge fridge){
+
+	public static void saveFridge(Fridge fridge) {
 		ofy().save().entity(fridge).now();
 	}
-	
-	
-	//GETTERS & SETTERS
-	
+
+	// GETTERS & SETTERS
+
 	public String getName() {
 		return name;
 	}

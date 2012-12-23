@@ -24,14 +24,15 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 @Cache
 @XmlRootElement
-public class Post implements Serializable{
-	
+public class Post implements Serializable {
+
 	/**
 	 * serialVersionUID
 	 */
 	private static final long serialVersionUID = -5300832520775741740L;
 
-	@Id private Long id;
+	@Id
+	private Long id;
 	private String author;
 	private String content;
 	private String color;
@@ -39,50 +40,53 @@ public class Post implements Serializable{
 	private Double positionX;
 	private Double positionY;
 	private DateTime dueDate;
-	@Index private String fridgeId;
+	@Index
+	private String fridgeId;
 
-	public Post() {	this.date = new DateTime(); }
-	
-	// DAO METHODS 
-
-	public static void savePost(Post post){
-		ofy().save().entity(post).now();
-        ClientRepository.notifyAllClientFromFridge(post.getFridgeId(),Constantes.COMMAND_REFRESH,null,null);
+	public Post() {
+		this.date = new DateTime();
 	}
-			
+
+	// DAO METHODS
+
+	public static void savePost(Post post) {
+		ofy().save().entity(post).now();
+		ClientRepository.notifyAllClientFromFridge(post.getFridgeId(), Constantes.COMMAND_REFRESH, null, null);
+	}
+
 	public static Post getPostById(Long id) {
 		return ofy().load().type(Post.class).id(id).get();
 	}
-	
+
 	public static List<Post> getAllPost() {
-        return ofy().load().type(Post.class).limit(10000).list();
+		return ofy().load().type(Post.class).limit(10000).list();
 	}
-	
+
 	public static List<Post> getPostByFridge(String fridgeName) {
-        return ofy().load().type(Post.class).filter("fridgeId", fridgeName).limit(100).list();
+		return ofy().load().type(Post.class).filter("fridgeId", fridgeName).limit(100).list();
 	}
-	
+
 	public static void remove(long id) {
 		Post post = getPostById(id);
-		String currentFridgeId = post.getFridgeId();
-		if (post != null){
+		if (post != null) {
+			String currentFridgeId = post.getFridgeId();
 			ofy().delete().entity(post).now();
-			ClientRepository.notifyAllClientFromFridge(currentFridgeId,Constantes.COMMAND_REFRESH,null,null);
+			ClientRepository.notifyAllClientFromFridge(currentFridgeId, Constantes.COMMAND_REFRESH, null, null);
 		}
 	}
-	
-	public static void remove(Collection<Long> ids){
-		for (Long id : ids){
+
+	public static void remove(Collection<Long> ids) {
+		for (Long id : ids) {
 			remove(id);
 		}
 	}
-	
-	public static int countPost(){
+
+	public static int countPost() {
 		return ofy().load().type(Post.class).count();
 	}
-	
-	//GETTERS & SETTERS
-	
+
+	// GETTERS & SETTERS
+
 	public Long getId() {
 		return id;
 	}
@@ -94,7 +98,7 @@ public class Post implements Serializable{
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
+
 	public String getContent() {
 		return content;
 	}
@@ -102,8 +106,8 @@ public class Post implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	@JsonSerialize(using=CustomDateTimeSerializer.class)
+
+	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	public DateTime getDate() {
 		return date;
 	}
@@ -140,8 +144,8 @@ public class Post implements Serializable{
 	public void setColor(String color) {
 		this.color = color;
 	}
-	
-	@JsonSerialize(using=CustomDateTimeSerializer.class)
+
+	@JsonSerialize(using = CustomDateTimeSerializer.class)
 	public DateTime getDueDate() {
 		return dueDate;
 	}
@@ -158,5 +162,5 @@ public class Post implements Serializable{
 	public void setFridgeId(String fridgeId) {
 		this.fridgeId = fridgeId;
 	}
-	
+
 }

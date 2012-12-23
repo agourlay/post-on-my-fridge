@@ -16,7 +16,7 @@ public class RSSFeedWriter {
 	ByteArrayOutputStream byteArrayOutputStream;
 	private Feed rssfeed;
 
-	public RSSFeedWriter(Feed rssfeed,ByteArrayOutputStream byteArrayOutputStream) {
+	public RSSFeedWriter(Feed rssfeed, ByteArrayOutputStream byteArrayOutputStream) {
 		this.rssfeed = rssfeed;
 		this.byteArrayOutputStream = byteArrayOutputStream;
 	}

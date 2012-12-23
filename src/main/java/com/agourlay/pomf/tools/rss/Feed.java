@@ -13,8 +13,7 @@ public class Feed {
 	final String pubDate;
 	final List<FeedMessage> entries = new ArrayList<FeedMessage>();
 
-	public Feed(String title, String link, String description, String language,
-			String copyright, String pubDate) {
+	public Feed(String title, String link, String description, String language, String copyright, String pubDate) {
 		this.title = title;
 		this.link = link;
 		this.description = description;
@@ -53,9 +52,8 @@ public class Feed {
 
 	@Override
 	public String toString() {
-		return "Feed [copyright=" + copyright + ", description=" + description
-				+ ", language=" + language + ", link=" + link + ", pubDate="
-				+ pubDate + ", title=" + title + "]";
+		return "Feed [copyright=" + copyright + ", description=" + description + ", language=" + language + ", link=" + link
+				+ ", pubDate=" + pubDate + ", title=" + title + "]";
 	}
 
 }

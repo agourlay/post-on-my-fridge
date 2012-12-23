@@ -18,5 +18,5 @@ public class Config extends HttpServlet {
 		ObjectifyService.register(Fridge.class);
 		ObjectifyService.register(Stat.class);
 	}
-	
+
 }

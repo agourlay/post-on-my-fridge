@@ -11,17 +11,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-	public class CustomDateTimeSerializer extends JsonSerializer<DateTime> {
-	    private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+public class CustomDateTimeSerializer extends JsonSerializer<DateTime> {
+	private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-	    @Override
-	    public void serialize(DateTime value, JsonGenerator gen, 
-	        SerializerProvider arg2) throws IOException,
-	        JsonProcessingException {
-	        gen.writeString(formatter.print(value));
-	    }
-	    @Override
-	    public Class<DateTime> handledType() { 
-	        return DateTime.class; 
-	    }
+	@Override
+	public void serialize(DateTime value, JsonGenerator gen, SerializerProvider arg2) throws IOException, JsonProcessingException {
+		gen.writeString(formatter.print(value));
 	}
+
+	@Override
+	public Class<DateTime> handledType() {
+		return DateTime.class;
+	}
+}

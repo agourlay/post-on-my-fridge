@@ -25,37 +25,37 @@ import com.agourlay.pomf.tools.rss.RssUtils;
 
 @Path("/fridge/{fridgeId}")
 public class FridgeResource {
-	
-    @GET
-    @Produces("application/json")
-    public Fridge getFridge(@PathParam ("fridgeId") String fridgeId)  {
-    	return Fridge.getFridgeById(fridgeId);
-     }
-    
-    @GET
-    @Path("/rss")
-    @Produces("application/xml")
-    public String getFridgeRssContent(@PathParam ("fridgeId") String fridgeId) throws Exception  {
-    	Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
-    	rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Arrays.asList(Fridge.getFridgeById(fridgeId))));
-    	RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
-    	return writer.write().toString();
-    }
-    
-    @GET
-    @Path("/search")
-    @Produces("application/json")
-    public List<String> getFridgeIds(@QueryParam("term") String term)  {
-    	return Fridge.searchFridgeNamesWithNameLike(term);
-    }
-    
+
+	@GET
+	@Produces("application/json")
+	public Fridge getFridge(@PathParam("fridgeId") String fridgeId) {
+		return Fridge.getFridgeById(fridgeId);
+	}
+
+	@GET
+	@Path("/rss")
+	@Produces("application/xml")
+	public String getFridgeRssContent(@PathParam("fridgeId") String fridgeId) throws Exception {
+		Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
+		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Arrays.asList(Fridge.getFridgeById(fridgeId))));
+		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
+		return writer.write().toString();
+	}
+
+	@GET
+	@Path("/search")
+	@Produces("application/json")
+	public List<String> getFridgeIds(@QueryParam("term") String term) {
+		return Fridge.searchFridgeNamesWithNameLike(term);
+	}
+
 	@DELETE
 	@Path("post/{postId}")
-	public void deletePost(@PathParam ("fridgeId") String fridgeId,@PathParam ("postId") String postId)  {
-		ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
+	public void deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
+		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_REFRESH, null, null);
 		Post.remove(Long.parseLong(postId));
 	}
-	
+
 	@PUT
 	@Path("/post")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -63,15 +63,15 @@ public class FridgeResource {
 	public void updatePost(Post post) {
 		Post.savePost(post);
 	}
-	
+
 	@POST
 	@Path("/post")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public void addPost(@PathParam ("fridgeId") String fridgeId,Post post) {
+	public void addPost(@PathParam("fridgeId") String fridgeId, Post post) {
 		Fridge.createFridgeIfNotExist(fridgeId);
 		Post.savePost(post);
-        ClientRepository.notifyAllClientFromFridge(fridgeId,Constantes.COMMAND_REFRESH,null,null);
+		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_REFRESH, null, null);
 	}
-    
+
 }

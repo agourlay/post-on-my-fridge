@@ -17,20 +17,20 @@ import com.agourlay.pomf.tools.rss.RssUtils;
 public class AdminResource {
 
 	@GET
-    @Path("fridges/rss")
+	@Path("fridges/rss")
 	@Produces("application/xml")
-	public String getFridgesRssContent() throws Exception  {
-	    Feed rssFeeder = RssUtils.createRssFeed("admin");
+	public String getFridgesRssContent() throws Exception {
+		Feed rssFeeder = RssUtils.createRssFeed("admin");
 		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getAllFridge()));
-		RSSFeedWriter writer =  new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
+		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
 		return writer.write().toString();
 	}
-	
+
 	@GET
-    @Path("fridges/stats")
+	@Path("fridges/stats")
 	@Produces("application/json")
-	public List<Stat> getFridgesStats()  {
+	public List<Stat> getFridgesStats() {
 		return Stat.getAllStats();
 	}
-	
+
 }

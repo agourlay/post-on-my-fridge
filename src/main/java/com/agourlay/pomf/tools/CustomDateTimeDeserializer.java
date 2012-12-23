@@ -2,7 +2,6 @@ package com.agourlay.pomf.tools;
 
 import java.io.IOException;
 
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

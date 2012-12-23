@@ -20,26 +20,26 @@ public class ChannelResource {
 	@Produces("application/json")
 	public String createChannel(@PathParam("fridgeId") String fridgeId) {
 		String channelId = UUID.randomUUID().toString();
-		return  ClientRepository.addChannelToFridge(fridgeId, channelId);
+		return ClientRepository.addChannelToFridge(fridgeId, channelId);
 	}
-	
+
 	@POST
 	@Path("/disconnected")
 	public void disconnectChannel(@FormParam("from") final String channelId) {
 
 	}
-	
+
 	@POST
 	@Path("/connected")
 	public void connectedChannel() {
 
 	}
-	
+
 	@POST
 	@Path("/{fridgeId}/message")
 	public void sendMessage(@FormParam("fridgeId") final String fridgeId, @FormParam("message") final String message,
 			@FormParam("user") final String user) {
-		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_MESSAGE,message,user);
+		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_MESSAGE, message, user);
 	}
 
 }
