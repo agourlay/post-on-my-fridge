@@ -33,24 +33,6 @@
         <servlet-name>Rest</servlet-name>
         <url-pattern>/_ah/*</url-pattern>
     </servlet-mapping>
-	
-	<servlet>
-		<servlet-name>EraseDuePostController</servlet-name>
-		<servlet-class>com.agourlay.pomf.controller.EraseDuePostController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>EraseDuePostController</servlet-name>
-		<url-pattern>/outdated</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>GenerateDailyStatisticsController</servlet-name>
-		<servlet-class>com.agourlay.pomf.controller.GenerateDailyStatisticsController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>GenerateDailyStatisticsController</servlet-name>
-		<url-pattern>/generate-daily-stats</url-pattern>
-	</servlet-mapping>
 		
 	<servlet>
 		<servlet-name>FridgeController</servlet-name>
