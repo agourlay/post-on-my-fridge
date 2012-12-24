@@ -1,17 +1,11 @@
 package com.agourlay.pomf.model;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.DateTime;
 
-import com.agourlay.pomf.service.ClientRepository;
-import com.agourlay.pomf.util.Constantes;
 import com.agourlay.pomf.util.CustomDateTimeDeserializer;
 import com.agourlay.pomf.util.CustomDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -45,44 +39,6 @@ public class Post implements Serializable {
 
 	public Post() {
 		this.date = new DateTime();
-	}
-
-	// DAO METHODS
-
-	public static void savePost(Post post) {
-		ofy().save().entity(post).now();
-		ClientRepository.notifyAllClientFromFridge(post.getFridgeId(), Constantes.COMMAND_REFRESH, null, null);
-	}
-
-	public static Post getPostById(Long id) {
-		return ofy().load().type(Post.class).id(id).get();
-	}
-
-	public static List<Post> getAllPost() {
-		return ofy().load().type(Post.class).limit(10000).list();
-	}
-
-	public static List<Post> getPostByFridge(String fridgeName) {
-		return ofy().load().type(Post.class).filter("fridgeId", fridgeName).limit(100).list();
-	}
-
-	public static void remove(long id) {
-		Post post = getPostById(id);
-		if (post != null) {
-			String currentFridgeId = post.getFridgeId();
-			ofy().delete().entity(post).now();
-			ClientRepository.notifyAllClientFromFridge(currentFridgeId, Constantes.COMMAND_REFRESH, null, null);
-		}
-	}
-
-	public static void remove(Collection<Long> ids) {
-		for (Long id : ids) {
-			remove(id);
-		}
-	}
-
-	public static int countPost() {
-		return ofy().load().type(Post.class).count();
 	}
 
 	// GETTERS & SETTERS

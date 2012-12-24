@@ -1,7 +1,6 @@
 App.Message = Em.Object.extend({
 	user: null,
 	message: null,
-	members: null,
-	kind: null,
+	date : null,
 	timestamp: moment().format('HH:mm')
 });

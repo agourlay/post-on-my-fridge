@@ -1,6 +1,5 @@
 package com.agourlay.pomf.rest;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -9,12 +8,10 @@ import javax.ws.rs.Produces;
 
 import org.joda.time.DateTime;
 
-import com.agourlay.pomf.model.Fridge;
+import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.model.Stat;
-import com.agourlay.pomf.rss.Feed;
-import com.agourlay.pomf.rss.RSSFeedWriter;
-import com.agourlay.pomf.rss.RssUtils;
+import com.agourlay.pomf.service.RssService;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
@@ -26,10 +23,7 @@ public class AdminResource {
 	@Path("fridges/rss")
 	@Produces("application/xml")
 	public String getFridgesRssContent() throws Exception {
-		Feed rssFeeder = RssUtils.createRssFeed("admin");
-		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Fridge.getAllFridge()));
-		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
-		return writer.write().toString();
+		return RssService.getRssStream(Dao.getAllFridge(),"admin");
 	}
 
 	@GET
@@ -38,7 +32,7 @@ public class AdminResource {
 	public List<Stat> getFridgesStats() {
 		return Stat.getAllStats();
 	}
-	
+
 	@GET
 	@Path("generate-stat")
 	@Produces("application/json")
@@ -46,25 +40,27 @@ public class AdminResource {
 		Stat.generateDailyStat();
 		return "Stats generated";
 	}
-	
+
 	@GET
 	@Path("clean")
 	@Produces("application/json")
 	public String eraseDuePost() {
 		// waiting for filter on date to be implemented on delete in Objectify
-		List<Long> postIdToDelete = FluentIterable.from(Post.getAllPost()).filter(new Predicate<Post>() {
-			@Override
-			public boolean apply(Post post) {
-				return post.getDueDate() != null && post.getDueDate().isBefore(new DateTime()) ? true : false;
-			}
-		}).transform(new Function<Post, Long>() {
-			@Override
-			public Long apply(Post post) {
-				return post.getId();
-			}
-		}).toList();
+		List<Long> postIdToDelete = FluentIterable//
+				.from(Dao.getAllPost())//
+				.filter(new Predicate<Post>() {
+					@Override
+					public boolean apply(Post post) {
+						return post.getDueDate() != null && post.getDueDate().isBefore(new DateTime()) ? true : false;
+					}
+				}).transform(new Function<Post, Long>() {
+					@Override
+					public Long apply(Post post) {
+						return post.getId();
+					}
+				}).toList();
 
-		Post.remove(postIdToDelete);
+		Dao.deletePosts(postIdToDelete);
 		return "Due posts deleted";
 	}
 

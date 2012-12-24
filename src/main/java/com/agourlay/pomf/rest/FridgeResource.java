@@ -1,6 +1,5 @@
 package com.agourlay.pomf.rest;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,45 +14,44 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.joda.time.DateTime;
+
+import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Fridge;
+import com.agourlay.pomf.model.FridgeMessage;
 import com.agourlay.pomf.model.Post;
-import com.agourlay.pomf.rss.Feed;
-import com.agourlay.pomf.rss.RSSFeedWriter;
-import com.agourlay.pomf.rss.RssUtils;
-import com.agourlay.pomf.service.ClientRepository;
+import com.agourlay.pomf.service.ClientService;
+import com.agourlay.pomf.service.RssService;
 import com.agourlay.pomf.util.Constantes;
 
 @Path("/fridge/{fridgeId}")
 public class FridgeResource {
-
+	
 	@GET
 	@Produces("application/json")
 	public Fridge getFridge(@PathParam("fridgeId") String fridgeId) {
-		return Fridge.getFridgeById(fridgeId);
+		return Dao.getFridgeById(fridgeId);
 	}
 
 	@GET
 	@Path("/rss")
 	@Produces("application/xml")
 	public String getFridgeRssContent(@PathParam("fridgeId") String fridgeId) throws Exception {
-		Feed rssFeeder = RssUtils.createRssFeed(fridgeId);
-		rssFeeder.getMessages().addAll(RssUtils.getRssEntry(Arrays.asList(Fridge.getFridgeById(fridgeId))));
-		RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, new ByteArrayOutputStream());
-		return writer.write().toString();
+		return RssService.getRssStream(Arrays.asList(Dao.getFridgeById(fridgeId)), fridgeId);
 	}
 
 	@GET
 	@Path("/search")
 	@Produces("application/json")
 	public List<String> getFridgeIds(@QueryParam("term") String term) {
-		return Fridge.searchFridgeNamesWithNameLike(term);
+		return Dao.searchFridgeNamesWithNameLike(term);
 	}
 
 	@DELETE
 	@Path("post/{postId}")
 	public void deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
-		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_REFRESH, null, null);
-		Post.remove(Long.parseLong(postId));
+		ClientService.notifyClientsFromFridge(fridgeId,new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,new DateTime()));
+		Dao.deletePost(Long.parseLong(postId));
 	}
 
 	@PUT
@@ -61,7 +59,7 @@ public class FridgeResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void updatePost(Post post) {
-		Post.savePost(post);
+		Dao.savePost(post);
 	}
 
 	@POST
@@ -69,9 +67,9 @@ public class FridgeResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public void addPost(@PathParam("fridgeId") String fridgeId, Post post) {
-		Fridge.createFridgeIfNotExist(fridgeId);
-		Post.savePost(post);
-		ClientRepository.notifyAllClientFromFridge(fridgeId, Constantes.COMMAND_REFRESH, null, null);
+		Dao.createFridgeIfNotExist(fridgeId);
+		Dao.savePost(post);
+		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,new DateTime()));
 	}
 
 }

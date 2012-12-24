@@ -5,6 +5,7 @@ App.ChatController = Ember.ArrayController.create({
 	init: function () {
 		this._super();
 		this.channelManagement();
+		this.retrievePreviousMessages();
 	},
 
 	sendChatMessage: function(message,pseudo){
@@ -14,7 +15,7 @@ App.ChatController = Ember.ArrayController.create({
 		payload.user = pseudo;
 		$.ajax({
 			type: "POST",
-			url: "/_ah/channel/" + payload.fridgeId + "/message",
+			url: "/_ah/channel/" +  App.get('fridgeId') + "/message",
 			data: payload
 		});
 	},
@@ -60,5 +61,14 @@ App.ChatController = Ember.ArrayController.create({
 		});
 	},
 	
-	retrievePreviousMessages: function() {}
+	retrievePreviousMessages: function() {
+		var me = this;
+		$.getJSON("/_ah/channel/" + App.get('fridgeId') + "/message", function(messages) {
+			if (messages !== null) {
+				$.each(messages, function(index, message) {
+					me.messageManagement(message.user,message.message,message.date);
+				});
+			}
+		});
+	}
 });

@@ -1,15 +1,19 @@
 package com.agourlay.pomf.model;
 
-public class ChatMessage {
+import org.joda.time.DateTime;
+
+public class FridgeMessage {
 
 	private String command;
 	private String user;
 	private String message;
+	private DateTime date;
 
-	public ChatMessage(String command, String user, String message) {
+	public FridgeMessage(String command, String user, String message, DateTime date) {
 		this.command = command;
 		this.user = user;
 		this.message = message;
+		this.date = date;
 	}
 
 	// GETTERS & SETTERS
@@ -36,6 +40,14 @@ public class ChatMessage {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public DateTime getDate() {
+		return date;
+	}
+
+	public void setDate(DateTime date) {
+		this.date = date;
 	}
 
 }

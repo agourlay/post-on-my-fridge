@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.agourlay.pomf.dao.Dao;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -37,8 +38,8 @@ public class Stat implements Serializable {
 	public static void generateDailyStat() {
 		Stat newStat = new Stat();
 		newStat.setGenerationDate(new DateTime());
-		newStat.setFridgeNumber(Fridge.countFridge());
-		newStat.setPostNumber(Post.countPost());
+		newStat.setFridgeNumber(Dao.countFridge());
+		newStat.setPostNumber(Dao.countPost());
 		Stat.createStat(newStat);
 	}
 
