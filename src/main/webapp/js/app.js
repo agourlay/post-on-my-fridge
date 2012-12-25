@@ -10,7 +10,7 @@ window.App = Ember.Application.create({
 	},
 
     Router : Ember.Router.extend({
-		enableLogging: true,
+		enableLogging: false,
 		location: 'hash',
 		root: Ember.Route.extend({
 			index: Ember.Route.extend({

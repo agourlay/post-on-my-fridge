@@ -3,6 +3,8 @@ package com.agourlay.pomf.model;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.Data;
+
 import com.agourlay.pomf.dao.Dao;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
@@ -11,7 +13,7 @@ import com.googlecode.objectify.annotation.Load;
 
 @Entity
 @Cache
-public class Fridge implements Serializable {
+@Data public class Fridge implements Serializable {
 
 	/**
 	 * serialVersionUID
@@ -28,29 +30,7 @@ public class Fridge implements Serializable {
 	}
 
 	// GETTERS & SETTERS
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public List<Post> getPosts() {
 		return Dao.getPostByFridge(this.name);
 	}
-
-	public void setPosts(List<Post> posts) {
-		this.posts = posts;
-	}
-
 }

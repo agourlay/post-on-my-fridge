@@ -15,23 +15,23 @@ App.ChatController = Ember.ArrayController.create({
 		payload.user = pseudo;
 		$.ajax({
 			type: "POST",
-			url: "/_ah/channel/" +  App.get('fridgeId') + "/message",
+			url: "/channel/" + App.get('fridgeId') + "/message",
 			data: payload
 		});
 	},
 
-	messageManagement: function(user, message) {
+	messageManagement: function(user, message,timestamp) {
 		var chatModel = {};
 		chatModel.user = user;
 		chatModel.message = message;
-		chatModel.timestamp = moment().format('HH:mm');
+		chatModel.timestamp = timestamp;
 		this.pushObject(App.Message.create(chatModel));
 	},
 
 	channelManagement : function () {
 		var me = this;
 		$.ajax({
-			url:"/_ah/channel/" + App.get('fridgeId'),
+			url: "/channel/" + App.get('fridgeId'),
 			type: "GET",
 			dataType:'text',
 			success: function(tokenChannel) {
@@ -46,7 +46,7 @@ App.ChatController = Ember.ArrayController.create({
 							App.FridgeController.retrievePost();
 						}
 						if (data.command == "#FRIDGE-CHAT#") {
-							me.messageManagement(data.user, data.message);
+							me.messageManagement(data.user, data.message,data.timestamp);
 						}
 					};
 					socket.onerror = function(err) {
@@ -54,7 +54,7 @@ App.ChatController = Ember.ArrayController.create({
 							baseCls: 'humane-jackedup',
 							addnCls: 'humane-jackedup-error'
 						});
-						jackedup.log("Channel error :" + err.description);
+						jackedup.log("Channel error : " + err.description);
 					};
 				}
 			}	
@@ -63,10 +63,10 @@ App.ChatController = Ember.ArrayController.create({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("/_ah/channel/" + App.get('fridgeId') + "/message", function(messages) {
-			if (messages !== null) {
+		$.getJSON("/channel/" + App.get('fridgeId') + "/message", function(messages) {
+			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
-					me.messageManagement(message.user,message.message,message.date);
+					me.messageManagement(message.user,message.message,message.timestamp);
 				});
 			}
 		});

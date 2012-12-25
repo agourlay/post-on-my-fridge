@@ -5,6 +5,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.Data;
+
 import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.Dao;
@@ -14,7 +16,7 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 @Cache
-public class Stat implements Serializable {
+@Data public class Stat implements Serializable {
 
 	private static final long serialVersionUID = 1025020018320400913L;
 
@@ -42,39 +44,4 @@ public class Stat implements Serializable {
 		newStat.setPostNumber(Dao.countPost());
 		Stat.createStat(newStat);
 	}
-
-	/* GETTERS & SETTERS */
-
-	public Integer getPostNumber() {
-		return postNumber;
-	}
-
-	public void setPostNumber(Integer postNumber) {
-		this.postNumber = postNumber;
-	}
-
-	public DateTime getGenerationDate() {
-		return generationDate;
-	}
-
-	public void setGenerationDate(DateTime generationDate) {
-		this.generationDate = generationDate;
-	}
-
-	public Integer getFridgeNumber() {
-		return fridgeNumber;
-	}
-
-	public void setFridgeNumber(Integer fridgeNumber) {
-		this.fridgeNumber = fridgeNumber;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 }

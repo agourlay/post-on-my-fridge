@@ -12,7 +12,7 @@ function initUIElement() {
 	});
 
     $("#search").autocomplete({
-		source: "/resources/fridge/noid/search",
+		source: "/fridge/noid/search",
 		delay: 300,
 		minLength: 2,
 		select: function(event, ui) {
@@ -35,10 +35,10 @@ function initUIElement() {
 				newPostData.author = $("#author").val();
 				newPostData.content = $("#content").val();
 				newPostData.color = $("#postColor").val();
-				newPostData.dueDate = $("#dueDate").val();
 				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(fridge.css("width"), 10);
 				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(fridge.css("height"), 10);
 				newPostData.fridgeId = App.get('fridgeId');
+				newPostData.dueDate = $("#dueDate").val();
 				newPostValidation(newPostData);
 				App.FridgeController.createPost(newPostData);
 				ui.draggable.animate({

@@ -12,7 +12,6 @@ App.ChatView = Ember.CollectionView.extend({
 				}
 			};
 			$("#message").keypress(handleReturnKey);
-			App.ChatController.sendChatMessage("Entered the chat","Someone");
 		},
 
 		itemViewClass: 'App.MessageView'

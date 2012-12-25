@@ -5,8 +5,6 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.util.Collection;
 import java.util.List;
 
-import org.joda.time.DateTime;
-
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.FridgeMessage;
 import com.agourlay.pomf.model.Post;
@@ -62,8 +60,7 @@ public class Dao {
 
 	public static void savePost(Post post) {
 		ofy().save().entity(post).now();
-		ClientService.notifyClientsFromFridge(post.getFridgeId(), new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,
-				new DateTime()));
+		ClientService.notifyClientsFromFridge(post.getFridgeId(), new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 	}
 
 	public static Post getPostById(Long id) {
@@ -83,8 +80,7 @@ public class Dao {
 		if (post != null) {
 			String currentFridgeId = post.getFridgeId();
 			ofy().delete().entity(post).now();
-			ClientService.notifyClientsFromFridge(currentFridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,
-					new DateTime()));
+			ClientService.notifyClientsFromFridge(currentFridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 		}
 	}
 

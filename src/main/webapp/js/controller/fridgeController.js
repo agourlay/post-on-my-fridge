@@ -50,7 +50,7 @@ App.FridgeController = Ember.ArrayController.create({
 
 	retrievePost: function() {
 		var me = this;
-		$.getJSON("/resources/fridge/" + App.get('fridgeId'), function(fridgeContent) {
+		$.getJSON("/fridge/" + App.get('fridgeId'), function(fridgeContent) {
 			if (fridgeContent !== null && fridgeContent.posts != null ) {
 				// remove post present in the fridge but not in the db
 				me.deleteProcedure(fridgeContent.posts);

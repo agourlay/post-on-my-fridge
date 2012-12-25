@@ -29,10 +29,10 @@
 	    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  	})();
 		</script>
-	<script src="/_ah/channel/jsapi"></script>
 </head>
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
+	<script src = "/_ah/channel/jsapi"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.2.1/purl.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
@@ -93,7 +93,7 @@
     </script>
 
     <script  type="text/x-handlebars" data-template-name="message-template">
-		<br/><i>Sent at {{view.content.timestamp}}</i>
+		<br/><i>Sent at {{view.content.date}}</i>
 		<br/><b>{{view.content.user}}:</b> <span class='chatMessage'>{{view.content.message}}</span>
     </script>
         

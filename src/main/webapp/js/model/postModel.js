@@ -8,7 +8,7 @@ App.Post = Em.Object.extend({
 	positionY: null,
 	dueDate: null,
 	fridgeId: null,
-	resourceUrl: "/resources/fridge/"+App.get('fridgeId')+"/post/",
+	resourceUrl: "/fridge/"+App.get('fridgeId')+"/post/",
 
 	fullPosition: function(key, value) {
 		// getter

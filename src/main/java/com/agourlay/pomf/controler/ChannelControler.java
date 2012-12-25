@@ -1,4 +1,4 @@
-package com.agourlay.pomf.rest;
+package com.agourlay.pomf.controler;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +15,7 @@ import com.agourlay.pomf.service.MessageService;
 import com.agourlay.pomf.service.ClientService;
 
 @Path("/channel")
-public class ChannelResource {
+public class ChannelControler {
 
 	@GET
 	@Path("/{fridgeId}")

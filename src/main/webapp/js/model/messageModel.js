@@ -1,6 +1,8 @@
 App.Message = Em.Object.extend({
 	user: null,
 	message: null,
-	date : null,
-	timestamp: moment().format('HH:mm')
+	timestamp: null,
+	date: function (){
+		return moment(new Date(this.get('timestamp'))).format('HH:mm');
+	}.property()
 });

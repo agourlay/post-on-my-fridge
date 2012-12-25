@@ -13,6 +13,7 @@ public class Config extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	static {
+		// Objectify
 		JodaTimeTranslators.add(ObjectifyService.factory());
 		ObjectifyService.register(Post.class);
 		ObjectifyService.register(Fridge.class);

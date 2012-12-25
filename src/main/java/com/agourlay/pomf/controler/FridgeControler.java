@@ -1,8 +1,9 @@
-package com.agourlay.pomf.rest;
+package com.agourlay.pomf.controler;
 
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -12,9 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
-import org.joda.time.DateTime;
 
 import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Fridge;
@@ -23,10 +23,17 @@ import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.service.ClientService;
 import com.agourlay.pomf.service.RssService;
 import com.agourlay.pomf.util.Constantes;
+import com.sun.jersey.api.view.Viewable;
 
 @Path("/fridge/{fridgeId}")
-public class FridgeResource {
-	
+public class FridgeControler {
+
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public Viewable index(@Context HttpServletRequest request) {
+		return new Viewable("/fridge.jsp", null);
+	}
+
 	@GET
 	@Produces("application/json")
 	public Fridge getFridge(@PathParam("fridgeId") String fridgeId) {
@@ -50,7 +57,7 @@ public class FridgeResource {
 	@DELETE
 	@Path("post/{postId}")
 	public void deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
-		ClientService.notifyClientsFromFridge(fridgeId,new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,new DateTime()));
+		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 		Dao.deletePost(Long.parseLong(postId));
 	}
 
@@ -69,7 +76,7 @@ public class FridgeResource {
 	public void addPost(@PathParam("fridgeId") String fridgeId, Post post) {
 		Dao.createFridgeIfNotExist(fridgeId);
 		Dao.savePost(post);
-		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null,new DateTime()));
+		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 	}
 
 }

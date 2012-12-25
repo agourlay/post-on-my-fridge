@@ -1,61 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-	
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
 	<filter>
-        <filter-name>ObjectifyFilter</filter-name>
-        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+		<filter-name>ObjectifyFilter</filter-name>
+		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
 	</filter>
 	<filter-mapping>
-	        <filter-name>ObjectifyFilter</filter-name>
-	        <url-pattern>/*</url-pattern>
-	</filter-mapping> 
-	 
+		<filter-name>ObjectifyFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>jersey</filter-name>
+		<filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>com.agourlay.pomf.controler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
+			<param-value>/WEB-INF/jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
+			<param-value>
+			(/_ah/?.*)|
+			(/(images|js|css)/?.*)|
+			(/favicon\.ico)|
+			(/robots\.txt)|
+			(/human\.txt)
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>jersey</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<servlet>
-        <servlet-name>Rest</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>com.agourlay.pomf</param-value>
-        </init-param>
-        <init-param>
-        	<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-        	<param-value>true</param-value>
-	    </init-param>
-         <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Rest</servlet-name>
-        <url-pattern>/resources/*</url-pattern>
-    </servlet-mapping>
-        <servlet-mapping>
-        <servlet-name>Rest</servlet-name>
-        <url-pattern>/_ah/*</url-pattern>
-    </servlet-mapping>
-		
-	<servlet>
-		<servlet-name>FridgeController</servlet-name>
-		<servlet-class>com.agourlay.pomf.controller.FridgeController</servlet-class>
+		<servlet-name>ConfigServlet</servlet-name>
+		<servlet-class>com.agourlay.pomf.conf.Config</servlet-class>
+		<load-on-startup>0</load-on-startup>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>FridgeController</servlet-name>
-		<url-pattern>/fridge/*</url-pattern>
-	</servlet-mapping>
-	 
-	<servlet>
-	    <servlet-name>ConfigServlet</servlet-name>
-	    <servlet-class>com.agourlay.pomf.conf.Config</servlet-class>
-	    <load-on-startup>0</load-on-startup>
-	</servlet>  
-	 
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-	</welcome-file-list>
-	
-	<mime-mapping> 
- 		<extension>css</extension> 
- 		<mime-type>text/css</mime-type> 
-	</mime-mapping> 
-	
+
+	<mime-mapping>
+		<extension>css</extension>
+		<mime-type>text/css</mime-type>
+	</mime-mapping>
+
 </web-app>
