@@ -1,15 +1,11 @@
 package com.agourlay.pomf.model;
 
-import static com.googlecode.objectify.ObjectifyService.ofy;
-
 import java.io.Serializable;
-import java.util.List;
 
 import lombok.Data;
 
 import org.joda.time.DateTime;
 
-import com.agourlay.pomf.dao.Dao;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -27,21 +23,5 @@ import com.googlecode.objectify.annotation.Id;
 	private Integer postNumber;
 
 	public Stat() {
-	}
-
-	public static List<Stat> getAllStats() {
-		return ofy().load().type(Stat.class).limit(1000).list();
-	}
-
-	public static void createStat(Stat stat) {
-		ofy().save().entity(stat).now();
-	}
-
-	public static void generateDailyStat() {
-		Stat newStat = new Stat();
-		newStat.setGenerationDate(new DateTime());
-		newStat.setFridgeNumber(Dao.countFridge());
-		newStat.setPostNumber(Dao.countPost());
-		Stat.createStat(newStat);
 	}
 }

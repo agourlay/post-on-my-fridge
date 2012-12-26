@@ -30,14 +30,14 @@ public class AdminControler {
 	@Path("fridges/stats")
 	@Produces("application/json")
 	public List<Stat> getFridgesStats() {
-		return Stat.getAllStats();
+		return Dao.getAllStats();
 	}
 
 	@GET
 	@Path("generate-stat")
 	@Produces("application/json")
 	public String generateFridgesStats() {
-		Stat.generateDailyStat();
+		Dao.generateDailyStat();
 		return "Stats generated";
 	}
 

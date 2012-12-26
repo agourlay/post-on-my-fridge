@@ -5,9 +5,12 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.util.Collection;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.agourlay.pomf.model.Fridge;
 import com.agourlay.pomf.model.FridgeMessage;
 import com.agourlay.pomf.model.Post;
+import com.agourlay.pomf.model.Stat;
 import com.agourlay.pomf.service.ClientService;
 import com.agourlay.pomf.util.Constantes;
 import com.google.common.base.Function;
@@ -92,6 +95,22 @@ public class Dao {
 
 	public static int countPost() {
 		return ofy().load().type(Post.class).count();
+	}
+	
+	public static List<Stat> getAllStats() {
+		return ofy().load().type(Stat.class).limit(1000).list();
+	}
+
+	public static void createStat(Stat stat) {
+		ofy().save().entity(stat).now();
+	}
+
+	public static void generateDailyStat() {
+		Stat newStat = new Stat();
+		newStat.setGenerationDate(new DateTime());
+		newStat.setFridgeNumber(Dao.countFridge());
+		newStat.setPostNumber(Dao.countPost());
+		createStat(newStat);
 	}
 
 }
