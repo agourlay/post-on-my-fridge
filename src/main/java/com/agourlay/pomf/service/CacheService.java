@@ -15,7 +15,7 @@ public class CacheService {
 	private static MemcacheService cache = MemcacheServiceFactory.getMemcacheService();
 
 	public static void put(String key, Object Value) {
-		cache.put(key, Value, Expiration.byDeltaSeconds(1440), SetPolicy.SET_ALWAYS);
+		cache.put(key, Value, Expiration.byDeltaSeconds(3600), SetPolicy.SET_ALWAYS);
 	}
 
 	@SuppressWarnings("unchecked")
