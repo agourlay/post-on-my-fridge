@@ -87,7 +87,7 @@
 
 	<script  type="text/x-handlebars" data-template-name="header-template">
 		<i>Interact with</i> {{view.fridgeId}}
-        <a href="/resources/fridge/{{view.fridgeId}}/rss" target="_blank">
+        <a {{bindAttr href="view.rssUrl"}} target="_blank">
             <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
         </a>
     </script>
