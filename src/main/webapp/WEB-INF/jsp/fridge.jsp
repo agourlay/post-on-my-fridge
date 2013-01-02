@@ -40,7 +40,6 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.2/ember-1.0.0-pre.2.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
- 	<script src = "//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.5/humane-3.0.5.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip-1.1.0.min.js"></script>
 	<script src = "/js/fridge.min.js"></script>
@@ -78,7 +77,6 @@
                     </div>
                 </aside>
                 <div id="loaded-content">
-                    <div id="loading"></div>
                     {{outlet fridgeOutlet}}
                 </div>
             </div>

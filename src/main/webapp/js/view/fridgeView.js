@@ -5,7 +5,6 @@ App.FridgeView = Ember.CollectionView.extend({
 
 		didInsertElement: function() {
 			initUIElement();
-		    setTimeout(showFridge, 1000); 
 		},
 
 		itemViewClass: 'App.PostView'
