@@ -16,9 +16,9 @@ window.App = Ember.Application.create({
 			index: Ember.Route.extend({
 				route: '/',
 				connectOutlets: function(router, event) {
-					router.get('applicationController').connectOutlet('fridgeOutlet','fridge');
-					router.get('applicationController').connectOutlet('chatOutlet','chat');
-					router.get('applicationController').connectOutlet('headerOutlet','header');
+					router.get('applicationController').connectOutlet('fridgeOutlet', 'fridge');
+					router.get('applicationController').connectOutlet('chatOutlet', 'chat');
+					router.get('applicationController').connectOutlet('headerOutlet', 'header');
 				}
 			})
 		})

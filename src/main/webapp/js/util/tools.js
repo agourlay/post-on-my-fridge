@@ -1,69 +1,18 @@
-function initUIElement() {
-	konami();
-	setRandomBackGround();
-	colorPickerManagement();
-	setTooltips();
-
-	$(".newPost").draggable({
-		revert: "invalid",
-		scroll: true,
-		stack: "div"
-	});
-
-    $("#search").autocomplete({
-		source: "/fridge/noid/search",
-		delay: 300,
-		minLength: 2,
-		select: function(event, ui) {
-            window.location = "/fridge/" + ui.item.value;
-        },
-	    response: function(event, ui) {
-	        if (ui.content.length === 0) {
-                ui.content.push({ label: "Click to create", value: $("#search").val()});
-	        }
-	    }
-	});
-
-	var fridge = $('#fridge');
-
-	fridge.droppable({
-		accept: ".post, .newPost",
-		drop: function(event, ui) {
-			var newPostData = {};
-			if (ui.draggable.hasClass('newPost')) {
-				newPostData.author = $("#author").val();
-				newPostData.content = $("#content").val();
-				newPostData.color = $("#postColor").val();
-				newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(fridge.css("width"), 10);
-				newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(fridge.css("height"), 10);
-				newPostData.fridgeId = App.get('fridgeId');
-				newPostData.dueDate = $("#dueDate").val();
-				newPostValidation(newPostData);
-				App.FridgeController.createPost(newPostData);
-				ui.draggable.animate({
-					'left': '10',
-					'top': '10'
-				}, 'slow', 'linear');
-			}
-		}
-	});
-}
-
-function newPostValidation(newPostData){
-	if (newPostData.dueDate != ""){
-		newPostData.dueDate = newPostData.dueDate+'T00:00:00';	
+function newPostValidation(newPostData) {
+	if (newPostData.dueDate !== "") {
+		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';
 	}
 
-	if (newPostData.author == ""){
-		newPostData.author = "Anonymous";	
+	if (newPostData.author === "") {
+		newPostData.author = "Anonymous";
 	}
 
-	if (newPostData.content == ""){
-		newPostData.content = "What's up";	
+	if (newPostData.content === "") {
+		newPostData.content = "What's up";
 	}
 }
 
-function setTooltips(){
+function setTooltips() {
 	$('#content').powerTip({
     	placement: 'e'
 	});
@@ -91,26 +40,25 @@ function setTooltips(){
 
 function colorPickerManagement() {
 	var color = $("#postColor").val(),
-		textColor = getTxtColorFromBg(color);
-		
+		textColor = getTxtColorFromBg(color);		
 	updatePostFormColor(color);
 }
 
 function updatePostFormColor(color) {
 	$("#postColor").val(color);
 	$("#newPost").css("background-color", color);
-	textColor = getTxtColorFromBg(color);
+	var textColor = getTxtColorFromBg(color);
 	$("#newPost").find("#content").css("color", textColor);
 	$("#newPost").find("#author").css("color", textColor);
 }
 
 function setRandomBackGround() {
-	path = "/images/background/";
-	myImages = ['circles.png', 'diagonal-noise.png', 'elastoplast.png', 'elegant_grid.png', 'gold_scale.png', 'light_checkered_tiles.png', 'plaid.png','silver_scales.png', 'soft_circle_scales.png', 'wavecut.png'];
-	imageFileNumber = myImages.length;
-	randomNumber = Math.floor(Math.random() * imageFileNumber);
-	imageToAssign = myImages[randomNumber];
-	imageFullPath = path + imageToAssign;
+	var path = "/images/background/",
+	    myImages = ['circles.png', 'diagonal-noise.png', 'elastoplast.png', 'elegant_grid.png', 'gold_scale.png', 'light_checkered_tiles.png', 'plaid.png', 'silver_scales.png', 'soft_circle_scales.png', 'wavecut.png'],
+	    imageFileNumber = myImages.length,
+	    randomNumber = Math.floor(Math.random() * imageFileNumber),
+	    imageToAssign = myImages[randomNumber],
+	    imageFullPath = path + imageToAssign;
 	$('#global').css('background-image', 'url(' + imageFullPath + ')');
 }
 
@@ -139,14 +87,14 @@ function getTxtColorFromBg(color) {
 }
 
 function isDark(color) {
-	R = parseInt((cutHex(color)).substring(0, 2), 16);
-	G = parseInt((cutHex(color)).substring(2, 4), 16);
-	B = parseInt((cutHex(color)).substring(4, 6), 16);
+	var R = parseInt((cutHex(color)).substring(0, 2), 16),
+	    G = parseInt((cutHex(color)).substring(2, 4), 16),
+	    B = parseInt((cutHex(color)).substring(4, 6), 16);
 	return R + G + B < 3 * 256 / 2; // r+g+b should be less than half of max (3 * 256)
 }
 
 function cutHex(h) {
-	return (h.charAt(0) == "#") ? h.substring(1, 7) : h;
+	return (h.charAt(0) === "#") ? h.substring(1, 7) : h;
 }
 
 function isRegExp(regExp, content) {
@@ -163,12 +111,12 @@ function filterData(data) {
 	return data;
 }
 
-function konami(){
-    $(window).konami(function(){
+function konami() {
+    $(window).konami(function() {
         jQuery('.post').addClass('barrel_roll');
-        setTimeout(function(){
+        setTimeout(function() {
             jQuery('.post').removeClass('barrel_roll');
-        },4000);  
+        }, 4000);  
     }); 
 }
 

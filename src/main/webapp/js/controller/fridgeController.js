@@ -17,11 +17,11 @@ App.FridgeController = Ember.ArrayController.create({
 	},
 
 	updateExistingPost: function(postInput) {
-		post = this.findProperty('id', postInput.id);
+		var post = this.findProperty('id', postInput.id);
 		post.set('content', postInput.content);
 		post.set('color', postInput.color);
-		newFullPosition = postInput.positionX + ' ' + postInput.positionY;
-		if (post.get('fullPosition') != newFullPosition){
+		var newFullPosition = postInput.positionX + ' ' + postInput.positionY;
+		if (post.get('fullPosition') !== newFullPosition){
 			post.set('fullPosition', newFullPosition);
 		}
 	},
@@ -38,11 +38,8 @@ App.FridgeController = Ember.ArrayController.create({
 	deleteProcedure: function(fridgeContent) {
 		var me = this;
 		$.each(me.get('content'), function(indexPost, valuePost) {
-			postId = valuePost.id;
-			exist = _.find(fridgeContent, function(dataPost) {
-				return dataPost.id == postId;
-			});
-			if (!exist) {
+			var postId = valuePost.id;
+			if ( ! _.find(fridgeContent, function(dataPost) {return dataPost.id === postId;})) {
 				me.removeObject(me.findProperty('id', postId));
 			}
 		});
@@ -51,7 +48,7 @@ App.FridgeController = Ember.ArrayController.create({
 	retrievePost: function() {
 		var me = this;
 		$.getJSON("/fridge/" + App.get('fridgeId'), function(fridgeContent) {
-			if (fridgeContent !== null && fridgeContent.posts != null ) {
+			if (fridgeContent !== null && fridgeContent.posts !== null) {
 				// remove post present in the fridge but not in the db
 				me.deleteProcedure(fridgeContent.posts);
 

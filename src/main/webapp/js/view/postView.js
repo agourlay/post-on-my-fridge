@@ -34,17 +34,14 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 	didInsertElement: function() {
 		var view = this;
-
 		view.initTrash();
 		view.colorize();
 		view.updatePhysicalPosition();
-
 		view.$().draggable({
 			revert: 'invalid',
-
 			stop: function(event) {
-				var fridge = $('#fridge');
-				var fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
+				var fridge = $('#fridge'),
+				    fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
 				view.get('content').set('fullPosition', fullPosition);
 			}
 		});
@@ -65,14 +62,13 @@ App.PostView = Em.View.extend(App.Draggable, {
 	},
 
 	updatePhysicalPosition: function() {
-		var left = this.get('content').get('positionX');
-		var top = this.get('content').get('positionY');
-		var fridge = $('#fridge');
+		var left = this.get('content').get('positionX'),
+		    top = this.get('content').get('positionY'),
+		    fridge = $('#fridge'),
+		    xTranslation = (left * fridge.width() - parseInt(this.$().offset().left, 10)),
+		    yTranslation = (top * fridge.height() - parseInt(this.$().offset().top, 10));
 
-		xTranslation = (left * fridge.width() - parseInt(this.$().offset().left, 10));
-		yTranslation = (top * fridge.height() - parseInt(this.$().offset().top, 10));
-
-		if (xTranslation != 0 || yTranslation != 0){
+		if (xTranslation !== 0 || yTranslation !== 0) {
 			this.$().animate({
 				'left': "+=" + xTranslation,
 				'top': "+=" + yTranslation
@@ -96,26 +92,25 @@ App.PostView = Em.View.extend(App.Draggable, {
 	},
 
 	generateContent: function() {
-		content = jQuery.trim(this.get('content').get('content'));
-		urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-		pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/;
-
-		var firstWordUrl = _.find(content.split(' '), function(word){ return isRegExp(urlRegexp, word); });
-		if (firstWordUrl == undefined){
-			return content
-		}else{
+		var content = jQuery.trim(this.get('content').get('content')),
+		    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
+            pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
+		    firstWordUrl = _.find(content.split(' '), function(word) { return isRegExp(urlRegexp, word); });
+		if (firstWordUrl === undefined) {
+			return content;
+		}else {
 			var url = purl(firstWordUrl);
-			if (url.attr('host') == "www.youtube.com") {
+			if (url.attr('host') === "www.youtube.com") {
 				return generateYoutubeFrame(url.param('v'));
-			} else if (url.attr('host') == "vimeo.com") {
+			} else if (url.attr('host') === "vimeo.com") {
 				return generateVimeoFrame(url.segment(1));
-			} else if (url.attr('host') == "www.dailymotion.com") {
-				return generateDailyMotionLink((url.segment(2)).split('_')[0]);	
+			} else if (url.attr('host') === "www.dailymotion.com") {
+				return generateDailyMotionLink((url.segment(2)).split('_')[0]);
 			} else if (isRegExp(pictureRegexp, firstWordUrl)) {
 				return generatePictureLink(firstWordUrl);
 			} else {
 				return generateHrefLink(firstWordUrl);
 			}
-		}	
+		}
 	}
 });

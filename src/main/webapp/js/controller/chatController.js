@@ -8,7 +8,7 @@ App.ChatController = Ember.ArrayController.create({
 		this.retrievePreviousMessages();
 	},
 
-	sendChatMessage: function(message,pseudo){
+	sendChatMessage: function(message, pseudo) {
 		var payload = {};
 		payload.fridgeId = App.get('fridgeId');
 		payload.message = message;
@@ -33,19 +33,19 @@ App.ChatController = Ember.ArrayController.create({
 		$.ajax({
 			url: "/channel/" + App.get('fridgeId'),
 			type: "GET",
-			dataType:'text',
+			dataType: 'text',
 			success: function(tokenChannel) {
 				if (tokenChannel !== undefined) {
-					var channel = new goog.appengine.Channel(tokenChannel);
-					var socket = channel.open();
+					var channel = new goog.appengine.Channel(tokenChannel),
+					    socket = channel.open();
 					socket.onopen = function() {};
 					socket.onclose = function() {};
 					socket.onmessage = function(m) {
 						var data = $.parseJSON(m.data);
-						if (data.command == "#FRIDGE-UPATE#") {
+						if (data.command === "#FRIDGE-UPATE#") {
 							App.FridgeController.retrievePost();
 						}
-						if (data.command == "#FRIDGE-CHAT#") {
+						if (data.command === "#FRIDGE-CHAT#") {
 							me.messageManagement(data.user, data.message,data.timestamp);
 						}
 					};
