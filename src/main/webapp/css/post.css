@@ -51,12 +51,13 @@
 	width: 80%;	}
 
 .newPost {
+	position: relative;
 	box-shadow: 5px 5px 4px #aaa;
 	width:230px;
 	height:230px;
 	padding-top: 10px;
 	margin-bottom : 20px;
-	z-index: 200; }
+	z-index: 99999;}
 
 .newPost .iconBox{
 	float: right;

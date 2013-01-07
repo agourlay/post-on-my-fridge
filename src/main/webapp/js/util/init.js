@@ -7,7 +7,7 @@ function initUIElement() {
 	$(".newPost").draggable({
 		revert: "invalid",
 		scroll: true,
-		stack: "div"
+		zIndex: 9999
 	});
 
     $("#search").autocomplete({

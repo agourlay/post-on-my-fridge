@@ -18,14 +18,6 @@ header {
 	-webkit-box-shadow: 5px 5px 4px #aaa;
 	vertical-align: middle; }
 	
-#loaded-content{
-	position:relative;
-	float : right;
-	margin-top: 40px;
-	text-align:center;
-	width: 80%;
-	height : 100%;}
-
 .rss {
     background-image: url(../../images/feed-icon-14x14.png);
     height: 15px;
@@ -52,15 +44,16 @@ header {
 	width: 100%;
 	min-height: 100%;
 	height : 2000px; }
-
+	
 #fridge {
 	position:relative;
-	text-align:center;
-	width: 100%;
-	background-image:url(../../images/fridgeBg.png);
-	background-size:100%;
-	height : 100%;
-}
+	float: right;
+	margin-top: 40px;
+	text-align: center;
+	width: 80%;
+	background-image: url(../../images/fridgeBg.png);
+	background-size: 100%;
+	height: 100%;}
 
 #leftPanel {
 	position : fixed;
