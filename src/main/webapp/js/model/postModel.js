@@ -29,12 +29,10 @@ App.Post = Em.Object.extend({
 		$.ajax({
 			type: 'DELETE',
 			url: this.resourceUrl + this.id,
+			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
-				jackedup = humane.create({
-					baseCls: 'humane-jackedup',
-					addnCls: 'humane-jackedup-error'
-				});
-				jackedup.log("Post not deleted!");
+				console.log(thrownError);
+				errorMessage("Post not deleted!");
 			}
 		});
 	},
@@ -43,15 +41,12 @@ App.Post = Em.Object.extend({
 		$.ajax({
 			url: this.resourceUrl,
 			type: "PUT",
-			dataType: "json",
 			contentType: "application/json",
+			dataType: "text",
 			data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				jackedup = humane.create({
-					baseCls: 'humane-jackedup',
-					addnCls: 'humane-jackedup-error'
-				});
-				jackedup.log("Post not updated!");
+				console.log(thrownError);
+				errorMessage("Post not updated!");
 			}
 		});
 	}.observes('fullPosition','content','color'),
@@ -59,16 +54,13 @@ App.Post = Em.Object.extend({
 	createPost: function() {
 		$.ajax({
 			url: this.resourceUrl,
-			data: JSON.stringify(this),
-			dataType: "json",
 			type: "POST",
         	contentType: "application/json",
+        	dataType: "text",
+        	data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				jackedup = humane.create({
-					baseCls: 'humane-jackedup',
-					addnCls: 'humane-jackedup-error'
-				});
-				jackedup.log("Post not created!");
+				console.log(thrownError);
+				errorMessage("Post not created!");
 			}
 		});
 	}

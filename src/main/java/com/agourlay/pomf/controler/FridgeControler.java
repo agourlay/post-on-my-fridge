@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.agourlay.pomf.dao.Dao;
 import com.agourlay.pomf.model.Fridge;
@@ -35,48 +36,51 @@ public class FridgeControler {
 	}
 
 	@GET
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Fridge getFridge(@PathParam("fridgeId") String fridgeId) {
 		return Dao.getFridgeById(fridgeId);
 	}
 
 	@GET
 	@Path("/rss")
-	@Produces("application/xml")
+	@Produces(MediaType.APPLICATION_XML)
 	public String getFridgeRssContent(@PathParam("fridgeId") String fridgeId) throws Exception {
 		return RssService.getRssStream(Arrays.asList(Dao.getFridgeById(fridgeId)), fridgeId);
 	}
 
 	@GET
 	@Path("/search")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<String> getFridgeIds(@QueryParam("term") String term) {
 		return Dao.searchFridgeNamesWithNameLike(term);
 	}
 
 	@DELETE
 	@Path("post/{postId}")
-	public void deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
 		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 		Dao.deletePost(Long.parseLong(postId));
+		return Response.ok("Post "+postId+" deleted").build();
 	}
 
 	@PUT
 	@Path("/post")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public void updatePost(Post post) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response updatePost(Post post) {
 		Dao.savePost(post);
+		return Response.ok("Post "+post.getId()+" updated").build();
 	}
 
 	@POST
 	@Path("/post")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public void addPost(@PathParam("fridgeId") String fridgeId, Post post) {
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response addPost(@PathParam("fridgeId") String fridgeId, Post post) {
 		Dao.createFridgeIfNotExist(fridgeId);
 		Dao.savePost(post);
 		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
+		return Response.ok("Post "+post.getId()+" created").build();
 	}
-
 }

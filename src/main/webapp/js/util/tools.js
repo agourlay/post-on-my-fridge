@@ -101,6 +101,14 @@ function isRegExp(regExp, content) {
 	return regExp.test(content);
 }
 
+function errorMessage(message){
+	jackedup = humane.create({
+		baseCls: 'humane-jackedup',
+		addnCls: 'humane-jackedup-error'
+	});
+	jackedup.log(message);
+}
+
 function filterData(data) {
 	data = data.replace(/<?\/body[^>]*>/g, '');
 	data = data.replace(/[\r|\n]+/g, '');
