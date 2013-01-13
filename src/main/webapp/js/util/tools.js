@@ -52,16 +52,6 @@ function updatePostFormColor(color) {
 	$("#newPost").find("#author").css("color", textColor);
 }
 
-function setRandomBackGround() {
-	var path = "/images/background/",
-	    myImages = ['circles.png', 'diagonal-noise.png', 'elastoplast.png', 'elegant_grid.png', 'gold_scale.png', 'light_checkered_tiles.png', 'plaid.png', 'silver_scales.png', 'soft_circle_scales.png', 'wavecut.png'],
-	    imageFileNumber = myImages.length,
-	    randomNumber = Math.floor(Math.random() * imageFileNumber),
-	    imageToAssign = myImages[randomNumber],
-	    imageFullPath = path + imageToAssign;
-	$('#global').css('background-image', 'url(' + imageFullPath + ')');
-}
-
 function generateYoutubeFrame(videoId) {
 	return "<iframe class='youtube-player' type='text/html' width='225' height='210' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1' frameborder='0'></iframe>";
 }

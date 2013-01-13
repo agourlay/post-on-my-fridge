@@ -10,7 +10,7 @@
 		<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 	
 		<!-- CSS -->
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+		<link href="//bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
 	
 		<!-- JS -->
 		<script>	
@@ -51,13 +51,6 @@
 			</div>
 			<div class="row-fluid">
 				<div class="span10 offset1">
-					<div class="alert">
-					 	<h4>Warning!</h4> The application is still under heavy development, the data are likely to be lost..
-					</div>
-				</div>
-			</div>
-			<div class="row-fluid">
-				<div class="span10 offset1">
 					<div class="span6 well">
 						<h2>Freedom</h2>
 						<p>
@@ -85,6 +78,13 @@
 						<p>
 							To share a video (youtube/vimeo/dailymotion) or a picture, just insert the url in the content.
 						</p>
+					</div>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span10 offset1">
+					<div class="alert">
+					 	<h4>Warning!</h4> The application is still under heavy development, the data are likely to be lost, have fun!
 					</div>
 				</div>
 			</div>

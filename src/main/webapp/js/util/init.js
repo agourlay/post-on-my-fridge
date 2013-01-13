@@ -1,6 +1,4 @@
 function initUIElement() {
-	konami();
-	setRandomBackGround();
 	colorPickerManagement();
 	setTooltips();
 
@@ -47,4 +45,6 @@ function initUIElement() {
 			}
 		}
 	});
+	
+	konami();
 }

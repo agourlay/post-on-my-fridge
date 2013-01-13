@@ -3,10 +3,11 @@ window.App = Ember.Application.create({
     
     ApplicationController: Ember.Controller.extend(),
     
+    //TODO remove this ugly thing
 	fridgeId : location.pathname.split('/')[2],
 
 	ready : function() {
-		document.title = this.fridgeId + " 's fridge";
+		document.title = "fridge "+ this.fridgeId;
 	},
 
     Router : Ember.Router.extend({
