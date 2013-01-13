@@ -40,18 +40,19 @@
 							<p>
 								A collaborative messaging system using sticky notes on virtual fridges.
 							</p>
+							<div class="span4 offset4">
+								<a class="btn btn-primary btn-large" href="/fridge/demo" >
+									<i class="icon-white icon-eye-open"></i>
+									Try the demo now
+								</a>
+							</div>
 						</div>
 					</div>
 					<div class="row-fluid">
-						<div class="span3">
-							<a class="btn btn-primary btn-large" href="/fridge/demo" >
-									<i class="icon-white icon-eye-open"></i>
-									Try the demo
-								</a>
-						</div>
-						<div class="span9">
+						<div class="span12">
 							<a href="#" class="thumbnail">
-								<img src="../../images/index-fridge.png" alt=""></a>
+								<img src="../../images/index-fridge.png" alt="">
+							</a>
 						</div>
 					</div>
 				</div>
@@ -59,13 +60,13 @@
 			<div class="row-fluid">
 				<div class="span10 offset1">
 					<div class="span6 well">
-						<h2>Freedom</h2>
+						<h2>Freedom <i class="icon-user"></i></h2>
 						<p>
 							Tired of authentication and access management? There is nothing like this here, everyone can add or delete content. Enjoy freedom and chaos.
 						</p>
 					</div>
 					<div class="span6 well">
-						<h2>Easy</h2>
+						<h2>Easy <i class="icon-heart"></i></h2>
 						<p>
 							To access or create a fridge use the search box or type directly the fridge name in the url /fridge/ <em>fridge name</em>.
 						</p>
@@ -75,13 +76,13 @@
 			<div class="row-fluid">
 				<div class="span10 offset1">
 					<div class="span6 well">
-						<h2>Share</h2>
+						<h2>Share <i class="icon-thumbs-up"></i></h2>
 						<p>
 							You can share content on a fridge in real time with your friends while chatting.
 						</p>
 					</div>
 					<div class="span6 well">
-						<h2>Multimedia</h2>
+						<h2>Multimedia <i class="icon-film"></i></h2>
 						<p>
 							To share a video (youtube/vimeo/dailymotion) or a picture, just insert the url in the content.
 						</p>
@@ -91,7 +92,8 @@
 			<div class="row-fluid">
 				<div class="span10 offset1">
 					<div class="alert">
-					 	<h4>Warning!</h4> The application is still under heavy development, the data are likely to be lost, have fun!
+					 	<h4>Warning<i class="icon-exclamation-sign"></i></h4>
+					 	The application is still under heavy development, the data are likely to be lost, have fun!
 					</div>
 				</div>
 			</div>
