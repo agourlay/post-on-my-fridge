@@ -53,12 +53,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 		}, 300).effect("clip", {
 			times: 1
 		}, 300);
-
-		libnotify = humane.create({
-			baseCls: 'humane-libnotify',
-			addnCls: 'humane-libnotify-info'
-		});
-		libnotify.log("Post from " + this.get('content').get('author') + " deleted");
+		infoMessage("Post from " + this.get('content').get('author') + " deleted");
 	},
 
 	updatePhysicalPosition: function() {

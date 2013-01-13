@@ -4,6 +4,6 @@ App.MessageView = Em.View.extend({
 	didInsertElement: function() {
 		$("#chatLog").animate({
 			scrollTop: $("#chatLog").prop("scrollHeight")
-		}, 3000);
+		}, 2000);
 	}
 });

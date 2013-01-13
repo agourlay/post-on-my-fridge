@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/jackedup.css"/>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/libnotify.css"/>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip.css"/>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,700,800,300' rel='stylesheet'>
-
+	<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600'/>
+	
 	<!-- JS -->
 	<script type="text/javascript">
 	  	var _gaq = _gaq || [];
@@ -82,7 +82,7 @@
     </script>
 
 	<script  type="text/x-handlebars" data-template-name="header-template">
-		<i>Interact with</i> {{view.fridgeId}}
+		<b>Post on fridge {{view.fridgeId}}</b>
         <a {{bindAttr href="view.rssUrl"}} target="_blank">
             <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
         </a>

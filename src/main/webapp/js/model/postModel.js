@@ -27,7 +27,7 @@ App.Post = Em.Object.extend({
 
 	deletePost: function() {
 		$.ajax({
-			type: 'DELETE',
+			method: 'DELETE',
 			url: this.resourceUrl + this.id,
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -40,7 +40,7 @@ App.Post = Em.Object.extend({
 	updatePosition: function() {
 		$.ajax({
 			url: this.resourceUrl,
-			type: "PUT",
+			method: "PUT",
 			contentType: "application/json",
 			dataType: "text",
 			data: JSON.stringify(this),
@@ -54,7 +54,7 @@ App.Post = Em.Object.extend({
 	createPost: function() {
 		$.ajax({
 			url: this.resourceUrl,
-			type: "POST",
+			method: "POST",
         	contentType: "application/json",
         	dataType: "text",
         	data: JSON.stringify(this),

@@ -109,6 +109,14 @@ function errorMessage(message){
 	jackedup.log(message);
 }
 
+function infoMessage(message){
+	libnotify = humane.create({
+		baseCls: 'humane-libnotify',
+		addnCls: 'humane-libnotify-info'
+	});
+	libnotify.log(message);
+}
+
 function filterData(data) {
 	data = data.replace(/<?\/body[^>]*>/g, '');
 	data = data.replace(/[\r|\n]+/g, '');
