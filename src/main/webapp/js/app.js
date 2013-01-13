@@ -7,7 +7,7 @@ window.App = Ember.Application.create({
 	fridgeId : location.pathname.split('/')[2],
 
 	ready : function() {
-		document.title = "fridge "+ this.fridgeId;
+		document.title = "Fridge "+ this.fridgeId;
 	},
 
     Router : Ember.Router.extend({

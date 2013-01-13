@@ -10,8 +10,8 @@ header {
 	font-size : large;
 	color : white;
 	background-color: #252525;
-	opacity: 0.8;
-	margin-bottom: 20px;
+	opacity: 0.9;
+	margin-bottom: 25px;
 	z-index : 999;
 	box-shadow: 5px 5px 4px #aaa;
 	-moz-box-shadow: 5px 5px 4px #aaa;

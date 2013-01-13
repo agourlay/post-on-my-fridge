@@ -11,7 +11,11 @@
 	
 		<!-- CSS -->
 		<link href="//bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
-	
+	    <style type="text/css">
+			.title-fridge {
+				text-align: center;
+			}
+		</style>
 		<!-- JS -->
 		<script>	
 			  var _gaq = _gaq || [];
@@ -31,7 +35,7 @@
 			<div class="row-fluid">
 				<div class="span10 offset1 hero-unit">
 					<div class="row-fluid">
-						<div class="span12">
+						<div class="span12 title-fridge">
 							<h1>Post on my fridge</h1>
 							<p>
 								A collaborative messaging system using sticky notes on virtual fridges.
@@ -40,9 +44,12 @@
 					</div>
 					<div class="row-fluid">
 						<div class="span3">
-							<a class="btn btn-primary btn-large" href="/fridge/demo" >Try the demo &raquo;</a>
+							<a class="btn btn-primary btn-large" href="/fridge/demo" >
+									<i class="icon-white icon-eye-open"></i>
+									Try the demo
+								</a>
 						</div>
-						<div class="span8">
+						<div class="span9">
 							<a href="#" class="thumbnail">
 								<img src="../../images/index-fridge.png" alt=""></a>
 						</div>
