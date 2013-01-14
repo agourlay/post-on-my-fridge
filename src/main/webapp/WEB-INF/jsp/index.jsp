@@ -41,10 +41,12 @@
 								A collaborative messaging system using sticky notes on virtual fridges.
 							</p>
 							<div class="span4 offset4">
-								<a class="btn btn-primary btn-large" href="/fridge/demo" >
-									<i class="icon-white icon-eye-open"></i>
-									Try the demo now
-								</a>
+								<p>
+									<a class="btn btn-primary btn-large" href="/fridge/demo" >
+										<i class="icon-white icon-eye-open"></i>
+										Try the demo now
+								    </a>
+								</p>
 							</div>
 						</div>
 					</div>
