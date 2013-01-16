@@ -1,4 +1,4 @@
-package com.agourlay.pomf.controler;
+package com.agourlay.pomf.controller;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
 @Path("/admin")
-public class AdminControler {
+public class AdminController {
 
 	@GET
 	@Path("fridges/rss")

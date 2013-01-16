@@ -1,4 +1,4 @@
-package com.agourlay.pomf.controler;
+package com.agourlay.pomf.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +27,7 @@ import com.agourlay.pomf.util.Constantes;
 import com.sun.jersey.api.view.Viewable;
 
 @Path("/fridge/{fridgeId}")
-public class FridgeControler {
+public class FridgeController {
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)

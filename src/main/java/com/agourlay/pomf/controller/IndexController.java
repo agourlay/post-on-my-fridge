@@ -1,4 +1,4 @@
-package com.agourlay.pomf.controler;
+package com.agourlay.pomf.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 import com.sun.jersey.api.view.Viewable;
 
 @Path("/")
-public class IndexControler {
+public class IndexController {
 
 	@GET
 	@Produces(MediaType.TEXT_HTML)

@@ -24,7 +24,7 @@ apply plugin: 'js'
 task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
 		"${projectDir}/src/main/webapp/js/util/tools.js",
-        "${projectDir}/src/main/webapp/js/util/init.js",
+		"${projectDir}/src/main/webapp/js/util/init.js",
 		"${projectDir}/src/main/webapp/js/app.js",
 		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
 		"${projectDir}/src/main/webapp/js/controller/headerController.js",
@@ -90,7 +90,6 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-databind:2.1.2'
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.2'
 	compile	'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.1.2'
-	compile 'javax.servlet:servlet-api:2.5'
 	compile 'joda-time:joda-time:2.1'
 	compile 'asm:asm:3.3.1'
 	testCompile 'junit:junit:4.11'
