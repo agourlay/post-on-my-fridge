@@ -1,12 +1,20 @@
 package com.agourlay.pomf.util.xss;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
  
 public class XSSRequestWrapper extends HttpServletRequestWrapper {
  
+	private final String body;  
+	
     private static Pattern[] patterns = new Pattern[]{
         // Script fragments
         Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE),
@@ -30,6 +38,35 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
  
     public XSSRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
+        // read the original payload into the xmlPayload variable
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
+        try {
+            // read the payload into the StringBuilder
+            InputStream inputStream = servletRequest.getInputStream();
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                char[] charBuffer = new char[128];
+                int bytesRead = -1;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+            } else {
+                // make an empty string since there is no payload
+                stringBuilder.append("");
+            }
+        } catch (IOException ex) {
+        	// ignore
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException iox) {
+                    // ignore
+                }
+            }
+        }
+        body = stripXSS(stringBuilder.toString());
     }
  
     @Override
@@ -73,4 +110,16 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
         }
         return value;
     }
+
+	@Override
+	public ServletInputStream getInputStream() throws IOException {
+		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
+        ServletInputStream inputStream = new ServletInputStream() {
+            public int read () 
+                throws IOException {
+                return byteArrayInputStream.read();
+            }
+        };
+        return inputStream;
+	}
 }
