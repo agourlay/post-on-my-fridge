@@ -50,7 +50,7 @@
             <header>
                 {{outlet headerOutlet}}
                 <div id="search-area">
-                    <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20"/>
+                    <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
                 </div>
             </header>
             <div id="main-content">
