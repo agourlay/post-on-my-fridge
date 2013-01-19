@@ -10,4 +10,4 @@ A Collaborative messaging system using sticky notes on fridges.
 
 * client side using Ember.js
 
-* build with Gradle
+* built with Gradle
