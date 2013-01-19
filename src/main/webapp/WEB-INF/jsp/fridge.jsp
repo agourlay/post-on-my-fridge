@@ -42,7 +42,7 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/humane.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip-1.1.0.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.1.1/store.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.6/store.min.js"></script>
 	<script src = "/js/fridge.min.js"></script>
 		
 	<script type="text/x-handlebars" data-template-name="application">
