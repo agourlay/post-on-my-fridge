@@ -1,13 +1,13 @@
-App.FridgeController = Ember.ArrayController.create({
+App.FridgeController = Ember.ArrayController.extend({
 	content: [],
 
 	init: function() {
 		this._super();
-		this.retrievePost();
+		App.getPosts();
 	},
 
 	createPost: function(postData) {
-		App.Post.create(postData).createPost();
+		App.Post.createWithMixins(postData).createPost();
 	},
 
 	deletePost: function(id) {
@@ -29,7 +29,7 @@ App.FridgeController = Ember.ArrayController.create({
 	createOrUpdate: function(post) {
 		var exists = this.filterProperty('id', post.id).length;
 		if (exists === 0) {
-			this.pushObject(App.Post.create(post));
+			this.pushObject(App.Post.createWithMixins(post));
 		} else {
 			this.updateExistingPost(post);
 		}
@@ -45,18 +45,16 @@ App.FridgeController = Ember.ArrayController.create({
 		});
 	},
 
-	retrievePost: function() {
-		var me = this;
-		$.getJSON("/fridge/" + App.get('fridgeId'), function(fridgeContent) {
-			if (fridgeContent !== null && fridgeContent.posts !== null) {
-				// remove post present in the fridge but not in the db
-				me.deleteProcedure(fridgeContent.posts);
-
-				//update or create the posts
-				$.each(fridgeContent.posts, function(index, post) {
-					me.createOrUpdate(post);
-				});
-			}
-		});
-	}
+	mergePost: function() {
+		var me = this,
+		    posts = App.get('posts');
+		if( posts !== null) {
+			// remove post present in the fridge but not in the db
+			me.deleteProcedure(posts);
+			// update or create the posts
+			$.each(posts, function(index, post) {
+				me.createOrUpdate(post);
+		    });
+		}
+	}.observes('App.posts')
 });

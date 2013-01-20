@@ -37,7 +37,7 @@
     <script src = "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.1/handlebars.min.js"></script>
- 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.2/ember-1.0.0-pre.2.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.4/ember.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/humane.min.js"></script>
@@ -48,7 +48,7 @@
 	<script type="text/x-handlebars" data-template-name="application">
         <div id="global">
             <header>
-                {{outlet headerOutlet}}
+                {{outlet header}}
                 <div id="search-area">
                     <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
                 </div>
@@ -72,12 +72,12 @@
                     <div id="chatPanel">
                         <form id="chatInput" accept-charset="utf-8">
                             <input type="text" placeholder="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
-                            {{outlet chatOutlet}}
+                            {{outlet chat}}
                             <textarea id="message" rows="0" cols="0" maxlength="200"></textarea>
                         </form>
                     </div>
                 </aside>
-				{{outlet fridgeOutlet}}
+				{{outlet fridge}}
             </div>
         </div>
     </script>

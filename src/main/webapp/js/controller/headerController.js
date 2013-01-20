@@ -1,1 +1,1 @@
-App.HeaderController = Ember.Controller.create({});
+App.HeaderController = Ember.Controller.extend({});

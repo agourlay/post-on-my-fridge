@@ -24,7 +24,6 @@ apply plugin: 'js'
 task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 	source = [
 		"${projectDir}/src/main/webapp/js/util/tools.js",
-		"${projectDir}/src/main/webapp/js/util/init.js",
 		"${projectDir}/src/main/webapp/js/app.js",
 		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
 		"${projectDir}/src/main/webapp/js/controller/headerController.js",
@@ -36,7 +35,8 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 		"${projectDir}/src/main/webapp/js/model/messageModel.js",
 		"${projectDir}/src/main/webapp/js/view/messageView.js",
 		"${projectDir}/src/main/webapp/js/view/chatView.js",
-		"${projectDir}/src/main/webapp/js/controller/chatController.js"
+		"${projectDir}/src/main/webapp/js/controller/chatController.js",
+		"${projectDir}/src/main/webapp/js/router.js"
 	]
 	dest = file("${buildDir}/exploded-war/js/fridge.js")
 }

@@ -1,4 +1,4 @@
-App.ChatController = Ember.ArrayController.create({
+App.ChatController = Ember.ArrayController.extend({
 	content: [],
 	chatSocket : null,
 
@@ -25,7 +25,7 @@ App.ChatController = Ember.ArrayController.create({
 		chatModel.user = user;
 		chatModel.message = message;
 		chatModel.timestamp = timestamp;
-		this.pushObject(App.Message.create(chatModel));
+		this.pushObject(App.Message.createWithMixins(chatModel));
 	},
 
 	channelManagement : function () {
@@ -43,7 +43,7 @@ App.ChatController = Ember.ArrayController.create({
 					socket.onmessage = function(m) {
 						var data = $.parseJSON(m.data);
 						if (data.command === "#FRIDGE-UPATE#") {
-							App.FridgeController.retrievePost();
+							App.getPosts();
 						}
 						if (data.command === "#FRIDGE-CHAT#") {
 							me.messageManagement(data.user, data.message,data.timestamp);
