@@ -81,7 +81,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var view = this;
 		view.$().find(" .ui-icon-trash").click(function() {
 			if (confirm("Are you sure you want to delete post?")) {
-				App.FridgeController.deletePost(view.get('content').get('id'));
+				view.get('controller').deletePost(view.get('content').get('id'));
 			}
 		});
 	},
