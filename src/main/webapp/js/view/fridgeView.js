@@ -20,8 +20,8 @@ App.FridgeView = Ember.CollectionView.extend({
 					newPostValidation(newPostData);
 					view.get('controller').createPost(newPostData);
 					ui.draggable.animate({
-						'left': '10',
-						'top': '10'
+						'left': '5',
+						'top': '5'
 					}, 'slow', 'linear');
 				}
 			}

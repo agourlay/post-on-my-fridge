@@ -12,32 +12,6 @@ function newPostValidation(newPostData) {
 	}
 }
 
-function setTooltips() {
-	$('#content').powerTip({
-    	placement: 'e'
-	});
-
-	$('#newPost').powerTip({
-    	placement: 'e'
-	});
-
-	$('#author').powerTip({
-    	placement: 'e'
-	});
-
-	$('#dueDate').powerTip({
-    	placement: 'e'
-	});
-
-	$('#postColor').powerTip({
-    	placement: 'e'
-	});
-
-	$('#pseudo').powerTip({
-    	placement: 'e'
-	});
-}
-
 function colorPickerManagement() {
 	var color = $("#postColor").val(),
 		textColor = getTxtColorFromBg(color);		

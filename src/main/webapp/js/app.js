@@ -23,7 +23,8 @@ window.App = Ember.Application.createWithMixins({
 		
 		didInsertElement : function() {
 			colorPickerManagement();
-			setTooltips();
+			
+			$('#dueDate').tooltip();
 
 			$(".newPost").draggable({
 				revert : "invalid",

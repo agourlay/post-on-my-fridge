@@ -13,7 +13,6 @@
 	<link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.0/themes/ui-lightness/jquery-ui.css"/>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/jackedup.css"/>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/libnotify.css"/>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip.css"/>
 	<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600'/>
 	
 	<!-- JS -->
@@ -41,7 +40,6 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/humane.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.1.0/jquery.powertip-1.1.0.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.6/store.min.js"></script>
 	<script src = "/js/fridge.min.js"></script>
 		
@@ -55,17 +53,17 @@
             </header>
             <div id="main-content">
                 <aside id ="leftPanel">
-                    <div id ="newPost" class="newPost" title="Fill the post and drop it on the fridge">
+                    <div id ="newPost" class="newPost">
                         <form id="postForm" accept-charset="utf-8">
                             <div class="content">
-                                <textarea name="content" id="content" rows="9" cols="23" maxlength="200" title="Content goes there"></textarea>
+                                <textarea name="content" id="content" rows="9" cols="23" maxlength="200" placeholder="Drop me on the fridge"></textarea>
                             </div>
                             <div class="author">
-                                <input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12" title="Who are u?"/>
+                                <input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12"/>
                             </div>
                             <div class="iconBox">
-                                <input type="date" id="dueDate" title="Pick a due date"/>
-                                <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)" title="Change the color"/>
+                                <input type="date" id="dueDate" title="Due date"/>
+                                <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
                             </div>
                         </form>
                     </div>
