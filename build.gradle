@@ -91,6 +91,5 @@ dependencies {
 	compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.2'
 	compile	'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.1.2'
 	compile 'joda-time:joda-time:2.1'
-	compile 'asm:asm:3.3.1'
 	testCompile 'junit:junit:4.11'
 }
