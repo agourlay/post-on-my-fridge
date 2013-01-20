@@ -66,19 +66,21 @@ function isRegExp(regExp, content) {
 }
 
 function errorMessage(message){
-	jackedup = humane.create({
-		baseCls: 'humane-jackedup',
-		addnCls: 'humane-jackedup-error'
-	});
-	jackedup.log(message);
+	n = noty({
+		layout: 'top',
+		type: 'error',
+		timeout: 2000,
+		closeWith: ['hover'],
+		text: message});
 }
 
 function infoMessage(message){
-	libnotify = humane.create({
-		baseCls: 'humane-libnotify',
-		addnCls: 'humane-libnotify-info'
-	});
-	libnotify.log(message);
+	n = noty({
+		layout: 'topRight',
+		type: 'information',
+		timeout: 2000,
+		closeWith: ['hover'],
+		text: message});
 }
 
 function filterData(data) {

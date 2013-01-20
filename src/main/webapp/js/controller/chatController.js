@@ -50,11 +50,7 @@ App.ChatController = Ember.ArrayController.extend({
 						}
 					};
 					socket.onerror = function(err) {
-						jackedup = humane.create({
-							baseCls: 'humane-jackedup',
-							addnCls: 'humane-jackedup-error'
-						});
-						jackedup.log("Channel error : " + err.description);
+						errorMessage("Channel error");
 					};
 				}
 			}	
