@@ -19,7 +19,11 @@ import com.google.common.collect.Lists;
 public class Dao {
 
 	public static Fridge getFridgeById(String fridgeId) {
-		return ofy().load().type(Fridge.class).id(fridgeId).get();
+		Fridge fridge = ofy().load().type(Fridge.class).id(fridgeId).get();
+		if (fridge != null){
+			fridge.setPosts(getPostByFridge(fridgeId));
+		}
+		return fridge;
 	}
 
 	public static int countFridge() {
@@ -42,8 +46,7 @@ public class Dao {
 		return ofy().load().type(Fridge.class).filter("name >=", fridgeName).filter("name <", fridgeName + "\uFFFD").list();
 	}
 
-	// TODO : get the names back using an objectify request, we don't need the
-	// full fridge objects.
+
 	public static List<String> searchFridgeNamesWithNameLike(String fridgeName) {
 		return Lists.transform(searchFridgeLike(fridgeName), new Function<Fridge, String>() {
 			@Override
@@ -54,7 +57,11 @@ public class Dao {
 	}
 
 	public static List<Fridge> getAllFridge() {
-		return ofy().load().type(Fridge.class).limit(10000).list();
+		List<Fridge> fridges = ofy().load().type(Fridge.class).limit(10000).list();
+		for (Fridge fridge:fridges){
+			fridge.setPosts(getPostByFridge(fridge.getName()));
+		}
+		return fridges;
 	}
 
 	public static void saveFridge(Fridge fridge) {

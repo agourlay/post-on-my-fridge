@@ -59,8 +59,8 @@ public class FridgeController {
 	@Path("post/{postId}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response deletePost(@PathParam("fridgeId") String fridgeId, @PathParam("postId") String postId) {
-		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 		Dao.deletePost(Long.parseLong(postId));
+		ClientService.notifyClientsFromFridge(fridgeId, new FridgeMessage(Constantes.COMMAND_REFRESH, null, null));
 		return Response.ok("Post "+postId+" deleted").build();
 	}
 

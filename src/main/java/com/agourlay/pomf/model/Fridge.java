@@ -5,11 +5,10 @@ import java.util.List;
 
 import lombok.Data;
 
-import com.agourlay.pomf.dao.Dao;
 import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Load;
+import com.googlecode.objectify.annotation.Ignore;
 
 @Entity
 @Cache
@@ -23,14 +22,9 @@ import com.googlecode.objectify.annotation.Load;
 	@Id
 	private String name;
 	private String description;
-	@Load
+	@Ignore
 	private List<Post> posts;
 
 	public Fridge() {
-	}
-
-	// GETTERS & SETTERS
-	public List<Post> getPosts() {
-		return Dao.getPostByFridge(this.name);
 	}
 }
