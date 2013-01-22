@@ -13,10 +13,11 @@ window.App = Ember.Application.createWithMixins({
 	posts : [],
 	
 	// TODO remove this ugly thing
-	fridgeId : location.pathname.split('/')[2],
+	fridgeId : getFridgeUrl(),
 	
 	ready : function() {
 		document.title = "Fridge "+ this.fridgeId;
+		window.location.replace("#");
 	},
 	
 	ApplicationView : Ember.View.extend({

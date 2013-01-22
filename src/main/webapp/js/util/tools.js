@@ -93,6 +93,16 @@ function filterData(data) {
 	return data;
 }
 
+//workaround before using ember state management
+function getFridgeUrl(){
+	var tmp = location.pathname.split('/')[2];
+	if (tmp.indexOf("#") !== -1){
+		return tmp.split('#')[0];
+	}else{
+		return tmp;
+	}
+}
+
 function konami() {
     $(window).konami(function() {
         jQuery('.post').addClass('barrel_roll');
