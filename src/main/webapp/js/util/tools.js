@@ -76,7 +76,7 @@ function errorMessage(message){
 
 function infoMessage(message){
 	n = noty({
-		layout: 'topRight',
+		layout: 'bottomRight',
 		type: 'information',
 		timeout: 2000,
 		closeWith: ['hover'],

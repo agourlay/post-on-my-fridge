@@ -40,7 +40,7 @@
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.6/store.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/jquery.noty.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/top.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/topRight.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/bottomRight.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/themes/default.js"></script>
 	<script src = "/js/fridge.min.js"></script>
 		
