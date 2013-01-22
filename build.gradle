@@ -71,7 +71,7 @@ apply plugin: 'gae'
 
 gae {
 	httpPort = 8888
-	stopKey = null
+	stopKey = "stop"
 	disableUpdateCheck = true
 	downloadSdk = true
 	appcfg { email = 'arnaud.gourlay@gmail.com' }
