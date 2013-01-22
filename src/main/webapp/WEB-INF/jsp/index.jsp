@@ -29,10 +29,23 @@
 			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			  })();
 		</script>
+		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50fefe9a3e8b6794"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row-fluid">
+				<div class="span10 offset1">
+					<p>		
+						<div class="addthis_toolbox addthis_default_style ">
+							<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+							<a class="addthis_button_tweet"></a>
+							<a class="addthis_button_pinterest_pinit"></a>
+							<a class="addthis_counter addthis_pill_style"></a>
+						</div>
+					</p>
+				</div>
+			</div>	
+			<div class="row-fluid">		
 				<div class="span10 offset1 hero-unit">
 					<div class="row-fluid">
 						<div class="span12 title-fridge">

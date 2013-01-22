@@ -25,7 +25,8 @@
 	    	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 	    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  	})();
-		</script>
+	</script>
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50fefe9a3e8b6794"></script>
 </head>
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
@@ -43,6 +44,14 @@
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/bottomRight.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/themes/default.js"></script>
 	<script src = "/js/fridge.min.js"></script>
+
+	<div class="addthis_toolbox addthis_floating_style addthis_32x32_style" style="right:1px;top:150px;">
+		<a class="addthis_button_preferred_1"></a>
+		<a class="addthis_button_preferred_2"></a>
+		<a class="addthis_button_preferred_3"></a>
+		<a class="addthis_button_preferred_4"></a>
+		<a class="addthis_button_compact"></a>
+	</div>
 		
 	<script type="text/x-handlebars" data-template-name="application">
         <div id="global">
