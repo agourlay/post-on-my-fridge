@@ -56,7 +56,12 @@
 	<script type="text/x-handlebars" data-template-name="application">
         <div id="global">
             <header>
-                {{outlet header}}
+                <div id="fridge-title">
+					<b>Post on fridge {{view.fridgeId}}</b>
+			        <a {{bindAttr href="view.rssUrl"}} target="_blank">
+			            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
+			        </a>
+                </div>
                 <div id="search-area">
                     <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
                 </div>
@@ -88,13 +93,6 @@
 				{{outlet fridge}}
             </div>
         </div>
-    </script>
-
-	<script  type="text/x-handlebars" data-template-name="header-template">
-		<b>Post on fridge {{view.fridgeId}}</b>
-        <a {{bindAttr href="view.rssUrl"}} target="_blank">
-            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
-        </a>
     </script>
 
     <script  type="text/x-handlebars" data-template-name="message-template">

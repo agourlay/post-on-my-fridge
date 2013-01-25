@@ -22,6 +22,14 @@ window.App = Ember.Application.createWithMixins({
 	
 	ApplicationView : Ember.View.extend({
 		
+		fridgeId: function() {
+			return App.get('fridgeId')
+		}.property(),
+
+		rssUrl: function() {
+			return "/fridge/" + this.get('fridgeId') + "/rss";
+		}.property(),
+
 		didInsertElement : function() {
 			colorPickerManagement();
 
