@@ -1,5 +1,5 @@
 ---
 before_script:
-  - "wget http://services.gradle.org/distributions/gradle-1.4-rc-2-bin.zip"
-  - "unzip gradle-1.4-rc-2* > /dev/null"
-script: "gradle-1.4-rc-2*/bin/gradle clean gaeDownloadSdk gaeExplodeWar minifyFridgeCss minifyFridgeJs"
+  - "wget http://services.gradle.org/distributions/gradle-1.4-rc-3-bin.zip"
+  - "unzip gradle-1.4-rc-3* > /dev/null"
+script: "gradle-1.4-rc-3*/bin/gradle clean gaeDownloadSdk gaeExplodeWar minifyFridgeCss minifyFridgeJs"
