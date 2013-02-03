@@ -8,7 +8,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
-	
+	    <meta name="detectify-verification" content="c50776561a50d7fbd7623f72e51be35b" />
 		<!-- CSS -->
 		<link href="//bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
 	    <style type="text/css">

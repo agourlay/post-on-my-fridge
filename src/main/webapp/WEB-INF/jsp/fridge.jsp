@@ -6,6 +6,7 @@
 	<meta name="keywords" content="post on my fridge, social network, messaging, multimedia, fridge, post, interactive" />
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="detectify-verification" content="c50776561a50d7fbd7623f72e51be35b" />
 	<title>a super fridge</title>
 
 	<!-- CSS -->
