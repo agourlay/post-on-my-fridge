@@ -32,7 +32,7 @@
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 	<script src = "/_ah/channel/jsapi"></script>
-    <script src = "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src = "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.2/handlebars.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.4/ember.min.js"></script>
