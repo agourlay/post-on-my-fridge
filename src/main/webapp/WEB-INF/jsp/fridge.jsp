@@ -37,7 +37,7 @@
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.2/handlebars.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.4/ember.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
- 	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.6/store.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/js-url/1.7.5/js-url.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/jquery.noty.js"></script>

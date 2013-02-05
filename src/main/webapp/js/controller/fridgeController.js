@@ -39,7 +39,7 @@ App.FridgeController = Ember.ArrayController.extend({
 		var me = this;
 		$.each(me.get('content'), function(indexPost, valuePost) {
 			var postId = valuePost.id;
-			if ( ! _.find(fridgeContent, function(dataPost) {return dataPost.id === postId;})) {
+			if ( ! _.findWhere(fridgeContent, { id : postId})) {
 				me.removeObject(me.findProperty('id', postId));
 			}
 		});
