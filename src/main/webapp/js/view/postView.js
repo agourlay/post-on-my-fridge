@@ -94,17 +94,18 @@ App.PostView = Em.View.extend(App.Draggable, {
 		if (firstWordUrl === undefined) {
 			return content;
 		}else {
-			var domain = url('domain', firstWordUrl);
-			if (domain === "youtube.com") {
-				return generateYoutubeFrame(url('?v',firstWordUrl));
-			} else if (domain === "vimeo.com") {
-				return generateVimeoFrame(url('1',firstWordUrl));
-			} else if (domain === "dailymotion.com") {
-				return generateDailyMotionLink((url('2',firstWordUrl)).split('_')[0]);
-			} else if (isRegExp(pictureRegexp, firstWordUrl)) {
+			if (isRegExp(pictureRegexp, firstWordUrl)) {
 				return generatePictureLink(firstWordUrl);
-			} else {
-				return generateHrefLink(firstWordUrl);
+			}	
+			switch (url('domain', firstWordUrl)) {
+			    case "youtube.com":
+			        return generateYoutubeFrame(url('?v',firstWordUrl));
+			    case "vimeo.com":
+			        return generateVimeoFrame(url('1',firstWordUrl));
+			    case "dailymotion.com":
+			        return generateDailyMotionLink((url('2',firstWordUrl)).split('_')[0]);
+			    default:
+			    	return generateHrefLink(firstWordUrl);
 			}
 		}
 	}
