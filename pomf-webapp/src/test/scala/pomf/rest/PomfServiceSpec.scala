@@ -40,13 +40,13 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
       "author": "Jack",
       "content": "Yo dude",
       "color": "Blue",
-      "date": "2012-02-11T12:13:56:00",
+      "date": "2012-02-11T12:13:56",
       "positionX": 0.5555,
       "positionY": 0.4444,
       "fridgeId": "Demo"}"""
     
     
-  val dateFormatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse("2012-02-11T12:13:56:00")  
+  val dateFormatted = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse("2012-02-11T12:13:56")  
 
   val expectedPost = new Post(author = "Jack",
       					  content = "Yo dude",

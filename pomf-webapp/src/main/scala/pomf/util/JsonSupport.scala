@@ -25,7 +25,7 @@ trait IsoDateChecker {
   def dateToIsoString(date: Date) = localIsoDateFormatter.format(date)
 
   def parseIsoDateString(date: String): Option[Date] =
-    if (date.length != 22){
+    if (date.length != 19){
       println(date + " " + date.length)
       None
     }
