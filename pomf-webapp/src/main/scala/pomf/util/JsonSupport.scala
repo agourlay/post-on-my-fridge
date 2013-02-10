@@ -7,29 +7,30 @@ import spray.json._
 
 trait DateMarshalling {
 
-  implicit object DateJsonFormat extends JsonFormat[Date] with IsoDateChecker {
+  implicit object DateJsonFormat extends RootJsonFormat[Date] with IsoDateChecker {
     override def write(obj: Date) = JsString(dateToIsoString(obj))
-    override def read(value: JsValue) = parseIsoDateString(value.toString) match {
-      case None => throw new DeserializationException("Expected ISO Date format, got %s" format(value.toString))
-      case Some(date) => date
+    override def read(value: JsValue) = value match {
+      case JsString(x) => parseIsoDateString(x)  match {
+        							  case Some(date) => date
+								      case None => throw new DeserializationException("Expected ISO Date format, got %s" format(x))
+								    }
+      case _ => deserializationError("Not a String? ")
     }
   }
 }
 
 trait IsoDateChecker {
-  private val localIsoDateFormatter = new ThreadLocal[SimpleDateFormat] {
-    override def initialValue() = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-  }
+  private val localIsoDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
-  def dateToIsoString(date: Date) = localIsoDateFormatter.get().format(date)
+  def dateToIsoString(date: Date) = localIsoDateFormatter.format(date)
 
   def parseIsoDateString(date: String): Option[Date] =
-    if (date.length != 24){
-      println(date.length)
+    if (date.length != 22){
+      println(date + " " + date.length)
       None
-    } 
+    }
     else try {
-     Some(localIsoDateFormatter.get().parse(date)) 
+     Some(localIsoDateFormatter.parse(date)) 
     }catch {
       case p: ParseException =>
         println(date + " " + p)

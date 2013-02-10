@@ -41,8 +41,8 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
       "content": "Yo dude",
       "color": "Blue",
       "date": "2012-02-11T12:13:56:00",
-      "positionX": "1",
-      "positionY": "2",
+      "positionX": 0.5555,
+      "positionY": 0.4444,
       "fridgeId": "Demo"}"""
     
     
@@ -52,8 +52,8 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
       					  content = "Yo dude",
       					  color = "Blue",
       					  date = dateFormatted,
-      					  positionX = 1.asInstanceOf[Double],
-      					  positionY = 2.asInstanceOf[Double],
+      					  positionX = 1d,
+      					  positionY = 2d,
       					  fridgeId = "Demo",
       					  id = Some(1L))
 
