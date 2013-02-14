@@ -46,5 +46,20 @@ trait PostComponent { this: Profile =>
     }
     
     def findPostByFridge(fridgeName : String )(implicit session: Session) = Query(Posts).filter(_.fridgeId === fridgeName).list 
+    
+    def updatePost(postToUpdate : Post)(implicit session: Session): Option[Post] = {
+      val q =  for { p <- Posts if p.id === postToUpdate.id } yield p.author ~ p.content ~ p.color ~ p.date ~ p.positionX ~ p.positionY ~ p.dueDate ~ p.fridgeId ~ p.id
+      Post.unapply(postToUpdate) match{
+       case Some(post) =>  q.update(post) ; Some(postToUpdate)
+       case None => None
+      }
+    }
+    
+    def getPost(idPost : Long)(implicit session: Session):Option[Post] =  Query(Posts).filter(_.id === idPost).firstOption 
+    
+    def deletePost(idPost : Long)(implicit session: Session):String =  {
+      (for(p <- Posts if p.id === idPost) yield p).delete
+      "Post "+idPost+" deleted" 
+    }
   }
 }

@@ -27,8 +27,8 @@ object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
 }
 
 trait PomfService extends HttpService { this: DBConfig =>
-import JsonImplicits._
-  
+  import JsonImplicits._
+
   val pomfRoute =
     path("") {
       get {
@@ -37,21 +37,31 @@ import JsonImplicits._
         }
       }
     } ~ pathPrefix("static") {
-          getFromResourceDirectory("static/")
+      getFromResourceDirectory("static/")
     } ~
-      path("fridge"  / Rest) { fridgeName =>
-        get { ctx =>
-          ctx.complete {
-            m.getFridgeRest(fridgeName)
-          }
+      path("fridge" / Rest) { fridgeName =>
+        get {
+          complete(m.getFridgeRest(fridgeName))
         }
       } ~
       path("post") {
         post {
           entity(as[Post]) { post =>
-            val result: Post = m.addPost(post)
-            complete(result)
+            complete(m.addPost(post))
           }
-        }
+        } ~
+          put {
+            entity(as[Post]) { post =>
+              complete(m.updatePost(post))
+            }
+          }
+      } ~
+      path("post" / LongNumber) { postId =>
+        get {
+          complete(m.getPost(postId))
+        } ~
+          delete {
+            complete(m.deletePost(postId))
+          }
       }
 }

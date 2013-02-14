@@ -39,7 +39,12 @@ import dal.profile.simple._
     fridgeOpt match {
       case Some(fridge) => Some(FridgeRest(fridge.name, fridge.description ,fridge.id, Posts.findPostByFridge(fridgeName)))
       case _ => None
-    }							
-    
+    }							 
   }
+  
+  def getPost(id :Long):Option[Post] = Posts.getPost(id)
+  
+  def deletePost(id :Long) = Posts.deletePost(id)
+  
+  def updatePost(post :Post):Option[Post] = Posts.updatePost(post)
 }
