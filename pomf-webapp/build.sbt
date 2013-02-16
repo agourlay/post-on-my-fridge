@@ -23,14 +23,14 @@ libraryDependencies ++= Seq(
   ,"io.spray"           %   "spray-caching"     % "1.1-M7"
   ,"io.spray"           %%  "spray-json"        % "1.2.3"
   ,"com.typesafe.akka"  %%  "akka-actor"        % "2.1.0" 
-  ,"joda-time"          %  "joda-time"         % "2.1"
+  ,"com.typesafe.akka"  %%  "akka-zeromq"       % "2.1.0" 
   ,"org.specs2"         %%  "specs2"            % "1.13"    % "test"
   ,"com.typesafe.slick" %   "slick_2.10"        % "1.0.0"
   ,"com.h2database"     %   "h2"                % "1.3.170"
-  ,"postgresql"         %   "postgresql"        % "9.1-901.jdbc4"
-  ,"org.xerial"         %   "sqlite-jdbc"       % "3.6.20"
+  ,"postgresql"         %   "postgresql"        % "9.1-901-1.jdbc4"
+  ,"org.xerial"         %   "sqlite-jdbc"       % "3.7.2"
   ,"junit"              %   "junit"             % "4.11"     % "test"
-  ,"ch.qos.logback"     %   "logback-classic"   % "1.0.9"    //% "test"
+  ,"ch.qos.logback"     %   "logback-classic"   % "1.0.9" 
 )
 
 seq(Revolver.settings: _*)
