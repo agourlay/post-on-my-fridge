@@ -17,12 +17,14 @@ class PomfServiceActor extends Actor with PomfService with ProductionDB {
   def actorRefFactory = context
 
   def receive = runRoute(pomfRoute)
+
 }
 
 import spray.json.DefaultJsonProtocol
 
 object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
   implicit val impPost = jsonFormat9(Post)
+  implicit val impFridge = jsonFormat3(Fridge)
   implicit val impFridgeRest = jsonFormat4(FridgeRest)
 }
 
@@ -32,17 +34,30 @@ trait PomfService extends HttpService { this: DBConfig =>
   val pomfRoute =
     path("") {
       get {
-        respondWithMediaType(`text/html`) {
-          getFromResource("static/index.html")
-        }
+        getFromResource("index.html")
       }
-    } ~ pathPrefix("static") {
-      getFromResourceDirectory("static/")
     } ~
+      pathPrefix("css") {
+        getFromResourceDirectory("css")
+      } ~
+      pathPrefix("js") {
+        getFromResourceDirectory("js")
+      } ~
+      pathPrefix("img") {
+        getFromResourceDirectory("img")
+      } ~
+      pathPrefix("templates") {
+        getFromResourceDirectory("templates")
+      } ~
       path("fridge" / Rest) { fridgeName =>
         get {
           complete(m.getFridgeRest(fridgeName))
-        }
+        } ~
+          post {
+            entity(as[Fridge]) { fridge =>
+              complete(m.addFridge(fridge))
+            }
+          }
       } ~
       path("post") {
         post {

@@ -1,3 +1,5 @@
+import AssemblyKeys._
+
 organization := "com.agourlay"
 
 name := "pomf-webapp"
@@ -5,6 +7,9 @@ name := "pomf-webapp"
 version := "0.1"
 
 scalaVersion := "2.10.0"
+
+unmanagedResourceDirectories in Compile <+=
+    (baseDirectory) { _ / "src" / "main" / "webapp" }
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
 
@@ -17,11 +22,11 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "io.spray"            %   "spray-can"         % "1.1-M7"
-  ,"io.spray"           %   "spray-routing"     % "1.1-M7"
-  ,"io.spray"           %   "spray-testkit"     % "1.1-M7"
-  ,"io.spray"           %   "spray-caching"     % "1.1-M7"
-  ,"io.spray"           %%  "spray-json"        % "1.2.3"
+  "io.spray"            %   "spray-can"         % "1.1-M7" 
+  ,"io.spray"           %   "spray-routing"     % "1.1-M7" 
+  ,"io.spray"           %   "spray-testkit"     % "1.1-M7" 
+  ,"io.spray"           %   "spray-caching"     % "1.1-M7" 
+  ,"io.spray"           %%  "spray-json"        % "1.2.3"  
   ,"com.typesafe.akka"  %%  "akka-actor"        % "2.1.0" 
   ,"com.typesafe.akka"  %%  "akka-zeromq"       % "2.1.0" 
   ,"org.specs2"         %%  "specs2"            % "1.13"    % "test"
@@ -34,3 +39,5 @@ libraryDependencies ++= Seq(
 )
 
 seq(Revolver.settings: _*)
+
+seq(assemblySettings: _*)
