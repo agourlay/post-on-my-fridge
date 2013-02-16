@@ -11,7 +11,7 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="/css/fridge.min.css"/>
-	<link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.0/themes/ui-lightness/jquery-ui.css"/>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/ui-lightness/jquery-ui.min.css"/>
 	<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600'/>
 	
 	<!-- JS -->
@@ -32,10 +32,10 @@
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
 	<script src = "/_ah/channel/jsapi"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
- 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-pre.4/ember.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/1.7.2/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.6/store.min.js"></script>
