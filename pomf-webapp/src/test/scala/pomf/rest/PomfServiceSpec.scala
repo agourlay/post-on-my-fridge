@@ -24,6 +24,7 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
     "Template Project REST Specification" ^
       p ^
       "For FRIDGE json objects" ^
+      "Return a empty list if there are no entities" ! getEmptyFridge ^
       "Return a non-empty list if there some entities" ! getNonEmptyFridgeList ^
       p ^
       "For POST json objects" ^
@@ -114,7 +115,7 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
   
   def deletePost = {
     Delete("/post/1") ~> pomfRoute ~> check {
-      entityAs[Post] === "Post 1 deleted" 
+      entityAs[String] === "Post 1 deleted" 
       ok
     }
   }
