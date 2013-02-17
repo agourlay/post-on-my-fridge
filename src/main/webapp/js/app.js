@@ -46,6 +46,9 @@ window.App = Ember.Application.createWithMixins({
 				select : function(event, ui) {
 					window.location = "/fridge/" + ui.item.value;
 				},
+				open: function (event, ui) {
+			        $('.ui-autocomplete').css('z-index', '99999');
+			    },
 				response : function(event, ui) {
 					if (ui.content.length === 0) {
 						ui.content.push({
