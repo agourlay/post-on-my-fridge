@@ -32,33 +32,19 @@ trait PomfService extends HttpService { this: DBConfig =>
   import JsonImplicits._
 
   val pomfRoute =
-    path("") {
-      get {
-        getFromResource("index.html")
-      }
-    } ~
-      pathPrefix("css") {
-        getFromResourceDirectory("css")
-      } ~
-      pathPrefix("js") {
-        getFromResourceDirectory("js")
-      } ~
-      pathPrefix("img") {
-        getFromResourceDirectory("img")
-      } ~
-      pathPrefix("templates") {
-        getFromResourceDirectory("templates")
-      } ~
-      path("fridge" / Rest) { fridgeName =>
+    pathPrefix("api") {
+     path("fridge" / Rest) { fridgeName =>
         get {
           complete(m.getFridgeRest(fridgeName))
-        } ~
-          post {
+        }           
+      } ~
+      path("fridge"){
+        post {
             entity(as[Fridge]) { fridge =>
               complete(m.addFridge(fridge))
             }
           }
-      } ~
+      } ~ 
       path("post") {
         post {
           entity(as[Post]) { post =>
@@ -79,4 +65,5 @@ trait PomfService extends HttpService { this: DBConfig =>
             complete(m.deletePost(postId))
           }
       }
+  }   
 }

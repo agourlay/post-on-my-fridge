@@ -1,15 +1,10 @@
-import AssemblyKeys._
-
 organization := "com.agourlay"
 
-name := "pomf-webapp"
+name := "pomf-api"
 
 version := "0.1"
 
 scalaVersion := "2.10.0"
-
-unmanagedResourceDirectories in Compile <+=
-    (baseDirectory) { _ / "src" / "main" / "webapp" }
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
 
@@ -39,5 +34,3 @@ libraryDependencies ++= Seq(
 )
 
 seq(Revolver.settings: _*)
-
-seq(assemblySettings: _*)

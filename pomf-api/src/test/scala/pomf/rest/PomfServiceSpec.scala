@@ -79,42 +79,42 @@ class PomfServiceSpec extends Specification with Specs2RouteTest with PomfServic
       					  id = Some(1L))
 
   def getEmptyFridge = {
-    Get("/fridge") ~> pomfRoute ~> check {
+    Get("/api/fridge") ~> pomfRoute ~> check {
       entityAs[FridgeRest] === List()
       ok
     } 
   }
   
   def getNonEmptyFridgeList = {
-    Get("/fridge") ~> pomfRoute ~> check {
+    Get("/api/fridge") ~> pomfRoute ~> check {
       entityAs[FridgeRest] != null
       ok
     }
   }
 
   def createPost = {
-    Post("/post", HttpBody(`application/json`, jsonPost)) ~> pomfRoute ~> check {
+    Post("/api/post", HttpBody(`application/json`, jsonPost)) ~> pomfRoute ~> check {
       entityAs[Post] === expectedPost
       ok
     }
   }
   
    def readPost = {
-    Get("/post/1") ~> pomfRoute ~> check {
+    Get("/api/post/1") ~> pomfRoute ~> check {
       entityAs[Post] === expectedPost
       ok
     }
   }
   
   def updatePost = {
-    Put("/post", HttpBody(`application/json`, jsonPostUpdate)) ~> pomfRoute ~> check {
+    Put("/api/post", HttpBody(`application/json`, jsonPostUpdate)) ~> pomfRoute ~> check {
       entityAs[Post] === expectedUpdatedPost
       ok
     }
   }
   
   def deletePost = {
-    Delete("/post/1") ~> pomfRoute ~> check {
+    Delete("/api/post/1") ~> pomfRoute ~> check {
       entityAs[String] === "Post 1 deleted" 
       ok
     }
