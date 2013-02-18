@@ -1,6 +1,8 @@
 package pomf.domain
 
-case class Fridge(name: String, description: String = "", id: Option[Long] = None)
+case class Fridge(name: String, description: String = "", id: Option[Long] = None){
+  require(!name.isEmpty, "fridge name must not be empty")
+}
 
 case class FridgeRest(name: String, description: String, id: Option[Long], posts: List[Post])
 

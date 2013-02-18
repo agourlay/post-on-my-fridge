@@ -11,7 +11,12 @@ case class Post(author: String,
 	dueDate:Option[Date] = None,
 	fridgeId:String,
     id: Option[Long] = None
-)
+){
+  require(!author.isEmpty, "author must not be empty")
+  require(!content.isEmpty, "author must not be empty")
+  require(!content.contains("/>"), "content must not contain /> ")
+  require(!fridgeId.isEmpty, "fridgeId must not be empty")
+}
 
 trait PostComponent { this: Profile =>
   import profile.simple._
