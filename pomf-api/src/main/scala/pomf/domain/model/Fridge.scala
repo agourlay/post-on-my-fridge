@@ -1,4 +1,6 @@
-package pomf.domain
+package pomf.domain.model
+
+import pomf.domain.config.Profile
 
 case class Fridge(name: String, description: String = "", id: Option[Long] = None){
   require(!name.isEmpty, "fridge name must not be empty")

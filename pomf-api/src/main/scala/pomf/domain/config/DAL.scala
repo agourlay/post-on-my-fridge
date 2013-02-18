@@ -1,11 +1,11 @@
-package pomf.domain
+package pomf.domain.config
 
 import scala.slick.driver.ExtendedProfile
 import scala.slick.session.Session
-import scala.slick.driver.H2Driver
-import scala.slick.driver.SQLiteDriver
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import pomf.domain.model.FridgeComponent
+import pomf.domain.model.PostComponent
 
 trait Profile {
   val profile: ExtendedProfile

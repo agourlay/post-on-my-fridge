@@ -1,6 +1,7 @@
-package pomf.domain
+package pomf.domain.model
 
 import java.util.Date
+import pomf.domain.config.Profile
 
 case class Post(author: String,
     content: String,

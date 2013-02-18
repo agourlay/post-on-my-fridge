@@ -1,6 +1,10 @@
-package pomf.domain
+package pomf.domain.dao
 
 import scala.slick.session.Database
+import pomf.domain.config.DAL
+import pomf.domain.model.Fridge
+import pomf.domain.model.FridgeRest
+import pomf.domain.model.Post
 
 class Dao(name: String, dal: DAL, db: Database) {
   // We only need the DB/session imports outside the DAL

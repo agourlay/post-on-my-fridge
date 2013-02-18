@@ -1,12 +1,13 @@
-package pomf.domain
+package pomf.domain.config
+
+import scala.slick.driver.H2Driver
+import scala.slick.driver.PostgresDriver
+import scala.slick.session.Database
+import pomf.domain.dao.Dao
 
 trait DBConfig {
   def m: Dao
 }
-
-import scala.slick.driver.H2Driver
-import scala.slick.driver.PostgresDriver
-import scala.slick.session.{ Database, Session }
 
 trait TestDB extends DBConfig {
   val m = new Dao("H2", new DAL(H2Driver),

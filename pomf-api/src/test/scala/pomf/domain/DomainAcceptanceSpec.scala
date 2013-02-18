@@ -3,8 +3,9 @@ package pomf.domain
 import org.specs2._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
-
-import pomf.domain._
+import pomf.domain.dao.Dao
+import pomf.domain.config.DAL
+import pomf.domain.model.Fridge
 
 @RunWith(classOf[JUnitRunner])
 class DomainAcceptanceSpec extends Specification {

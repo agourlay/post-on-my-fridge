@@ -1,7 +1,6 @@
-package pomf.rest
+package pomf.service.rest
 import pomf.domain._
 import pomf.util._
-
 import akka.actor.Actor
 import spray.routing._
 import spray.http._
@@ -11,8 +10,14 @@ import spray.routing.directives.CompletionMagnet.fromObject
 import spray.httpx.SprayJsonSupport.sprayJsonMarshaller
 import spray.httpx.SprayJsonSupport.sprayJsonUnmarshaller
 import spray.json.DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol
+import pomf.domain.model.Post
+import pomf.domain.model.FridgeRest
+import pomf.domain.model.Fridge
+import pomf.domain.config.ProductionDB
+import pomf.domain.config.DBConfig
 
-class PomfServiceActor extends Actor with PomfService with ProductionDB {
+class PomfServiceActor extends Actor with PomfRouteService with ProductionDB {
 
   def actorRefFactory = context
 
@@ -20,15 +25,13 @@ class PomfServiceActor extends Actor with PomfService with ProductionDB {
 
 }
 
-import spray.json.DefaultJsonProtocol
-
 object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
   implicit val impPost = jsonFormat9(Post)
   implicit val impFridge = jsonFormat3(Fridge)
   implicit val impFridgeRest = jsonFormat4(FridgeRest)
 }
 
-trait PomfService extends HttpService { this: DBConfig =>
+trait PomfRouteService extends HttpService { this: DBConfig =>
   import JsonImplicits._
 
   val pomfRoute =

@@ -1,19 +1,19 @@
-package pomf.rest
+package pomf.boot
 
 import akka.actor.{Props, ActorSystem}
 import spray.can.server.HttpServer
 import spray.io._
 import akka.actor.actorRef2Scala
-//import S4.rest.ApointServiceActor
+import com.rabbitmq.client.ConnectionFactory
+import com.github.sstone.amqp.Amqp.ExchangeParameters
+import com.github.sstone.amqp.ConnectionOwner
+import pomf.service.rest.PomfServiceActor
 
 
 object Boot extends App {
-  // we need an ActorSystem to host our application in
+ 
   val system = ActorSystem("pomf")
   
-  // every spray-can HttpServer (and HttpClient) needs an IOBridge for low-level network IO
-  // (but several servers and/or clients can share one)
-  //val ioBridge = new IOBridge(system).start()
   private val ioBridge = IOExtension(system).ioBridge()
   // create and start our service actor
   val service = system.actorOf(Props[PomfServiceActor], "pomf-service")
@@ -28,4 +28,16 @@ object Boot extends App {
   // a running HttpServer can be bound, unbound and rebound
   // initially to need to tell it where to bind to
   httpServer ! HttpServer.Bind("localhost", 8080)
+  
+  // prepare the AMQP connection factory
+  val connectionFactory = new ConnectionFactory()
+  connectionFactory.setHost("localhost")
+  
+  // connect to the AMQP exchange
+  val amqpExchange = ExchangeParameters(name = "amq.direct", exchangeType = "", passive = true)
+
+  // create a "connection owner" actor, which will try and 
+  // reconnect automatically if the connection ins lost
+  val connection = system.actorOf(
+                     Props(new ConnectionOwner(connectionFactory)))
 }
