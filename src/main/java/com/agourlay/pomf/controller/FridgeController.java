@@ -3,7 +3,6 @@ package com.agourlay.pomf.controller;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,16 +22,9 @@ import com.agourlay.pomf.model.Post;
 import com.agourlay.pomf.service.ClientService;
 import com.agourlay.pomf.service.RssService;
 import com.agourlay.pomf.util.Constantes;
-import com.sun.jersey.api.view.Viewable;
 
 @Path("/fridge/{fridgeId}")
 public class FridgeController {
-
-	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public Viewable index(@Context HttpServletRequest request) {
-		return new Viewable("/fridge.jsp", null);
-	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

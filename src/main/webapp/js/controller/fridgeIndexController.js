@@ -1,0 +1,1 @@
+App.FridgeIndexController = Ember.ObjectController.extend({});

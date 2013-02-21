@@ -1,10 +1,5 @@
-App.FridgeController = Ember.ArrayController.extend({
+App.PostsController = Ember.ArrayController.extend({
 	content: [],
-
-	init: function() {
-		this._super();
-		App.getPosts();
-	},
 
 	createPost: function(postData) {
 		App.Post.createWithMixins(postData).createPost();

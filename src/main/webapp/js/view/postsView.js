@@ -1,7 +1,8 @@
-App.FridgeView = Ember.CollectionView.extend({
+App.PostsView = Ember.CollectionView.extend({
 	tagName : 'section',
 	elementId : 'fridge',
 	itemViewClass : 'App.PostView',
+	
 	didInsertElement : function() {
 		var view = this;
 		view.set('content',view.get('controller').get('content'));
