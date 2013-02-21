@@ -43,7 +43,7 @@ App.ChatController = Ember.ArrayController.extend({
 					socket.onmessage = function(m) {
 						var data = $.parseJSON(m.data);
 						if (data.command === "#FRIDGE-UPATE#") {
-							App.getPosts();
+							App.Fridge.refresh();
 						}
 						if (data.command === "#FRIDGE-CHAT#") {
 							me.messageManagement(data.user, data.message,data.timestamp);

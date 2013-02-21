@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="/css/fridge.min.css"/>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/ui-lightness/jquery-ui.min.css"/>
 	<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,600'/>
-	<link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
+	<link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css" id="bootstrap-css">
 	
 	<!-- JS -->
 	<script type="text/javascript">
@@ -29,10 +29,10 @@
 	    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  	})();
 	</script>
-	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50fefe9a3e8b6794"></script>
 </head>
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
+	<script src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50fefe9a3e8b6794"></script>
 	<script src = "/_ah/channel/jsapi"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
@@ -76,10 +76,10 @@
 							</p>
 							<div class="span4 offset4">
 								<p>
-									<a class="btn btn-primary btn-large" href="/fridge/demo" >
-										<i class="icon-white icon-eye-open"></i>
+								   {{#linkTo fridge.index "demo" href="true" class="btn btn-primary btn-large" }}
+								    	<i class="icon-white icon-eye-open"></i>
 										Try the demo now
-								    </a>
+								   {{/linkTo}}	
 								</p>
 							</div>
 						</div>

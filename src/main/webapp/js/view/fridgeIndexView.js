@@ -2,7 +2,12 @@ App.FridgeIndexView = Em.View.extend({
 
 	templateName: 'fridge/index',
 
+	willInsertElement : function(){
+		$("#bootstrap-css").attr("disabled", "disabled");
+	},
+
 	didInsertElement : function() {
+
 		colorPickerManagement();
 
 		$(".newPost").draggable({
@@ -16,7 +21,7 @@ App.FridgeIndexView = Em.View.extend({
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {
-				window.location = "/fridge/" + ui.item.value;
+				App.Router.transitionTo('fridge.index',ui.item.value);
 			},
 			open: function (event, ui) {
 		        $('.ui-autocomplete').css('z-index', '99999');

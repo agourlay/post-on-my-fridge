@@ -51,5 +51,5 @@ App.PostsController = Ember.ArrayController.extend({
 				me.createOrUpdate(post);
 		    });
 		}
-	}.observes('App.posts')
+	}.observes('App.Fridge.posts')
 });

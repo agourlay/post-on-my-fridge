@@ -90,8 +90,15 @@
 	margin-left : 20px;
 	padding-top : 10px;	}
 
-.newPost input, .newPost textarea{
+.newPost input{
 	background-color: transparent;
 	border: dotted;
     resize: none;
+	border-width: thin;	}
+
+.newPost textarea{
+	background-color: transparent;
+	border: dotted;
+    resize: none;
+    width: 190px;
 	border-width: thin;	}
