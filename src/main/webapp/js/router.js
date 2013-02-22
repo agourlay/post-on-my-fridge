@@ -7,7 +7,7 @@ App.Router.map(function() {
   	});
 });
 
-App.FridgeIndexRoute = Ember.Route.extend({
+App.FridgeRoute = Ember.Route.extend({
    model: function(params) {
     return App.Dao.findFridgeById(params.fridge_id);
   }

@@ -1,13 +1,22 @@
 App.FridgeIndexView = Em.View.extend({
-
+	tagName : 'div',
+	elementId : 'global',
 	templateName: 'fridge/index',
+
+	//ready : function() {
+	//	document.title = "Fridge "+ this.fridgeId;
+	//},
+
+	//rssUrl: function() {
+	//		return "/fridge/" + this.get('controller').get('content').get('id') + "/rss";
+	//}.property(),
 
 	willInsertElement : function(){
 		$("#bootstrap-css").attr("disabled", "disabled");
 	},
 
 	didInsertElement : function() {
-
+		konami();
 		colorPickerManagement();
 
 		$(".newPost").draggable({
@@ -34,9 +43,6 @@ App.FridgeIndexView = Em.View.extend({
 					});
 				}
 			}
-		});
-		
-		konami();
+		});		
 	}
-
 });

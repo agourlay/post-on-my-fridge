@@ -35,8 +35,9 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 		"${projectDir}/src/main/webapp/js/view/chatView.js",
 		"${projectDir}/src/main/webapp/js/controller/chatController.js",
 		"${projectDir}/src/main/webapp/js/model/fridgeModel.js",
-		"${projectDir}/src/main/webapp/js/view/fridgeIndexView.js",
 		"${projectDir}/src/main/webapp/js/controller/fridgeIndexController.js",
+		"${projectDir}/src/main/webapp/js/view/fridgeIndexView.js",
+		"${projectDir}/src/main/webapp/js/view/indexView.js",
 		"${projectDir}/src/main/webapp/js/dao.js",
 		"${projectDir}/src/main/webapp/js/router.js"
 	]

@@ -16,7 +16,8 @@ App.PostsView = Ember.CollectionView.extend({
 					newPostData.color = $("#postColor").val();
 					newPostData.positionX = parseInt(ui.draggable.offset().left, 10) / parseInt(view.$().css("width"), 10);
 					newPostData.positionY = parseInt(ui.draggable.offset().top, 10) / parseInt(view.$().css("height"), 10);
-					newPostData.fridgeId = App.get('fridgeId');
+					//TODO get real id
+					newPostData.fridgeId = "demo";
 					newPostData.dueDate = $("#dueDate").val();
 					newPostValidation(newPostData);
 					view.get('controller').createPost(newPostData);

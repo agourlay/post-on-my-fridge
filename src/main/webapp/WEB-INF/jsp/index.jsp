@@ -76,7 +76,7 @@
 							</p>
 							<div class="span4 offset4">
 								<p>
-								   {{#linkTo fridge.index "demo" href="true" class="btn btn-primary btn-large" }}
+								   {{#linkTo fridge.index view.demo class="btn btn-primary btn-large" }}
 								    	<i class="icon-white icon-eye-open"></i>
 										Try the demo now
 								   {{/linkTo}}	
@@ -149,48 +149,45 @@
     </script>
 
 	<script type="text/x-handlebars" data-template-name="fridge/index">
-        <div id="global">
-            <header>
-                <div id="fridge-title">
-					<b>Post on fridge {{view.fridgeId}}</b>
-			        <a {{bindAttr href="view.rssUrl"}} target="_blank">
-			            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
-			        </a>
-                </div>
-                <div id="search-area">
-                    <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
-                </div>
-            </header>
-            <div id="main-content">
-                <aside id ="leftPanel">
-                    <div id ="newPost" class="newPost">
-                        <form id="postForm" accept-charset="utf-8">
-                            <div class="content">
-                                <textarea name="content" id="content" rows="9" cols="23" maxlength="200" placeholder="Drop me on the fridge"></textarea>
-                            </div>
-                            <div class="author">
-                                <input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12"/>
-                            </div>
-                            <div class="iconBox">
-                                <input type="date" id="dueDate" title="Due date"/>
-                                <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="chatPanel">
-                        <form id="chatInput" accept-charset="utf-8">
-                            <input type="text" placeholder="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
-                            {{render chat}}
-                            <textarea id="message" rows="0" cols="0" maxlength="200"></textarea>
-                        </form>
-                    </div>
-                </aside>
-				{{render posts}}
+        <header>
+            <div id="fridge-title">
+				<b>Post on fridge {{view.fridgeId}}</b>
+		        <a {{bindAttr href="view.rssUrl"}} target="_blank">
+		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
+		        </a>
             </div>
-        </div>
+            <div id="search-area">
+                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
+            </div>
+        </header>
+        <div id="main-content">
+            <aside id ="leftPanel">
+                <div id ="newPost" class="newPost">
+                    <form id="postForm" accept-charset="utf-8">
+                        <div class="content">
+                            <textarea name="content" id="content" rows="9" cols="23" maxlength="200" placeholder="Drop me on the fridge"></textarea>
+                        </div>
+                        <div class="author">
+                            <input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12"/>
+                        </div>
+                        <div class="iconBox">
+                            <input type="date" id="dueDate" title="Due date"/>
+                            <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
+                        </div>
+                    </form>
+                </div>
+                <div id="chatPanel">
+                    <form id="chatInput" accept-charset="utf-8">
+                        <input type="text" placeholder="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
+                        {{render chat}}
+                        <textarea id="message" rows="0" cols="0" maxlength="200"></textarea>
+                    </form>
+                </div>
+            </aside>
+			{{render "posts"}}
     </script>
 
-    <script  type="text/x-handlebars" data-template-name="message-template">
+    <script type="text/x-handlebars" data-template-name="message-template">
 		<br/><i>Sent at {{view.content.date}}</i>
 		<br/><b>{{view.content.user}}:</b> <span class='chatMessage'>{{view.content.message}}</span>
     </script>
