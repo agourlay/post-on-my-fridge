@@ -1,6 +1,9 @@
 App.PostsController = Ember.ArrayController.extend({
-	content: [],
 
+	watchContent: function() {
+		console.log("PostsController content changed :" + JSON.stringify(this.get('content')));
+	}.observes('content'),
+	
 	createPost: function(postData) {
 		App.Post.createWithMixins(postData).createPost();
 	},
@@ -42,7 +45,7 @@ App.PostsController = Ember.ArrayController.extend({
 
 	mergePost: function() {
 		var me = this,
-		    posts = App.get('posts');
+		    posts = App.Dao.get('posts');
 		if( posts !== null) {
 			// remove post present in the fridge but not in the db
 			me.deleteProcedure(posts);
@@ -51,5 +54,5 @@ App.PostsController = Ember.ArrayController.extend({
 				me.createOrUpdate(post);
 		    });
 		}
-	}.observes('App.Fridge.posts')
+	}.observes('App.Dao.posts')
 });

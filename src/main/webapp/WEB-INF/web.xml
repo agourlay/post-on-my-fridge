@@ -45,6 +45,7 @@
 			(/favicon\.ico)|
 			(/robots\.txt)|
 			(/human\.txt)
+			(/index\.html)
 			</param-value>
 		</init-param>
 	</filter>

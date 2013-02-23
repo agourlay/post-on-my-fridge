@@ -1,7 +1,10 @@
 App.ChatController = Ember.ArrayController.extend({
-	content: [],
 	chatSocket : null,
-
+	
+	fridgeName : function(){
+		return App.Dao.get('fridgeId');
+	}.property(),	
+	
 	init: function () {
 		this._super();
 		this.channelManagement();
@@ -10,12 +13,12 @@ App.ChatController = Ember.ArrayController.extend({
 
 	sendChatMessage: function(message, pseudo) {
 		var payload = {};
-		payload.fridgeId = App.get('fridgeId');
+		payload.fridgeId = this.get('fridgeName');
 		payload.message = message;
 		payload.user = pseudo;
 		$.ajax({
 			type: "POST",
-			url: "/channel/" + App.get('fridgeId') + "/message",
+			url: "/channel/" + this.get('fridgeName') + "/message",
 			data: payload
 		});
 	},
@@ -31,7 +34,7 @@ App.ChatController = Ember.ArrayController.extend({
 	channelManagement : function () {
 		var me = this;
 		$.ajax({
-			url: "/channel/" + App.get('fridgeId'),
+			url: "/channel/" + this.get('fridgeName'),
 			type: "GET",
 			dataType: 'text',
 			success: function(tokenChannel) {
@@ -59,7 +62,7 @@ App.ChatController = Ember.ArrayController.extend({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("/channel/" + App.get('fridgeId') + "/message", function(messages) {
+		$.getJSON("/channel/" + this.get('fridgeName') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
 					me.messageManagement(message.user,message.message,message.timestamp);

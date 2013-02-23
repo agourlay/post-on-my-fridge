@@ -76,7 +76,7 @@
 							</p>
 							<div class="span4 offset4">
 								<p>
-								   {{#linkTo fridge.index view.demo class="btn btn-primary btn-large" }}
+								   {{#linkTo fridge view.demo class="btn btn-primary btn-large" }}
 								    	<i class="icon-white icon-eye-open"></i>
 										Try the demo now
 								   {{/linkTo}}	
@@ -141,17 +141,9 @@
     </script>
 
 	<script type="text/x-handlebars" data-template-name="fridge">
-		{{outlet}}
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="fridge/new">
-		Fridge creation
-    </script>
-
-	<script type="text/x-handlebars" data-template-name="fridge/index">
         <header>
             <div id="fridge-title">
-				<b>Post on fridge {{view.fridgeId}}</b>
+				<b>Post on fridge {{view.content.name}}</b>
 		        <a {{bindAttr href="view.rssUrl"}} target="_blank">
 		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
 		        </a>
@@ -184,7 +176,7 @@
                     </form>
                 </div>
             </aside>
-			{{render "posts"}}
+			{{render "posts" view.content.posts}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="message-template">

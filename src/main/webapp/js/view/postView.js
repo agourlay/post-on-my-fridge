@@ -5,7 +5,7 @@ App.PostView = Em.View.extend(App.Draggable, {
     templateName: 'post-template',
 
 	relativeDate: function() {
-		var date = this.get('content').get('date');
+		var date = this.get('date');
 		return moment(date).fromNow();
 	}.property('content.date').cacheable(),
 

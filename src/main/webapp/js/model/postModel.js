@@ -8,8 +8,9 @@ App.Post = Em.Object.extend({
 	positionY: null,
 	dueDate: null,
 	fridgeId: null,
-	//TODO get real id
-	resourceUrl: "/fridge/demo/post/",
+	resourceUrl: function(){
+		return "/fridge/"+ this.get('fridgeId') + "/post/";
+	}.property(),
 
 	fullPosition: function(key, value) {
 		// getter
@@ -29,7 +30,7 @@ App.Post = Em.Object.extend({
 	deletePost: function() {
 		$.ajax({
 			method: 'DELETE',
-			url: this.resourceUrl + this.id,
+			url: this.get('resourceUrl') + this.id,
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
 				console.log(thrownError);
@@ -40,7 +41,7 @@ App.Post = Em.Object.extend({
 
 	updatePosition: function() {
 		$.ajax({
-			url: this.resourceUrl,
+			url: this.get('resourceUrl'),
 			method: "PUT",
 			contentType: "application/json",
 			dataType: "text",
@@ -54,7 +55,7 @@ App.Post = Em.Object.extend({
 
 	createPost: function() {
 		$.ajax({
-			url: this.resourceUrl,
+			url: this.get('resourceUrl'),
 			method: "POST",
         	contentType: "application/json",
         	dataType: "text",

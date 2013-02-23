@@ -1,3 +1,5 @@
 App.IndexView = Ember.View.extend({
-	demo : {id: "demo"}
+	demo : function (){
+		App.Dao.findFridgeByName("demo");
+	}.property()
 });

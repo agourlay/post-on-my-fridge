@@ -1,15 +1,9 @@
 function newPostValidation(newPostData) {
-	if (newPostData.dueDate !== "") {
-		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';
-	}
+	if (newPostData.dueDate !== "") {newPostData.dueDate = newPostData.dueDate + 'T00:00:00';}
 
-	if (newPostData.author === "") {
-		newPostData.author = "Anonymous";
-	}
+	if (newPostData.author === "") {newPostData.author = "Anonymous";}
 
-	if (newPostData.content === "") {
-		newPostData.content = "What's up";
-	}
+	if (newPostData.content === "") {newPostData.content = "What's up";	}
 }
 
 function colorPickerManagement() {

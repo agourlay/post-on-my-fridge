@@ -29,6 +29,7 @@ public class FridgeController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Fridge getFridge(@PathParam("fridgeId") String fridgeId) {
+		Dao.createFridgeIfNotExist(fridgeId);
 		return Dao.getFridgeById(fridgeId);
 	}
 

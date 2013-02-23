@@ -1,21 +1,23 @@
-App.FridgeIndexView = Em.View.extend({
+App.FridgeView = Em.View.extend({
 	tagName : 'div',
 	elementId : 'global',
-	templateName: 'fridge/index',
+	contentBinding: 'controller.content',
 
-	//ready : function() {
-	//	document.title = "Fridge "+ this.fridgeId;
-	//},
-
-	//rssUrl: function() {
-	//		return "/fridge/" + this.get('controller').get('content').get('id') + "/rss";
-	//}.property(),
+	watchContent: function() {
+		console.log("FridgeView content changed :" + JSON.stringify(this.get('content')));
+	}.observes('content'),
+	
+	rssUrl: function() {
+		var fridgeName = this.get('content').get('name');
+		return "/fridge/" + fridgeName + "/rss";
+	}.property('content.name').cacheable(),
 
 	willInsertElement : function(){
 		$("#bootstrap-css").attr("disabled", "disabled");
 	},
-
+	
 	didInsertElement : function() {
+		document.title = "Fridge "+ this.get('content').get('name');
 		konami();
 		colorPickerManagement();
 
@@ -30,7 +32,7 @@ App.FridgeIndexView = Em.View.extend({
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {
-				App.Router.transitionTo('fridge.index',ui.item.value);
+				router.transitionTo('fridge.index',ui.item.value);
 			},
 			open: function (event, ui) {
 		        $('.ui-autocomplete').css('z-index', '99999');
