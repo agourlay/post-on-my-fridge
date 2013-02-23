@@ -1,12 +1,16 @@
 App.ChatController = Ember.ArrayController.extend({
-	chatSocket : null,
+	content: [],
 	
 	fridgeName : function(){
 		return App.Dao.get('fridgeId');
-	}.property(),	
+	}.property().cacheable(false),	
 	
-	init: function () {
-		this._super();
+	watchContent: function() {
+		console.log("ChatController content changed :" + JSON.stringify(this.get('content')));
+	}.observes('content'),
+	
+	initController: function () {
+		this.get('content').clear();
 		this.channelManagement();
 		this.retrievePreviousMessages();
 	},
@@ -23,15 +27,17 @@ App.ChatController = Ember.ArrayController.extend({
 		});
 	},
 
-	messageManagement: function(user, message,timestamp) {
+	messageManagement: function(user,message,timestamp) {
 		var chatModel = {};
 		chatModel.user = user;
 		chatModel.message = message;
 		chatModel.timestamp = timestamp;
-		this.pushObject(App.Message.createWithMixins(chatModel));
+		var messageModel = App.Message.createWithMixins(chatModel);
+		this.pushObject(messageModel);
 	},
 
 	channelManagement : function () {
+		console.log("request token for : "+this.get('fridgeName'));
 		var me = this;
 		$.ajax({
 			url: "api/channel/" + this.get('fridgeName'),
@@ -65,7 +71,7 @@ App.ChatController = Ember.ArrayController.extend({
 		$.getJSON("api/channel/" + this.get('fridgeName') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
-					me.messageManagement(message.user,message.message,message.timestamp);
+					me.messageManagement(message.user, message.message,message.timestamp);
 				});
 			}
 		});

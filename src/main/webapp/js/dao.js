@@ -5,6 +5,7 @@ App.Dao = Em.Object.create({
 
 	findFridgeByName : function(fridgeId) {
 		var fridgeRetrieved = null; 
+		this.set('fridgeId',fridgeId);
 		console.log("Dao requesting fridge :"+fridgeId);
 		$.ajax({
 	        async: false,   // forces synchronous call
@@ -18,12 +19,10 @@ App.Dao = Em.Object.create({
 				}
 	        }
     	});
-		this.set('fridgeId',fridgeId);
-		this.set('posts',fridgeRetrieved.get('posts'));
 		return fridgeRetrieved;
 	},
 
 	refresh : function() {
-		this.findFridgeByName(this.get('fridgeId'));
+		this.set('posts',this.findFridgeByName(this.get('fridgeId')).get('posts'));
 	}
 });

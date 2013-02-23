@@ -36,6 +36,7 @@ App.PostsController = Ember.ArrayController.extend({
 	deleteProcedure: function(fridgeContent) {
 		var me = this;
 		$.each(me.get('content'), function(indexPost, valuePost) {
+			console.log("Delete procedure : "+ JSON.stringify(valuePost))
 			var postId = valuePost.id;
 			if ( ! _.findWhere(fridgeContent, { id : postId})) {
 				me.removeObject(me.findProperty('id', postId));

@@ -10,7 +10,7 @@ App.FridgeView = Em.View.extend({
 	rssUrl: function() {
 		var fridgeName = this.get('content').get('name');
 		return "/fridge/" + fridgeName + "/rss";
-	}.property('content.name').cacheable(),
+	}.property('content.name'),
 
 	willInsertElement : function(){
 		$("#bootstrap-css").attr("disabled", "disabled");
