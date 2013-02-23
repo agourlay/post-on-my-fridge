@@ -14,7 +14,7 @@ import com.agourlay.pomf.model.FridgeMessage;
 import com.agourlay.pomf.service.MessageService;
 import com.agourlay.pomf.service.ClientService;
 
-@Path("/channel")
+@Path("api/channel")
 public class ChannelController {
 
 	@GET

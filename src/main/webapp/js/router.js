@@ -1,10 +1,15 @@
+// 'http://localhost:8888/#/fridge/demo
 App.Router.map(function() {
-    this.resource('index', {path: '/fridge'});
+    this.resource('index'); 
+    this.resource('fridges');
+    this.resource('fridge', { path:'/fridge/:fridge_name' });
 });
 
-App.IndexRoute = Ember.Route.extend({
-    renderTemplate: function(controller, model) {
-        this.render('fridge', {outlet: 'fridge'});
-        this.render('chat', {outlet: 'chat'});
-    }
+App.FridgeRoute = Ember.Route.extend({
+   model: function(params) {
+	var model = App.Dao.findFridgeByName(params.fridge_name);
+	// init chat controller
+	this.controllerFor('Chat').initController();
+    return model;
+  }
 });

@@ -1,7 +1,9 @@
 App.ChatView = Ember.CollectionView.extend({
 	tagName: 'div',
-	elementId: 'chatLog',
+	classNames: ['chatLog'],
 	itemViewClass: 'App.MessageView',
+	contentBinding: 'controller.content',
+	
 	pseudo: function() {
 		if ($("#pseudo").val() !== ""){
 			var inputName = $("#pseudo").val();
@@ -20,7 +22,6 @@ App.ChatView = Ember.CollectionView.extend({
 		
 	didInsertElement: function() {
 		var view = this;
-		view.set('content',view.get('controller').get('content'));
 		view.get('pseudo');
 		var handleReturnKey = function(e) {
 				if(e.charCode === 13 || e.keyCode === 13) {

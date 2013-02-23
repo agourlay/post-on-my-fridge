@@ -70,6 +70,7 @@
  	width: 40px;
  	background-size: 100%;
  	z-index: 1000;
+ 	padding-right: 4px;
  	float: right; }
 
  .newPost .datePicker{
@@ -90,8 +91,15 @@
 	margin-left : 20px;
 	padding-top : 10px;	}
 
-.newPost input, .newPost textarea{
+.newPost input{
 	background-color: transparent;
 	border: dotted;
     resize: none;
+	border-width: thin;	}
+
+.newPost textarea{
+	background-color: transparent;
+	border: dotted;
+    resize: none;
+    width: 200px;
 	border-width: thin;	}

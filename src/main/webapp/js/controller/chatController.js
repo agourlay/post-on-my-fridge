@@ -1,37 +1,46 @@
 App.ChatController = Ember.ArrayController.extend({
 	content: [],
-	chatSocket : null,
-
-	init: function () {
-		this._super();
+	
+	fridgeName : function(){
+		return App.Dao.get('fridgeId');
+	}.property().cacheable(false),	
+	
+	watchContent: function() {
+		console.log("ChatController content changed :" + JSON.stringify(this.get('content')));
+	}.observes('content'),
+	
+	initController: function () {
+		this.get('content').clear();
 		this.channelManagement();
 		this.retrievePreviousMessages();
 	},
 
 	sendChatMessage: function(message, pseudo) {
 		var payload = {};
-		payload.fridgeId = App.get('fridgeId');
+		payload.fridgeId = this.get('fridgeName');
 		payload.message = message;
 		payload.user = pseudo;
 		$.ajax({
 			type: "POST",
-			url: "/channel/" + App.get('fridgeId') + "/message",
+			url: "api/channel/" + this.get('fridgeName') + "/message",
 			data: payload
 		});
 	},
 
-	messageManagement: function(user, message,timestamp) {
+	messageManagement: function(user,message,timestamp) {
 		var chatModel = {};
 		chatModel.user = user;
 		chatModel.message = message;
 		chatModel.timestamp = timestamp;
-		this.pushObject(App.Message.createWithMixins(chatModel));
+		var messageModel = App.Message.createWithMixins(chatModel);
+		this.pushObject(messageModel);
 	},
 
 	channelManagement : function () {
+		console.log("request token for : "+this.get('fridgeName'));
 		var me = this;
 		$.ajax({
-			url: "/channel/" + App.get('fridgeId'),
+			url: "api/channel/" + this.get('fridgeName'),
 			type: "GET",
 			dataType: 'text',
 			success: function(tokenChannel) {
@@ -43,7 +52,7 @@ App.ChatController = Ember.ArrayController.extend({
 					socket.onmessage = function(m) {
 						var data = $.parseJSON(m.data);
 						if (data.command === "#FRIDGE-UPATE#") {
-							App.getPosts();
+							App.Dao.refresh();
 						}
 						if (data.command === "#FRIDGE-CHAT#") {
 							me.messageManagement(data.user, data.message,data.timestamp);
@@ -59,10 +68,10 @@ App.ChatController = Ember.ArrayController.extend({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("/channel/" + App.get('fridgeId') + "/message", function(messages) {
+		$.getJSON("api/channel/" + this.get('fridgeName') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
-					me.messageManagement(message.user,message.message,message.timestamp);
+					me.messageManagement(message.user, message.message,message.timestamp);
 				});
 			}
 		});
