@@ -9,7 +9,7 @@ App.FridgeView = Em.View.extend({
 	
 	rssUrl: function() {
 		var fridgeName = this.get('content').get('name');
-		return "/fridge/" + fridgeName + "/rss";
+		return "/api/fridge/" + fridgeName + "/rss";
 	}.property('content.name'),
 
 	willInsertElement : function(){

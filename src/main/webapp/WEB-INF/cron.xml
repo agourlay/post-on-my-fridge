@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/admin/clean</url>
+    <url>/api/admin/clean</url>
     <description>Delete post with expired due date</description>
     <schedule>every day 00:00</schedule>
   </cron>
   
   <cron>
-    <url>/admin/generate-stat</url>
+    <url>/api/admin/generate-stat</url>
     <description>Generate daily statistics</description>
     <schedule>every day 00:10</schedule>
   </cron>
