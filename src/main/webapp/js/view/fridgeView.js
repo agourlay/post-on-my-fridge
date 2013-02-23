@@ -28,7 +28,7 @@ App.FridgeView = Em.View.extend({
 		});
 
 		$("#search").autocomplete({
-			source : "/fridge/noid/search",
+			source : "api/fridge/noid/search",
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {

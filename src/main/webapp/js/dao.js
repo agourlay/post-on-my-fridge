@@ -9,7 +9,7 @@ App.Dao = Em.Object.create({
 
 		$.ajax({
 	        async: false,   // forces synchronous call
-	        url: "/fridge/" + fridgeId,
+	        url: "api/fridge/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
 	            console.log("Dao received for id:"+fridgeId+" - "+ fridge);

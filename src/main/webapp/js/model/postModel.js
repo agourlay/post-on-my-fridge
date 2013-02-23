@@ -9,7 +9,7 @@ App.Post = Em.Object.extend({
 	dueDate: null,
 	fridgeId: null,
 	resourceUrl: function(){
-		return "/fridge/"+ this.get('fridgeId') + "/post/";
+		return "api/fridge/"+ this.get('fridgeId') + "/post/";
 	}.property(),
 
 	fullPosition: function(key, value) {

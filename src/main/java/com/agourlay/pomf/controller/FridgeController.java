@@ -23,7 +23,7 @@ import com.agourlay.pomf.service.ClientService;
 import com.agourlay.pomf.service.RssService;
 import com.agourlay.pomf.util.Constantes;
 
-@Path("/fridge/{fridgeId}")
+@Path("api/fridge/{fridgeId}")
 public class FridgeController {
 
 	@GET

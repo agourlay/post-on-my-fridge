@@ -10,7 +10,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>XSSFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
 
 	<filter>
@@ -19,7 +19,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>ObjectifyFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
 	
 	<filter>
@@ -32,10 +32,6 @@
 		<init-param>
 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
 			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
-			<param-value>/WEB-INF/jsp</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
@@ -51,8 +47,12 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>jersey</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
+
+	<welcome-file-list>
+    	<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 
 	<servlet>
 		<servlet-name>ConfigServlet</servlet-name>
