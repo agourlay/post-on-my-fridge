@@ -1,15 +1,9 @@
 function newPostValidation(newPostData) {
-	if (newPostData.dueDate !== "") {
-		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';
-	}
+	if (newPostData.dueDate !== "") {newPostData.dueDate = newPostData.dueDate + 'T00:00:00';}
 
-	if (newPostData.author === "") {
-		newPostData.author = "Anonymous";
-	}
+	if (newPostData.author === "") {newPostData.author = "Anonymous";}
 
-	if (newPostData.content === "") {
-		newPostData.content = "What's up";
-	}
+	if (newPostData.content === "") {newPostData.content = "What's up";	}
 }
 
 function colorPickerManagement() {
@@ -91,16 +85,6 @@ function filterData(data) {
 	data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g, '');
 	data = data.replace(/<script.*\/>/, '');
 	return data;
-}
-
-//workaround before using ember state management
-function getFridgeUrl(){
-	var tmp = location.pathname.split('/')[2];
-	if (tmp.indexOf("#") !== -1){
-		return tmp.split('#')[0];
-	}else{
-		return tmp;
-	}
 }
 
 function konami() {

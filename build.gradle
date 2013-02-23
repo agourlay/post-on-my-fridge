@@ -28,12 +28,17 @@ task combineFridgeJs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
 		"${projectDir}/src/main/webapp/js/util/jquery-ui-ember.js",
 		"${projectDir}/src/main/webapp/js/model/postModel.js",
 		"${projectDir}/src/main/webapp/js/view/postView.js",
-		"${projectDir}/src/main/webapp/js/controller/fridgeController.js",
-		"${projectDir}/src/main/webapp/js/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/controller/postsController.js",
+		"${projectDir}/src/main/webapp/js/view/postsView.js",
 		"${projectDir}/src/main/webapp/js/model/messageModel.js",
 		"${projectDir}/src/main/webapp/js/view/messageView.js",
 		"${projectDir}/src/main/webapp/js/view/chatView.js",
 		"${projectDir}/src/main/webapp/js/controller/chatController.js",
+		"${projectDir}/src/main/webapp/js/model/fridgeModel.js",
+		"${projectDir}/src/main/webapp/js/controller/fridgeController.js",
+		"${projectDir}/src/main/webapp/js/view/fridgeView.js",
+		"${projectDir}/src/main/webapp/js/view/indexView.js",
+		"${projectDir}/src/main/webapp/js/dao.js",
 		"${projectDir}/src/main/webapp/js/router.js"
 	]
 	dest = file("${buildDir}/exploded-war/js/fridge.js")

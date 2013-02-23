@@ -16,7 +16,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
-@Path("/admin")
+@Path("api/admin")
 public class AdminController {
 
 	@GET
