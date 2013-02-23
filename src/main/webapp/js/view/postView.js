@@ -5,7 +5,7 @@ App.PostView = Em.View.extend(App.Draggable, {
     templateName: 'post-template',
 
 	relativeDate: function() {
-		var date = this.get('date');
+		var date = this.get('content').get('date');
 		return moment(date).fromNow();
 	}.property('content.date').cacheable(),
 
@@ -47,14 +47,6 @@ App.PostView = Em.View.extend(App.Draggable, {
 		});
 	},
 
-	willDestroyElement: function() {
-		this.$().effect("bounce", {
-			times: 3
-		}, 300).effect("clip", {
-			times: 1
-		}, 300);
-		infoMessage("Post from " + this.get('content').get('author') + " deleted");
-	},
 
 	updatePhysicalPosition: function() {
 		var left = this.get('content').get('positionX'),
@@ -81,6 +73,9 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var view = this;
 		view.$().find(" .ui-icon-trash").click(function() {
 			if (confirm("Are you sure you want to delete post?")) {
+				view.$().effect("bounce", {	times: 3}, 300)
+						.effect("clip", { times: 1}, 300);
+				infoMessage("Post from " + view.get('content').get('author') + " deleted");
 				view.get('controller').deletePost(view.get('content').get('id'));
 			}
 		});

@@ -6,13 +6,11 @@ App.Dao = Em.Object.create({
 	findFridgeByName : function(fridgeId) {
 		var fridgeRetrieved = null; 
 		console.log("Dao requesting fridge :"+fridgeId);
-
 		$.ajax({
 	        async: false,   // forces synchronous call
 	        url: "api/fridge/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
-	            console.log("Dao received for id:"+fridgeId+" - "+ fridge);
 				if (fridge !== null && fridge !== undefined) {
 					console.log("Dao received proper fridge for id :" + fridgeId + " - " + JSON.stringify(fridge));
 					fridge.posts = _.map(fridge.posts, function(post){ return App.Post.createWithMixins(post); });

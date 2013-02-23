@@ -7,7 +7,6 @@ App.Router.map(function() {
 
 App.FridgeRoute = Ember.Route.extend({
    model: function(params) {
-   	console.log("Through fridgeRoute with :"+params.fridge_name)
     return App.Dao.findFridgeByName(params.fridge_name);
   }
 });

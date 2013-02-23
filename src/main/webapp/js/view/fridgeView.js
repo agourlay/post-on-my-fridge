@@ -32,7 +32,7 @@ App.FridgeView = Em.View.extend({
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {
-				router.transitionTo('fridge.index',ui.item.value);
+				window.location = "/#/fridge/" + ui.item.value;
 			},
 			open: function (event, ui) {
 		        $('.ui-autocomplete').css('z-index', '99999');
