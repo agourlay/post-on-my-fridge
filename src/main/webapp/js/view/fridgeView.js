@@ -1,6 +1,6 @@
 App.FridgeView = Em.View.extend({
 	tagName : 'div',
-	elementId : 'global',
+	classNames: ['global'],
 	contentBinding: 'controller.content',
 
 	watchContent: function() {
