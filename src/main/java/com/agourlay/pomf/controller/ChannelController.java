@@ -11,8 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.agourlay.pomf.model.FridgeMessage;
-import com.agourlay.pomf.service.MessageService;
 import com.agourlay.pomf.service.ClientService;
+import com.agourlay.pomf.service.MessageService;
 
 @Path("api/channel")
 public class ChannelController {
@@ -26,15 +26,15 @@ public class ChannelController {
 	}
 
 	@POST
-	@Path("/disconnected")
+	@Path("/disconnected/")
 	public void disconnectChannel(@FormParam("from") final String channelId) {
 
 	}
 
 	@POST
-	@Path("/connected")
+	@Path("/connected/")
 	public void connectedChannel() {
-
+	
 	}
 
 	@POST
