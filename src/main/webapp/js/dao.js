@@ -14,7 +14,7 @@ App.Dao = Em.Object.create({
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
 					console.log("Dao received proper fridge for id :" + fridgeId + " - " + JSON.stringify(fridge));
-					fridge.posts = _.map(fridge.posts, function(post){ return App.Post.createWithMixins(post); });
+					fridge.posts = fridge.posts.map(function(post){ return App.Post.createWithMixins(post); });
 					fridgeRetrieved = App.Fridge.createWithMixins(fridge);
 				}
 	        }

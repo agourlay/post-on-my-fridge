@@ -33,27 +33,29 @@ App.PostsController = Ember.ArrayController.extend({
 		}
 	},
 
-	deleteProcedure: function(fridgeContent) {
+	deleteProcedure: function(posts) {
 		var me = this;
-		$.each(me.get('content'), function(indexPost, valuePost) {
-			console.log("Delete procedure : "+ JSON.stringify(valuePost))
+			postsTodelete = [],
+		me.forEach(function(valuePost) {
 			var postId = valuePost.id;
-			if ( ! _.findWhere(fridgeContent, { id : postId})) {
-				me.removeObject(me.findProperty('id', postId));
+			if (postId !== undefined && posts.findProperty('id', postId) === undefined) {
+				postsTodelete.pushObject(me.findProperty('id', postId));
 			}
+		});
+		postsTodelete.forEach(function(postToDelete) {
+			infoMessage("Post from " + postToDelete.get('author') + " deleted");
+			me.removeObject(postToDelete);
 		});
 	},
 
 	mergePost: function() {
 		var me = this,
 		    posts = App.Dao.get('posts');
-		if( posts !== null) {
+		if(posts !== null) {
 			// remove post present in the fridge but not in the db
 			me.deleteProcedure(posts);
 			// update or create the posts
-			$.each(posts, function(index, post) {
-				me.createOrUpdate(post);
-		    });
+			posts.forEach(function(post) { me.createOrUpdate(post); });
 		}
 	}.observes('App.Dao.posts')
 });

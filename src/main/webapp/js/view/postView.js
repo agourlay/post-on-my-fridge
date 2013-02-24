@@ -85,7 +85,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var content = jQuery.trim(this.get('content').get('content')),
 		    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
             pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
-		    firstWordUrl = _.find(content.split(' '), function(word) { return isRegExp(urlRegexp, word); });
+		    firstWordUrl = content.split(' ').find(function(word) { return isRegExp(urlRegexp, word); });
 		if (firstWordUrl === undefined) {
 			return content;
 		}else {
