@@ -75,8 +75,9 @@ header {
 	
 #chatInput textarea{
 	resize: none;
+	margin-bottom: 1px;
 	width: 97%;
-	height: 17%; }		
+	height: 19%; }		
 	
 .chatLog {
 	position:relative;
@@ -92,6 +93,11 @@ header {
 .chatMessage{
 	text-align: justify;
 	word-wrap : break-word;
+}
+
+#pseudo {
+	width: 180px;
+	margin-bottom: 1px;}
 }
 
 .barrel_roll {

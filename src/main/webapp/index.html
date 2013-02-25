@@ -102,7 +102,7 @@
 					<div class="span6 well">
 						<h2>Easy <i class="icon-heart"></i></h2>
 						<p>
-							To access or create a fridge use the search box or type directly the fridge name in the url /fridge/ <em>fridge name</em>.
+							To access or create a fridge use the search box or type directly the fridge name in the url /fridge/<em>fridge name</em>.
 						</p>
 					</div>
 				</div>
@@ -168,9 +168,9 @@
                 </div>
                 <div id="chatPanel">
                     <form id="chatInput" accept-charset="utf-8">
-                        <input type="text" placeholder="Anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
+                        <input type="text" placeholder="Chatting as anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
                         {{render "chat"}}
-                        <textarea id="message" rows="0" cols="0" maxlength="200"></textarea>
+                        <textarea id="message" rows="0" cols="0" maxlength="200" placeholder="Enter message..."></textarea>
                     </form>
                 </div>
             </aside>
