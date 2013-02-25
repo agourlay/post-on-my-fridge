@@ -12,10 +12,6 @@ App.FridgeView = Em.View.extend({
 		return "/api/fridge/" + fridgeName + "/rss";
 	}.property('content.name'),
 
-	willInsertElement : function(){
-		$("#bootstrap-css").attr("disabled", "disabled");
-	},
-	
 	didInsertElement : function() {
 		document.title = "Fridge "+ this.get('content').get('name');
 		konami();

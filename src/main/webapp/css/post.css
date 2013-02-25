@@ -53,8 +53,8 @@
 .newPost {
 	position: relative;
 	box-shadow: 5px 5px 4px #aaa;
-	width:230px;
-	height:230px;
+	width:232px;
+	height:232px;
 	padding-top: 10px;
 	margin-bottom : 20px;
 	z-index: 99999;}
@@ -73,13 +73,6 @@
  	padding-right: 4px;
  	float: right; }
 
- .newPost .datePicker{
-	height: 20px;
- 	width: 40px;
- 	z-index: 1000;
- 	float: left;
- 	padding: 5px; }
-
 .newPost .content{
 	position: relative;
 	font-weight: bold;
@@ -88,18 +81,20 @@
 	
 .newPost .author{
 	position: relative;
-	margin-left : 20px;
-	padding-top : 10px;	}
+	margin-left : 13px;}
+
+.newPost input[type="date"]{
+	height: 18px;
+	width: 130px;}
 
 .newPost input{
-	background-color: transparent;
-	border: dotted;
-    resize: none;
-	border-width: thin;	}
+	height: 18px;
+	width: 190px;}
 
 .newPost textarea{
 	background-color: transparent;
 	border: dotted;
     resize: none;
-    width: 200px;
+    width: 190px;
+    margin-bottom: 7px;
 	border-width: thin;	}
