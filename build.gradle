@@ -84,7 +84,7 @@ gae {
 dependencies {
 	gaeSdk  'com.google.appengine:appengine-java-sdk:1.7.5'
 	compile 'com.googlecode.objectify:objectify:4.0b1'
-	compile 'com.google.guava:guava:14.0-rc3'
+	compile 'com.google.guava:guava:14.0'
 	compile 'org.projectlombok:lombok:0.11.6'
 	compile 'com.sun.jersey:jersey-core:1.17'
 	compile 'com.sun.jersey:jersey-server:1.17'
