@@ -14,7 +14,7 @@ case class Post(author: String,
     id: Option[Long] = None
 ){
   require(!author.isEmpty, "author must not be empty")
-  require(!content.isEmpty, "author must not be empty")
+  require(!content.isEmpty, "content must not be empty")
   require(!content.contains("/>"), "content must not contain /> ")
   require(!fridgeId.isEmpty, "fridgeId must not be empty")
 }
