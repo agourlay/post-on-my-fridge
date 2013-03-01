@@ -67,6 +67,13 @@ trait PomfRouteService extends HttpService { this: DBConfig =>
           delete {
             complete(m.deletePost(postId))
           }
-      }
+      }~
+      pathPrefix("rss") {
+         path("fridge" / Rest) { fridgeName =>
+           get {
+            complete(m.getFridgeRss(fridgeName))
+          }           
+        }
+     }
   }   
 }
