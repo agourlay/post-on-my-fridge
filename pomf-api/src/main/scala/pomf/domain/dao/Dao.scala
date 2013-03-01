@@ -33,16 +33,17 @@ import dal.profile.simple._
   }
   
    def addPost(post: Post): Post = {
+    Fridges.findByName(post.fridgeId).getOrElse(addFridge(Fridge(name = post.fridgeId))) 
     val result = Posts.insert(post)
     println("Inserted post: " + result)
     result
   }
   
-  def getFridgeRest(fridgeName: String):Option[FridgeRest] = {
+  def getFridgeRest(fridgeName: String):FridgeRest = {
     val fridgeOpt:Option[Fridge] = Fridges.findByName(fridgeName)
     fridgeOpt match {
-      case Some(fridge) => Some(FridgeRest(fridge.name, fridge.description ,fridge.id, Posts.findPostByFridge(fridgeName)))
-      case _ => None
+      case Some(fridge) => FridgeRest(fridge.name, fridge.description ,fridge.id, Posts.findPostByFridge(fridgeName))
+      case _ => FridgeRest(name = fridgeName, description = "" ,posts = List[Post](), id = None)
     }							 
   }
   

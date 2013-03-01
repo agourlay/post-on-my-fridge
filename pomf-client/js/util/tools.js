@@ -1,5 +1,11 @@
 function newPostValidation(newPostData) {
-	if (newPostData.dueDate !== "") {newPostData.dueDate = newPostData.dueDate + 'T00:00:00';}
+	if (newPostData.dueDate !== "") {
+		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';
+	}else{
+		delete newPostData.dueDate;
+	}
+
+	newPostData.date = moment().format("YYYY-MM-DDTHH:mm:ss");
 
 	if (newPostData.author === "") {newPostData.author = "Anonymous";}
 
