@@ -5,6 +5,7 @@ import pomf.domain.config.DAL
 import pomf.domain.model.Fridge
 import pomf.domain.model.FridgeRest
 import pomf.domain.model.Post
+import pomf.util.RssSupport
 
 class Dao(name: String, dal: DAL, db: Database) {
   // We only need the DB/session imports outside the DAL
@@ -49,29 +50,7 @@ import dal.profile.simple._
   
   def getFridgeRss(fridgeName: String): scala.xml.Elem = {
     val fridge = getFridgeRest(fridgeName)
-    val myRss = <rss version="2.0">
-  <channel>
-  <title>{fridge.name}</title>
-  <description>{fridge.description}</description>
-  <link>http://www.example.com/rss</link>
-  <lastBuildDate>Mon, 05 Oct 2012 11:12:55</lastBuildDate>
-  <pubDate>Tue, 06 Oct 2012 09:00:00 +0100</pubDate>
-  {
-   for (post <- fridge.posts) yield
-   {
-     <item>
-     <title>{post.fridgeId}</title>
-     <description>{post.content}</description>
-     <link>http://www.example.com/item</link>
-     <guid isPermaLink="false">123</guid>
-     <author>{post.author}</author>
-     <pubDate>{post.date}</pubDate>
-     </item>
-	}
-  }
-  </channel>
-  </rss>
-   myRss					 
+    RssSupport.generateFridgeRss(fridge)
   }
   
   def getPost(id :Long):Option[Post] = Posts.getPost(id)

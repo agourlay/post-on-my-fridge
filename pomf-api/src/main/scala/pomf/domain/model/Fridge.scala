@@ -27,13 +27,9 @@ trait FridgeComponent { this: Profile =>
     // Query Execution
     def findAllFridge(implicit session: Session): List[Fridge] = Query(Fridges).sortBy(_.id).list()
 
-    def insert(fridge: Fridge)(implicit session: Session): Fridge = {
-      autoInc.insert(fridge.name, fridge.description)
-    }
+    def insert(fridge: Fridge)(implicit session: Session): Fridge = autoInc.insert(fridge.name, fridge.description)
 
-    def update(fridge: Fridge)(implicit db: Database) = {
-      implicit session: Session => Fridges.where(_.id === fridge.id).update(fridge)
-    }
+    def update(fridge: Fridge)(implicit session: Session) = Fridges.where(_.id === fridge.id).update(fridge)
 
     def findByName(fridgeName: String)(implicit session: Session):Option[Fridge] = Query(Fridges).filter(_.name === fridgeName).firstOption    
     

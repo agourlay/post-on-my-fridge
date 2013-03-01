@@ -47,9 +47,8 @@ trait PostComponent { this: Profile =>
       
     // Query Execution
     def findAllPost(implicit session: Session): List[Post] = Query(Posts).sortBy(_.id).list()
-    def insert(x: Post)(implicit session: Session): Post = {
-      autoInc.insert(x.author, x.content, x.color, x.date, x.positionX, x.positionY, x.dueDate, x.fridgeId)
-    }
+    
+    def insert(x: Post)(implicit session: Session): Post = autoInc.insert(x.author, x.content, x.color, x.date, x.positionX, x.positionY, x.dueDate, x.fridgeId)
     
     def findPostByFridge(fridgeName : String )(implicit session: Session) = Query(Posts).filter(_.fridgeId === fridgeName).list 
     
