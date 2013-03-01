@@ -74,6 +74,15 @@ trait PomfRouteService extends HttpService { this: DBConfig =>
             complete(m.getFridgeRss(fridgeName))
           }           
         }
-     }
+     }~
+     pathPrefix("search") {
+         path("fridge"){
+           parameters("term") { term =>
+             get {
+              complete(m.searchByNameLike(term))
+             }           
+           }
+         }
+     }   
   }   
 }

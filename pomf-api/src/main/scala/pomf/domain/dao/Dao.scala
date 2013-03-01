@@ -76,6 +76,8 @@ import dal.profile.simple._
   
   def getPost(id :Long):Option[Post] = Posts.getPost(id)
   
+  def searchByNameLike(term:String):List[String] = Fridges.searchByNameLike(term)
+  
   def deletePost(id :Long) = Posts.deletePost(id)
   
   def updatePost(post :Post):Option[Post] = Posts.updatePost(post)

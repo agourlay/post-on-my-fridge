@@ -36,6 +36,12 @@ trait FridgeComponent { this: Profile =>
     }
 
     def findByName(fridgeName: String)(implicit session: Session):Option[Fridge] = Query(Fridges).filter(_.name === fridgeName).firstOption    
-
+    
+    def searchByNameLike(term:String)(implicit session: Session):List[String] = {
+      val query = for {
+    	  fridge <- Fridges if fridge.name like "%"+term+"%"
+      } yield (fridge.name)
+      query.list
+    }
   }
 }
