@@ -15,7 +15,7 @@ object Application extends Controller {
     val asJson: Enumeratee[Message, JsValue] = Enumeratee.map[Message] {
     message => toJson ( Map (
       "command" -> toJson(message.command),
-      "payload" -> toJson(message.command)
+      "payload" -> toJson(message.payload)
     ) )
   }
 
