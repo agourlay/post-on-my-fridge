@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
   ,"io.spray"           %   "spray-testkit"     % "1.1-M7" 
   ,"io.spray"           %   "spray-caching"     % "1.1-M7" 
   ,"io.spray"           %%  "spray-json"        % "1.2.3"  
-  ,"com.typesafe.akka"  %%  "akka-actor"        % "2.1.0" 
+  ,"com.typesafe.akka"  %%  "akka-actor"        % "2.1.1" 
   ,"com.github.sstone"  %%  "amqp-client"       % "1.1" 
   ,"org.specs2"         %%  "specs2"            % "1.13"    % "test"
   ,"com.typesafe.slick" %%  "slick"             % "1.0.0"
