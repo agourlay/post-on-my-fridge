@@ -6,7 +6,6 @@ import spray.io._
 import akka.actor.actorRef2Scala
 import pomf.service.rest.PomfHttpActor
 import pomf.service.notification.PomfNotificationActor
-import pomf.service.caching.PomfCachingActor
 
 object Boot extends App {
  
@@ -14,9 +13,6 @@ object Boot extends App {
   
   // notification actor
   val notificationService = system.actorOf(Props[PomfNotificationActor], "pomf-messaging-service")
-
-  // caching actor
-  val cachingService = system.actorOf(Props[PomfCachingActor], "pomf-caching-service")
   
   private val ioBridge = IOExtension(system).ioBridge()
     

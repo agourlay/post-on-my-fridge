@@ -1,6 +1,5 @@
 package pomf.service
 
-import pomf.service.caching.PomfCachingActor
 import pomf.service.notification.PomfNotificationActor
 import pomf.domain.model.Fridge
 import pomf.domain.model.Post
@@ -8,34 +7,35 @@ import pomf.domain.config.ProductionDB
 import pomf.domain.config.DBConfig
 import pomf.domain.model.FridgeRest
 import pomf.domain.config.TestDB
+import pomf.service.caching.PomfCachingService
 
-
-trait PomfProdServiceLayer extends PomfActionService with ProductionDB {
-
-}
-
-trait PomfTestServiceLayer extends PomfActionService with TestDB {
+trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
 
 }
 
-trait PomfActionService { this: DBConfig =>
+trait PomfTestServiceLayer extends PomfActionService with PomfCachingService with TestDB {
 
-	def getAllFridge(): List[Fridge] = m.getAllFridge 
+}
+
+trait PomfActionService extends { 
+    this: DBConfig =>
+
+	def getAllFridge(): List[Fridge] = dao.getAllFridge
 	
-	def addFridge(fridge: Fridge): Fridge = m.addFridge(fridge)
+	def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
 	  
-	def addPost(post: Post): Post = m.addPost(post)
+	def addPost(post: Post): Post = dao.addPost(post)
 	  
-	def getFridgeRest(fridgeName: String):FridgeRest = m.getFridgeRest(fridgeName)
+	def getFridgeRest(fridgeName: String):FridgeRest = dao.getFridgeRest(fridgeName)
 	  
-	def getFridgeRss(fridgeName: String): scala.xml.Elem = m.getFridgeRss(fridgeName)
+	def getFridgeRss(fridgeName: String): scala.xml.Elem = dao.getFridgeRss(fridgeName)
 	  
-	def getPost(id :Long):Option[Post] = m.getPost(id)
+	def getPost(id :Long):Option[Post] = dao.getPost(id)
 	  
-	def searchByNameLike(term:String):List[String] = m.searchByNameLike(term)
+	def searchByNameLike(term:String):List[String] = dao.searchByNameLike(term)
 	  
-	def deletePost(id :Long) = m.deletePost(id)
+	def deletePost(id :Long) = dao.deletePost(id)
 	  
-	def updatePost(post :Post):Option[Post] = m.updatePost(post)
+	def updatePost(post :Post):Option[Post] = dao.updatePost(post)
   
 }
