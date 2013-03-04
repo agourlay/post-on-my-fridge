@@ -17,7 +17,7 @@ import pomf.domain.model.Fridge
 import pomf.domain.config.ProductionDB
 import pomf.domain.config.DBConfig
 
-class PomfServiceActor extends Actor with PomfRouteService with ProductionDB {
+class PomfHttpActor extends Actor with PomfRouteService with ProductionDB {
 
   def actorRefFactory = context
 

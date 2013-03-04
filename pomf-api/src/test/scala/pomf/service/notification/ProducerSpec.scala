@@ -1,11 +1,11 @@
-package pomf.service.messaging
+package pomf.service.notification
 
 import org.junit.runner.RunWith
 import org.specs2.Specification
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ProducerSpec extends Specification with PomfMessagingService {
+class ProducerSpec extends Specification with PomfNotificationService {
   def is =
     "Producer should:" ^
       p ^
