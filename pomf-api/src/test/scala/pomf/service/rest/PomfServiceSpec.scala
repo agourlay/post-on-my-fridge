@@ -14,9 +14,10 @@ import java.text.SimpleDateFormat
 import pomf.domain.config.TestDB
 import pomf.domain.model._
 import JsonImplicits._
+import pomf.service.PomfTestServiceLayer
 
 @RunWith(classOf[JUnitRunner]) // Only required if testing from within Eclipse
-class PomfServiceSpec extends Specification with Specs2RouteTest with PomfRouteService with TestDB {
+class PomfServiceSpec extends Specification with Specs2RouteTest with PomfRouteService with PomfTestServiceLayer {
   def actorRefFactory = system
 
   def is = {

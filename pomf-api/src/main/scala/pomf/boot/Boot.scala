@@ -12,11 +12,11 @@ object Boot extends App {
  
   implicit val system = ActorSystem("pomf")
   
-  // messaging actor
-  val messagingService = system.actorOf(Props[PomfNotificationActor], "pomf-messaging-service")
+  // notification actor
+  val notificationService = system.actorOf(Props[PomfNotificationActor], "pomf-messaging-service")
 
   // caching actor
-  val cachningService = system.actorOf(Props[PomfCachingActor], "pomf-caching-service")
+  val cachingService = system.actorOf(Props[PomfCachingActor], "pomf-caching-service")
   
   private val ioBridge = IOExtension(system).ioBridge()
     

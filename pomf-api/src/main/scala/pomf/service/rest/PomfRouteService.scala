@@ -16,8 +16,10 @@ import pomf.domain.model.FridgeRest
 import pomf.domain.model.Fridge
 import pomf.domain.config.ProductionDB
 import pomf.domain.config.DBConfig
+import pomf.service.PomfProdServiceLayer
+import pomf.service.PomfActionService
 
-class PomfHttpActor extends Actor with PomfRouteService with ProductionDB {
+class PomfHttpActor extends Actor with PomfRouteService with PomfProdServiceLayer {
 
   def actorRefFactory = context
 
@@ -31,47 +33,47 @@ object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
   implicit val impFridgeRest = jsonFormat4(FridgeRest)
 }
 
-trait PomfRouteService extends HttpService { this: DBConfig =>
+trait PomfRouteService extends HttpService { this: PomfActionService =>
   import JsonImplicits._
 
   val pomfRoute =
     pathPrefix("api") {
      path("fridge" / Rest) { fridgeName =>
         get {
-          complete(m.getFridgeRest(fridgeName))
+          complete(getFridgeRest(fridgeName))
         }           
       } ~
       path("fridge"){
         post {
             entity(as[Fridge]) { fridge =>
-              complete(m.addFridge(fridge))
+              complete(addFridge(fridge))
             }
           }
       } ~ 
       path("post") {
         post {
           entity(as[Post]) { post =>
-            complete(m.addPost(post))
+            complete(addPost(post))
           }
         } ~
           put {
             entity(as[Post]) { post =>
-              complete(m.updatePost(post))
+              complete(updatePost(post))
             }
           }
       } ~
       path("post" / LongNumber) { postId =>
         get {
-          complete(m.getPost(postId))
+          complete(getPost(postId))
         } ~
           delete {
-            complete(m.deletePost(postId))
+            complete(deletePost(postId))
           }
       }~
       pathPrefix("rss") {
          path("fridge" / Rest) { fridgeName =>
            get {
-            complete(m.getFridgeRss(fridgeName))
+            complete(getFridgeRss(fridgeName))
           }           
         }
      }~
@@ -79,7 +81,7 @@ trait PomfRouteService extends HttpService { this: DBConfig =>
          path("fridge"){
            parameters("term") { term =>
              get {
-              complete(m.searchByNameLike(term))
+              complete(searchByNameLike(term))
              }           
            }
          }

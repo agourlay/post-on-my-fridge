@@ -10,7 +10,7 @@ import com.github.sstone.amqp.Amqp._
 import com.github.sstone.amqp.ConnectionOwner
 import com.github.sstone.amqp.ChannelOwner
 
-class PomfNotificationActor extends Actor with PomfNotificationService {
+class PomfNotificationActor extends Actor{
 
   implicit val actorSystem = context.system
 
@@ -31,9 +31,5 @@ class PomfNotificationActor extends Actor with PomfNotificationService {
       producer ! Publish("amq.direct", "fridge_key", "test publish!".getBytes)
     case _ => println("received unknown message")
   }
-
-}
-
-trait PomfNotificationService {
 
 }

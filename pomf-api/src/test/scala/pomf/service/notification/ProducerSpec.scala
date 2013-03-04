@@ -5,7 +5,7 @@ import org.specs2.Specification
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class ProducerSpec extends Specification with PomfNotificationService {
+class ProducerSpec extends Specification {
   def is =
     "Producer should:" ^
       p ^
