@@ -40,40 +40,54 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
     pathPrefix("api") {
      path("fridge" / Rest) { fridgeName =>
         get {
-          complete(getFridgeRest(fridgeName))
+          detachTo(singleRequestServiceActor) {
+            complete(getFridgeRest(fridgeName))
+          }      
         }           
       } ~
       path("fridge"){
         post {
-            entity(as[Fridge]) { fridge =>
-              complete(addFridge(fridge))
-            }
+          detachTo(singleRequestServiceActor) {
+                entity(as[Fridge]) { fridge =>
+                	complete(addFridge(fridge))
+                }
+          	}     
           }
       } ~ 
       path("post") {
         post {
-          entity(as[Post]) { post =>
-            complete(addPost(post))
-          }
+          detachTo(singleRequestServiceActor) {
+            entity(as[Post]) { post =>
+            	complete(addPost(post))
+            }
+          }        
         } ~
           put {
-            entity(as[Post]) { post =>
-              complete(updatePost(post))
-            }
+	        detachTo(singleRequestServiceActor) {
+	          entity(as[Post]) { post =>
+	            complete(updatePost(post))
+	          } 
+	        }          
           }
       } ~
       path("post" / LongNumber) { postId =>
         get {
-          complete(getPost(postId))
+          detachTo(singleRequestServiceActor) {
+            complete(getPost(postId))
+          }        
         } ~
           delete {
-            complete(deletePost(postId))
+            detachTo(singleRequestServiceActor) {
+              complete(deletePost(postId)) 
+            }
           }
       }~
       pathPrefix("rss") {
          path("fridge" / Rest) { fridgeName =>
            get {
-            complete(getFridgeRss(fridgeName))
+             detachTo(singleRequestServiceActor) {
+               complete(getFridgeRss(fridgeName)) 
+             }
           }           
         }
      }~
@@ -81,7 +95,9 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
          path("fridge"){
            parameters("term") { term =>
              get {
-              complete(searchByNameLike(term))
+               detachTo(singleRequestServiceActor) {
+                  complete(searchByNameLike(term)) 
+               }
              }           
            }
          }
