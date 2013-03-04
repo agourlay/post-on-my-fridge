@@ -16,20 +16,34 @@ class PomfNotificationActor extends Actor{
 
   val connFactory = new ConnectionFactory()
       connFactory.setHost("localhost")
+      
   val conn = actorSystem.actorOf(Props(new ConnectionOwner(connFactory)), name = "conn")
-  val queueParams = QueueParameters("fridge.demo", passive = false, durable = false, exclusive = false, autodelete = true)
   
   val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
-      producer ! DeclareQueue(queueParams)
-      producer ! QueueBind("fridge_queue", "amq.direct", "fridge_key")
   
   Amqp.waitForConnection(actorSystem, producer).await()
 
   def receive = {
-    case "test" =>
-      println("received test")
-      producer ! Publish("amq.direct", "fridge_key", "test publish!".getBytes)
+    case Notification(fridgeName,command,payload) =>  {
+      val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = true)
+          //idem potent
+          producer ! DeclareQueue(queueParams)
+          producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
+          producer ! Publish("amq.direct", "fridge."+fridgeName, "test publish!".getBytes)
+    }
     case _ => println("received unknown message")
   }
 
+}
+
+case class Notification(fridgeName : String, command :String, payload : Any ) {
+
+}
+
+object NotificationCmd extends Enumeration {
+	type NotificationCmd = Value
+	val Create = Value("Create")
+	val Delete = Value("Delete") 
+	val Update = Value("Update")
+	val Message = Value("message") 
 }
