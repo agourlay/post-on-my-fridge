@@ -10,9 +10,9 @@ import pomf.domain.config.TestDB
 import pomf.service.caching.PomfCachingService
 import akka.actor.Actor
 import akka.actor.Props
-import pomf.service.notification.PomfNotification
 import scala.compat.Platform
 import pomf.boot.Boot
+import pomf.domain.model.Notification
 
 trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
 
@@ -42,7 +42,7 @@ trait PomfActionService{
 	def deletePost(id :Long) = dao.deletePost(id)
 	  
 	def updatePost(post :Post):Option[Post] = {
-	  Boot.notificationService ! PomfNotification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
+	  Boot.notificationService ! Notification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
 	  dao.updatePost(post)
 	}
   

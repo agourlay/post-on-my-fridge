@@ -18,6 +18,7 @@ import pomf.domain.config.ProductionDB
 import pomf.domain.config.DBConfig
 import pomf.service.PomfProdServiceLayer
 import pomf.service.PomfActionService
+import pomf.domain.model.Notification
 
 class PomfHttpActor extends Actor with PomfRouteService with PomfProdServiceLayer {
 

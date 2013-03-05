@@ -11,7 +11,7 @@ App.ChatController = Ember.ArrayController.extend({
 	
 	initController: function () {
 		this.get('content').clear();
-		//this.channelManagement();
+		this.streamManagement();
 		//this.retrievePreviousMessages();
 	},
 
@@ -36,39 +36,34 @@ App.ChatController = Ember.ArrayController.extend({
 		this.pushObject(messageModel);
 	},
 
-	channelManagement : function () {
-		console.log("request token for : "+this.get('fridgeName'));
+	streamManagement : function () {
 		var me = this;
-		$.ajax({
-			url: "api/channel/" + this.get('fridgeName'),
-			type: "GET",
-			dataType: 'text',
-			success: function(tokenChannel) {
-				if (tokenChannel !== undefined) {
-					var channel = new goog.appengine.Channel(tokenChannel),
-					    socket = channel.open();
-					socket.onopen = function() {};
-					socket.onclose = function() {};
-					socket.onmessage = function(m) {
-						var data = $.parseJSON(m.data);
-						if (data.command === "#FRIDGE-UPATE#") {
-							App.Dao.refresh();
-						}
-						if (data.command === "#FRIDGE-CHAT#") {
-							me.messageManagement(data.user, data.message,data.timestamp);
-						}
-					};
-					socket.onerror = function(err) {
-						errorMessage("Channel error");
-					};
-				}
-			}	
-		});
+		var source = new EventSource("stream/" + this.get('fridgeName'));
+		source.addEventListener('message', function(e) {
+			console.log(e.data);
+			var data = $.parseJSON(e.data);
+			if (data.command === "refresh") {
+				App.Dao.refresh();
+			}
+			if (data.command === "message") {
+				me.messageManagement(data.user, data.message,data.timestamp);
+			}
+		}, false);
+
+		source.addEventListener('open', function(e) {
+			console.log("SSE opened!")
+		}, false);
+
+		source.addEventListener('error', function(e) {
+			if (e.readyState == EventSource.CLOSED) {
+			    errorMessage("Channel error");
+			}
+		}, false);
 	},
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("api/channel/" + this.get('fridgeName') , function(messages) {
+		$.getJSON("api/message/" + this.get('fridgeName') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
 					me.messageManagement(message.user, message.message,message.timestamp);
