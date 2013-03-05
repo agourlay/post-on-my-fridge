@@ -9,6 +9,10 @@ import akka.actor.Props
 import com.github.sstone.amqp.Amqp._
 import com.github.sstone.amqp.ConnectionOwner
 import com.github.sstone.amqp.ChannelOwner
+import scala.util.Marshal
+import scala.compat.Platform
+import akka.actor.ActorContext
+import akka.actor.ActorSystem
 
 class PomfNotificationActor extends Actor{
 
@@ -22,24 +26,26 @@ class PomfNotificationActor extends Actor{
   val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
   
   Amqp.waitForConnection(actorSystem, producer).await()
-
+   
   def receive = {
-    case Notification(fridgeName,command,payload) =>  {
+    case PomfNotification(fridgeName,command,user, message,timestamp) =>  {
+      println("received message "+command+" for fridge "+fridgeName)
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = true)
           //idem potent
           producer ! DeclareQueue(queueParams)
           producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
-          producer ! Publish("amq.direct", "fridge."+fridgeName, "test publish!".getBytes)
+          producer ! Publish("amq.direct", "fridge."+fridgeName,Marshal.dump(PomfNotification(fridgeName,command,user, message,timestamp)) )
     }
     case _ => println("received unknown message")
   }
 
 }
 
-case class Notification(fridgeName : String, command :String, payload : Any ) {
+case class PomfNotification(fridgeName : String, command :String, user : String, message : String, timestamp : Long ) extends Serializable {
 
 }
 
+// For later use with reverse rest on client ;)
 object NotificationCmd extends Enumeration {
 	type NotificationCmd = Value
 	val Create = Value("Create")

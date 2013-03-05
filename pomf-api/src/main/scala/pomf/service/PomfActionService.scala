@@ -8,6 +8,11 @@ import pomf.domain.config.DBConfig
 import pomf.domain.model.FridgeRest
 import pomf.domain.config.TestDB
 import pomf.service.caching.PomfCachingService
+import akka.actor.Actor
+import akka.actor.Props
+import pomf.service.notification.PomfNotification
+import scala.compat.Platform
+import pomf.boot.Boot
 
 trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
 
@@ -17,9 +22,9 @@ trait PomfTestServiceLayer extends PomfActionService with PomfCachingService wit
 
 }
 
-trait PomfActionService extends { 
+trait PomfActionService{ 
     this: DBConfig =>
-
+      
 	def getAllFridge(): List[Fridge] = dao.getAllFridge
 	
 	def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
@@ -36,6 +41,9 @@ trait PomfActionService extends {
 	  
 	def deletePost(id :Long) = dao.deletePost(id)
 	  
-	def updatePost(post :Post):Option[Post] = dao.updatePost(post)
+	def updatePost(post :Post):Option[Post] = {
+	  Boot.notificationService ! PomfNotification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
+	  dao.updatePost(post)
+	}
   
 }

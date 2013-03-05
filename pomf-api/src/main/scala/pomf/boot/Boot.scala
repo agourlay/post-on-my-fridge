@@ -10,10 +10,7 @@ import pomf.service.notification.PomfNotificationActor
 object Boot extends App {
  
   implicit val system = ActorSystem("pomf")
-  
-  // notification actor
-  val notificationService = system.actorOf(Props[PomfNotificationActor], "pomf-messaging-service")
-  
+      
   private val ioBridge = IOExtension(system).ioBridge()
     
   // create and start our service actor
@@ -30,4 +27,5 @@ object Boot extends App {
   // initially to need to tell it where to bind to
   httpServer ! HttpServer.Bind("localhost", 8080)
   
+  val notificationService = system.actorOf(Props[PomfNotificationActor], "pomf-messaging-service")  
 }

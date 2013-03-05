@@ -20,6 +20,8 @@ import pomf.service.PomfTestServiceLayer
 class PomfServiceSpec extends Specification with Specs2RouteTest with PomfRouteService with PomfTestServiceLayer {
   def actorRefFactory = system
 
+  
+  
   def is = {
     var string2NR = () // shadow implicit conversion from Spray Directives trait
     sequential^
