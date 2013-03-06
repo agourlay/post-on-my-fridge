@@ -1,3 +1,5 @@
+# How
+
 start nginx
 
 nginx -s stop
