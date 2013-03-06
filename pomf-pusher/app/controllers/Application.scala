@@ -8,7 +8,7 @@ import libs.json.Json._
 import libs.EventSource
 import play.api.libs.iteratee.Enumerator
 import model.Notification
-import model.NotificationEnumerator
+import service.NotificationEnumerator
 
 object Application extends Controller {
   

@@ -29,7 +29,10 @@ trait PomfActionService{
 	
 	def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
 	  
-	def addPost(post: Post): Post = dao.addPost(post)
+	def addPost(post: Post): Post = {
+	  Boot.notificationService ! Notification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
+	  dao.addPost(post)
+	}
 	  
 	def getFridgeRest(fridgeName: String):FridgeRest = dao.getFridgeRest(fridgeName)
 	  
