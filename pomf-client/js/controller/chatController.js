@@ -17,13 +17,15 @@ App.ChatController = Ember.ArrayController.extend({
 
 	sendChatMessage: function(message, pseudo) {
 		var payload = {};
-		payload.fridgeId = this.get('fridgeName');
-		payload.message = message;
+		payload.fridgeName = this.get('fridgeName');
 		payload.user = pseudo;
+		payload.message = message;
 		$.ajax({
 			type: "POST",
-			url: "api/channel/" + this.get('fridgeName') + "/message",
-			data: payload
+			url: "api/message/",
+			contentType: "application/json",
+			dataType: "text",
+			data: JSON.stringify(payload)
 		});
 	},
 

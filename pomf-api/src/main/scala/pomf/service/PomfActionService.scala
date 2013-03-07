@@ -13,6 +13,7 @@ import akka.actor.Props
 import scala.compat.Platform
 import pomf.boot.Boot
 import pomf.domain.model.Notification
+import pomf.domain.model.ChatMessage
 
 trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
 
@@ -51,5 +52,10 @@ trait PomfActionService{
 	  Boot.notificationService ! Notification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
 	  dao.updatePost(post)
 	}
+	
+	def addChatMessage(message: ChatMessage):ChatMessage = {
+	  Boot.notificationService ! Notification(message.fridgeName,"message",message.user, message.message,Platform.currentTime)
+	  message
+	} 
   
 }
