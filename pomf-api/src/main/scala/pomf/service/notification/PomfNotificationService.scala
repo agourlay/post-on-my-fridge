@@ -19,14 +19,11 @@ import pomf.domain.model.Notification
 import scala.io.Codec
 import spray.json.JsValue
 
+
 class PomfNotificationActor extends Actor{
   
   implicit val actorSystem = context.system
   
-  object NotifImplicit extends DefaultJsonProtocol{
-	  implicit val impNotif = jsonFormat5(Notification)
-  }
-
   val connFactory = new ConnectionFactory()
       connFactory.setHost("localhost")
       
@@ -34,8 +31,12 @@ class PomfNotificationActor extends Actor{
   
   val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
   
-  Amqp.waitForConnection(actorSystem, producer).await()
-   
+  
+  override def preStart() = {
+	  Amqp.waitForConnection(actorSystem, producer).await()
+  }
+  
+  
   def receive = {
     case Notification(fridgeName,command,user, message,timestamp) =>  {
       println("received message "+command+" for fridge "+fridgeName)
@@ -50,5 +51,10 @@ class PomfNotificationActor extends Actor{
     }
     case _ => println("received unknown message")
   }
+  
+  object NotifImplicit extends DefaultJsonProtocol{
+	  implicit val impNotif = jsonFormat5(Notification)
+  }
+  
 }
 

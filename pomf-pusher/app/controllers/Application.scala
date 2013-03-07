@@ -8,7 +8,7 @@ import libs.json.Json._
 import libs.EventSource
 import play.api.libs.iteratee.Enumerator
 import model.Notification
-import service.NotificationEnumerator
+import service.PomfNotificationService
 
 object Application extends Controller {
   
@@ -26,6 +26,6 @@ object Application extends Controller {
    * Stream of server send events
    */
   def stream(fridgeName:String) = Action {
-    Ok.stream(NotificationEnumerator.messageStream &> asJson ><> EventSource()).as("text/event-stream")
+    Ok.stream(PomfNotificationService.getStream(fridgeName) &> asJson ><> EventSource()).as("text/event-stream")
   }
 }

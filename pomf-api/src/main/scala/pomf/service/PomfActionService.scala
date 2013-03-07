@@ -42,7 +42,10 @@ trait PomfActionService{
 	  
 	def searchByNameLike(term:String):List[String] = dao.searchByNameLike(term)
 	  
-	def deletePost(id :Long) = dao.deletePost(id)
+	def deletePost(id :Long) = {
+	  Boot.notificationService ! Notification(getPost(id).get.fridgeId,"refresh","none", "none",Platform.currentTime)
+	  dao.deletePost(id)
+	}
 	  
 	def updatePost(post :Post):Option[Post] = {
 	  Boot.notificationService ! Notification(post.fridgeId,"refresh","none", "none",Platform.currentTime)
