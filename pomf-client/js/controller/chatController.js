@@ -12,7 +12,7 @@ App.ChatController = Ember.ArrayController.extend({
 	initController: function () {
 		this.get('content').clear();
 		this.streamManagement();
-		//this.retrievePreviousMessages();
+		this.retrievePreviousMessages();
 	},
 
 	sendChatMessage: function(message, pseudo) {
@@ -22,7 +22,7 @@ App.ChatController = Ember.ArrayController.extend({
 		payload.message = message;
 		$.ajax({
 			type: "POST",
-			url: "api/message/",
+			url: "api/message/"+this.get('fridgeName'),
 			contentType: "application/json",
 			dataType: "text",
 			data: JSON.stringify(payload)
@@ -65,7 +65,7 @@ App.ChatController = Ember.ArrayController.extend({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("api/message/" + this.get('fridgeName') , function(messages) {
+		$.getJSON("api/message/"+this.get('fridgeName') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
 					me.messageManagement(message.user, message.message,message.timestamp);

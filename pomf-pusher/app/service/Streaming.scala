@@ -45,19 +45,16 @@ class PomfNotificationActor{
   }
 
   def setUpQueue(fridgeName: String): FridgeQueue = {
-    println("Setup for "+fridgeName)
     createPhysicalQueueIfAbsent(fridgeName)
 
     val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[Notification]
 
     // create an actor that will receive AMQP deliveries
     val listener = actorSystem.actorOf(Props(new Actor {
-      println("Create Listener for "+fridgeName)
       def receive = {
         case Delivery(consumerTag, envelope, properties, body) => {
           sender ! Ack(envelope.getDeliveryTag)
           val json: JsValue = Json.parse(new String(body))
-          println("json: " + json)
           val fridgeName = (json \ "fridgeName").asOpt[String]
           val command = (json \ "command").asOpt[String]
           val user = (json \ "user").asOpt[String]
@@ -75,7 +72,6 @@ class PomfNotificationActor{
   }
 
   def createPhysicalQueueIfAbsent(fridgeName: String) = {
-    println("Building queue if absent")
     producer ! DeclareQueue(QueueParameters("fridge." + fridgeName, passive = false, durable = false, exclusive = false, autodelete = false))
     Amqp.waitForConnection(actorSystem, producer).await()
   }

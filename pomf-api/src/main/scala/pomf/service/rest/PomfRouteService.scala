@@ -105,14 +105,19 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
            }
         }
      }~
-     path("message") {
+     path("message" / Rest) { fridgeName =>
            post {
              detachTo(singleRequestServiceActor) {
                entity(as[ChatMessage]) { message =>
-            	 complete(addChatMessage(message))
-            }
+            	 complete(addChatMessage(fridgeName,message))
+               }
+             }
+           }~
+             get {
+               detachTo(singleRequestServiceActor) {
+                  complete(retrieveChatHistory(fridgeName)) 
+               }
           }      
-        }
      }     
   }   
 }

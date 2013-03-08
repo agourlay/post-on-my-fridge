@@ -14,6 +14,7 @@ import scala.compat.Platform
 import pomf.boot.Boot
 import pomf.domain.model.Notification
 import pomf.domain.model.ChatMessage
+import com.redis.serialization.Parse
 
 trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
 
@@ -25,7 +26,8 @@ trait PomfTestServiceLayer extends PomfActionService with PomfCachingService wit
 
 trait PomfActionService{ 
     this: DBConfig =>
-      
+    import Parse.Implicits._  
+          
 	def getAllFridge(): List[Fridge] = dao.getAllFridge
 	
 	def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
@@ -53,9 +55,14 @@ trait PomfActionService{
 	  dao.updatePost(post)
 	}
 	
-	def addChatMessage(message: ChatMessage):ChatMessage = {
+	def addChatMessage(fridgeName : String, message: ChatMessage):ChatMessage = {
+	  //cache.lpush(fridgeName+".chat", message)
 	  Boot.notificationService ! Notification(message.fridgeName,"message",message.user, message.message,Platform.currentTime)
 	  message
 	} 
-  
+  	
+	def retrieveChatHistory(fridgeName: String):List[ChatMessage] = {
+	  //cache.get[List[ChatMessage]](fridgeName+".chat")
+	  List()
+	} 
 }

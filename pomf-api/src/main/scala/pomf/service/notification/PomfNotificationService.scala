@@ -39,7 +39,7 @@ class PomfNotificationActor extends Actor{
   
   def receive = {
     case Notification(fridgeName,command,user, message,timestamp) =>  {
-      println("received message "+command+" for fridge "+fridgeName)
+      //println("received message "+command+" for fridge "+fridgeName)
       val jsonNotif : JsValue = NotifImplicit.impNotif.write(Notification(fridgeName,command,user, message,timestamp))
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
           //idem potent
@@ -49,7 +49,7 @@ class PomfNotificationActor extends Actor{
         		  		   , "fridge."+fridgeName
         		  		   , jsonNotif.toString.getBytes(Codec.UTF8.charSet))
     }
-    case _ => println("received unknown message")
+    case _ => 
   }
   
   object NotifImplicit extends DefaultJsonProtocol{
