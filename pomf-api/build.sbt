@@ -1,10 +1,20 @@
+import AssemblyKeys._
+
+assemblySettings
+
+jarName in assembly := "pomf-api.jar"
+
+test in assembly := {}
+
+net.virtualvoid.sbt.graph.Plugin.graphSettings
+
 organization := "com.agourlay"
 
 name := "pomf-api"
 
 version := "0.1"
 
-scalaVersion := "2.10.0"
+scalaVersion := "2.10.1-RC3"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
 
@@ -24,7 +34,7 @@ libraryDependencies ++= Seq(
   ,"io.spray"           %%  "spray-json"           % "1.2.3"           withSources()
   ,"com.typesafe.akka"  %%  "akka-slf4j"           % "2.1.1"           withSources()
   ,"com.typesafe.akka"  %%  "akka-actor"           % "2.1.1"           withSources()
-  ,"net.debasishg"      %%  "redisclient"          % "2.9"             withSources()
+  ,"net.debasishg"      %%  "redisclient"          % "2.9"             withSources()  exclude("com.typesafe.akka", "akka-actor_2.10.0-RC5")
   ,"com.github.sstone"  %%  "amqp-client"          % "1.1"             withSources()
   ,"org.specs2"         %%  "specs2"               % "1.14" % "test"   withSources() 
   ,"com.typesafe.slick" %%  "slick"                % "1.0.0"           withSources()
