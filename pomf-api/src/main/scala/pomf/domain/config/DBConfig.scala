@@ -23,9 +23,9 @@ trait TestDB extends DBConfig {
 
 trait ProductionDB extends DBConfig {
   val dao = new Dao("PostgreSQL", new DAL(PostgresDriver),
-    Database.forURL("jdbc:postgresql:test",
+    Database.forURL("jdbc:postgresql:pomf",
                            driver="org.postgresql.Driver",
-                           user="postgres",
+                           user="pomf-api",
                            password="root"))
   dao.createDB
   
