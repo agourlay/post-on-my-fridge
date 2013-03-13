@@ -72,12 +72,25 @@ App.PostView = Em.View.extend(App.Draggable, {
 	initTrash: function() {
 		var view = this;
 		view.$().find(" .ui-icon-trash").click(function() {
-			if (confirm("Are you sure you want to delete post?")) {
-				view.$().effect("bounce", {	times: 3}, 300)
-						.effect("clip", { times: 1}, 300);
-				infoMessage("Post from " + view.get('content').get('author') + " deleted");
-				view.get('controller').deletePost(view.get('content').get('id'));
-			}
+			Bootstrap.ModalPane.popup({
+				heading: "Delete post",
+				message: "Are you sure?",
+				primary: "OK",
+				secondary: "Cancel",
+				showBackdrop: true,
+				callback: function(opts, event) {
+				  	if (opts.primary) {
+				    	view.$().effect("bounce", {	times: 3}, 300)
+							    .effect("clip", { times: 1}, 300);
+						infoMessage("Post from " + view.get('content').get('author') + " deleted");
+						view.get('controller').deletePost(view.get('content').get('id'));
+					} else if (opts.secondary) {
+						false;
+				  	} else {
+				        false;
+				    }
+				}
+			});
 		});
 	},
 
