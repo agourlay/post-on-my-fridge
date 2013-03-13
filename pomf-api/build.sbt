@@ -14,7 +14,7 @@ name := "pomf-api"
 
 version := "0.1"
 
-scalaVersion := "2.10.1-RC3"
+scalaVersion := "2.10.1"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
 
