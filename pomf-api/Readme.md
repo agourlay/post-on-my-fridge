@@ -4,8 +4,10 @@ sbt
 
 ~re-start
 
+assembly to build deployable jar
+
 # Prerequisite
 
-postgresql started (jdbc:postgresql:test", user="postgres", password="root")
+postgresql started (jdbc:postgresql:pomf", user="pomf_api", password="root")
 
 rabbitMq started
