@@ -39,6 +39,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 		view.updatePhysicalPosition();
 		view.$().draggable({
 			revert: 'invalid',
+			containment: "parent",
 			stop: function(event) {
 				var fridge = $('#fridge'),
 				    fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
