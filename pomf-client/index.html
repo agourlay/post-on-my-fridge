@@ -162,9 +162,12 @@
 	<script type="text/x-handlebars" data-template-name="fridge">
         <header>
             <div id="fridge-title">
+            	<a href="/" target="_blank" style="text-decoration: none">
+		            <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
+		        </a>
 				<b>Post on fridge {{view.content.name}}</b>
 		        <a {{bindAttr href="view.rssUrl"}} target="_blank">
-		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none" />
+		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
 		        </a>
             </div>
             <div id="search-area">
