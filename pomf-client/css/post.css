@@ -50,51 +50,19 @@
 	height : 90%;
 	width: 90%;	}
 
-.newPost {
-	position: relative;
-	box-shadow: 5px 5px 4px #aaa;
-	width:232px;
-	height:232px;
-	padding-top: 10px;
-	margin-bottom : 20px;
-	z-index: 99999;}
-
-.newPost .iconBox{
-	float: right;
-	position: relative;
-	display : inline-block;
-	width : 95%; }
-
-.newPost .changeColor{
-	height: 20px;
- 	width: 40px;
- 	background-size: 100%;
- 	z-index: 1000;
- 	padding-right: 4px;
- 	float: right; }
-
-.newPost .content{
-	position: relative;
-	font-weight: bold;
-	padding-bottom: 3px;
-	margin-left : 15px; }
-	
-.newPost .author{
-	position: relative;
-	margin-left : 13px;}
-
-.newPost input[type="date"]{
-	height: 18px;
-	width: 130px;}
-
-.newPost input{
-	height: 18px;
-	width: 190px;}
-
-.newPost textarea{
-	background-color: transparent;
+.post textarea{
 	border: dotted;
     resize: none;
-    width: 190px;
+    width: 210px;
     margin-bottom: 7px;
 	border-width: thin;	}
+
+.post input[type="date"]{
+	height: 18px;
+	width: 130px;}	
+
+.post input[type="color"]{
+	float : right;
+	margin-right: 5px;
+	height: 18px;
+	width: 50px;}		

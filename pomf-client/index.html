@@ -13,6 +13,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/cupertino/jquery-ui.min.css"/>
 	<link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.2/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/static/css/index.css"/>
 	<link rel="stylesheet" href="/static/css/layout.css"/>
 	<link rel="stylesheet" href="/static/css/post.css"/>
@@ -45,6 +46,7 @@
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/top.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/bottomRight.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/themes/default.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 
 
 	<script src = "/static/js/util/tools.js"></script>
@@ -131,7 +133,7 @@
 			<div class="row-fluid">
 				<div class="span10 offset1">
 					<div class="span6 well">
-						<h2>Share <i class="icon-thumbs-up"></i></h2>
+						<h2>Share <i class="icon-share"></i></h2>
 						<p>
 							You can share content on a fridge in real time with your friends while chatting.
 						</p>
@@ -170,32 +172,29 @@
 		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
 		        </a>
             </div>
-            <div id="search-area">
-                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
+
+            <div id="header-interaction">
+	 			<div id="create-area">
+					<a class="btn btn-success" onclick="javascript:addDefaultPost()">
+	  					<i class="icon-plus-sign icon-large"></i> Add post
+	  				</a>
+	  			</div>
+	  			<div id="user-area">	
+	  				<i class="icon-user icon-large"></i>
+	  				<input type="text" placeholder="Usename" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
+	            </div>
+	            <div id="search-area">
+	                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
+	            </div>
             </div>
         </header>
         <div id="main-content">
             <aside id ="leftPanel">
-                <div id ="newPost" class="newPost">
-                    <form id="postForm" accept-charset="utf-8">
-                        <div class="content">
-                            <textarea name="content" id="content" rows="7" cols="23" maxlength="200" placeholder="Drop me on the fridge"></textarea>
-                        </div>
-                        <div class="author">
-                            <input type="text" placeholder="Anonymous" name="author" id="author" maxlength="15" size="12"/>
-                        </div>
-                        <div class="iconBox">
-                            <input type="date" id="dueDate" title="Due date"/>
-                            <input type="color" id="postColor" class="changeColor" value="#f7f083" onchange="javascript:updatePostFormColor(this.value)"/>
-                        </div>
-                    </form>
-                </div>
                 <div id="chatPanel">
-                    <form id="chatInput" accept-charset="utf-8">
-                        <input type="text" placeholder="Chatting as anonymous" id="pseudo" min="3" maxlength="15" size="12" title="Choose your pseudo"/>
+         
                         {{render "chat"}}
                         <textarea id="message" rows="0" cols="0" maxlength="200" placeholder="Enter message..."></textarea>
-                    </form>
+                    
                 </div>
             </aside>
 			{{render "posts" view.content.posts}}
@@ -203,16 +202,23 @@
 
     <script type="text/x-handlebars" data-template-name="message-template">
 		<br/><i>Sent at {{view.content.date}}</i>
-		<br/><b>{{view.content.user}}:</b> <span class='chatMessage'>{{view.content.message}}</span>
+		<br/><b>{{view.content.user}}:</b> <span class='chatContent'>{{view.content.message}}</span>
     </script>
         
     <script type="text/x-handlebars" data-template-name="post-template">
+    {{#if view.readMode}}
 		<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
 		<div class='content'>{{{view.generatedContent}}}</div>
 		<div class='footer'>
 			<span class="author">{{view.content.author}}</span> posted 
 			<time class="date" datetime="{{view.content.creationDate}}">{{view.relativeDate}}</time>
 		</div>
+	{{else}}
+		{{view Ember.TextArea valueBinding="view.content.content" placeholder="Content" rows="7"}}
+		{{view Ember.TextField valueBinding="view.content.author" placeholder="Anonymous"}}
+		<input type="color" id="postColor" title="Change color" {{bindAttr value="view.content.color"}}/>
+		<input type="date" id="dueDate" title="Due date" {{bindAttr value="view.content.dueDate"}}/>
+	{{/if}}	
     </script> 
 </body>
 </html>

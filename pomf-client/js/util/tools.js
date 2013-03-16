@@ -1,3 +1,16 @@
+function addDefaultPost(){
+	var newPostData = {};
+	newPostData.author = "Anonymous";
+	newPostData.content = "I am new edit me with a double click!";
+	newPostData.color = "#f7f083";
+	newPostData.positionX = 0.5;
+	newPostData.positionY = 0.04;
+	newPostData.fridgeId = App.Dao.get('fridgeId');
+	newPostData.dueDate = "";
+	newPostValidation(newPostData);
+	App.Post.createWithMixins(newPostData).createPost();
+}
+
 function newPostValidation(newPostData) {
 	if (newPostData.dueDate !== "") {
 		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';
@@ -10,20 +23,6 @@ function newPostValidation(newPostData) {
 	if (newPostData.author === "") {newPostData.author = "Anonymous";}
 
 	if (newPostData.content === "") {newPostData.content = "What's up";	}
-}
-
-function colorPickerManagement() {
-	var color = $("#postColor").val(),
-		textColor = getTxtColorFromBg(color);		
-	updatePostFormColor(color);
-}
-
-function updatePostFormColor(color) {
-	$("#postColor").val(color);
-	$("#newPost").css("background-color", color);
-	var textColor = getTxtColorFromBg(color);
-	$("#newPost").find("#content").css("color", textColor);
-	$("#newPost").find("#author").css("color", textColor);
 }
 
 function generateYoutubeFrame(videoId) {

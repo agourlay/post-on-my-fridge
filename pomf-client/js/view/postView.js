@@ -3,6 +3,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 	classNames: ['post'],
 	uiType: 'draggable',
     templateName: 'post-template',
+    readMode : true,
 
 	relativeDate: function() {
 		var date = this.get('content').get('date');
@@ -29,7 +30,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 	},
 
 	doubleClick: function() {
-		alert('Live edit feature coming soon');
+		this.set('readMode',!this.get('readMode'));
 	},
 
 	didInsertElement: function() {
@@ -47,7 +48,6 @@ App.PostView = Em.View.extend(App.Draggable, {
 			}
 		});
 	},
-
 
 	updatePhysicalPosition: function() {
 		var left = this.get('content').get('positionX'),
@@ -68,30 +68,15 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var color = this.get('content').get('color');
 		this.$().css("background-color", color);
 		this.$().css("color", getTxtColorFromBg(color));
-	},
+	}.observes('content.color'),
 
 	initTrash: function() {
 		var view = this;
 		view.$().find(" .ui-icon-trash").click(function() {
-			Bootstrap.ModalPane.popup({
-				heading: "Delete post",
-				message: "Are you sure?",
-				primary: "OK",
-				secondary: "Cancel",
-				showBackdrop: true,
-				callback: function(opts, event) {
-				  	if (opts.primary) {
-				    	view.$().effect("bounce", {	times: 3}, 300)
-							    .effect("clip", { times: 1}, 300);
-						infoMessage("Post from " + view.get('content').get('author') + " deleted");
-						view.get('controller').deletePost(view.get('content').get('id'));
-					} else if (opts.secondary) {
-						false;
-				  	} else {
-				        false;
-				    }
-				}
-			});
+			view.$().effect("bounce", {	times: 3}, 300)
+				    .effect("clip", { times: 1}, 300);
+			infoMessage("Post from " + view.get('content').get('author') + " deleted");
+			view.get('controller').deletePost(view.get('content').get('id'));
 		});
 	},
 

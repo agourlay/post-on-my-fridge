@@ -15,13 +15,6 @@ App.FridgeView = Em.View.extend({
 	didInsertElement : function() {
 		document.title = "Fridge "+ this.get('content').get('name');
 		konami();
-		colorPickerManagement();
-
-		$(".newPost").draggable({
-			revert : "invalid",
-			scroll : true,
-			zIndex : 9999
-		});
 
 		$("#search").autocomplete({
 			source : "api/search/fridge/",
@@ -41,6 +34,6 @@ App.FridgeView = Em.View.extend({
 					});
 				}
 			}
-		});		
+		});
 	}
 });

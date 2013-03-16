@@ -51,7 +51,7 @@ App.Post = Em.Object.extend({
 				errorMessage("Post not updated!");
 			}
 		});
-	}.observes('fullPosition','content','color'),
+	}.observes('fullPosition','content','color','author','dueDate'),
 
 	createPost: function() {
 		$.ajax({
