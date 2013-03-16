@@ -3,9 +3,9 @@ App.FridgeView = Em.View.extend({
 	classNames: ['global'],
 	contentBinding: 'controller.content',
 
-	watchContent: function() {
+/*	watchContent: function() {
 		console.log("FridgeView content changed :" + JSON.stringify(this.get('content')));
-	}.observes('content'),
+	}.observes('content'),*/
 	
 	rssUrl: function() {
 		var fridgeName = this.get('content').get('name');

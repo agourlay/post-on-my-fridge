@@ -17,9 +17,9 @@ App.ChatController = Ember.ArrayController.extend({
 	sendChatMessage: function(message) {
 		var pseudo = App.Dao.pseudo();
 		var payload = {};
-		payload.fridgeName = this.get('fridgeName');
 		payload.user = pseudo;
 		payload.message = message;
+		payload.timestamp = new Date().getTime();
 		$.ajax({
 			type: "POST",
 			url: "api/message/"+this.get('fridgeName'),
@@ -29,12 +29,8 @@ App.ChatController = Ember.ArrayController.extend({
 		});
 	},
 
-	messageManagement: function(user,message,timestamp) {
-		var chatModel = {};
-		chatModel.user = user;
-		chatModel.message = message;
-		chatModel.timestamp = timestamp;
-		var messageModel = App.Message.createWithMixins(chatModel);
+	messageManagement: function(message) {
+		var messageModel = App.Message.createWithMixins(message);
 		this.pushObject(messageModel);
 	},
 	

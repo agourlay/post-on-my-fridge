@@ -12,14 +12,8 @@ import service.PomfNotificationService
 
 object Application extends Controller {
   
-    val asJson: Enumeratee[Notification, JsValue] = Enumeratee.map[Notification] {
-    notification => toJson ( Map (
-      "fridgeId" -> toJson(notification.fridgeName),
-      "command" -> toJson(notification.command),
-      "user" -> toJson(notification.user),
-      "message" -> toJson(notification.message),
-      "timestamp" -> toJson(notification.timestamp)
-    ) )
+    val asJson: Enumeratee[JsValue, JsValue] = Enumeratee.map[JsValue] {
+    notification => notification
   }
 
   /**

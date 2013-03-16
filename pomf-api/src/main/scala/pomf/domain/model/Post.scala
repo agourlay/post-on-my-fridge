@@ -2,6 +2,8 @@ package pomf.domain.model
 
 import java.util.Date
 import pomf.domain.config.Profile
+import pomf.util.DateMarshalling
+import spray.json.DefaultJsonProtocol
 
 case class Post(author: String,
     content: String,
@@ -25,8 +27,9 @@ trait PostComponent { this: Profile =>
   implicit val dateMapper = MappedTypeMapper.base[java.util.Date, java.sql.Date] (
   x => new java.sql.Date(x.getTime),
   x => new java.util.Date(x.getTime))
+  
 
-  object Posts extends Table[Post]("POST") {
+  object Posts extends Table[Post]("POST") {    
     def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
     def author = column[String]("AUTHOR", O.NotNull)
     def content = column[String]("CONTENT", O.NotNull)

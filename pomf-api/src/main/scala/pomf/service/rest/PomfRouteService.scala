@@ -18,8 +18,9 @@ import pomf.domain.config.ProductionDB
 import pomf.domain.config.DBConfig
 import pomf.service.PomfProdServiceLayer
 import pomf.service.PomfActionService
-import pomf.domain.model.Notification
 import pomf.domain.model.ChatMessage
+import pomf.domain.model.ChatMessage
+import pomf.domain.model.Notification
 
 class PomfHttpActor extends Actor with PomfRouteService with PomfProdServiceLayer {
 
@@ -34,6 +35,7 @@ object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
   implicit val impFridge = jsonFormat3(Fridge)
   implicit val impFridgeRest = jsonFormat4(FridgeRest)
   implicit val impChatMessage = jsonFormat3(ChatMessage)
+  implicit val impNotif = jsonFormat4(Notification)
 }
 
 trait PomfRouteService extends HttpService { this: PomfActionService =>

@@ -27,35 +27,19 @@ App.PostsController = Ember.ArrayController.extend({
 	createOrUpdate: function(post) {
 		var exists = this.filterProperty('id', post.id).length;
 		if (exists === 0) {
+			console.dir(App.Post.createWithMixins(post));
 			this.pushObject(App.Post.createWithMixins(post));
 		} else {
 			this.updateExistingPost(post);
 		}
 	},
 
-	deleteProcedure: function(posts) {
-		var me = this;
-			postsTodelete = [],
-		me.forEach(function(valuePost) {
-			var postId = valuePost.id;
-			if (postId !== undefined && posts.findProperty('id', postId) === undefined) {
-				postsTodelete.pushObject(me.findProperty('id', postId));
-			}
-		});
-		postsTodelete.forEach(function(postToDelete) {
+	deleteById : function(id) {
+		var postToDelete = this.findProperty('id', id);
+		if (postToDelete !== undefined){
+			console.log('Delete '+ id );
 			infoMessage("Post from " + postToDelete.get('author') + " deleted");
-			me.removeObject(postToDelete);
-		});
-	},
-
-	mergePost: function() {
-		var me = this,
-		    posts = App.Dao.get('posts');
-		if(posts !== null) {
-			// remove post present in the fridge but not in the db
-			me.deleteProcedure(posts);
-			// update or create the posts
-			posts.forEach(function(post) { me.createOrUpdate(post); });
+			this.removeObject(postToDelete);
 		}
-	}.observes('App.Dao.posts')
+	}
 });

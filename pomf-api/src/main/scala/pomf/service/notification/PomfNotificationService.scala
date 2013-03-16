@@ -14,13 +14,19 @@ import scala.compat.Platform
 import akka.actor.ActorContext
 import akka.actor.ActorSystem
 import spray.json.JsObject
+import spray.json.DefaultJsonProtocol._
 import spray.json.DefaultJsonProtocol
-import pomf.domain.model.Notification
 import scala.io.Codec
 import spray.json.JsValue
-
+import pomf.domain.model.Post
+import pomf.util.DateMarshalling
+import pomf.domain.model.NotificationObj
+import spray.json.RootJsonFormat
+import pomf.service.rest.JsonImplicits
+import pomf.domain.model.Notification
 
 class PomfNotificationActor extends Actor{
+  import JsonImplicits._
   
   implicit val actorSystem = context.system
   
@@ -38,9 +44,9 @@ class PomfNotificationActor extends Actor{
   
   
   def receive = {
-    case Notification(fridgeName,command,user, message,timestamp) =>  {
-      //println("received message "+command+" for fridge "+fridgeName)
-      val jsonNotif : JsValue = NotifImplicit.impNotif.write(Notification(fridgeName,command,user, message,timestamp))
+    case Notification(fridgeName,command,payload,timestamp) =>  {
+      //println("received message "+command+" for fridge "+fridgeName+" payload "+payload)
+      val jsonNotif : JsValue = impNotif.write(Notification(fridgeName,command,payload,timestamp))
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
           //idem potent
           producer ! DeclareQueue(queueParams)
@@ -51,10 +57,4 @@ class PomfNotificationActor extends Actor{
     }
     case _ => 
   }
-  
-  object NotifImplicit extends DefaultJsonProtocol{
-	  implicit val impNotif = jsonFormat5(Notification)
-  }
-  
 }
-

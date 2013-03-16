@@ -39,7 +39,7 @@ class PomfNotificationActor{
 
   val queues: Map[String, FridgeQueue] = TrieMap[String, FridgeQueue]()
   
-  def getStream(fridgeName: String): Enumerator[Notification] = {
+  def getStream(fridgeName: String): Enumerator[JsValue] = {
     println("Get Stream for "+fridgeName)
     queues.getOrElse(fridgeName, setUpQueue(fridgeName)).broadcast._1  
   }
@@ -47,7 +47,7 @@ class PomfNotificationActor{
   def setUpQueue(fridgeName: String): FridgeQueue = {
     createPhysicalQueueIfAbsent(fridgeName)
 
-    val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[Notification]
+    val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[JsValue]
 
     // create an actor that will receive AMQP deliveries
     val listener = actorSystem.actorOf(Props(new Actor {
@@ -55,12 +55,8 @@ class PomfNotificationActor{
         case Delivery(consumerTag, envelope, properties, body) => {
           sender ! Ack(envelope.getDeliveryTag)
           val json: JsValue = Json.parse(new String(body))
-          val fridgeName = (json \ "fridgeName").asOpt[String]
-          val command = (json \ "command").asOpt[String]
-          val user = (json \ "user").asOpt[String]
-          val message = (json \ "message").asOpt[String]
-          val timestamp = (json \ "timestamp").asOpt[Long]
-          fridgeChannel.push(Notification(fridgeName.get, command.get, user.get, message.get, timestamp.get))
+          //println("Pushing "+json.toString)
+          fridgeChannel.push(json)
         }
       }
     }))
@@ -78,4 +74,4 @@ class PomfNotificationActor{
 
 }
 
-case class FridgeQueue(val listener: ActorRef, val broadcast: (Enumerator[Notification], Channel[Notification]))
+case class FridgeQueue(val listener: ActorRef, val broadcast: (Enumerator[JsValue], Channel[JsValue]))
