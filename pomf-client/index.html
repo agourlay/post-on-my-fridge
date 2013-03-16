@@ -181,7 +181,7 @@
 	  			</div>
 	  			<div id="user-area">	
 	  				<i class="icon-user icon-large"></i>
-	  				<input type="text" placeholder="Usename" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
+	  				<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
 	            </div>
 	            <div id="search-area">
 	                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
@@ -191,10 +191,8 @@
         <div id="main-content">
             <aside id ="leftPanel">
                 <div id="chatPanel">
-         
-                        {{render "chat"}}
-                        <textarea id="message" rows="0" cols="0" maxlength="200" placeholder="Enter message..."></textarea>
-                    
+                    {{render "chat"}}
+                    <textarea id="message" rows="0" cols="0" maxlength="200" placeholder="Type message..."></textarea>
                 </div>
             </aside>
 			{{render "posts" view.content.posts}}

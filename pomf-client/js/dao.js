@@ -3,6 +3,15 @@ App.Dao = Em.Object.create({
 	fridgeId : null,
 	posts : [],
 
+	pseudo : function() {
+		if ($("#pseudo").val() !== ""){
+			var inputName = $("#pseudo").val();
+			store.set('username', inputName);
+			return inputName;
+		}		
+		return "Anonymous";	
+	},
+
 	findFridgeByName : function(fridgeId) {
 		var fridgeRetrieved = null; 
 		this.set('fridgeId',fridgeId);

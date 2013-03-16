@@ -15,7 +15,8 @@ App.ChatController = Ember.ArrayController.extend({
 		this.retrievePreviousMessages();
 	},
 
-	sendChatMessage: function(message, pseudo) {
+	sendChatMessage: function(message) {
+		var pseudo = App.Dao.pseudo();
 		var payload = {};
 		payload.fridgeName = this.get('fridgeName');
 		payload.user = pseudo;

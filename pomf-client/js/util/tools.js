@@ -1,7 +1,7 @@
 function addDefaultPost(){
 	var newPostData = {};
-	newPostData.author = "Anonymous";
-	newPostData.content = "I am new edit me with a double click!";
+	newPostData.author = App.Dao.pseudo();
+	newPostData.content = "New post -> edit me with a double click!";
 	newPostData.color = "#f7f083";
 	newPostData.positionX = 0.5;
 	newPostData.positionY = 0.04;

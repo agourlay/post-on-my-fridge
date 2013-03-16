@@ -16,6 +16,10 @@ App.FridgeView = Em.View.extend({
 		document.title = "Fridge "+ this.get('content').get('name');
 		konami();
 
+		if(typeof store.get('username') !== "undefined"){
+			$("#pseudo").val(store.get('username'));
+		}
+
 		$("#search").autocomplete({
 			source : "api/search/fridge/",
 			delay : 100,
