@@ -11,7 +11,6 @@ App.ChatController = Ember.ArrayController.extend({
 	
 	initController: function () {
 		this.get('content').clear();
-		this.streamManagement();
 		this.retrievePreviousMessages();
 	},
 
@@ -37,31 +36,6 @@ App.ChatController = Ember.ArrayController.extend({
 		chatModel.timestamp = timestamp;
 		var messageModel = App.Message.createWithMixins(chatModel);
 		this.pushObject(messageModel);
-	},
-
-	streamManagement : function () {
-		var me = this;
-		var source = new EventSource("stream/" + this.get('fridgeName'));
-		source.addEventListener('message', function(e) {
-			console.log(e.data);
-			var data = $.parseJSON(e.data);
-			if (data.command === "refresh") {
-				App.Dao.refresh();
-			}
-			if (data.command === "message") {
-				me.messageManagement(data.user, data.message,data.timestamp);
-			}
-		}, false);
-
-		source.addEventListener('open', function(e) {
-			console.log("SSE opened!")
-		}, false);
-
-		source.addEventListener('error', function(e) {
-			if (e.readyState == EventSource.CLOSED) {
-			    errorMessage("Channel error");
-			}
-		}, false);
 	},
 	
 	retrievePreviousMessages: function() {

@@ -8,8 +8,7 @@ App.Router.map(function() {
 App.FridgeRoute = Ember.Route.extend({
    model: function(params) {
 	var model = App.Dao.findFridgeByName(params.fridge_name);
-	// init chat controller
-	this.controllerFor('Chat').initController();
+	App.Dao.initApp(this.controllerFor('Chat'),this.controllerFor('Fridge'));
     return model;
   }
 });
