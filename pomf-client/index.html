@@ -53,6 +53,7 @@
 	<script src = "/static/js/app.js"></script>
 	<script src = "/static/js/util/jquery-ui-ember.js"></script>
 	<script src = "/static/js/util/ember-bootstrap.min.js"></script>
+	<script src = "/static/js/util/customView.js"></script>
 	<script src = "/static/js/model/postModel.js"></script>
 	<script src = "/static/js/view/postView.js"></script>
 	<script src = "/static/js/controller/postsController.js"></script>
@@ -175,7 +176,7 @@
 
             <div id="header-interaction">
 	 			<div id="create-area">
-					<a class="btn btn-success" onclick="javascript:addDefaultPost()">
+					<a class="btn btn-primary btn-small" onclick="javascript:addDefaultPost()">
 	  					<i class="icon-plus-sign icon-large"></i> Add post
 	  				</a>
 	  			</div>
@@ -214,8 +215,8 @@
 	{{else}}
 		{{view Ember.TextArea valueBinding="view.content.content" placeholder="Content" rows="7"}}
 		{{view Ember.TextField valueBinding="view.content.author" placeholder="Anonymous"}}
-		<input type="color" id="postColor" title="Change color" {{bindAttr value="view.content.color"}}/>
-		<input type="date" id="dueDate" title="Due date" {{bindAttr value="view.content.dueDate"}}/>
+		{{view App.ColorFieldView valueBinding="view.content.color"}}
+		{{view App.DateFieldView valueBinding="view.content.dueDate"}}
 	{{/if}}	
     </script> 
 </body>
