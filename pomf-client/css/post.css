@@ -59,10 +59,18 @@
 
 .post input[type="date"]{
 	height: 18px;
+	width: 140px;}
+
+.post input[type="text"]{
+	height: 18px;
 	width: 130px;}	
+
+.post input[type="button"]{
+	margin-right: 5px;
+	float:right;}				
 
 .post input[type="color"]{
 	float : right;
 	margin-right: 5px;
 	height: 18px;
-	width: 50px;}		
+	width: 30px;}		

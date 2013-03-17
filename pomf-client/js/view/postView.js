@@ -80,6 +80,16 @@ App.PostView = Em.View.extend(App.Draggable, {
 		});
 	},
 
+	save: function(e) {
+    	this.get('content').setProperties({
+    		color: this.get('textFieldColor.value'), 
+    		author: this.get('textFieldAuthor.value'), 
+    		content: this.get('textFieldContent.value'), 
+    		dueDate: this.get('textFieldDueDate.value')
+    	});
+    	this.set('readMode',!this.get('readMode'));
+  	},
+
 	generateContent: function() {
 		var content = jQuery.trim(this.get('content').get('content')),
 		    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,

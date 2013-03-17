@@ -205,19 +205,22 @@
     </script>
         
     <script type="text/x-handlebars" data-template-name="post-template">
-    {{#if view.readMode}}
-		<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
-		<div class='content'>{{{view.generatedContent}}}</div>
-		<div class='footer'>
-			<span class="author">{{view.content.author}}</span> posted 
-			<time class="date" datetime="{{view.content.creationDate}}">{{view.relativeDate}}</time>
-		</div>
-	{{else}}
-		{{view Ember.TextArea valueBinding="view.content.content" placeholder="Content" rows="7"}}
-		{{view Ember.TextField valueBinding="view.content.author" placeholder="Anonymous"}}
-		{{view App.ColorFieldView valueBinding="view.content.color"}}
-		{{view App.DateFieldView valueBinding="view.content.dueDate"}}
-	{{/if}}	
+	    {{#if view.readMode}}
+			<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
+			<div class='content'>{{{view.generatedContent}}}</div>
+			<div class='footer'>
+				<span class="author">{{view.content.author}}</span> posted 
+				<time class="date" datetime="{{view.content.creationDate}}">{{view.relativeDate}}</time>
+			</div>
+		{{else}}
+			<form>
+				{{view App.LazyTextArea sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
+				{{view App.LazyDateFieldView sourceBinding="view.content.dueDate" viewName="textFieldDueDate"}}
+				{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
+				{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}}
+				<input type="button" value="Save" {{action save target="view"}}>
+			</form>
+		{{/if}}	
     </script> 
 </body>
 </html>
