@@ -4,6 +4,7 @@ import java.util.Date
 import pomf.domain.config.Profile
 import pomf.util.DateMarshalling
 import spray.json.DefaultJsonProtocol
+import pomf.util.XssFilter
 
 case class Post(author: String,
     content: String,
@@ -16,9 +17,11 @@ case class Post(author: String,
     id: Option[Long] = None
 ){
   require(!author.isEmpty, "author must not be empty")
+  require(!XssFilter.containsScript(author), "author must not contain script tags")
   require(!content.isEmpty, "content must not be empty")
-  require(!content.contains("/>"), "content must not contain /> ")
+  require(!XssFilter.containsScript(content), "content must not contain script tags")
   require(!fridgeId.isEmpty, "fridgeId must not be empty")
+  require(!XssFilter.containsScript(fridgeId), "fridgeId must not contain script tags")
 }
 
 trait PostComponent { this: Profile =>

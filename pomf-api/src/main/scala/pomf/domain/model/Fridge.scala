@@ -1,9 +1,12 @@
 package pomf.domain.model
 
 import pomf.domain.config.Profile
+import pomf.util.XssFilter
 
 case class Fridge(name: String, description: String = "", id: Option[Long] = None){
   require(!name.isEmpty, "fridge name must not be empty")
+  require(!XssFilter.containsScript(name), "name must not contain script tags")
+  require(!XssFilter.containsScript(description), "description must not contain script tags")
 }
 
 case class FridgeRest(name: String, description: String, id: Option[Long], posts: List[Post])

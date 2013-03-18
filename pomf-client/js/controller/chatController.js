@@ -25,7 +25,10 @@ App.ChatController = Ember.ArrayController.extend({
 			url: "api/message/"+this.get('fridgeName'),
 			contentType: "application/json",
 			dataType: "text",
-			data: JSON.stringify(payload)
+			data: JSON.stringify(payload),
+			error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Message not sent!");
+			}
 		});
 	},
 
