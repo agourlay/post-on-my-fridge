@@ -33,7 +33,6 @@ App.Post = Em.Object.extend({
 			url: this.get('resourceUrl') + this.id,
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
-				console.log(thrownError);
 				errorMessage("Post not deleted!");
 			}
 		});
@@ -47,7 +46,6 @@ App.Post = Em.Object.extend({
 			dataType: "text",
 			data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				console.log(thrownError);
 				errorMessage("Post not updated!");
 			}
 		});
@@ -61,7 +59,6 @@ App.Post = Em.Object.extend({
         	dataType: "text",
         	data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				console.log(thrownError);
 				errorMessage("Post not created!");
 			}
 		});
