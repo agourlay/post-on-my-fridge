@@ -2,42 +2,13 @@ App.FridgeView = Em.View.extend({
 	tagName : 'div',
 	classNames: ['global'],
 	contentBinding: 'controller.content',
-
-/*	watchContent: function() {
-		console.log("FridgeView content changed :" + JSON.stringify(this.get('content')));
-	}.observes('content'),*/
 	
 	rssUrl: function() {
-		var fridgeName = this.get('content').get('name');
+		var fridgeName = this.get('content').get('id');
 		return "/api/rss/fridge/" + fridgeName;
-	}.property('content.name'),
+	}.property('content.id'),
 
 	didInsertElement : function() {
-		document.title = "Fridge "+ this.get('content').get('name');
-		konami();
-
-		if(typeof store.get('username') !== "undefined"){
-			$("#pseudo").val(store.get('username'));
-		}
-
-		$("#search").autocomplete({
-			source : "api/search/fridge/",
-			delay : 100,
-			minLength : 2,
-			select : function(event, ui) {
-				window.location = "/#/fridge/" + ui.item.value;
-			},
-			open: function (event, ui) {
-		        $('.ui-autocomplete').css('z-index', '99999');
-		    },
-			response : function(event, ui) {
-				if (ui.content.length === 0) {
-					ui.content.push({
-						label : "Click to create",
-						value : $("#search").val()
-					});
-				}
-			}
-		});
+		document.title = "Fridge "+ App.Dao.get('fridgeId');
 	}
 });

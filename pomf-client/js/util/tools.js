@@ -94,9 +94,9 @@ function filterData(data) {
 
 function konami() {
     $(window).konami(function() {
-        jQuery('.post').addClass('barrel_roll');
+        $('.post').addClass('barrel_roll');
         setTimeout(function() {
-            jQuery('.post').removeClass('barrel_roll');
+            $('.post').removeClass('barrel_roll');
         }, 4000);  
     }); 
 }
@@ -117,5 +117,5 @@ function konami() {
 	        }
 	      });
 	    }
-	  })(jQuery);
-	}).call(this);
+	})(jQuery);
+}).call(this);

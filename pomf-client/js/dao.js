@@ -16,14 +16,15 @@ App.Dao = Em.Object.create({
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
+			var payload = $.parseJSON(data.payload);
 			if (data.command === "update" || data.command === "create" ) {
-				postsController.createOrUpdate($.parseJSON(data.payload));
+				postsController.createOrUpdate(payload);
 			}
 			if (data.command === "delete") {
-				postsController.deleteById($.parseJSON(data.payload));
+				postsController.deleteById(payload);
 			}
 			if (data.command === "message") {
-				chatController.messageManagement($.parseJSON(data.payload));
+				chatController.messageManagement(payload);
 			}
 		}, false);
 
@@ -33,7 +34,7 @@ App.Dao = Em.Object.create({
 
 		source.addEventListener('error', function(e) {
 			if (e.readyState == EventSource.CLOSED) {
-			    errorMessage("Channel error");
+			    errorMessage("Streaming service error");
 			}
 		}, false);
 	},
@@ -48,21 +49,21 @@ App.Dao = Em.Object.create({
 	},
 
 	findFridgeByName : function(fridgeId) {
-		var fridgeRetrieved = null; 
 		this.set('fridgeId',fridgeId);
 		console.log("Dao requesting fridge :"+fridgeId);
+		var model = App.Fridge.create();
 		$.ajax({
-	        async: false,   // forces synchronous call
 	        url: "api/fridge/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
-					console.dir(fridge);
-					fridge.posts = fridge.posts.map(function(post){ return App.Post.createWithMixins(post); });
-					fridgeRetrieved = App.Fridge.createWithMixins(fridge);
+					model.set('id', fridge.name);
+					model.set('description', fridge.description);
+					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
+					model.set('loaded', true);
 				}
 	        }
     	});
-		return fridgeRetrieved;
+		return model;
 	}
 });

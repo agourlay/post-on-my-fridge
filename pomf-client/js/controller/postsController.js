@@ -1,8 +1,8 @@
 App.PostsController = Ember.ArrayController.extend({
 
-	watchContent: function() {
+/*	watchContent: function() {
 		console.log("PostsController content changed :" + JSON.stringify(this.get('content')));
-	}.observes('content'),
+	}.observes('content'),*/
 	
 	createPost: function(postData) {
 		App.Post.createWithMixins(postData).createPost();

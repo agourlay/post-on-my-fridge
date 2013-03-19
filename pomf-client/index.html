@@ -48,7 +48,7 @@
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/layouts/bottomRight.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.0.3/themes/default.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-
+	
 	<script src = "/static/js/util/tools.js"></script>
 	<script src = "/static/js/app.js"></script>
 	<script src = "/static/js/util/jquery-ui-ember.js"></script>
@@ -162,40 +162,43 @@
     </script>
 
 	<script type="text/x-handlebars" data-template-name="fridge">
-        <header>
-            <div id="fridge-title">
-            	<a href="/" target="_blank" style="text-decoration: none">
-		            <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
-		        </a>
-				<b>Post on fridge {{view.content.name}}</b>
-		        <a {{bindAttr href="view.rssUrl"}} target="_blank">
-		            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
-		        </a>
-            </div>
+		{{#if view.content.loaded}}
+	        <header>
+	            <div id="fridge-title">
+	            	<a href="/" target="_blank" style="text-decoration: none">
+			            <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
+			        </a>
+					<b>Post on fridge {{view.content.id}}</b>
+			        <a {{bindAttr href="view.rssUrl"}} target="_blank">
+			            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
+			        </a>
+	            </div>
 
-            <div id="header-interaction">
-	 			<div id="create-area">
-					<a class="btn btn-primary btn-small" onclick="javascript:addDefaultPost()">
-	  					<i class="icon-plus-sign icon-large"></i> Add post
-	  				</a>
-	  			</div>
-	  			<div id="user-area">	
-	  				<i class="icon-user icon-large"></i>
-	  				<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
+	            <div id="header-interaction">
+		 			<div id="create-area">
+						<a class="btn btn-primary btn-small" onclick="javascript:addDefaultPost()">
+		  					<i class="icon-plus-sign icon-large"></i> Add post
+		  				</a>
+		  			</div>
+		  			<div id="user-area">	
+		  				<i class="icon-user icon-large"></i>
+		  				<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
+		            </div>
+		            <div id="search-area">
+		                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
+		            </div>
 	            </div>
-	            <div id="search-area">
-	                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
-	            </div>
-            </div>
-        </header>
-        <div id="main-content">
-            <aside id ="leftPanel">
-                <div id="chatPanel">
-                    {{render "chat"}}
-                    <textarea id="chatInput" rows="0" cols="0" maxlength="200" placeholder="Type message..."></textarea>
-                </div>
-            </aside>
-			{{render "posts" view.content.posts}}
+	        </header>
+	        <div id="main-content">
+	            <aside id ="leftPanel">
+	                <div id="chatPanel">
+	                    {{render "chat"}}
+	                    <textarea id="chatInput" rows="0" cols="0" maxlength="200" placeholder="Type message..."></textarea>
+	                </div>
+	            </aside>
+				{{render "posts" view.content.posts}}
+			</div> 
+		{{/if}}
     </script>
 
     <script type="text/x-handlebars" data-template-name="message-template">
