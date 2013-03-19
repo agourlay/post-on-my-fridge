@@ -9,10 +9,10 @@ App.ChatView = Ember.CollectionView.extend({
 		var handleReturnKey = function(e) {
 				if(e.charCode === 13 || e.keyCode === 13) {
 					e.preventDefault();
-					view.get('controller').sendChatMessage($("#message").val());
-					$("#message").val('');
+					view.get('controller').sendChatMessage($("#chatInput").val());
+					$("#chatInput").val('');
 				}
 			};
-		$("#message").keypress(handleReturnKey);
+		$("#chatInput").keypress(handleReturnKey);
 	}
 });
