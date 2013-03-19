@@ -1,4 +1,6 @@
-html,body {	margin: 0; }
+html,body {	
+	margin: 0;
+	height: 100%; }
 
 header {
 	position : fixed;
@@ -86,20 +88,8 @@ header {
   	padding: 2px; }
 
 #chatPanel{
-	bottom: 50px;
 	width: 100%;
 	height: 100%; }
-
-#chatInput {
-	position:relative;
-	width: 100%;
-	height: 100%; }	
-	
-#message textarea{
-	resize: none;
-	margin-bottom: 0px;
-	width: 100%;
-	height: 20%; }		
 	
 .chatLog {
 	position:relative;
@@ -111,6 +101,12 @@ header {
 	opacity:0.8;
 	overflow-y : scroll;
 	overflow-x : hidden; }	
+
+#chatInput {
+	resize: none;
+	margin-bottom: 2px;
+	width: 100%;
+	height: 7%; }		
 
 .chatContent{
 	word-wrap : break-word;
