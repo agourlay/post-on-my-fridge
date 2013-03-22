@@ -15,12 +15,20 @@ App.ChatController = Ember.ArrayController.extend({
 	},
 
 	sendChatMessage: function(message) {
+		var controller = this;
 		var pseudo = App.Dao.pseudo();
 		var payload = {};
 		payload.user = pseudo;
 		payload.message = message;
 		payload.timestamp = new Date().getTime();
-		$.ajax({
+		var promiseCreation = this.postMessage(payload);
+		promiseCreation.done(function(){
+			controller.messageManagement(payload);
+		});
+	},
+
+	postMessage : function(payload) {
+		return $.ajax({
 			type: "POST",
 			url: "api/message/"+this.get('fridgeName')+"?token="+ App.Dao.get("userToken"),
 			contentType: "application/json",
