@@ -1,11 +1,13 @@
 App.PostsController = Ember.ArrayController.extend({
-
-/*	watchContent: function() {
-		console.log("PostsController content changed :" + JSON.stringify(this.get('content')));
-	}.observes('content'),*/
 	
 	createPost: function(postData) {
-		App.Post.createWithMixins(postData).createPost();
+		var controller = this;
+		var model = App.Post.createWithMixins(postData);
+		var promiseCreation = model.createPost();
+		promiseCreation.done(function(postCreated){
+			model.set('id',$.parseJSON(postCreated).id);
+			controller.pushObject(model);
+		});
 	},
 
 	deletePost: function(id) {
@@ -27,7 +29,6 @@ App.PostsController = Ember.ArrayController.extend({
 	createOrUpdate: function(post) {
 		var exists = this.filterProperty('id', post.id).length;
 		if (exists === 0) {
-			console.dir(App.Post.createWithMixins(post));
 			this.pushObject(App.Post.createWithMixins(post));
 		} else {
 			this.updateExistingPost(post);

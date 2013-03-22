@@ -22,7 +22,7 @@ App.ChatController = Ember.ArrayController.extend({
 		payload.timestamp = new Date().getTime();
 		$.ajax({
 			type: "POST",
-			url: "api/message/"+this.get('fridgeName'),
+			url: "api/message/"+this.get('fridgeName')+"?token="+ App.Dao.get("userToken"),
 			contentType: "application/json",
 			dataType: "text",
 			data: JSON.stringify(payload),

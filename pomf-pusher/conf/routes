@@ -3,4 +3,4 @@
 # ~~~~
 
 # Home page
-GET     /stream/:fridgeName                     controllers.Application.stream(fridgeName: String)
+GET     /stream/:fridgeName/:token                     controllers.Application.stream(fridgeName: String, token: String)

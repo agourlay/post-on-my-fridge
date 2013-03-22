@@ -35,7 +35,7 @@ object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
   implicit val impFridge = jsonFormat3(Fridge)
   implicit val impFridgeRest = jsonFormat4(FridgeRest)
   implicit val impChatMessage = jsonFormat3(ChatMessage)
-  implicit val impNotif = jsonFormat4(Notification)
+  implicit val impNotif = jsonFormat5(Notification)
 }
 
 trait PomfRouteService extends HttpService { this: PomfActionService =>
@@ -62,16 +62,20 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
       path("post") {
         post {
           detachTo(singleRequestServiceActor) {
-            entity(as[Post]) { post =>
-            	complete(addPost(post))
+            parameters("token") { token =>
+              entity(as[Post]) { post =>
+            	complete(addPost(post,token))
+              }
             }
           }        
         } ~
           put {
 	        detachTo(singleRequestServiceActor) {
+	          parameters("token") { token =>
 	          entity(as[Post]) { post =>
-	            complete(updatePost(post))
-	          } 
+	            complete(updatePost(post,token))
+	          }
+	         }
 	        }          
           }
       } ~
@@ -83,7 +87,9 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
         } ~
           delete {
             detachTo(singleRequestServiceActor) {
-              complete(deletePost(postId)) 
+              parameters("token") { token =>
+              	complete(deletePost(postId,token))
+              }
             }
           }
       }~
@@ -110,9 +116,11 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
      path("message" / Rest) { fridgeName =>
            post {
              detachTo(singleRequestServiceActor) {
-               entity(as[ChatMessage]) { message =>
-            	 complete(addChatMessage(fridgeName,message))
-               }
+               parameters("token") { token =>
+	               entity(as[ChatMessage]) { message =>
+	            	 complete(addChatMessage(fridgeName,message,token))
+	               }
+              }
              }
            }~
              get {
@@ -120,6 +128,11 @@ trait PomfRouteService extends HttpService { this: PomfActionService =>
                   complete(retrieveChatHistory(fridgeName)) 
                }
           }      
-     }     
+     }~
+     path("token") {
+       get {
+        complete(TokenSupport.nextSessionId) 
+       }
+     }
   }   
 }

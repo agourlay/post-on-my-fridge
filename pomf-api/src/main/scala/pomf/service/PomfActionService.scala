@@ -34,9 +34,9 @@ trait PomfActionService{
 	
 	def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
 	  
-	def addPost(post: Post): Post = {
+	def addPost(post: Post, token : String): Post = {
 	  val persistedPost = dao.addPost(post)
-	  Boot.notificationService ! NotificationObj.create(post.fridgeId, persistedPost)
+	  Boot.notificationService ! NotificationObj.create(post.fridgeId, persistedPost, token)
 	  persistedPost
 	}
 	  
@@ -48,19 +48,19 @@ trait PomfActionService{
 	  
 	def searchByNameLike(term:String):List[String] = dao.searchByNameLike(term)
 	  
-	def deletePost(id :Long) = {
-	  Boot.notificationService ! NotificationObj.delete(getPost(id).get.fridgeId, id)
+	def deletePost(id :Long, token : String) = {
+	  Boot.notificationService ! NotificationObj.delete(getPost(id).get.fridgeId, id, token)
 	  dao.deletePost(id)
 	}
 	  
-	def updatePost(post :Post):Option[Post] = {
-	  Boot.notificationService ! NotificationObj.update(post.fridgeId, post)
+	def updatePost(post :Post, token : String):Option[Post] = {
+	  Boot.notificationService ! NotificationObj.update(post.fridgeId, post, token)
 	  dao.updatePost(post)
 	}
 	
-	def addChatMessage(fridgeName : String, message: ChatMessage):ChatMessage = {
+	def addChatMessage(fridgeName : String, message: ChatMessage, token : String):ChatMessage = {
 	  //cache.lpush(fridgeName+".chat", message)
-	  Boot.notificationService ! NotificationObj.message(fridgeName, message)
+	  Boot.notificationService ! NotificationObj.message(fridgeName, message, token)
 	  message
 	} 
   	

@@ -1,16 +1,3 @@
-function addDefaultPost(){
-	var newPostData = {};
-	newPostData.author = App.Dao.pseudo();
-	newPostData.content = "New post -> edit me with a double click!";
-	newPostData.color = "#f7f083";
-	newPostData.positionX = 0.5;
-	newPostData.positionY = 0.04;
-	newPostData.fridgeId = App.Dao.get('fridgeId');
-	newPostData.dueDate = "";
-	newPostValidation(newPostData);
-	App.Post.createWithMixins(newPostData).createPost();
-}
-
 function newPostValidation(newPostData) {
 	if (newPostData.dueDate !== "") {
 		newPostData.dueDate = newPostData.dueDate + 'T00:00:00';

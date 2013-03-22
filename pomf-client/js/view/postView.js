@@ -45,6 +45,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 				var fridge = $('#fridge'),
 				    fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
 				view.get('content').set('fullPosition', fullPosition);
+				view.get('content').updatePost()
 			}
 		});
 	},

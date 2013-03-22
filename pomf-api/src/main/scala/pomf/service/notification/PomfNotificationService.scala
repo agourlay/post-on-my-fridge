@@ -40,20 +40,15 @@ class PomfNotificationActor extends Actor{
   
   override def preStart() = {
 	  Amqp.waitForConnection(actorSystem, producer).await()
-  }
-  
+  }  
   
   def receive = {
-    case Notification(fridgeName,command,payload,timestamp) =>  {
-      //println("received message "+command+" for fridge "+fridgeName+" payload "+payload)
-      val jsonNotif : JsValue = impNotif.write(Notification(fridgeName,command,payload,timestamp))
+    case Notification(fridgeName,command,payload,timestamp,token) =>  {
+      val jsonNotif : JsValue = impNotif.write(Notification(fridgeName,command,payload,timestamp,token))
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
-          //idem potent
-          producer ! DeclareQueue(queueParams)
-          producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
-          producer ! Publish("amq.direct"
-        		  		   , "fridge."+fridgeName
-        		  		   , jsonNotif.toString.getBytes(Codec.UTF8.charSet))
+      producer ! DeclareQueue(queueParams)  //idem potent
+      producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
+      producer ! Publish("amq.direct", "fridge." + fridgeName, jsonNotif.toString.getBytes(Codec.UTF8.charSet))
     }
     case _ => 
   }

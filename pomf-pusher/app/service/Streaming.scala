@@ -16,6 +16,8 @@ import scala.collection.concurrent.TrieMap
 import scala.collection.concurrent.Map
 import akka.actor.ActorRef
 import play.api.libs.iteratee.Concurrent.Channel
+import play.api.libs.json.JsString
+import play.api.libs.json.JsObject
 
 object PomfNotificationService {
   lazy val notifier = new PomfNotificationActor
@@ -39,15 +41,14 @@ class PomfNotificationActor{
 
   val queues: Map[String, FridgeQueue] = TrieMap[String, FridgeQueue]()
   
-  def getStream(fridgeName: String): Enumerator[JsValue] = {
-    println("Get Stream for "+fridgeName)
+  def getStream(fridgeName: String): Enumerator[JsObject] = {
     queues.getOrElse(fridgeName, setUpQueue(fridgeName)).broadcast._1  
   }
 
   def setUpQueue(fridgeName: String): FridgeQueue = {
     createPhysicalQueueIfAbsent(fridgeName)
 
-    val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[JsValue]
+    val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[JsObject]
 
     // create an actor that will receive AMQP deliveries
     val listener = actorSystem.actorOf(Props(new Actor {
@@ -55,8 +56,15 @@ class PomfNotificationActor{
         case Delivery(consumerTag, envelope, properties, body) => {
           sender ! Ack(envelope.getDeliveryTag)
           val json: JsValue = Json.parse(new String(body))
-          //println("Pushing "+json.toString)
-          fridgeChannel.push(json)
+          val data = Json.obj(
+    		"fridgeName" -> json.\("fridgeName"),
+    		"command" -> json.\("command"),
+    		"payload" -> json.\("payload"),
+    		"timestamp" -> json.\("timestamp"),
+    		"token" -> json.\("token")
+    		)
+    	  //println("Pushing object " + data)
+          fridgeChannel.push(data)
         }
       }
     }))
@@ -74,4 +82,4 @@ class PomfNotificationActor{
 
 }
 
-case class FridgeQueue(val listener: ActorRef, val broadcast: (Enumerator[JsValue], Channel[JsValue]))
+case class FridgeQueue(val listener: ActorRef, val broadcast: (Enumerator[JsObject], Channel[JsObject]))

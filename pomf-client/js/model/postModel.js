@@ -12,6 +12,10 @@ App.Post = Em.Object.extend({
 		return "api/post/";
 	}.property(),
 
+	resourceUrlWithToken: function(){
+		return this.get("resourceUrl") +"?token=" + App.Dao.get("userToken") ;
+	}.property(),
+
 	fullPosition: function(key, value) {
 		// getter
 		if (arguments.length === 1) {
@@ -30,7 +34,7 @@ App.Post = Em.Object.extend({
 	deletePost: function() {
 		$.ajax({
 			method: 'DELETE',
-			url: this.get('resourceUrl') + this.id,
+			url:  this.get("resourceUrl") + this.id+"?token=" + App.Dao.get("userToken"),
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Post not deleted!");
@@ -38,9 +42,9 @@ App.Post = Em.Object.extend({
 		});
 	},
 
-	updatePosition: function() {
+	updatePost: function() {
 		$.ajax({
-			url: this.get('resourceUrl'),
+			url: this.get('resourceUrlWithToken'),
 			method: "PUT",
 			contentType: "application/json",
 			dataType: "text",
@@ -49,11 +53,11 @@ App.Post = Em.Object.extend({
 				errorMessage("Post not updated!");
 			}
 		});
-	}.observes('fullPosition','content','color','author','dueDate'),
+	}.observes('content','color','author','dueDate'),
 
 	createPost: function() {
-		$.ajax({
-			url: this.get('resourceUrl'),
+		return $.ajax({
+			url: this.get('resourceUrlWithToken'),
 			method: "POST",
         	contentType: "application/json",
         	dataType: "text",
