@@ -61,7 +61,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 			this.$().animate({
 				'left': "+=" + xTranslation,
 				'top': "+=" + yTranslation
-			}, 'slow', 'linear');
+			}, 'fast', 'swing');
 		}
 	}.observes('content.fullPosition'),
 
