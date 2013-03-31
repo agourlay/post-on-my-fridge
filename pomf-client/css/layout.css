@@ -55,7 +55,8 @@ header {
 	margin-right: 20px; }	
 
 #search-area input{
-	height: 18px;}	
+	height: 18px;
+	width: 180px;}	
 
 .global {
 	position:relative;
