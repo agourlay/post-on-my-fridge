@@ -8,9 +8,7 @@ object ApplicationBuild extends Build {
   val appVersion      = "1.0-SNAPSHOT"
 
   val appDependencies = Seq(
-    "com.github.sstone"  %%  "amqp-client" % "1.1"    ,   
-    jdbc,
-    anorm
+    "com.github.sstone"  %%  "amqp-client" % "1.1"
   )
 
 
