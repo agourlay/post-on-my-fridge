@@ -21,13 +21,14 @@ scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-featur
 resolvers ++= Seq(
   "sonatype releases" at "https://oss.sonatype.org/content/repositories/releases/",
   "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
-  "typesafe repo" at "http://repo.typesafe.com/typesafe/releases/",
+  "typesafe release" at "http://repo.typesafe.com/typesafe/releases/",
+  "typesafe repo" at "http://repo.typesafe.com/typesafe/repo/",
   "maven central" at "http://repo1.maven.org/maven2/",
   "spray repo" at "http://repo.spray.io/"
 )
 
 libraryDependencies ++= Seq(
-  "io.spray"            %   "spray-can"            % "1.1-M7"          withSources()
+   "io.spray"           %   "spray-can"            % "1.1-M7"          withSources()
   ,"io.spray"           %   "spray-routing"        % "1.1-M7"          withSources()
   ,"io.spray"           %   "spray-testkit"        % "1.1-M7"          withSources()
   ,"io.spray"           %   "spray-caching"        % "1.1-M7"          withSources()
@@ -39,7 +40,7 @@ libraryDependencies ++= Seq(
   ,"org.specs2"         %%  "specs2"               % "1.14" % "test"   withSources() 
   ,"com.typesafe.slick" %%  "slick"                % "1.0.0"           withSources()
   ,"com.h2database"     %   "h2"                   % "1.3.170"       
-  ,"postgresql"         %   "postgresql"           % "9.1-901-1.jdbc4" withSources()
+  ,"postgresql"         %   "postgresql"           % "9.2-1002.jdbc4"  withSources()
   ,"org.xerial"         %   "sqlite-jdbc"          % "3.7.2"           withSources()
   ,"junit"              %   "junit"                % "4.11" % "test"   withSources() 
   ,"ch.qos.logback"     %   "logback-classic"      % "1.0.9"           withSources()
