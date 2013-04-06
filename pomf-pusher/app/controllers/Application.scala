@@ -16,22 +16,27 @@ import play.api.libs.json.JsObject
 
 object Application extends Controller {
   
+  /**
+  * Remove event with user token
+  */  
   def filterNotToken(token: String): Enumeratee[JsObject, JsObject] = Enumeratee.filter[JsObject] {
     notification => notification.\("token").as[String] != token
   }
-    
-  val removeToken: Enumeratee[JsObject, JsObject] = Enumeratee.map[JsObject] {
+  
+  /**
+  * Remove token attribute
+  */  
+  def removeToken: Enumeratee[JsObject, JsObject] = Enumeratee.map[JsObject] {
     notification => Json.obj(
     		"fridgeName" -> notification.\("fridgeName"),
-    		"command" -> notification.\("command"),
-    		"payload" -> notification.\("payload"),
-    		"timestamp" -> notification.\("timestamp")
+    		"command"    -> notification.\("command"),
+    		"payload"    -> notification.\("payload"),
+    		"timestamp"  -> notification.\("timestamp")
     )
   }
   
-  def toJsValue: Enumeratee[JsObject, JsValue] = Enumeratee.map[JsObject] {
-    notification => notification
-  }
+  //FIXME not really nice : could by clean with implicit
+  def toJsValue: Enumeratee[JsObject, JsValue] = Enumeratee.map[JsObject] { notification => notification }
 
   /**
    * Stream of server send events

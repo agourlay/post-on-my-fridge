@@ -11,9 +11,8 @@ object ApplicationBuild extends Build {
     "com.github.sstone"  %%  "amqp-client" % "1.1"
   )
 
-
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    // Add your own project settings here      
+    scalacOptions ++= Seq("-deprecation","-unchecked","-feature") 
   )
 
 }
