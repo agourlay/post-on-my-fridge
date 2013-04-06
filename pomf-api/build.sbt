@@ -39,7 +39,7 @@ libraryDependencies ++= Seq(
   ,"com.github.sstone"  %%  "amqp-client"          % "1.1"             withSources()
   ,"org.specs2"         %%  "specs2"               % "1.14" % "test"   withSources() 
   ,"com.typesafe.slick" %%  "slick"                % "1.0.0"           withSources()
-  ,"com.h2database"     %   "h2"                   % "1.3.170"       
+  ,"com.h2database"     %   "h2"                   % "1.3.171"       
   ,"postgresql"         %   "postgresql"           % "9.2-1002.jdbc4"  withSources()
   ,"org.xerial"         %   "sqlite-jdbc"          % "3.7.2"           withSources()
   ,"junit"              %   "junit"                % "4.11" % "test"   withSources() 
