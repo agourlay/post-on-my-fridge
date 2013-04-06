@@ -40,7 +40,7 @@ libraryDependencies ++= Seq(
   ,"org.specs2"         %%  "specs2"               % "1.14" % "test"   withSources() 
   ,"com.typesafe.slick" %%  "slick"                % "1.0.0"           withSources()
   ,"com.h2database"     %   "h2"                   % "1.3.171"       
-  ,"postgresql"         %   "postgresql"           % "9.2-1002.jdbc4"  withSources()
+  ,"postgresql"         %   "postgresql"           % "9.2-1002.jdbc4"
   ,"org.xerial"         %   "sqlite-jdbc"          % "3.7.2"           withSources()
   ,"junit"              %   "junit"                % "4.11" % "test"   withSources() 
   ,"ch.qos.logback"     %   "logback-classic"      % "1.0.9"           withSources()
