@@ -11,17 +11,16 @@ class FridgeSimulation extends Simulation {
 
 	val httpConf = httpConfig
 			.baseURL("http://fridge.arnaud-gourlay.info")
-			.acceptHeader("application/json, text/javascript, */*; q=0.01")
+			.acceptHeader("text/plain,*/*; q=0.01")
 			.acceptEncodingHeader("gzip, deflate")
-			.acceptLanguageHeader("fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3")
+			.acceptLanguageHeader("en-US,en;q=0.4")
 			.connection("keep-alive")
-			.userAgentHeader("Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:20.0) Gecko/20100101 Firefox/20.0")
+			.userAgentHeader("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0")
 
 
 	val headers_1 = Map(
 			"Accept" -> """text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8""",
-			"Cache-Control" -> """max-age=0""",
-			"If-Modified-Since" -> """Sun, 31 Mar 2013 09:55:21 GMT"""
+			"Cache-Control" -> """max-age=0"""
 	)
 
 	val headers_2 = Map(
@@ -31,7 +30,6 @@ class FridgeSimulation extends Simulation {
 
 	val headers_3 = Map(
 			"Accept" -> """*/*""",
-			"Cache-Control" -> """max-age=0""",
 			"X-Requested-With" -> """XMLHttpRequest"""
 	)
 
@@ -62,112 +60,110 @@ class FridgeSimulation extends Simulation {
 			"X-Requested-With" -> """XMLHttpRequest"""
 	)
 
+	val headers_13 = Map(
+			"Cache-Control" -> """no-cache""",
+			"Content-Type" -> """application/json; charset=UTF-8""",
+			"Pragma" -> """no-cache""",
+			"X-Requested-With" -> """XMLHttpRequest"""
+	)
 
-	val scn = scenario("Fridge test")
-		.exec(http("index")
-					.get("/")
-					.headers(headers_1)
-					.check(status.is(304))
-			)
-		.pause(2)
-		.exec(http("retrieve chat history gatling1")
-					.get("/api/message/gatling1")
+	val headers_14 = Map(
+			"X-Requested-With" -> """XMLHttpRequest"""
+	)
+
+	def retrieveAndSetUserToken = http("retrieve user token on ${fridge_id}")
+						         .get("/api/token/")
+						         .headers(headers_3)
+						         .check(bodyString.saveAs("user_token"))
+
+	def createPostOnFridge = http("create post on ${fridge_id}")
+							.post("/api/post/")
+							.headers(headers_13)
+							.queryParam("""token""", """${user_token}""")
+							.body("""{"author":"${user_name}","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.5,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48"}""")
+							.check(jsonPath("//id")saveAs("post_id"))
+
+    def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
+								 .get("/stream/${fridge_id}/${user_token}")
+								 .headers(headers_8)
+
+	def retrieveChatHistory = http("retrieve chat history ${fridge_id}")
+					.get("/api/message/${fridge_id}")
 					.headers(headers_2)
-			)
-		.pause(12 milliseconds)
-		.exec(http("retrieve user token on gatling1")
-					.get("/api/token/")
-					.headers(headers_3)
-			)
-		.pause(19 milliseconds)
-		.exec(http("retrieve fridge gatling1")
-					.get("/api/fridge/gatling1")
-					.headers(headers_3)
-			)
-		.pause(20 milliseconds)
-		.exec(http("subscribe to fridge update")
-				.get("/stream/gatling1/s7o4f9vbrbf1hgoabph1hq28ls")
-				.headers(headers_8)
-			)
-		.pause(3)
-		.exec(http("send chat message on gatling1")
-					.post("/api/message/gatling1")
-					.headers(headers_6)
-					.queryParam("""token""", """s7o4f9vbrbf1hgoabph1hq28ls""")
-						.body("""{"user":"joe","message":"first message on gatling1","timestamp":1365329980732}""").asJSON
-			)
-		.pause(3)
-		.exec(http("send chat message 2 on gatling1")
-					.post("/api/message/gatling1")
-					.headers(headers_6)
-					.queryParam("""token""", """s7o4f9vbrbf1hgoabph1hq28ls""")
-						.body("""{"user":"joe","message":"second message on gatling1","timestamp":1365329984455}""").asJSON
-			)
-		.pause(4)
-		.exec(http("search for fridge term ga")
-					.get("/api/search/fridge/")
-					.headers(headers_9)
-					.queryParam("""term""", """ga""")
-			)
-		.pause(195 milliseconds)
-		.exec(http("search for fridge term gat")
-					.get("/api/search/fridge/")
-					.headers(headers_9)
-					.queryParam("""term""", """gat""")
-			)
-		.pause(1)
-		.exec(http("retrieve chat history gatling2")
-					.get("/api/message/gatling2")
-					.headers(headers_9)
-			)
-		.pause(11 milliseconds)
-		.exec(http("retrieve user token on gatling2")
-					.get("/api/token/")
-					.headers(headers_12)
-			)
-		.exec(http("retrieve fridge gatling2")
-					.get("/api/fridge/gatling2")
-					.headers(headers_12)
-			)
-		.pause(11 milliseconds)
-		.exec(http("subscribe to fridge gatling2")
-				.get("/stream/gatling1/s7o4f9vbrbf1hgoabph1hq29ls")
-				.headers(headers_8)
-			)
-		.pause(6)
-		.exec(http("send chat message on gatling2")
-					.post("/api/message/gatling2")
-					.headers(headers_6)
-					.queryParam("""token""", """s7o4f9vbrbf1hgoabph1hq29ls""")
-						.body("""{"user":"joe","message":"first message on gatling2","timestamp":1365330002982}""").asJSON
-			)
-		.pause(4)
-		.exec(http("search for fridge term ga")
-					.get("/api/search/fridge/")
-					.headers(headers_9)
-					.queryParam("""term""", """ga""")
-			)
-		.pause(786 milliseconds)
-		.exec(http("search for fridge term gat")
-					.get("/api/search/fridge/")
-					.headers(headers_9)
-					.queryParam("""term""", """gat""")
-			)
-		.pause(4)
-		.exec(http("retrieve chat history gatling1")
-					.get("/api/message/gatling1")
-					.headers(headers_9)
-			)
-		.pause(786 milliseconds)
-		.exec(http("retrieve user token on gatling1")
-					.get("/api/token/")
-					.headers(headers_12)
-			)
-		.pause(18 milliseconds)
-		.exec(http("retrieve fridge gatling1")
-					.get("/api/fridge/gatling1")
-					.headers(headers_12)
-			)
 
-	setUp(scn.users(500).ramp(100).protocolConfig(httpConf))
+	def retrieveFridgeContent = http("retrieve fridge ${fridge_id}")
+					.get("/api/fridge/${fridge_id}")
+					.headers(headers_3)			
+
+	def sendMessage = http("send chat message on ${fridge_id}")
+					.post("/api/message/${fridge_id}")
+					.headers(headers_6)
+					.queryParam("""token""", """${user_token}""")
+					.body("""{"user":"${user_name}","message":"Hello from Gatling blasting fridge ${fridge_id}","timestamp":1365329980732}""")
+
+	def searchForFridge = http("search for fridge term ${next_fridge_id}")
+					.get("/api/search/fridge/")
+					.headers(headers_9)
+					.queryParam("""term""", """${next_fridge_id}""")
+
+	def movePostAround = http("moving post ${post_id} on fridge ${fridge_id}")
+					.put("/api/post/")
+					.headers(headers_3)
+					.queryParam("""token""", """${user_token}""")
+					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","id":${post_id},"date":"2013-04-08T12:40:48"}""")
+					.asJSON
+
+	def changePostColor = http("change post ${post_id} color on fridge ${fridge_id}")
+					.put("/api/post/")
+					.headers(headers_3)
+					.queryParam("""token""", """${user_token}""")
+					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
+					.asJSON
+
+	def changePostContent = http("change post ${post_id} content on fridge ${fridge_id}")
+					.put("/api/post/")
+					.headers(headers_3)
+					.queryParam("""token""", """${user_token}""")
+					.body("""{"author":"Anonymous","content":"Gatling rocks!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
+					.asJSON
+			
+
+	def deletePost = http("delete post ${post_id} from fridge ${fridge_id}")
+					.delete("/api/post/${post_id}")
+					.headers(headers_14)
+					.queryParam("""token""", """${user_token}""")
+
+
+
+	val scn = scenario("Fridge use case")
+	    .exec(session => session.setAttribute("fridge_id","gatling1"))
+	    .pause(10 milliseconds)
+	    .exec(session => session.setAttribute("user_name","Joe"))
+	    .pause(10 milliseconds)
+	    .exec(session => session.setAttribute("next_fridge_id","gatling2"))
+	    .pause(10 milliseconds)
+	    .exec(retrieveAndSetUserToken)
+	    .pause(20 milliseconds)
+		.exec(retrieveChatHistory)
+		.pause(20 milliseconds)
+		//.exec(suscribeToNotification)
+		.pause(20 milliseconds)
+		.exec(retrieveFridgeContent)
+		.pause(2)
+		.exec(createPostOnFridge)
+		.pause(2)
+        .exec(sendMessage)
+		.pause(2)
+		.exec(movePostAround)
+		.pause(2)
+		.exec(changePostColor)
+		.pause(2)
+		.exec(changePostContent)
+		.pause(2)
+		.exec(deletePost)
+		.pause(2)		
+		.exec(searchForFridge)
+
+	setUp(scn.users(1).ramp(1).protocolConfig(httpConf))
+	//setUp(scn.users(300).ramp(100).protocolConfig(httpConf))
 }
