@@ -6,6 +6,7 @@ import com.excilys.ebi.gatling.http.Headers.Names._
 import akka.util.duration._
 import bootstrap._
 import assertions._
+import java.util.Random
 
 class FridgeSimulation extends Simulation {
 
@@ -134,13 +135,15 @@ class FridgeSimulation extends Simulation {
 					.queryParam("""token""", """${user_token}""")
 
 
+	val fridgeChoice = Array("gatling1","gatling2")
+	val rand = new Random(System.currentTimeMillis())
 
 	val scn = scenario("Fridge use case")
-	    .exec(session => session.setAttribute("fridge_id","gatling1"))
+	    .exec(session => session.setAttribute("fridge_id", fridgeChoice(rand.nextInt(fridgeChoice.length))))
 	    .pause(10 milliseconds)
 	    .exec(session => session.setAttribute("user_name","Joe"))
 	    .pause(10 milliseconds)
-	    .exec(session => session.setAttribute("next_fridge_id","gatling2"))
+	    .exec(session => session.setAttribute("next_fridge_id", fridgeChoice(rand.nextInt(fridgeChoice.length))))
 	    .pause(10 milliseconds)
 	    .exec(retrieveAndSetUserToken)
 	    .pause(20 milliseconds)
@@ -164,6 +167,5 @@ class FridgeSimulation extends Simulation {
 		.pause(2)		
 		.exec(searchForFridge)
 
-	setUp(scn.users(1).ramp(1).protocolConfig(httpConf))
-	//setUp(scn.users(300).ramp(100).protocolConfig(httpConf))
+	setUp(scn.users(150).ramp(10).protocolConfig(httpConf))
 }
