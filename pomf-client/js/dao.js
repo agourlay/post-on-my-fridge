@@ -12,7 +12,9 @@ App.Dao = Em.Object.create({
 		if (this.get("messagesController") != null){
 			this.get("messagesController").reload();
 		}
-		this.set("source",null);
+		if (this.get("source") != null){
+			this.get("source").close();
+		}
 		this.retrieveUserToken();
 		return this.findFridgeByName(fridgeId);
 	},
