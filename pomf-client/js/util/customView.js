@@ -19,3 +19,16 @@ App.LazyTextField = Ember.TextField.extend({
 App.LazyTextArea = Ember.TextArea.extend({
   valueBinding: Ember.Binding.oneWay('source')
 });
+
+App.ChatTextArea = Ember.TextArea.extend({
+  didInsertElement: function() {
+    var view = this;
+    var handleReturnKey = function(e) {
+        if(e.charCode === 13 || e.keyCode === 13) {
+          e.preventDefault();
+          view.get('controller').sendChatMessage();
+        }
+      };
+    view.$().keypress(handleReturnKey);  
+  }
+});

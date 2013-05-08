@@ -1,4 +1,8 @@
 App.PostsController = Ember.ArrayController.extend({
+
+	init : function(){
+		App.Dao.streamRegistering(this,null);
+	},
 	
 	createPost: function(postData) {
 		var controller = this;

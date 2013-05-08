@@ -2,7 +2,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 	tagName: 'article',
 	classNames: ['post'],
 	uiType: 'draggable',
-    templateName: 'post-template',
+	templateName: 'post',
     readMode : true,
 
 	relativeDate: function() {

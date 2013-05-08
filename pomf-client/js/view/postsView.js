@@ -7,8 +7,6 @@ App.PostsView = Ember.CollectionView.extend({
 	didInsertElement : function() {
 		var view = this;
 		view.$().droppable({accept: ".post"});
-		App.Dao.streamManagement(view.get('controller'));
-
 		konami();
 		
 		if(typeof store.get('username') !== "undefined"){

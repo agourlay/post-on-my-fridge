@@ -39,7 +39,7 @@
 	<script src = "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	<script src = "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js"></script>
- 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.3/ember.min.js"></script>
+ 	<script src = "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.3/ember.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/store.js/1.3.7/store.min.js"></script>
  	<script src = "//cdnjs.cloudflare.com/ajax/libs/js-url/1.7.6/js-url.min.js"></script>
@@ -60,6 +60,8 @@
 	<script src = "/static/js/view/postsView.js"></script>
 	<script src = "/static/js/model/messageModel.js"></script>
 	<script src = "/static/js/view/messageView.js"></script>
+	<script src = "/static/js/view/messagesView.js"></script>
+	<script src = "/static/js/controller/messagesController.js"></script>
 	<script src = "/static/js/view/chatView.js"></script>
 	<script src = "/static/js/controller/chatController.js"></script>
 	<script src = "/static/js/model/fridgeModel.js"></script>
@@ -191,22 +193,24 @@
 	        </header>
 	        <div id="main-content">
 	            <aside id ="leftPanel">
-	                <div id="chatPanel">
-	                    {{render "chat"}}
-	                    <textarea id="chatInput" rows="0" cols="0" maxlength="200" placeholder="Type message..."></textarea>
-	                </div>
+	                {{render "chat"}}
 	            </aside>
 				{{render "posts" view.content.posts}}
 			</div> 
 		{{/if}}
     </script>
 
-    <script type="text/x-handlebars" data-template-name="message-template">
+   <script type="text/x-handlebars" data-template-name="chat">
+		{{render "messages"}}
+	    {{view App.ChatTextArea maxlength="200" valueBinding="content" placeholder="Type message..."}} 
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="message">
 		<br/><i>Sent at {{view.content.date}}</i>
 		<br/><b>{{view.content.user}}:</b> <span class='chatContent'>{{view.content.message}}</span>
     </script>
         
-    <script type="text/x-handlebars" data-template-name="post-template">
+    <script type="text/x-handlebars" data-template-name="post">
     	<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
 	    {{#if view.readMode}}
 			<div class='content'>{{{view.generatedContent}}}</div>

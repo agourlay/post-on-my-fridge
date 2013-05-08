@@ -2,13 +2,12 @@ App.Dao = Em.Object.create({
 
 	fridgeId : null,
 	source : null,
-	chatController : null,
+	messagesController : null,
 	postsController : null,
 	userToken: null,
 
-	initApp : function(chatController) {
-		chatController.initController();
-		this.set('chatController',chatController);
+	initSessionData : function() {
+		this.set("source",null);
 		this.retrieveUserToken();
 	},
 
@@ -25,10 +24,30 @@ App.Dao = Em.Object.create({
 		this.get('postsController').createPost(newPostData);
 	},
 
-	streamManagement : function (postsController) {
+	addLocalMessage : function (message) {
+		this.get('messagesController').messageManagement(message);
+	},
+
+	streamRegistering : function(optPostsController, optMessagesController){
+		console.log("registering "+ optPostsController + " " + optMessagesController);
+		if (optPostsController != null){
+			this.set("postsController",optPostsController);
+		}
+
+		if (optMessagesController != null){
+			this.set("messagesController",optMessagesController);
+		}
+
+		var postsController = this.get("postsController");
+		var messagesController = this.get("messagesController");
+
+		if (postsController != null && messagesController != null){
+			this.streamManagement(postsController,messagesController); 
+		}
+	},
+
+	streamManagement : function (postsController,messagesController) {
 		var me = this;
-		var chatController = this.get('chatController');
-		this.set("postsController",postsController);
 		me.set("source", new EventSource("stream/" + this.get('fridgeId') +"/"+ this.get("userToken")));
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
@@ -42,7 +61,7 @@ App.Dao = Em.Object.create({
 				postsController.deleteById(payload);
 			}
 			if (data.command === "message") {
-				chatController.messageManagement(payload);
+				messagesController.messageManagement(payload);
 			}
 		}, false);
 
