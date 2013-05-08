@@ -6,9 +6,14 @@ App.Dao = Em.Object.create({
 	postsController : null,
 	userToken: null,
 
-	initSessionData : function() {
+	initSessionData : function(fridgeId) {
+		this.set('fridgeId',fridgeId);
+		this.set("userToken",null);
+		this.set("messagesController",null);
+		this.set("postsController",null);
 		this.set("source",null);
 		this.retrieveUserToken();
+		return this.findFridgeByName(fridgeId);
 	},
 
 	addDefaultPost : function (){
@@ -29,7 +34,6 @@ App.Dao = Em.Object.create({
 	},
 
 	streamRegistering : function(optPostsController, optMessagesController){
-		console.log("registering "+ optPostsController + " " + optMessagesController);
 		if (optPostsController != null){
 			this.set("postsController",optPostsController);
 		}
@@ -86,7 +90,6 @@ App.Dao = Em.Object.create({
 	},
 
 	findFridgeByName : function(fridgeId) {
-		this.set('fridgeId',fridgeId);
 		console.log("Dao requesting fridge :"+fridgeId);
 		var model = App.Fridge.create();
 		$.ajax({
