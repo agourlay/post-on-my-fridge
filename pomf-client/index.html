@@ -178,6 +178,10 @@
 
 	            <div id="header-interaction">
 		 			<div id="create-area">
+		 				<a class="btn btn-info btn-small" 
+		 					onclick="javascript:$('#leftPanel').animate({width:'toggle'},300);">
+		  					<i class="icon-comments-alt icon-large"></i> Toggle chat
+		  				</a>
 						<a class="btn btn-primary btn-small" onclick="javascript:App.Dao.addDefaultPost()">
 		  					<i class="icon-plus-sign icon-large"></i> Add post
 		  				</a>
@@ -202,7 +206,7 @@
 
    <script type="text/x-handlebars" data-template-name="chat">
 		{{render "messages"}}
-	    {{view App.ChatTextArea maxlength="200" valueBinding="content" placeholder="Type message..."}} 
+	    {{view App.ChatTextArea maxlength="200" class="chatInput" valueBinding="content" placeholder="Type message..."}} 
     </script>
 
     <script type="text/x-handlebars" data-template-name="message">
