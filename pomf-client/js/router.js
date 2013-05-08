@@ -1,4 +1,3 @@
-// 'http://localhost:8888/#/fridge/demo
 App.Router.map(function() {
     this.resource('index', { path:'/'}); 
     this.resource('fridges');

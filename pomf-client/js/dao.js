@@ -9,8 +9,9 @@ App.Dao = Em.Object.create({
 	initSessionData : function(fridgeId) {
 		this.set('fridgeId',fridgeId);
 		this.set("userToken",null);
-		this.set("messagesController",null);
-		this.set("postsController",null);
+		if (this.get("messagesController") != null){
+			this.get("messagesController").reload();
+		}
 		this.set("source",null);
 		this.retrieveUserToken();
 		return this.findFridgeByName(fridgeId);
@@ -90,7 +91,7 @@ App.Dao = Em.Object.create({
 	},
 
 	findFridgeByName : function(fridgeId) {
-		console.log("Dao requesting fridge :"+fridgeId);
+		console.log("Dao requesting fridge : "+fridgeId);
 		var model = App.Fridge.create();
 		$.ajax({
 	        url: "api/fridge/" + fridgeId,

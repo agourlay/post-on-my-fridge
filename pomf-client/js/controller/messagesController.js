@@ -1,14 +1,14 @@
 App.MessagesController = Ember.ArrayController.extend({
 	content: [],
-	
-	watchContent: function() {
-		console.log("MessagesController content changed : " + JSON.stringify(this.get('content')));
-	}.observes('content'),
-	
+		
 	init: function () {
+		App.Dao.streamRegistering(null,this);
+		this.reload();
+	},
+
+	reload : function (){
 		this.get('content').clear();
 		this.retrievePreviousMessages();
-		App.Dao.streamRegistering(null,this);
 	},
 
 	messageManagement: function(message) {

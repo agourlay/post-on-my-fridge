@@ -1,8 +1,4 @@
 App.ChatController = Ember.ObjectController.extend({
-
-	watchContent: function() {
-		console.log("ChatController content changed :" + JSON.stringify(this.get('content')));
-	}.observes('content'),
 	
 	sendChatMessage: function() {
 		var message = this.get('content');
