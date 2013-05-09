@@ -16,9 +16,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 	mouseEnter: function(event) {
 		this.$().find(".header").css({
-			'position': 'absolute',
-			'left': 0,
-			'top': '-18px'
+			'display': 'block'
 		}).fadeIn(300);
 	},
 
@@ -29,13 +27,9 @@ App.PostView = Em.View.extend(App.Draggable, {
 		}
 	},
 
-	doubleClick: function() {
-		this.set('readMode',!this.get('readMode'));
-	},
-
 	didInsertElement: function() {
 		var view = this;
-		view.initTrash();
+		view.initIcons();
 		view.colorize();
 		view.updatePhysicalPosition();
 		view.$().draggable({
@@ -71,14 +65,19 @@ App.PostView = Em.View.extend(App.Draggable, {
 		this.$().css("color", getTxtColorFromBg(color));
 	}.observes('content.color'),
 
-	initTrash: function() {
+	initIcons: function() {
 		var view = this;
+		// Trash
 		view.$().find(" .icon-trash").click(function() {
 			view.$().effect("bounce", {	times: 2}, 300)
 				    .effect("clip", { times: 1}, 300, function(){
 				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
 						view.get('controller').deletePost(view.get('content').get('id'));
 				    });
+		});
+		// Edit
+		view.$().find(" .icon-edit").click(function() {
+			view.set('readMode',!view.get('readMode'));
 		});
 	},
 

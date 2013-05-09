@@ -211,9 +211,34 @@
 		<br/><i>Sent at {{view.content.date}}</i>
 		<br/><b>{{view.content.user}}:</b> <span class='chatContent'>{{view.content.message}}</span>
     </script>
-        
+    
+    <script type="text/x-handlebars" data-template-name="post/_header">
+    	<div class='header'>
+			<div class="btn-toolbar">
+			    <div class="btn-group">
+			    	<a class="btn btn-mini"><i class="icon-thumbs-up"></i></a>
+			     	<a class="btn btn-mini"><i class="icon-share-alt"></i></a>
+			    </div>
+			    <div class="btn-group">
+			       <a class="btn btn-mini"><i class="icon-edit"></i></a>
+			       <a class="btn btn-mini"><i class="icon-trash"></i></a>
+			    </div>
+			</div>
+		</div>	
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="post/_form">
+    	<form>
+			{{view App.LazyTextArea sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
+			{{view App.LazyDateFieldView sourceBinding="view.content.dueDate" viewName="textFieldDueDate"}}
+			{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
+			{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}}
+			<input type="button" value="Save" {{action save target="view"}}>
+		</form>
+    </script>
+
     <script type="text/x-handlebars" data-template-name="post">
-    	<div class='header'><i class="icon-trash"></i></div> 
+    	{{partial "post/header"}}
 	    {{#if view.readMode}}
 			<div class='content'>{{{view.generatedContent}}}</div>
 			<div class='footer'>
@@ -221,13 +246,7 @@
 				<time class="date" datetime="{{view.content.creationDate}}">{{view.relativeDate}}</time>
 			</div>
 		{{else}}
-			<form>
-				{{view App.LazyTextArea sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
-				{{view App.LazyDateFieldView sourceBinding="view.content.dueDate" viewName="textFieldDueDate"}}
-				{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
-				{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}}
-				<input type="button" value="Save" {{action save target="view"}}>
-			</form>
+			{{partial "post/form"}}
 		{{/if}}	
     </script> 
 </body>

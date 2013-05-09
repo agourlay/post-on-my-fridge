@@ -22,7 +22,7 @@ App.Dao = Em.Object.create({
 	addDefaultPost : function (){
 		var newPostData = {};
 		newPostData.author = App.Dao.pseudo();
-		newPostData.content = "New post -> edit me with a double click!";
+		newPostData.content = "New post -> edit me!";
 		newPostData.color = "#f7f083";
 		newPostData.positionX = 0.5;
 		newPostData.positionY = 0.04;

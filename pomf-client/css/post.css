@@ -23,9 +23,7 @@
 .post .header{
 	position: absolute;
 	left:0;
-	top:-1px;
-	border:1px solid black;
-	background-color:white;
+	top:-35px;
 	display:none; }
 	
 .post:hover .header:hover {
