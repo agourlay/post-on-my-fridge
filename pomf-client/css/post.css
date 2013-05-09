@@ -23,7 +23,7 @@
 .post .header{
 	position: absolute;
 	left:0;
-	top:-18px;
+	top:-1px;
 	border:1px solid black;
 	background-color:white;
 	display:none; }

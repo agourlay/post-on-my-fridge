@@ -1,5 +1,5 @@
 App.ChatView = Ember.View.extend({
-	tagName: 'div',
+	tagName: 'aside',
 	classNames: ['chatPanel'],
 	contentBinding: 'controller.content'
 });

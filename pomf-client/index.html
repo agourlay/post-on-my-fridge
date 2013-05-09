@@ -179,7 +179,7 @@
 	            <div id="header-interaction">
 		 			<div id="create-area">
 		 				<a class="btn btn-info btn-small" 
-		 					onclick="javascript:$('#leftPanel').animate({width:'toggle'},300);">
+		 					onclick="javascript:$('.chatPanel').animate({width:'toggle'},300);">
 		  					<i class="icon-comments-alt icon-large"></i> Toggle chat
 		  				</a>
 						<a class="btn btn-primary btn-small" onclick="javascript:App.Dao.addDefaultPost()">
@@ -196,9 +196,7 @@
 	            </div>
 	        </header>
 	        <div id="main-content">
-	            <aside id ="leftPanel">
-	                {{render "chat"}}
-	            </aside>
+	            {{render "chat"}}
 				{{render "posts" view.content.posts}}
 			</div> 
 		{{/if}}
@@ -215,7 +213,7 @@
     </script>
         
     <script type="text/x-handlebars" data-template-name="post">
-    	<div class='header'><span class='ui-icon ui-icon-trash'></span></div> 
+    	<div class='header'><i class="icon-trash"></i></div> 
 	    {{#if view.readMode}}
 			<div class='content'>{{{view.generatedContent}}}</div>
 			<div class='footer'>

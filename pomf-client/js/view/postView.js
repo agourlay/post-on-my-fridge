@@ -73,11 +73,12 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 	initTrash: function() {
 		var view = this;
-		view.$().find(" .ui-icon-trash").click(function() {
-			view.$().effect("bounce", {	times: 3}, 300)
-				    .effect("clip", { times: 1}, 300);
-			infoMessage("Post from " + view.get('content').get('author') + " deleted");
-			view.get('controller').deletePost(view.get('content').get('id'));
+		view.$().find(" .icon-trash").click(function() {
+			view.$().effect("bounce", {	times: 2}, 300)
+				    .effect("clip", { times: 1}, 300, function(){
+				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
+						view.get('controller').deletePost(view.get('content').get('id'));
+				    });
 		});
 	},
 
