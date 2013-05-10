@@ -14,7 +14,6 @@ App.PostsView = Ember.CollectionView.extend({
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {
-				//window.location = "/#/fridge/" + ui.item.value;
 				view.get('controller').get('target').transitionToRoute('fridge', App.Dao.initSessionData(ui.item.value));
 			},
 			open: function (event, ui) {
