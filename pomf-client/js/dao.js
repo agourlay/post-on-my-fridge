@@ -21,7 +21,7 @@ App.Dao = Em.Object.create({
 	},
 
 	toggleChatMode : function (){
-		this.set("chatMode",true);
+		this.set("chatMode",!this.get("chatMode"));
 		$('.chatPanel').animate({width:'toggle'},300);
 	},
 
