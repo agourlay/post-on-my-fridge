@@ -176,11 +176,10 @@
 
 	        <div id="header-interaction">
 		 		<div id="create-area">
-		 			<a class="btn btn-info btn-small" 
-		 					onclick="javascript:$('.chatPanel').animate({width:'toggle'},300);">
+		 			<a class="btn btn-info btn-small" {{action "toggleChat"}}>
 		  				<i class="icon-comments-alt icon-large"></i> Toggle chat
 		  			</a>
-					<a class="btn btn-primary btn-small" onclick="javascript:App.Dao.addDefaultPost()">
+					<a class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
 		  					<i class="icon-plus-sign icon-large"></i> Add post
 		  			</a>
 		  		</div>
