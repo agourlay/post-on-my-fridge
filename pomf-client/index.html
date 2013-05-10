@@ -52,7 +52,6 @@
 	<script src = "/static/js/util/tools.js"></script>
 	<script src = "/static/js/app.js"></script>
 	<script src = "/static/js/util/jquery-ui-ember.js"></script>
-	<script src = "/static/js/util/ember-bootstrap.min.js"></script>
 	<script src = "/static/js/util/customView.js"></script>
 	<script src = "/static/js/model/postModel.js"></script>
 	<script src = "/static/js/view/postView.js"></script>
@@ -163,38 +162,42 @@
 		List of all fridges
     </script>
 
-	<script type="text/x-handlebars" data-template-name="fridge">
-		{{#if view.content.loaded}}
-	        <header>
-	            <div id="fridge-title">
-	            	<a href="/" style="text-decoration: none">
-			            <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
-			        </a>
-					<b>Post on fridge {{view.content.id}}</b>
-			        <a {{bindAttr href="view.rssUrl"}} target="_blank">
-			            <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
-			        </a>
-	            </div>
+    <script type="text/x-handlebars" data-template-name="fridge/_header">
+    	 <header>
+	        <div id="fridge-title">
+	          	<a href="/" style="text-decoration: none">
+			        <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
+			    </a>
+				<b>Post on fridge {{view.content.id}}</b>
+			    <a {{bindAttr href="view.rssUrl"}} target="_blank">
+			        <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
+			    </a>
+	        </div>
 
-	            <div id="header-interaction">
-		 			<div id="create-area">
-		 				<a class="btn btn-info btn-small" 
+	        <div id="header-interaction">
+		 		<div id="create-area">
+		 			<a class="btn btn-info btn-small" 
 		 					onclick="javascript:$('.chatPanel').animate({width:'toggle'},300);">
-		  					<i class="icon-comments-alt icon-large"></i> Toggle chat
-		  				</a>
-						<a class="btn btn-primary btn-small" onclick="javascript:App.Dao.addDefaultPost()">
+		  				<i class="icon-comments-alt icon-large"></i> Toggle chat
+		  			</a>
+					<a class="btn btn-primary btn-small" onclick="javascript:App.Dao.addDefaultPost()">
 		  					<i class="icon-plus-sign icon-large"></i> Add post
-		  				</a>
-		  			</div>
-		  			<div id="user-area">	
-		  				<i class="icon-user icon-large"></i>
-		  				<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
-		            </div>
-		            <div id="search-area">
-		                <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
-		            </div>
-	            </div>
-	        </header>
+		  			</a>
+		  		</div>
+		  		<div id="user-area">	
+		  			<i class="icon-user icon-large"></i>
+		  			<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
+		        </div>
+		        <div id="search-area">
+		            <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
+		        </div>
+	        </div>
+	    </header>
+    </script>
+
+	<script type="text/x-handlebars" data-template-name="fridge">
+		{{partial "fridge/header"}}
+		{{#if view.content.loaded}}
 	        <div id="main-content">
 	            {{render "chat"}}
 				{{render "posts" view.content.posts}}

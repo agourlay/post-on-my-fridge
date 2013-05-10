@@ -22,7 +22,7 @@ App.Dao = Em.Object.create({
 	addDefaultPost : function (){
 		var newPostData = {};
 		newPostData.author = App.Dao.pseudo();
-		newPostData.content = "New post -> edit me!";
+		newPostData.content = "New post -> edit me";
 		newPostData.color = "#f7f083";
 		newPostData.positionX = 0.5;
 		newPostData.positionY = 0.04;
@@ -95,12 +95,12 @@ App.Dao = Em.Object.create({
 	findFridgeByName : function(fridgeId) {
 		console.log("Dao requesting fridge : "+fridgeId);
 		var model = App.Fridge.create();
+		model.set('id', fridgeId);
 		$.ajax({
 	        url: "api/fridge/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
-					model.set('id', fridge.name);
 					model.set('description', fridge.description);
 					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
 					model.set('loaded', true);

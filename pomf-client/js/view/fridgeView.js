@@ -9,6 +9,6 @@ App.FridgeView = Em.View.extend({
 	}.property('content.id'),
 
 	didInsertElement : function() {
-		document.title = "Fridge "+ App.Dao.get('fridgeId');
+		document.title = "Fridge "+ this.get('content').get('id');
 	}
 });

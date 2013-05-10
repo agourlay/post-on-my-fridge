@@ -13,6 +13,8 @@ App.ApplicationController = Ember.Controller.extend({
              window.location.hash.substring(1) :
              window.location.pathname;
       _gaq.push(['_trackPageview', page]);
+      _gaq.push(['_setAccount', 'UA-25345034-1']);
+      _gaq.push(['_setSiteSpeedSampleRate', 100]);
     }
   }.observes('currentPath')
 });

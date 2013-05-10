@@ -9,16 +9,13 @@ App.PostsView = Ember.CollectionView.extend({
 		view.$().droppable({accept: ".post"});
 		konami();
 		
-		if(typeof store.get('username') !== "undefined"){
-			$("#pseudo").val(store.get('username'));
-		}
-
 		$("#search").autocomplete({
 			source : "api/search/fridge/",
 			delay : 100,
 			minLength : 2,
 			select : function(event, ui) {
-				window.location = "/#/fridge/" + ui.item.value;
+				//window.location = "/#/fridge/" + ui.item.value;
+				view.get('controller').get('target').transitionToRoute('fridge', App.Dao.initSessionData(ui.item.value));
 			},
 			open: function (event, ui) {
 		        $('.ui-autocomplete').css('z-index', '99999');
@@ -32,6 +29,5 @@ App.PostsView = Ember.CollectionView.extend({
 				}
 			}
 		});
-
 	}
 });
