@@ -20,6 +20,9 @@
 	<link rel="stylesheet" href="/static/css/post.css"/>
 	
 	<!-- PREFETCH -->
+	<link rel="prefetch" href="/images/index/index-chat.jpeg" />
+	<link rel="prefetch" href="/images/index/index-multimedia.jpeg" />
+	<link rel="prefetch" href="/images/index/index-easy.jpeg" />
 	<link rel="prefetch" href="/images/fridgeBg.png" />
 
 	<!-- JS -->
@@ -112,9 +115,53 @@
 					</div>
 					<div class="row-fluid">
 						<div class="span12">
-							<a class="thumbnail">
-								<img src="../../images/index-fridge.png" alt="">
-							</a>
+							<div id="myCarousel" class="carousel slide">
+								<ol class="carousel-indicators">
+									<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+									<li data-target="#myCarousel" data-slide-to="1"></li>
+									<li data-target="#myCarousel" data-slide-to="2"></li>
+									<li data-target="#myCarousel" data-slide-to="3"></li>
+								</ol>
+								<!-- Carousel items -->
+								<div class="carousel-inner">
+									<div class="active item">
+										<div class="thumbnail">
+											<img src="../../images/index/index-overview.jpeg" alt="">
+										</div>
+										<div class="carousel-caption">
+                      						<h4>Overview</h4>
+                      						<p>Yes it is awesome.</p>
+                    					</div>
+									</div>
+									<div class="item">
+										<div class="thumbnail">
+											<img src="../../images/index/index-chat.jpeg" alt="">
+										</div>	
+										<div class="carousel-caption">
+                      						<h4><i class="icon-comments-alt"></i> Chat</h4>
+                      						<p>Exchange in live with other users.</p>
+                    					</div>
+									</div>
+									<div class="item">
+										<div class="thumbnail">
+											<img src="../../images/index/index-multimedia.jpeg" alt="">
+										</div>
+										<div class="carousel-caption">
+                      						<h4><i class="icon-film"></i> Multimedia</h4>
+                      						<p>Share videos from Youtube, Vimeo & Dailymotion</p>
+                    					</div>
+									</div>
+									<div class="item">
+										<div class="thumbnail">
+											<img src="../../images/index/index-easy.jpeg" alt="">
+										</div>
+										<div class="carousel-caption">
+                      						<h4><i class="icon-heart"></i> Easy</h4>
+                      						<p>Create and modify content in real-time</p>
+                    					</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

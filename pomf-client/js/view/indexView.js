@@ -1,1 +1,7 @@
-App.IndexView = Ember.View.extend({});
+App.IndexView = Ember.View.extend({
+	didInsertElement : function() {	
+		$('#myCarousel').carousel({
+  			interval: 3000
+		})
+	}
+});
