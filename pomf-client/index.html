@@ -53,6 +53,7 @@
 	<script src = "/static/js/app.js"></script>
 	<script src = "/static/js/util/jquery-ui-ember.js"></script>
 	<script src = "/static/js/util/customView.js"></script>
+	<script src = "/static/js/controller/indexController.js"></script>
 	<script src = "/static/js/model/postModel.js"></script>
 	<script src = "/static/js/view/postView.js"></script>
 	<script src = "/static/js/controller/postsController.js"></script>
@@ -98,7 +99,7 @@
 							</p>
 							<div class="span4 offset4">
 								<p>
-								   <a class="btn btn-primary btn-large" href="#/fridge/demo" >
+								   <a class="btn btn-primary btn-large" {{action "toDemo"}} >
 										<i class="icon-white icon-signin"></i>
 										Try the demo
 								    </a>
@@ -108,7 +109,7 @@
 					</div>
 					<div class="row-fluid">
 						<div class="span12">
-							<a href="#" class="thumbnail">
+							<a class="thumbnail">
 								<img src="../../images/index-fridge.png" alt="">
 							</a>
 						</div>
