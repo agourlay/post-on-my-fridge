@@ -165,31 +165,31 @@
     <script type="text/x-handlebars" data-template-name="fridge/_header">
     	 <header>
 	        <div id="fridge-title">
-	          	<a href="/" style="text-decoration: none">
-			        <img src="/images/fridge-link.png" alt="index" style="border:none; height:32px;padding-right:10px" />
-			    </a>
-				<b>Post on fridge {{view.content.id}}</b>
+			    <img class="index-link" src="/images/fridge-link.png" alt="index" {{action "toIndex"}}/>
+				Post on fridge {{view.content.id}}
 			    <a {{bindAttr href="view.rssUrl"}} target="_blank">
-			        <img src="/images/feed-icon-14x14.png" alt="RSS" style="border:none; padding-left:10px" />
+			        <img src="/images/feed-icon-14x14.png" alt="RSS" class="rss-link" />
 			    </a>
 	        </div>
 
 	        <div id="header-interaction">
-		 		<div id="create-area">
-		 			<a class="btn btn-info btn-small" {{action "toggleChat"}}>
-		  				<i class="icon-comments-alt icon-large"></i> Toggle chat
-		  			</a>
-					<a class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
+	        	<form class="form-inline">
+	        		<div class="btn-group">
+		 				<button type="button" class="btn btn-info btn-small" data-toggle="button" {{action "toggleChat"}}>
+		  					<i class="icon-comments-alt icon-large"></i> Toggle chat
+		  				</button>
+						<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
 		  					<i class="icon-plus-sign icon-large"></i> Add post
-		  			</a>
-		  		</div>
-		  		<div id="user-area">	
-		  			<i class="icon-user icon-large"></i>
-		  			<input type="text" placeholder="Username" id="pseudo" min="3" maxlength="12" size="12" title="Choose your pseudo"/>
-		        </div>
-		        <div id="search-area">
-		            <input type="search" placeholder="Search for a fridge" name="search" id="search" maxlength="20" size="20" x-webkit-speech/>
-		        </div>
+		  				</button>
+		  			</div>
+		  			<div class="input-prepend">
+			  				<span class="add-on">
+			  					<i class="icon-user icon-large"></i>
+			  				</span>	
+			  				<input type="text" placeholder="Username" class="input-medium" id="pseudo"/>
+			  		</div>
+			  		<input type="search" class="input-medium search-query" placeholder="Search for a fridge" id="search" x-webkit-speech/>
+	        	</form>
 	        </div>
 	    </header>
     </script>
@@ -235,7 +235,10 @@
 			{{view App.LazyDateFieldView sourceBinding="view.content.dueDate" viewName="textFieldDueDate"}}
 			{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
 			{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}}
-			<input type="button" value="Save" {{action save target="view"}}>
+			<button class="btn btn-small btn-primary" type="button" {{action save target="view"}}>
+				<i class="icon-ok-circle"></i>
+				Save
+			</button>
 		</form>
     </script>
 

@@ -6,9 +6,6 @@ header {
 	position : fixed;
 	width: 100%;
 	height: 40px;
-	font-weight: bold;
-	font-size : large;
-	color : white;
 	background-color: #252525;
 	opacity: 0.9;
 	z-index : 500;
@@ -17,46 +14,33 @@ header {
 	-webkit-box-shadow: 5px 5px 4px #aaa;
 	vertical-align: middle; }
 	
-.rss {
-    background-image: url(../../images/feed-icon-14x14.png);
-    height: 15px;
-    width: 15px; }
+.rss-link {
+    border:none;
+    padding-left:15px}
 
 #fridge-title{
-	width: 30%;
+	width: 40%;
+	color : white;
+	font-size : large;
+	font-weight: bold;
 	float: left;
-	margin-left: 40px;
-	margin-top: 7px; }
+	margin-left: 20px;
+	margin-top: 7px; }	
+
+.index-link{
+	border:none;
+	height:33px;
+	padding-right:10px;
+	cursor: pointer;}	
 
 #header-interaction{
 	margin-top: 5px;
 	float:right;
-	display: inline;
 	width:50%;
-	height:100%;
-}
+	height:100%;}
 
-#create-area {
-	width:150px;
-	display: inline;
-	margin-right: 20px; }
-
-#user-area {
-	display: inline;
-	margin-right: 20px; }	
-
-#user-area input{
-	margin-right: 5px;
-	height: 18px;
-	width: 120px;}	
-
-#search-area {
-	display: inline;
-	margin-right: 20px; }	
-
-#search-area input{
-	height: 18px;
-	width: 155px;}	
+#header-interaction input{
+	margin-right: 10px;}	
 
 .global {
 	position:relative;
