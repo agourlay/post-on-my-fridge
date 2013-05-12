@@ -19,7 +19,7 @@ header {
     padding-left:10px}
 
 #fridge-title{
-	width: 40%;
+	width: 29%;
 	color : white;
 	font-size : large;
 	font-weight: bold;
@@ -37,7 +37,7 @@ header {
 	margin-top: 5px;
 	float:right;
 	text-align: right;
-	width:55%;
+	width:69%;
 	height:100%;}
 
 #header-interaction input{
