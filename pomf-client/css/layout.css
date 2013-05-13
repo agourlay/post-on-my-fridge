@@ -16,10 +16,11 @@ header {
 	
 .rss-link {
     border:none;
+    padding-right:10px;
     padding-left:10px}
 
 #fridge-title{
-	width: 29%;
+	width: 38%;
 	color : white;
 	font-size : large;
 	font-weight: bold;
@@ -37,7 +38,7 @@ header {
 	margin-top: 5px;
 	float:right;
 	text-align: right;
-	width:69%;
+	width:60%;
 	height:100%;}
 
 #header-interaction input{

@@ -39,6 +39,14 @@
 	  	})();
 	</script>
 	<script async src = "http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-50fefe9a3e8b6794"></script>
+	<script type="text/javascript">
+		var addthis_share = 
+		{  	templates: {
+	                   twitter: 'check out the fridge {{url}} ',
+	                   facebook: 'check out fridge {{url}} '
+	               		}
+		}
+	</script>	
 </head>
 <body>
 	<noscript>This site requires JavaScript to function properly!</noscript>
@@ -221,6 +229,7 @@
 			    <a {{bindAttr href="view.rssUrl"}} target="_blank">
 			        <img src="/images/feed-icon-14x14.png" alt="RSS" class="rss-link" />
 			    </a>
+			   <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-50fefe9a3e8b6794"><img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
 	        </div>
 
 	        <div id="header-interaction">
@@ -237,7 +246,7 @@
 			  				<span class="add-on">
 			  					<i class="icon-user icon-large"></i>
 			  				</span>	
-			  				<input type="text" placeholder="Username" class="input-medium" id="pseudo"/>
+			  				<input type="text" placeholder="Username" class="input-small" id="pseudo"/>
 			  		</div>
 			  		<input type="search" class="input-medium search-query" placeholder="Search for a fridge" id="search" x-webkit-speech/>
 	        	</form>
