@@ -111,7 +111,10 @@ App.Dao = Em.Object.create({
 					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
 					model.set('loaded', true);
 				}
-	        }
+	        },
+	        error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during fridge retrieval");
+			}
     	});
 		return model;
 	},
@@ -124,7 +127,10 @@ App.Dao = Em.Object.create({
 				if (token !== null && token !== undefined) {
 					App.Dao.set('userToken',token);
 				}
-	        }
+	        },
+	        error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during token retrieval");
+			}
     	});
 	}
 });

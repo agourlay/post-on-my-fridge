@@ -37,7 +37,7 @@ App.Post = Em.Object.extend({
 			url:  this.get("resourceUrl") + this.id+"?token=" + App.Dao.get("userToken"),
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Post not deleted!");
+				errorMessage("Error during post deletion");
 			}
 		});
 	},
@@ -50,7 +50,7 @@ App.Post = Em.Object.extend({
 			dataType: "text",
 			data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Post not updated!");
+				errorMessage("Error during post update");
 			}
 		});
 	}.observes('content','color','author','dueDate'),
@@ -63,7 +63,7 @@ App.Post = Em.Object.extend({
         	dataType: "text",
         	data: JSON.stringify(this),
 			error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Post not created!");
+				errorMessage("Error during post creation");
 			}
 		});
 	}
