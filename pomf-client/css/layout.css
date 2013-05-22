@@ -44,8 +44,11 @@ header {
 #header-interaction input{
 	margin-right: 10px;}
 
-#header-interaction button{
-	margin-right: 10px;}		
+#header-interaction .btn-info{
+	margin-left: 10px;}
+
+#header-interaction .add-on{
+	margin-left: 10px;}
 
 .global {
 	position:relative;

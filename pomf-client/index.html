@@ -117,10 +117,22 @@
 							</p>
 							<div class="span4 offset4">
 								<p>
-								   <a class="btn btn-primary btn-large" {{action "toDemo"}} >
-										<i class="icon-white icon-signin"></i>
-										Try the demo
-								    </a>
+									<div class="btn-group">
+									    <button class="btn btn-primary btn-large" {{action "toDemo"}} >
+											<i class="icon-white icon-signin"></i> Try the demo
+										</button>
+									</div>
+								</p>
+								<p>
+									<form class="form-inline">
+		        						<div class="btn-group">
+											<input type="text" placeholder="Or create your fridge" 
+											class="input-medium" id="newFridgeValue" /> 
+											<button class="btn" id="button-newfridge">
+													<i class="icon-ok-circle"></i> 
+											</button>
+										</div>
+									</form>		  	      
 								</p>
 							</div>
 						</div>
@@ -241,12 +253,13 @@
 	        <div id="header-interaction">
 	        	<form class="form-inline">
 	        		<div class="btn-group">
-		 				<button type="button" class="btn btn-info btn-small" data-toggle="button" {{action "toggleChat"}}>
-		  					<i class="icon-comments-alt icon-large"></i> Toggle chat
+	        			<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
+		  					<i class="icon-plus-sign icon-large"></i> Post
 		  				</button>
-						<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
-		  					<i class="icon-plus-sign icon-large"></i> Add post
-		  				</button>
+
+						<button type="button" class="btn btn-info btn-small" data-toggle="button" {{action "toggleChat"}}>
+		  						<i class="icon-comments-alt icon-large"></i> Toggle 
+		  				</button>		 				
 		  			</div>
 		  			<div class="input-prepend">
 			  				<span class="add-on">
