@@ -30,8 +30,8 @@ App.Dao = Em.Object.create({
 		newPostData.author = App.Dao.pseudo();
 		newPostData.content = "New post -> edit me";
 		newPostData.color = "#f7f083";
-		newPostData.positionX = 0.5;
-		newPostData.positionY = 0.04;
+		newPostData.positionX = 0.4;
+		newPostData.positionY = 0.25;
 		newPostData.fridgeId = App.Dao.get('fridgeId');
 		newPostData.dueDate = "";
 		newPostValidation(newPostData);
