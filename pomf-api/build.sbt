@@ -28,7 +28,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"       % "1.1-M7"          withSources()
+   "io.spray"           %   "spray-can"       % "1.1-M7"          withSources() 
   ,"io.spray"           %   "spray-routing"   % "1.1-M7"          withSources()
   ,"io.spray"           %   "spray-testkit"   % "1.1-M7"          withSources()
   ,"io.spray"           %   "spray-caching"   % "1.1-M7"          withSources()
