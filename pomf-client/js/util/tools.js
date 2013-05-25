@@ -51,22 +51,16 @@ function isRegExp(regExp, content) {
 	return regExp.test(content);
 }
 
+function successMessage(message){
+	Alertify.log.success(message);
+}
+
 function errorMessage(message){
-	n = noty({
-		layout: 'top',
-		type: 'error',
-		timeout: 2000,
-		closeWith: ['hover'],
-		text: message});
+	Alertify.log.error(message);
 }
 
 function infoMessage(message){
-	n = noty({
-		layout: 'bottomRight',
-		type: 'information',
-		timeout: 2000,
-		closeWith: ['hover'],
-		text: message});
+	Alertify.log.info(message);
 }
 
 function filterData(data) {
