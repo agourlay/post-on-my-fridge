@@ -62,7 +62,7 @@ App.Post = Em.Object.extend({
         	contentType: "application/json",
         	dataType: "text",
         	data: JSON.stringify(this),
-        	success : successMessage("Post created"),
+        	success : successMessage("Post successfully created"),
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during post creation");
 			}

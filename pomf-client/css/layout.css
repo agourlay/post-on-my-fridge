@@ -13,6 +13,10 @@ header {
 	-moz-box-shadow: 5px 5px 4px #aaa;
 	-webkit-box-shadow: 5px 5px 4px #aaa;
 	vertical-align: middle; }
+
+.title-fridge {
+	text-align: center;
+}
 	
 .rss-link {
     border:none;
