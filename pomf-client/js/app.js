@@ -1,6 +1,41 @@
 window.App = Ember.Application.createWithMixins({
-	LOG_TRANSITIONS: true,
-	LOG_BINDINGS : true
+   templates: [
+    'application',
+    'index',
+    'fridges',
+    'fridge/_header',
+    'fridge',
+    'chat',
+    'message',
+    'post/_header',
+    'post/_form',
+    'post'
+  ],
+
+  loadTemplates: function() {
+    var app = this,
+        templates = this.get('templates');
+
+    app.deferReadiness();
+
+    var promises = templates.map(function(name) {
+      return Ember.$.get('static/js/templates/'+name+'.hbs').then(function(data) {
+        Ember.TEMPLATES[name] = Ember.Handlebars.compile(data);
+      });
+    });
+
+    Ember.RSVP.all(promises).then(function() {
+      app.advanceReadiness();
+    });
+  },
+
+  init: function() {
+      this._super();
+      this.loadTemplates();
+  },
+
+  LOG_TRANSITIONS: true,
+  LOG_BINDINGS : true
 });
 
 App.ApplicationController = Ember.Controller.extend({

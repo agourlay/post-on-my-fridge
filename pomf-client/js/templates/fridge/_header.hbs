@@ -1,0 +1,38 @@
+<header>
+    <div id="fridge-title">
+	    <img class="index-link" src="/images/fridge-link.png" alt="index" {{action "toIndex"}}/>
+		Fridge / {{view.content.id}}
+	    <a {{bindAttr href="view.rssUrl"}} target="_blank">
+	        <img src="/images/feed-icon-14x14.png" alt="RSS" class="rss-link" />
+	    </a>
+	    <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=300&amp;pubid=ra-50fefe9a3e8b6794">
+	    	<img src="http://s7.addthis.com/static/btn/v2/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/>
+	    </a>
+    </div>
+
+    <div id="header-interaction">
+    	<form class="form-inline">
+    		<div class="btn-group">
+    			<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
+  					<i class="icon-plus-sign icon-large"></i> Post
+  				</button>
+
+				<button type="button" class="btn btn-info btn-small" data-toggle="button" {{action "toggleChat"}}>
+  						<i class="icon-comments-alt icon-large"></i> Toggle 
+  				</button>		 				
+  			</div>
+  			<div class="input-prepend">
+	  				<span class="add-on">
+	  					<i class="icon-user icon-large"></i>
+	  				</span>	
+	  				<input type="text" placeholder="Username" class="input-small" id="pseudo"/>
+	  		</div>
+	  		<div class="input-prepend">
+	  			<span class="add-on">
+	  				<i class="icon-search icon-large"></i>
+	  			</span>	
+	  			<input type="text" class="input-small" placeholder="Search" id="search"/>
+	  		</div>
+		</form>
+    </div>
+</header>
