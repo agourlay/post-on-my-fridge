@@ -37,7 +37,7 @@ libraryDependencies ++= Seq(
   ,"com.typesafe.akka"  %%  "akka-actor"      % "2.1.4"           withSources()
   ,"net.debasishg"      %%  "redisclient"     % "2.10"            withSources()
   ,"com.github.sstone"  %%  "amqp-client"     % "1.1"             withSources()
-  ,"com.typesafe.slick" %%  "slick"           % "1.0.1-RC1"       withSources()
+  ,"com.typesafe.slick" %%  "slick"           % "1.0.1"           withSources()
   ,"com.h2database"     %   "h2"              % "1.3.172"       
   ,"postgresql"         %   "postgresql"      % "9.2-1002.jdbc4"
   ,"ch.qos.logback"     %   "logback-classic" % "1.0.13"          withSources()
