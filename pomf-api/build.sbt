@@ -28,9 +28,9 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"       % "1.1-M7"          withSources() 
-  ,"io.spray"           %   "spray-routing"   % "1.1-M7"          withSources()
-  ,"io.spray"           %   "spray-testkit"   % "1.1-M7"          withSources()
+   "io.spray"           %   "spray-can"       % "1.1-M8"          withSources() 
+  ,"io.spray"           %   "spray-routing"   % "1.1-M8"          withSources()
+  ,"io.spray"           %   "spray-testkit"   % "1.1-M8"          withSources()
   ,"io.spray"           %%  "spray-json"      % "1.2.5"           withSources()
   ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.1.4"           withSources()
   ,"com.typesafe.akka"  %%  "akka-actor"      % "2.1.4"           withSources()
