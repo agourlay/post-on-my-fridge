@@ -82,7 +82,7 @@ class FridgeSimulation extends Simulation {
 							.headers(headers_13)
 							.queryParam("""token""", """${user_token}""")
 							.body("""{"author":"${user_name}","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.5,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48"}""")
-							.check(jsonPath("//id")saveAs("post_id"))
+							.check(jsonPath("id")saveAs("post_id"))
 
     def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
 								 .get("/stream/${fridge_id}/${user_token}")
