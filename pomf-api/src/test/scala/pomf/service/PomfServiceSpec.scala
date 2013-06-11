@@ -1,17 +1,12 @@
-package pomf.service.rest
+package pomf.service
 
 
 import org.specs2.Specification
 import org.junit.runner.RunWith
-import org.specs2.runner.JUnitRunner
 import spray.testkit.Specs2RouteTest
 import spray.http._
-import StatusCodes._
-import MediaTypes.`application/json`
-import spray.httpx.SprayJsonSupport.{ sprayJsonMarshaller, sprayJsonUnmarshaller }
-import java.util.Date
+import spray.http.StatusCodes._
 import java.text.SimpleDateFormat
-import pomf.domain.config.TestDB
 import pomf.domain.model._
 import JsonImplicits._
 import pomf.service.PomfTestServiceLayer

@@ -1,11 +1,12 @@
 package pomf.domain.model
 
 import scala.compat.Platform
+
 import spray.json.RootJsonFormat
 
 case class Notification(fridgeName : String, command :String, payload :String, timestamp : Long, token : String ) 
 
-object NotificationObj{
+object Notifications{
     
   def create(fridgeName : String, post : Post, token :String)(implicit conv : RootJsonFormat[Post]) = {
     new Notification(fridgeName, "create", conv.write(post).toString, Platform.currentTime,token)

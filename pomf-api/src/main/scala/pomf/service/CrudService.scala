@@ -1,28 +1,29 @@
 package pomf.service
 
-import pomf.service.notification.PomfNotificationActor
-import pomf.domain.model.Fridge
-import pomf.domain.model.Post
-import pomf.domain.config.ProductionDB
-import pomf.domain.config.DBConfig
-import pomf.domain.model.FridgeRest
-import pomf.domain.config.TestDB
-import pomf.service.caching.PomfCachingService
+import JsonImplicits.impChatMessage
+import JsonImplicits.impPost
 import akka.actor.Actor
-import akka.actor.Props
-import scala.compat.Platform
+import akka.actor.actorRef2Scala
 import pomf.boot.Boot
-import pomf.domain.model.ChatMessage
+import pomf.domain.config._
+import pomf.domain.model._
 import com.redis.serialization.Parse
-import pomf.service.rest.JsonImplicits
-import pomf.domain.model.NotificationObj
+import pomf.service.CrudServiceActor._
 
-trait PomfProdServiceLayer extends PomfActionService with PomfCachingService with ProductionDB  {
-
+class CrudServiceActor extends Actor with PomfActionService with PomfCachingService with ProductionDB  {
+    def receive = {
+    	case fridgeName:String => getFridgeRest(fridgeName)
+    	case fridge:Fridge => addFridge(fridge)
+    	case postId:Long => getPost(postId)
+    	case (postId:Long, token:String) => deletePost(postId, token)
+    	case CreatePost(post, token) => addPost(post, token)
+        case UpdatePost(post, token) => updatePost(post, token)
+    }  
 }
 
-trait PomfTestServiceLayer extends PomfActionService with PomfCachingService with TestDB {
-
+object CrudServiceActor {
+  case class UpdatePost(post: Post, token: String)
+  case class CreatePost(post: Post, token: String)
 }
 
 trait PomfActionService{ 
@@ -36,7 +37,7 @@ trait PomfActionService{
 	  
 	def addPost(post: Post, token : String): Post = {
 	  val persistedPost = dao.addPost(post)
-	  Boot.notificationService ! NotificationObj.create(post.fridgeId, persistedPost, token)
+	  Boot.notificationService ! Notifications.create(post.fridgeId, persistedPost, token)
 	  persistedPost
 	}
 	  
@@ -49,18 +50,18 @@ trait PomfActionService{
 	def searchByNameLike(term:String):List[String] = dao.searchByNameLike(term)
 	  
 	def deletePost(id :Long, token : String) = {
-	  Boot.notificationService ! NotificationObj.delete(getPost(id).get.fridgeId, id, token)
+	  Boot.notificationService ! Notifications.delete(getPost(id).get.fridgeId, id, token)
 	  dao.deletePost(id)
 	}
 	  
 	def updatePost(post :Post, token : String):Option[Post] = {
-	  Boot.notificationService ! NotificationObj.update(post.fridgeId, post, token)
+	  Boot.notificationService ! Notifications.update(post.fridgeId, post, token)
 	  dao.updatePost(post)
 	}
 	
 	def addChatMessage(fridgeName : String, message: ChatMessage, token : String):ChatMessage = {
 	  //cache.lpush(fridgeName+".chat", message)
-	  Boot.notificationService ! NotificationObj.message(fridgeName, message, token)
+	  Boot.notificationService ! Notifications.message(fridgeName, message, token)
 	  message
 	} 
   	

@@ -1,31 +1,19 @@
-package pomf.service.notification
+package pomf.service
 
 import akka.actor.Actor
-import akka.actor.ActorRef
-import com.github.sstone.amqp.RabbitMQConnection
 import com.github.sstone.amqp.Amqp
 import com.rabbitmq.client.ConnectionFactory
 import akka.actor.Props
 import com.github.sstone.amqp.Amqp._
 import com.github.sstone.amqp.ConnectionOwner
 import com.github.sstone.amqp.ChannelOwner
-import scala.util.Marshal
-import scala.compat.Platform
-import akka.actor.ActorContext
-import akka.actor.ActorSystem
-import spray.json.JsObject
 import spray.json.DefaultJsonProtocol._
-import spray.json.DefaultJsonProtocol
 import scala.io.Codec
 import spray.json.JsValue
-import pomf.domain.model.Post
-import pomf.util.DateMarshalling
-import pomf.domain.model.NotificationObj
-import spray.json.RootJsonFormat
-import pomf.service.rest.JsonImplicits
 import pomf.domain.model.Notification
+import akka.actor.actorRef2Scala
 
-class PomfNotificationActor extends Actor{
+class NotificationActor extends Actor {
   import JsonImplicits._
   
   implicit val actorSystem = context.system

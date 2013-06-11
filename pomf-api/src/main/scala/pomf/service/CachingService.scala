@@ -1,7 +1,4 @@
-package pomf.service.caching
-
-import akka.actor.Actor
-import com.redis.RedisClient
+package pomf.service
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 import pomf.domain.config.DBConfig
