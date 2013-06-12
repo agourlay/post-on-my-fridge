@@ -1,9 +1,10 @@
-package pomf.util
+package pomf.api
 
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.text.ParseException
 import spray.json._
+import pomf.domain.model._
 
 trait DateMarshalling {
 
@@ -36,4 +37,12 @@ trait IsoDateChecker {
         println(date + " " + p)
         None
     }
+}
+
+object JsonImplicits extends DefaultJsonProtocol with DateMarshalling {
+  implicit val impPost = jsonFormat9(Post)
+  implicit val impFridge = jsonFormat3(Fridge)
+  implicit val impFridgeRest = jsonFormat4(FridgeRest)
+  implicit val impChatMessage = jsonFormat3(ChatMessage)
+  implicit val impNotif = jsonFormat5(Notification)
 }

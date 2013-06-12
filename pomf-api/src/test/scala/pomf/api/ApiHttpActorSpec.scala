@@ -1,4 +1,4 @@
-package pomf.service
+package pomf.api
 
 
 import org.specs2.Specification
@@ -8,11 +8,11 @@ import spray.http._
 import spray.http.StatusCodes._
 import java.text.SimpleDateFormat
 import pomf.domain.model._
-import JsonImplicits._
-import pomf.service.PomfTestServiceLayer
+import pomf.util.JsonImplicits._
+import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner]) // Only required if testing from within Eclipse
-class PomfServiceSpec extends Specification with Specs2RouteTest with PomfRouteService with PomfTestServiceLayer {
+class PomfServiceSpec extends Specification with Specs2RouteTest {
   def actorRefFactory = system
 
   

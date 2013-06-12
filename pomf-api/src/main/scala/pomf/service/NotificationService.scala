@@ -14,7 +14,7 @@ import pomf.domain.model.Notification
 import akka.actor.actorRef2Scala
 
 class NotificationActor extends Actor {
-  import JsonImplicits._
+  import pomf.api.JsonImplicits._
   
   implicit val actorSystem = context.system
   
