@@ -16,9 +16,9 @@ object Boot extends App {
   // create and start our services actor
   val service = system.actorOf(Props[ApiHttpActor], "http-service")
 
-  val crudRouter = system.actorOf(Props[CrudServiceActor].withRouter(SmallestMailboxRouter(Runtime.getRuntime.availableProcessors)), "crud-router")
+  val crudRouter = system.actorOf(Props[CrudServiceActor].withRouter(SmallestMailboxRouter(nrOfInstances = 1)), "crud-router")
   
-  val notificationRouter = system.actorOf(Props[NotificationActor].withRouter(SmallestMailboxRouter(Runtime.getRuntime.availableProcessors)), "notification-router")
+  val notificationRouter = system.actorOf(Props[NotificationActor].withRouter(SmallestMailboxRouter(nrOfInstances = 1)), "notification-router")
     
   // start a new HTTP server on port 8080 with our service actor as the handler
   IO(Http) ! Http.Bind(service, "localhost", port = 8080)  

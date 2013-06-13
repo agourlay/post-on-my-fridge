@@ -1,6 +1,6 @@
 package pomf.service
 
-import pomf.api.JsonImplicits._
+import pomf.api.JsonSupport._
 import akka.actor.Actor
 import akka.actor.actorRef2Scala
 import pomf.Boot

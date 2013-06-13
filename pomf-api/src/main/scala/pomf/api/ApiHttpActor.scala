@@ -1,31 +1,34 @@
 package pomf.api
-import pomf.domain._
+
 import pomf.util._
 import akka.pattern._
 import akka.actor._
+import scala.concurrent.duration._
+import pomf.domain.model._
+import reflect.ClassTag
+import JsonSupport._
+import spray.json._
+import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.http._
 import spray.http.MediaTypes._
 import spray.routing.Directive.pimpApply
-import spray.json.DefaultJsonProtocol._
-import scala.concurrent.duration._
-import pomf.domain.model._
-import reflect.ClassTag
-import spray.json.DefaultJsonProtocol
+import spray.util.SprayActorLogging
+import DefaultJsonProtocol._
+import pomf.service.CrudServiceActor
 
 
-
-class ApiHttpActor extends HttpServiceActor {
+class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
   implicit def executionContext = actorRefFactory.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
-  
-  import JsonImplicits._
-
-  def actorRefFactory = context
 
   def receive = runRoute(pomfRoute)
   
-  val crudService = actorRefFactory.actorFor("crud-router")
+  private var crudService : ActorRef = _
+
+  override def preStart() {
+      crudService = actorRefFactory.actorFor("crud-router")
+  }
 
   val pomfRoute =
     pathPrefix("api") {

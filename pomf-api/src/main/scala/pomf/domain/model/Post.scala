@@ -2,7 +2,6 @@ package pomf.domain.model
 
 import java.util.Date
 import pomf.domain.config.Profile
-import pomf.api.DateMarshalling
 import spray.json.DefaultJsonProtocol
 import pomf.util.XssFilter
 

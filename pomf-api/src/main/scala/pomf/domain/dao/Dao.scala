@@ -10,7 +10,7 @@ import pomf.util.RssSupport
 class Dao(name: String, dal: DAL, db: Database) {
   // We only need the DB/session imports outside the DAL
   import dal._
-import dal.profile.simple._
+  import dal.profile.simple._
 
   // Put an implicitSession in scope for database actions
   implicit val implicitSession = db.createSession

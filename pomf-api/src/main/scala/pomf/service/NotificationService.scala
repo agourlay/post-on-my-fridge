@@ -14,14 +14,14 @@ import pomf.domain.model.Notification
 import akka.actor.actorRef2Scala
 
 class NotificationActor extends Actor {
-  import pomf.api.JsonImplicits._
+  import pomf.api.JsonSupport._
   
   implicit val actorSystem = context.system
   
   val connFactory = new ConnectionFactory()
       connFactory.setHost("localhost")
       
-  val conn = actorSystem.actorOf(Props(new ConnectionOwner(connFactory)), name = "conn")
+  val conn = actorSystem.actorOf(Props(new ConnectionOwner(connFactory)))
   
   val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
   
@@ -32,7 +32,7 @@ class NotificationActor extends Actor {
   
   def receive = {
     case Notification(fridgeName,command,payload,timestamp,token) =>  {
-      val jsonNotif : JsValue = impNotif.write(Notification(fridgeName,command,payload,timestamp,token))
+      val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
       producer ! DeclareQueue(queueParams)  //idem potent
       producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
