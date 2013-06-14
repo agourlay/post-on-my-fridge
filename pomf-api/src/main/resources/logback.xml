@@ -7,11 +7,20 @@
             <pattern>%date{MM/dd HH:mm:ss} %-5level[%.15thread] %logger{1} - %msg%n</pattern>
         </encoder>
     </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>pomf-api.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d [%thread] %-5level %logger{0} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <logger name="scala.slick" level="INFO" />
     
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
+         <appender-ref ref="FILE" />
     </root>
 
 </configuration>
