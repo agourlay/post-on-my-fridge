@@ -6,6 +6,8 @@ import pomf.domain.model.Fridge
 import pomf.domain.model.FridgeRest
 import pomf.domain.model.Post
 import pomf.util.RssSupport
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class Dao(name: String, dal: DAL, db: Database) {
   // We only need the DB/session imports outside the DAL
@@ -14,6 +16,8 @@ class Dao(name: String, dal: DAL, db: Database) {
 
   // Put an implicitSession in scope for database actions
   implicit val implicitSession = db.createSession
+  
+  val logger: Logger = LoggerFactory.getLogger("pomf.dao");
 
   def createDB = dal.create
 
@@ -23,20 +27,19 @@ class Dao(name: String, dal: DAL, db: Database) {
 
    def getAllFridge(): List[Fridge] = {
     val result = Fridges.findAllFridge
-    println("Got fridge: " + result)
     result
   }
 
   def addFridge(fridge: Fridge): Fridge = {
     val result = Fridges.insert(fridge)
-    println("Inserted fridge: " + result)
+    logger.debug("Inserted fridge: {}", result)
     result
   }
   
    def addPost(post: Post): Post = {
     Fridges.findByName(post.fridgeId).getOrElse(addFridge(Fridge(name = post.fridgeId))) 
     val result = Posts.insert(post)
-    println("Inserted post: " + result)
+    logger.debug("Inserted post: {}", result)
     result
   }
   

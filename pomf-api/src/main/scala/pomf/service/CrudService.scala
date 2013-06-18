@@ -9,7 +9,7 @@ import pomf.domain.model._
 import com.redis.serialization.Parse
 import pomf.service.CrudServiceActor._
 
-class CrudServiceActor extends Actor with PomfCachingService with ProductionDB { 
+class CrudServiceActor extends Actor with ActorLogging with PomfCachingService with ProductionDB { 
   this: DBConfig =>
   import Parse.Implicits._
 
@@ -18,16 +18,16 @@ class CrudServiceActor extends Actor with PomfCachingService with ProductionDB {
   val notificationService = actorRefFactory.actorFor("notification-router")
 
   def receive = {
-    case fridgeName: String => getFridgeRest(fridgeName)
-    case fridge: Fridge => addFridge(fridge)
-    case postId: Long => getPost(postId)
-    case DeletePost(postId, token) => deletePost(postId, token)
-    case CreatePost(post, token) => addPost(post, token)
-    case UpdatePost(post, token) => updatePost(post, token)
-    case FridgeRss(fridgeName) => getFridgeRss(fridgeName)
-    case SearchFridge(term) => searchByNameLike(term)
+    case FullFridge(fridgeName: String)       => getFridgeRest(fridgeName)
+    case CreateFridge(fridge: Fridge)         => addFridge(fridge)
+    case GetPost(postId: Long)                => getPost(postId)
+    case DeletePost(postId, token)            => deletePost(postId, token)
+    case CreatePost(post, token)              => addPost(post, token)
+    case UpdatePost(post, token)              => updatePost(post, token)
+    case FridgeRss(fridgeName)                => getFridgeRss(fridgeName)
+    case SearchFridge(term)                   => searchByNameLike(term)
     case PushChat(fridgeName, message, token) => addChatMessage(fridgeName, message, token)
-    case ChatHistory(fridgeName) => retrieveChatHistory(fridgeName)
+    case ChatHistory(fridgeName)              => retrieveChatHistory(fridgeName)
   }
 
   def getAllFridge(): List[Fridge] = dao.getAllFridge
@@ -40,8 +40,10 @@ class CrudServiceActor extends Actor with PomfCachingService with ProductionDB {
     persistedPost
   }
 
-  def getFridgeRest(fridgeName: String): FridgeRest = dao.getFridgeRest(fridgeName)
-
+  def getFridgeRest(fridgeName: String): FridgeRest = {
+      log.debug("Requesting fridge {}", fridgeName)
+      dao.getFridgeRest(fridgeName)
+    }
   def getFridgeRss(fridgeName: String): scala.xml.Elem = dao.getFridgeRss(fridgeName)
 
   def getPost(id: Long): Option[Post] = dao.getPost(id)
@@ -71,6 +73,9 @@ class CrudServiceActor extends Actor with PomfCachingService with ProductionDB {
 }
 
 object CrudServiceActor {
+  case class FullFridge(fridgeName : String)
+  case class CreateFridge(fridge : Fridge) 
+  case class GetPost(postId : Long)
   case class UpdatePost(post: Post, token: String)
   case class CreatePost(post: Post, token: String)
   case class DeletePost(postId: Long, token: String)

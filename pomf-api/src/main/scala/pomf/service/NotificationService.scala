@@ -13,7 +13,7 @@ import spray.json.JsValue
 import pomf.domain.model.Notification
 import akka.actor.actorRef2Scala
 
-class NotificationActor extends Actor {
+class NotificationActor extends Actor with ActorLogging {
   import pomf.api.JsonSupport._
   
   implicit val actorSystem = context.system
@@ -31,8 +31,9 @@ class NotificationActor extends Actor {
   }  
   
   def receive = {
-    case Notification(fridgeName,command,payload,timestamp,token) =>  {
+    case Notification(fridgeName,command,payload,timestamp,token) =>  {    
       val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
+      log.debug("Sending notification {}", jsonNotif)
       val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
       producer ! DeclareQueue(queueParams)  //idem potent
       producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)

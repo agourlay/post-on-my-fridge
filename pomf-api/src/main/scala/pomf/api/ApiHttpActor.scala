@@ -35,7 +35,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
       path("fridge" / Rest) { fridgeName =>
         get {
           complete {
-            (crudService ? fridgeName).mapTo[FridgeRest]
+            (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }
         }
       } ~
@@ -43,7 +43,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
           post {
             entity(as[Fridge]) { fridge =>
               complete {
-                (crudService ? fridge).mapTo[Fridge]
+                (crudService ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
               }
             }
           }
@@ -71,7 +71,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
         path("post" / LongNumber) { postId =>
           get {
             complete {
-              (crudService ? postId).mapTo[Option[Post]]
+              (crudService ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
             }
           } ~
             delete {
