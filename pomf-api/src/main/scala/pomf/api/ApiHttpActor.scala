@@ -14,6 +14,8 @@ import spray.http._
 import spray.http.MediaTypes._
 import spray.routing.Directive.pimpApply
 import spray.util.SprayActorLogging
+import spray.can.Http
+import spray.can.server.Stats
 import DefaultJsonProtocol._
 import pomf.service.CrudServiceActor
 
@@ -122,6 +124,22 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
           get {
             complete(TokenSupport.nextSessionId)
           }
+        } ~ 
+        path("stats") {
+          complete {
+              context.actorFor("/user/IO-HTTP/listener-0") ? Http.GetStats map {
+                case stats: Stats ⇒
+                  s"""
+                  | Uptime                : ${Duration(stats.uptime.toHours, TimeUnit.HOURS)}
+                  | Total requests        : ${stats.totalRequests}
+                  | Open requests         : ${stats.openRequests}
+                  | Max open requests     : ${stats.maxOpenRequests}
+                  | Total connections     : ${stats.totalConnections}
+                  | Open connections      : ${stats.openConnections}
+                  | Max open connections  : ${stats.maxOpenConnections}
+                  | Requests timed out    : ${stats.requestTimeouts}
+                  """.trim.stripMargin
+              }
+           }
         }
     }
-}
