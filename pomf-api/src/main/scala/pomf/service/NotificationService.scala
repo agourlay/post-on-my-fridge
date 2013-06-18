@@ -12,6 +12,7 @@ import scala.io.Codec
 import spray.json.JsValue
 import pomf.domain.model.Notification
 import akka.actor.actorRef2Scala
+import akka.actor.ActorLogging
 
 class NotificationActor extends Actor with ActorLogging {
   import pomf.api.JsonSupport._

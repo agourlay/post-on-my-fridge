@@ -18,10 +18,11 @@ import spray.can.Http
 import spray.can.server.Stats
 import DefaultJsonProtocol._
 import pomf.service.CrudServiceActor
+import java.util.concurrent.TimeUnit
 
 
 class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
-  implicit def executionContext = actorRefFactory.dispatcher
+  implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
 
   def receive = runRoute(pomfRoute)
@@ -29,7 +30,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
   private var crudService : ActorRef = _
 
   override def preStart() {
-      crudService = actorRefFactory.actorFor("crud-router")
+    crudService = context.actorFor("crud-router")
   }
 
   val pomfRoute =
@@ -37,7 +38,9 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
       path("fridge" / Rest) { fridgeName =>
         get {
           complete {
-            (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
+            log.debug("requesting fridge {} ...", fridgeName)
+            crudService.ask(CrudServiceActor.FullFridge(fridgeName))
+                       .mapTo[FridgeRest]
           }
         }
       } ~
@@ -143,3 +146,4 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
            }
         }
     }
+  }
