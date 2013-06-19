@@ -24,7 +24,7 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
   private var notificationService : ActorRef = _
 
   override def preStart() {
-      notificationService = context.actorFor("notification-router")
+     notificationService = context.actorFor("/user/notification-service")
   }
 
   def receive = LoggingReceive {

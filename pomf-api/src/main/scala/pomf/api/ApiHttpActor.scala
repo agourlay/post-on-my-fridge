@@ -12,11 +12,10 @@ import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.http._
 import spray.http.MediaTypes._
-import spray.routing.Directive.pimpApply
-import spray.util.SprayActorLogging
 import spray.can.Http
 import spray.can.server.Stats
 
+import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext
 
@@ -25,7 +24,7 @@ import reflect.ClassTag
 import JsonSupport._
 
 
-class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
+class ApiHttpActor extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
 
@@ -34,17 +33,15 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
   private var crudService : ActorRef = _
 
   override def preStart() {
-    crudService = context.actorFor("crud-router")
+    crudService = context.actorFor("/user/crud-service")
   }
 
-  val pomfRoute =
+  private val pomfRoute =
     pathPrefix("api") {
       path("fridge" / Rest) { fridgeName =>
         get {
           complete {
-            log.debug("requesting fridge {} ...", fridgeName)
-            crudService.ask(CrudServiceActor.FullFridge(fridgeName))
-                       .mapTo[FridgeRest]
+            (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }
         }
       } ~
@@ -137,7 +134,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
               context.actorFor("/user/IO-HTTP/listener-0") ? Http.GetStats map {
                 case stats: Stats ⇒
                   s"""
-                  | Uptime                : ${stats.uptime}
+                  | Uptime                : ${Duration(stats.uptime.toHours, TimeUnit.HOURS)}
                   | Total requests        : ${stats.totalRequests}
                   | Open requests         : ${stats.openRequests}
                   | Max open requests     : ${stats.maxOpenRequests}
