@@ -1,12 +1,12 @@
 package pomf.api
 
 import pomf.util._
+import pomf.service.CrudServiceActor
+import pomf.domain.model._
+
 import akka.pattern._
 import akka.actor._
-import scala.concurrent.duration._
-import pomf.domain.model._
-import reflect.ClassTag
-import JsonSupport._
+
 import spray.json._
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -16,9 +16,13 @@ import spray.routing.Directive.pimpApply
 import spray.util.SprayActorLogging
 import spray.can.Http
 import spray.can.server.Stats
+
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext
+
 import DefaultJsonProtocol._
-import pomf.service.CrudServiceActor
-import java.util.concurrent.TimeUnit
+import reflect.ClassTag
+import JsonSupport._
 
 
 class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
@@ -133,7 +137,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
               context.actorFor("/user/IO-HTTP/listener-0") ? Http.GetStats map {
                 case stats: Stats ⇒
                   s"""
-                  | Uptime                : ${Duration(stats.uptime.toHours, TimeUnit.HOURS)}
+                  | Uptime                : ${stats.uptime.stats.uptime.formatHMS}
                   | Total requests        : ${stats.totalRequests}
                   | Open requests         : ${stats.openRequests}
                   | Max open requests     : ${stats.maxOpenRequests}
