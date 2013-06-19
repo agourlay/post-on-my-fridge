@@ -17,10 +17,11 @@
     </appender>
 
     <logger name="scala.slick" level="INFO" />
+    <logger name="akka" level="DEBUG" />
     
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
-         <appender-ref ref="FILE" />
+        <appender-ref ref="FILE" />
     </root>
 
 </configuration>

@@ -137,7 +137,7 @@ class ApiHttpActor extends HttpServiceActor with SprayActorLogging{
               context.actorFor("/user/IO-HTTP/listener-0") ? Http.GetStats map {
                 case stats: Stats ⇒
                   s"""
-                  | Uptime                : ${stats.uptime.formatHMS}
+                  | Uptime                : ${stats.uptime}
                   | Total requests        : ${stats.totalRequests}
                   | Open requests         : ${stats.openRequests}
                   | Max open requests     : ${stats.maxOpenRequests}
