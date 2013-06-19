@@ -41,7 +41,7 @@ libraryDependencies ++= Seq(
   ,"org.postgresql"     %   "postgresql"      % "9.2-1003-jdbc4"             withSources()
   ,"ch.qos.logback"     %   "logback-classic" % "1.0.13"                     withSources()
   ,"junit"              %   "junit"           % "4.11"            % "test"   withSources()
-  ,"org.specs2"         %%  "specs2"          % "1.14"            % "test"   withSources()  
+  ,"org.specs2"         %%  "specs2"          % "2.0"             % "test"   withSources()  
 )
 
 seq(Revolver.settings: _*)
