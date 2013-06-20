@@ -61,14 +61,14 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
 
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
-  def deletePost(id: Long, token: String): Long = {
+  def deletePost(id: Long, token: String): String = {
     notificationService ! Notifications.delete(getPost(id).get.fridgeId, id, token)
-    dao.deletePost(id)
+    "post " + dao.deletePost(id) + " deleted"
   }
 
-  def updatePost(post: Post, token: String): Option[Post] = {
+  def updatePost(post: Post, token: String): Post = {
     notificationService ! Notifications.update(post.fridgeId, post, token)
-    dao.updatePost(post)
+    dao.updatePost(post).orNull
   }
 
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
