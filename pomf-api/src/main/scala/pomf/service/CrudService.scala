@@ -29,6 +29,7 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
 
   def receive = LoggingReceive {
       case FullFridge(fridgeName)               => sender ! getFridgeRest(fridgeName)
+      case AllFridge()                          => sender ! getAllFridge()
       case CreateFridge(fridge)                 => sender ! addFridge(fridge)
       case GetPost(postId)                      => sender ! getPost(postId)
       case DeletePost(postId, token)            => sender ! deletePost(postId, token)
@@ -85,6 +86,7 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
 
 object CrudServiceActor {
   case class FullFridge(fridgeName : String)
+  case class AllFridge()
   case class CreateFridge(fridge : Fridge) 
   case class GetPost(postId : Long)
   case class UpdatePost(post: Post, token: String)

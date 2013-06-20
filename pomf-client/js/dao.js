@@ -103,7 +103,7 @@ App.Dao = Em.Object.create({
 		var model = App.Fridge.create();
 		model.set('id', fridgeId);
 		$.ajax({
-	        url: "api/fridge/" + fridgeId,
+	        url: "api/fridges/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {

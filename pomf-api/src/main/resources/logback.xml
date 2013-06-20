@@ -19,7 +19,7 @@
     <logger name="scala.slick" level="INFO" />
     <logger name="akka" level="INFO" />
     
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE" />
     </root>

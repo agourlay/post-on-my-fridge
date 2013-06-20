@@ -28,7 +28,7 @@ trait FridgeComponent { this: Profile =>
       ({ (n, d) => Fridge(n, d, None) }, { x: Fridge => Some((x.name, x.description)) })
       
     // Query Execution
-    def findAllFridge(implicit session: Session): List[Fridge] = Query(Fridges).sortBy(_.id).list()
+    def findAllFridge(implicit session: Session): List[Fridge] = Query(Fridges).sortBy(_.name).list()
 
     def insert(fridge: Fridge)(implicit session: Session): Fridge = autoInc.insert(fridge.name, fridge.description)
 

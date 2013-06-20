@@ -38,43 +38,46 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
 
   private val pomfRoute =
     pathPrefix("api") {
-      path("fridge" / Rest) { fridgeName =>
+      path("fridges" / Rest) { fridgeName =>
         get {
           complete {
-            (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
+            if (fridgeName.isEmpty)
+              (crudService ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
+            else
+              (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }
         }
       } ~
-        path("fridge") {
-          post {
-            entity(as[Fridge]) { fridge =>
+      path("fridges") {
+        post {
+          entity(as[Fridge]) { fridge =>
+            complete {
+              (crudService ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
+            }
+          }
+        }
+      } ~
+      path("posts") {
+        post {
+          parameters("token") { token =>
+            entity(as[Post]) { post =>
               complete {
-                (crudService ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
+                (crudService ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
               }
             }
           }
         } ~
-        path("post") {
-          post {
+          put {
             parameters("token") { token =>
               entity(as[Post]) { post =>
                 complete {
-                  (crudService ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
+                  (crudService ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
                 }
               }
             }
-          } ~
-            put {
-              parameters("token") { token =>
-                entity(as[Post]) { post =>
-                  complete {
-                    (crudService ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
-                  }
-                }
-              }
-            }
+          }
         } ~
-        path("post" / LongNumber) { postId =>
+        path("posts" / LongNumber) { postId =>
           get {
             complete {
               (crudService ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
@@ -108,7 +111,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
             }
           }
         } ~
-        path("message" / Rest) { fridgeName =>
+        path("messages" / Rest) { fridgeName =>
           post {
             parameters("token") { token =>
               entity(as[ChatMessage]) { message =>
