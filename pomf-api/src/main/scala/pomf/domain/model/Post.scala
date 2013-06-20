@@ -2,7 +2,6 @@ package pomf.domain.model
 
 import java.util.Date
 import pomf.domain.config.Profile
-import pomf.util.DateMarshalling
 import spray.json.DefaultJsonProtocol
 import pomf.util.XssFilter
 
@@ -68,9 +67,9 @@ trait PostComponent { this: Profile =>
     
     def getPost(idPost : Long)(implicit session: Session):Option[Post] =  Query(Posts).filter(_.id === idPost).firstOption 
     
-    def deletePost(idPost : Long)(implicit session: Session):String =  {
+    def deletePost(idPost : Long)(implicit session: Session):Long =  {
       (for(p <- Posts if p.id === idPost) yield p).delete
-      "Post "+idPost+" deleted" 
+      idPost 
     }
   }
 }

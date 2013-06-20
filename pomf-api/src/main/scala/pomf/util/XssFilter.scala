@@ -17,5 +17,4 @@ object XssFilter {
   def containsScript(txt:String):Boolean = {
     patterns.exists(txt.contains(_))
   }
-
 }
