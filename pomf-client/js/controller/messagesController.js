@@ -18,7 +18,7 @@ App.MessagesController = Ember.ArrayController.extend({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("api/message/" + App.Dao.get('fridgeId') , function(messages) {
+		$.getJSON("api/messages/" + App.Dao.get('fridgeId') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
 					me.messageManagement(message.user, message.message,message.timestamp);
