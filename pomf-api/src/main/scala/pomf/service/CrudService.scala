@@ -28,16 +28,16 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
   }
 
   def receive = LoggingReceive {
-      case FullFridge(fridgeName)               => getFridgeRest(fridgeName)
-      case CreateFridge(fridge)                 => addFridge(fridge)
-      case GetPost(postId)                      => getPost(postId)
-      case DeletePost(postId, token)            => deletePost(postId, token)
-      case CreatePost(post, token)              => addPost(post, token)
-      case UpdatePost(post, token)              => updatePost(post, token)
-      case FridgeRss(fridgeName)                => getFridgeRss(fridgeName)
-      case SearchFridge(term)                   => searchByNameLike(term)
-      case PushChat(fridgeName, message, token) => addChatMessage(fridgeName, message, token)
-      case ChatHistory(fridgeName)              => retrieveChatHistory(fridgeName)
+      case FullFridge(fridgeName)               => sender ! getFridgeRest(fridgeName)
+      case CreateFridge(fridge)                 => sender ! addFridge(fridge)
+      case GetPost(postId)                      => sender ! getPost(postId)
+      case DeletePost(postId, token)            => sender ! deletePost(postId, token)
+      case CreatePost(post, token)              => sender ! addPost(post, token)
+      case UpdatePost(post, token)              => sender ! updatePost(post, token)
+      case FridgeRss(fridgeName)                => sender ! getFridgeRss(fridgeName)
+      case SearchFridge(term)                   => sender ! searchByNameLike(term)
+      case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
+      case ChatHistory(fridgeName)              => sender ! retrieveChatHistory(fridgeName)
   }
 
   def getAllFridge(): List[Fridge] = dao.getAllFridge
