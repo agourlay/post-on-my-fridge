@@ -26,6 +26,7 @@ class NotificationActor extends Actor with ActorLogging {
   
   val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
   
+  val queueName = "pomf-notification"
   
   override def preStart() = {
 	  Amqp.waitForConnection(actorSystem, producer).await()
@@ -35,10 +36,10 @@ class NotificationActor extends Actor with ActorLogging {
     case Notification(fridgeName,command,payload,timestamp,token) =>  {    
       val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
       log.debug("Sending notification {}", jsonNotif)
-      val queueParams = QueueParameters("fridge."+fridgeName, passive = false, durable = false, exclusive = false, autodelete = false)
+      val queueParams = QueueParameters(queueName, passive = false, durable = false, exclusive = false, autodelete = false)
       producer ! DeclareQueue(queueParams)  //idem potent
-      producer ! QueueBind("fridge."+fridgeName, "amq.direct", "fridge."+fridgeName)
-      producer ! Publish("amq.direct", "fridge." + fridgeName, jsonNotif.toString.getBytes(Codec.UTF8.charSet))
+      producer ! QueueBind("pomf-notification", "amq.direct", queueName)
+      producer ! Publish("amq.direct", queueName, jsonNotif.toString.getBytes(Codec.UTF8.charSet))
     }
     case _ => 
   }

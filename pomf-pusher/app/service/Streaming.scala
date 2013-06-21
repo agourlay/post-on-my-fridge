@@ -20,37 +20,31 @@ import play.api.libs.json.JsString
 import play.api.libs.json.JsObject
 
 object PomfNotificationService {
-  lazy val notifier = new PomfNotificationActor
-  def getStream(fridgeName: String) = notifier.getStream(fridgeName)
-}
-
-class PomfNotificationActor{
-   
-  print("Initialisation PomfNotificationService")
+    
+  setUpQueue()
   
   implicit val actorSystem = GlobalPusher.system
 
   val connFactory = new ConnectionFactory()
-  connFactory.setHost("localhost")
+      connFactory.setHost("localhost")
 
   val connDeclare = actorSystem.actorOf(Props(new ConnectionOwner(connFactory)), name = "conn")
 
   val producer = ConnectionOwner.createActor(connDeclare, Props(new ChannelOwner()))
 
   val conn = new RabbitMQConnection(host = "localhost", name = "Connection-from-pusher")
-
-  val queues: Map[String, FridgeQueue] = TrieMap[String, FridgeQueue]()
   
-  def getStream(fridgeName: String): Enumerator[JsObject] = {
-    queues.getOrElse(fridgeName, setUpQueue(fridgeName)).broadcast._1  
+  val queueName = "pomf-notification"
+  
+  val concurrentEnum = Concurrent.broadcast[JsObject] 
+  
+  def getStream(): Enumerator[JsObject] = {
+    concurrentEnum.broadcast._1  
   }
 
-  def setUpQueue(fridgeName: String): FridgeQueue = {
+  def setUpQueue(): FridgeQueue = {
     createPhysicalQueueIfAbsent(fridgeName)
 
-    val (fridgeEnumerator, fridgeChannel) = Concurrent.broadcast[JsObject]
-
-    // create an actor that will receive AMQP deliveries
     val listener = actorSystem.actorOf(Props(new Actor {
       def receive = {
         case Delivery(consumerTag, envelope, properties, body) => {
@@ -58,28 +52,22 @@ class PomfNotificationActor{
           val json: JsValue = Json.parse(new String(body))
           val data = Json.obj(
     		"fridgeName" -> json.\("fridgeName"),
-    		"command" -> json.\("command"),
-    		"payload" -> json.\("payload"),
-    		"timestamp" -> json.\("timestamp"),
-    		"token" -> json.\("token")
+    		"command"    -> json.\("command"),
+    		"payload"    -> json.\("payload"),
+    		"timestamp"  -> json.\("timestamp"),
+    		"token"      -> json.\("token")
     		)
-    	  //println("Pushing object " + data)
-          fridgeChannel.push(data)
+          concurrentEnum._2.push(data)
         }
       }
     }))
-    val queueParams = QueueParameters("fridge." + fridgeName, passive = true, durable = false, exclusive = false, autodelete = false)
-    val consumer = conn.createConsumer(Amqp.StandardExchanges.amqDirect, queueParams, "fridge." + fridgeName, listener, None)
-    val fridgeQueue = FridgeQueue(listener, (fridgeEnumerator, fridgeChannel))
-    queues.putIfAbsent(fridgeName, fridgeQueue)
-    fridgeQueue
+    val queueParams = QueueParameters(queueName, passive = true, durable = false, exclusive = false, autodelete = false)
+    val consumer = conn.createConsumer(Amqp.StandardExchanges.amqDirect, queueParams, queueName, listener, None)
   }
 
-  def createPhysicalQueueIfAbsent(fridgeName: String) = {
-    producer ! DeclareQueue(QueueParameters("fridge." + fridgeName, passive = false, durable = false, exclusive = false, autodelete = false))
+  def createPhysicalQueueIfAbsent() = {
+    producer ! DeclareQueue(QueueParameters(queueName, passive = false, durable = false, exclusive = false, autodelete = false))
     Amqp.waitForConnection(actorSystem, producer).await()
   }
 
 }
-
-case class FridgeQueue(val listener: ActorRef, val broadcast: (Enumerator[JsObject], Channel[JsObject]))

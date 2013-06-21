@@ -24,11 +24,17 @@ object Application extends Controller {
   }
   
   /**
-  * Remove token attribute
+  * Remove event not relative to current fridge
   */  
-  def removeToken: Enumeratee[JsObject, JsObject] = Enumeratee.map[JsObject] {
+  def filterNotCurrentFridge(fridgeName: String): Enumeratee[JsObject, JsObject] = Enumeratee.filter[JsObject] {
+    notification => notification.\("fridgeName").as[String] != fridgeName
+  }
+  
+  /**
+  * Remove token & fridge name attributes
+  */  
+  def filterInfo: Enumeratee[JsObject, JsObject] = Enumeratee.map[JsObject] {
     notification => Json.obj(
-    		"fridgeName" -> notification.\("fridgeName"),
     		"command"    -> notification.\("command"),
     		"payload"    -> notification.\("payload"),
     		"timestamp"  -> notification.\("timestamp")
@@ -43,6 +49,10 @@ object Application extends Controller {
    */
   def stream(fridgeName:String, token: String) = Action {
     println("Get Stream for fridge "+fridgeName+" with token "+token)
-    Ok.stream(PomfNotificationService.getStream(fridgeName) &> filterNotToken(token) &> removeToken &> toJsValue ><> EventSource()).as("text/event-stream")
+    Ok.stream(PomfNotificationService.getStream() 
+                                      &> filterNotToken(token)
+                                      &> filterNotCurrentFridge(fridgeName)
+                                      &> filterInfo 
+                                      &> toJsValue ><> EventSource()).as("text/event-stream")
   }
 }
