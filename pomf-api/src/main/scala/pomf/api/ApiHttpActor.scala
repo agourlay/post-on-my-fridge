@@ -30,21 +30,17 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
 
   def receive = runRoute(pomfRoute)
   
-  private var crudService : ActorRef = _
+  private var crud = "/user/crud-service"
 
-  override def preStart() {
-    crudService = context.actorFor("/user/crud-service")
-  }
-
-  private val pomfRoute =
+ private val pomfRoute =
     pathPrefix("api") {
       path("fridges" / Rest) { fridgeName =>
         get {
           complete {
             if (fridgeName.isEmpty)
-              (crudService ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
+              (context.actorFor(crud) ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
             else
-              (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
+              (context.actorFor(crud) ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }
         }
       } ~
@@ -52,7 +48,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
         post {
           entity(as[Fridge]) { fridge =>
             complete {
-              (crudService ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
+              (context.actorFor(crud) ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
             }
           }
         }
@@ -62,7 +58,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
           parameters("token") { token =>
             entity(as[Post]) { post =>
               complete {
-                (crudService ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
+                (context.actorFor(crud) ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
               }
             }
           }
@@ -71,7 +67,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
             parameters("token") { token =>
               entity(as[Post]) { post =>
                 complete {
-                  (crudService ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
+                  (context.actorFor(crud) ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
                 }
               }
             }
@@ -80,13 +76,13 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
         path("posts" / LongNumber) { postId =>
           get {
             complete {
-              (crudService ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
+              (context.actorFor(crud) ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
             }
           } ~
             delete {
               parameters("token") { token =>
                 complete {
-                  (crudService ? CrudServiceActor.DeletePost(postId, token)).mapTo[String]
+                  (context.actorFor(crud) ? CrudServiceActor.DeletePost(postId, token)).mapTo[String]
                 }
               }
             }
@@ -95,7 +91,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
           path("fridge" / Rest) { fridgeName =>
             get {
               complete {
-                (crudService ? CrudServiceActor.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
+                (context.actorFor(crud) ? CrudServiceActor.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
               }
             }
           }
@@ -105,7 +101,7 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
             parameters("term") { term =>
               get {
                 complete {
-                  (crudService ? CrudServiceActor.SearchFridge(term)).mapTo[List[String]]
+                  (context.actorFor(crud) ? CrudServiceActor.SearchFridge(term)).mapTo[List[String]]
                 }
               }
             }
@@ -116,14 +112,14 @@ class ApiHttpActor extends HttpServiceActor with ActorLogging{
             parameters("token") { token =>
               entity(as[ChatMessage]) { message =>
                 complete {
-                  (crudService ? CrudServiceActor.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
+                  (context.actorFor(crud) ? CrudServiceActor.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
                 }
               }
             }
           } ~
             get {
               complete {
-                (crudService ? CrudServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
+                (context.actorFor(crud) ? CrudServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
               }
             }
         } ~
