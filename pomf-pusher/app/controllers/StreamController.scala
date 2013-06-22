@@ -5,16 +5,19 @@ import play.api.mvc._
 import play.api.libs.iteratee.Enumeratee
 import play.api.libs.json.JsValue
 import libs.json.Json._
+import play.api.libs.concurrent._
+import play.api.libs.iteratee.Concurrent
 import libs.EventSource
 import play.api.libs.iteratee.Enumerator
 import model.Notification
+import scala.language.reflectiveCalls
 import service.PomfNotificationService
 import play.api.libs.json.Json
 import play.api.libs.json.JsValueDeserializer
 import play.api.libs.json.JsString
 import play.api.libs.json.JsObject
 
-object Application extends Controller {
+object StreamController extends Controller {
   
   /**
   * Remove event with user token
@@ -44,15 +47,17 @@ object Application extends Controller {
   //FIXME not really nice : could by clean with implicit
   def toJsValue: Enumeratee[JsObject, JsValue] = Enumeratee.map[JsObject] { notification => notification }
 
+  val concurrentStream = Concurrent.broadcast[JsObject] 
+
   /**
    * Stream of server send events
    */
   def stream(fridgeName:String, token: String) = Action {
     println("Get Stream for fridge "+fridgeName+" with token "+token)
-    Ok.stream(PomfNotificationService.getStream() 
-                                      &> filterNotToken(token)
-                                      &> filterNotCurrentFridge(fridgeName)
-                                      &> filterInfo 
-                                      &> toJsValue ><> EventSource()).as("text/event-stream")
+    Ok.stream(concurrentStream._1
+                                 &> filterNotToken(token)
+                                 &> filterNotCurrentFridge(fridgeName)
+                                 &> filterInfo 
+                                 &> toJsValue ><> EventSource()).as("text/event-stream")
   }
 }

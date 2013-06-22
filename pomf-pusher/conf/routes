@@ -2,5 +2,4 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /stream/:fridgeName/:token                     controllers.Application.stream(fridgeName: String, token: String)
+GET   /stream/:fridgeName/:token         controllers.StreamController.stream(fridgeName: String, token: String)
