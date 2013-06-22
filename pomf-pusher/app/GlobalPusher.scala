@@ -5,16 +5,16 @@ import service.PusherNotificationService
 
 object GlobalPusher extends GlobalSettings {
 
-  implicit val system = ActorSystem("PusherSystem")
+  implicit val system = ActorSystem("pomf-pusher")
     
-  val pusherNotificationService = system.actorOf(Props[PusherNotificationService], "pusher-listenner-service")
+  val pusherNotificationService = system.actorOf(Props[PusherNotificationService], "pusher-listener")
 
   override def onStart(app: Application) {
-    Logger.info("Pomf-pusher has started")
+    Logger.info("pomf-pusher has started")
   }  
   
   override def onStop(app: Application) {
-    Logger.info("Pomf-pusher shutdown...")
+    Logger.info("pomf-pusher shutdown...")
   }  
   
 }

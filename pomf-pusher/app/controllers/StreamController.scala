@@ -11,7 +11,6 @@ import libs.EventSource
 import play.api.libs.iteratee.Enumerator
 import model.Notification
 import scala.language.reflectiveCalls
-import service.PomfNotificationService
 import play.api.libs.json.Json
 import play.api.libs.json.JsValueDeserializer
 import play.api.libs.json.JsString
@@ -30,7 +29,7 @@ object StreamController extends Controller {
   * Remove event not relative to current fridge
   */  
   def filterNotCurrentFridge(fridgeName: String): Enumeratee[JsObject, JsObject] = Enumeratee.filter[JsObject] {
-    notification => notification.\("fridgeName").as[String] != fridgeName
+    notification => notification.\("fridgeName").as[String] == fridgeName
   }
   
   /**
