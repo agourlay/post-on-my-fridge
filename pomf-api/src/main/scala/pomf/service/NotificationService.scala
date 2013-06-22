@@ -14,14 +14,13 @@ class NotificationActor extends Actor with ActorLogging {
   
   implicit val actorSystem = context.system
 
-  val remote = "akka.tcp://pomf-pusher@127.0.0.1:2553/user/pusher-listener"
+  val remote = "akka://pomf-pusher@127.0.0.1:2553/user/pusher-listener"
   
   def receive = {
     case Notification(fridgeName,command,payload,timestamp,token) =>  {    
       val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
-      log.debug("Sending notification {}", jsonNotif)
-      context.actorSelection(remote) ! jsonNotif
+      log.info("Sending notification {}", jsonNotif)
+      context.actorFor(remote) ! jsonNotif.toString
     }
-    case _ => 
   }
 }

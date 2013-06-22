@@ -43,7 +43,7 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
 
   def addPost(post: Post, token: String): Post = {
     val persistedPost = dao.addPost(post)
-    context.actorSelection(notification) ! Notifications.create(post.fridgeId, persistedPost, token)
+    context.actorFor(notification) ! Notifications.create(post.fridgeId, persistedPost, token)
     persistedPost
   }
 
@@ -59,18 +59,18 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
-    context.actorSelection(notification) ! Notifications.delete(getPost(id).get.fridgeId, id, token)
+    context.actorFor(notification) ! Notifications.delete(getPost(id).get.fridgeId, id, token)
     "post " + dao.deletePost(id) + " deleted"
   }
 
   def updatePost(post: Post, token: String): Post = {
-    context.actorSelection(notification) ! Notifications.update(post.fridgeId, post, token)
+    context.actorFor(notification) ! Notifications.update(post.fridgeId, post, token)
     dao.updatePost(post).orNull
   }
 
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
     //cache.lpush(fridgeName+".chat", message)
-    context.actorSelection(notification) ! Notifications.message(fridgeName, message, token)
+    context.actorFor(notification) ! Notifications.message(fridgeName, message, token)
     message
   }
 

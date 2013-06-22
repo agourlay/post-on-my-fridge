@@ -23,7 +23,7 @@ class PusherNotificationService extends Actor with ActorLogging{
 
   def receive = {
     case jsonString : String => {
-      val json: JsValue = Json.parse(new String(jsonString))
+      val json: JsValue = Json.parse(jsonString)
       val data = Json.obj(
                 	"fridgeName" -> json.\("fridgeName"),
                 	"command"    -> json.\("command"),
@@ -32,6 +32,7 @@ class PusherNotificationService extends Actor with ActorLogging{
                 	"token"      -> json.\("token")
                 	)
       StreamController.concurrentStream._2.push(data)
-    }   
+    }
+    case _ => println("Cannot handle message")
   }
 }
