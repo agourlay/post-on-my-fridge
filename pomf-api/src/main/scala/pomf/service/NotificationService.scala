@@ -1,12 +1,7 @@
 package pomf.service
 
 import akka.actor.Actor
-import com.github.sstone.amqp.Amqp
-import com.rabbitmq.client.ConnectionFactory
 import akka.actor.Props
-import com.github.sstone.amqp.Amqp._
-import com.github.sstone.amqp.ConnectionOwner
-import com.github.sstone.amqp.ChannelOwner
 import spray.json.DefaultJsonProtocol._
 import scala.io.Codec
 import spray.json.JsValue
@@ -18,28 +13,14 @@ class NotificationActor extends Actor with ActorLogging {
   import pomf.api.JsonSupport._
   
   implicit val actorSystem = context.system
-  
-  val connFactory = new ConnectionFactory()
-      connFactory.setHost("localhost")
-      
-  val conn = actorSystem.actorOf(Props(new ConnectionOwner(connFactory)))
-  
-  val producer = ConnectionOwner.createActor(conn, Props(new ChannelOwner()))
-  
-  val queueName = "pomf-notification"
-  
-  override def preStart() = {
-	  Amqp.waitForConnection(actorSystem, producer).await()
-  }  
+
+  val remote = "akka.tcp://pomf-pusher@127.0.0.1:2553/user/pusher-listener"
   
   def receive = {
     case Notification(fridgeName,command,payload,timestamp,token) =>  {    
       val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
       log.debug("Sending notification {}", jsonNotif)
-      val queueParams = QueueParameters(queueName, passive = false, durable = false, exclusive = false, autodelete = false)
-      producer ! DeclareQueue(queueParams)  //idem potent
-      producer ! QueueBind("pomf-notification", "amq.direct", queueName)
-      producer ! Publish("amq.direct", queueName, jsonNotif.toString.getBytes(Codec.UTF8.charSet))
+      context.actorSelection(remote) ! jsonNotif
     }
     case _ => 
   }

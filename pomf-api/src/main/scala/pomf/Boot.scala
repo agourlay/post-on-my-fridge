@@ -18,7 +18,7 @@ object Boot extends App {
  
   val log: Logger = LoggerFactory.getLogger("pomf.boot");
 
-  implicit val system = ActorSystem("pomf")
+  implicit val system = ActorSystem("pomf-api")
 
   val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
 

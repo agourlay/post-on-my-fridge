@@ -28,14 +28,14 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"       % "1.1-M8"                     withSources() 
-  ,"io.spray"           %   "spray-routing"   % "1.1-M8"                     withSources()
-  ,"io.spray"           %   "spray-testkit"   % "1.1-M8"          % "test"   withSources()
+   "io.spray"           %   "spray-can"       % "1.2-M8"                     withSources() 
+  ,"io.spray"           %   "spray-routing"   % "1.2-M8"                     withSources()
+  ,"io.spray"           %   "spray-testkit"   % "1.2-M8"          % "test"   withSources()
   ,"io.spray"           %%  "spray-json"      % "1.2.5"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-actor"      % "2.1.4"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.1.4"                      withSources()
+  ,"com.typesafe.akka"  %%  "akka-actor"      % "2.2.0-RC1"                  withSources()
+  ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.2.0-RC1"                  withSources()
+  ,"com.typesafe.akka"  %%  "akka-remote"     % "2.2.0-RC1"                  withSources()
   ,"net.debasishg"      %%  "redisclient"     % "2.10"                       withSources()
-  ,"com.github.sstone"  %%  "amqp-client"     % "1.1"                        withSources()
   ,"com.typesafe.slick" %%  "slick"           % "1.0.1"                      withSources()
   ,"com.h2database"     %   "h2"              % "1.3.172"       
   ,"org.postgresql"     %   "postgresql"      % "9.2-1003-jdbc4"             withSources()
