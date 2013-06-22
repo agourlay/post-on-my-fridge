@@ -29,7 +29,7 @@ object StreamController extends Controller {
   * Remove event not relative to current fridge
   */  
   def filterNotCurrentFridge(fridgeName: String): Enumeratee[JsObject, JsObject] = Enumeratee.filter[JsObject] {
-    notification => notification.\("fridgeName").as[String] != fridgeName
+    notification => notification.\("fridgeName").as[String] == fridgeName
   }
   
   /**

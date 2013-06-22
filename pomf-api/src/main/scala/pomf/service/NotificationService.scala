@@ -18,8 +18,7 @@ class NotificationActor extends Actor with ActorLogging {
   
   def receive = {
     case Notification(fridgeName,command,payload,timestamp,token) =>  {    
-      val jsonNotif : JsValue = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
-      log.info("Sending notification {}", jsonNotif)
+      val jsonNotif  = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
       context.actorFor(remote) ! jsonNotif.toString
     }
   }
