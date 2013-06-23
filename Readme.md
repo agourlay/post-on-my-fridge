@@ -1,6 +1,6 @@
 #post-on-my-fridge  
 
-Just sticky notes on virtual fridges shared in real time. 
+> Just sticky notes on virtual fridges shared in real time.
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
@@ -8,7 +8,7 @@ This project is a sandbox that demonstrates modern technologies for modern webap
 
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
-The application´s architecture is composed from several parts.
+The application´s architecture is composed from several parts. *pomf stands for post-on-my-fridge*
 
 ### pomf-client
 
@@ -17,7 +17,7 @@ The client calls the rest API on pomf-api and subscribes to notifications for th
 
 ### pomf-api  
 
-This is a non blocking rest API that reads and modify fridges. It is built with Spray.io and Slick on a Postgresql database for persistence.
+This is a non blocking rest API that reads and modifies fridges. It is built with Spray.io and Slick for persistence.
 When an action on a fridge such as creating or moving a post is called, a notification is sent to pomf-pusher via akka-remote to notify all the current fridge´s clients about the new state. 
 This technique allows near real time collaboration on a fridge.
 
