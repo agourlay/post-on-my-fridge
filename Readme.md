@@ -8,7 +8,7 @@ This project is a sandbox that demonstrates modern technologies for modern webap
 
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
-Post-on-my-fridge architecture is composed from several parts.
+The application´s architecture is composed from several parts.
 
 ### pomf-client
 
@@ -24,7 +24,7 @@ This technique allows near real time collaboration on a fridge.
 ### pomf-pusher 
 
 This module allows a client to subscribe to all notifications as Server Sent Event on a fridge. 
-This is built using Play 2.1 and Iteratess.
+This is built using Play 2.1 and Iteratees.
 
 ### pomf-infra
 
