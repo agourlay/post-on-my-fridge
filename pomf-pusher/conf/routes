@@ -3,3 +3,5 @@
 # ~~~~
 
 GET   /stream/:fridgeName/:token         controllers.StreamController.stream(fridgeName: String, token: String)
+
+GET   /stream/firehose                   controllers.StreamController.firehose()

@@ -49,14 +49,23 @@ object StreamController extends Controller {
   val concurrentStream = Concurrent.broadcast[JsObject] 
 
   /**
-   * Stream of server send events
+   * Stream for a fridge
    */
   def stream(fridgeName:String, token: String) = Action {
     println("Get Stream for fridge "+fridgeName+" with token "+token)
-    Ok.stream(concurrentStream._1
-                                 &> filterNotToken(token)
-                                 &> filterNotCurrentFridge(fridgeName)
-                                 &> filterInfo 
-                                 &> toJsValue ><> EventSource()).as("text/event-stream")
+    Ok.stream(concurrentStream._1 &> filterNotToken(token)
+                                  &> filterNotCurrentFridge(fridgeName)
+                                  &> filterInfo 
+                                  &> toJsValue ><> EventSource()).as("text/event-stream")
+  }
+  
+  /**
+   * Firehose stream
+   */
+  def firehose() = Action {
+    println("Get Firehose")
+    // do not forget to filter private fridge when implemented
+    Ok.stream(concurrentStream._1 &> filterInfo 
+                                  &> toJsValue ><> EventSource()).as("text/event-stream")
   }
 }
