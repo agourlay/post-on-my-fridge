@@ -8,7 +8,7 @@ This project is a sandbox that demonstrates modern technologies for modern webap
 
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
-The application´s architecture is composed from several parts. *pomf stands for post-on-my-fridge*
+The application´s architecture is composed from several parts. *(pomf stands for post-on-my-fridge)*
 
 ### pomf-client
 
