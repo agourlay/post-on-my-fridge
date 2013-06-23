@@ -1,6 +1,6 @@
 #post-on-my-fridge  
 
-Just sticky notes on virtual fridges that can be shared in real time. 
+Just sticky notes on virtual fridges shared in real time. 
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
@@ -19,7 +19,7 @@ The client calls the rest API on pomf-api and subscribes to notifications for th
 
 This is a non blocking rest API that reads and modify fridges. It is built with Spray.io and Slick on a Postgresql database for persistence.
 When an action on a fridge such as creating or moving a post is called, a notification is sent to pomf-pusher via akka-remote to notify all the current fridge´s clients about the new state. 
-This technique allows near realtime collaboration on a fridge.
+This technique allows near real time collaboration on a fridge.
 
 ### pomf-pusher 
 
@@ -30,7 +30,7 @@ This is built using Play 2.1 and Iteratess.
 
 This folder contains : 
 
-* the nginx reverse proxy configuration used to route clients between the api and the pusher.
+* the Nginx reverse proxy configuration used to route clients between the API and the SSE pusher.
 
-* a Gatling simulation that stress test the application.
+* a Gatling simulation to stress the application.
 
