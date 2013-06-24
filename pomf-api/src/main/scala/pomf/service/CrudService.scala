@@ -13,11 +13,8 @@ import akka.util.Timeout
 
 import scala.concurrent._
 
-import com.redis.serialization.Parse
-
-class CrudServiceActor extends Actor with ActorLogging with PomfCachingService with ProductionDB { 
+class CrudServiceActor extends Actor with ActorLogging with ProductionDB { 
   this: DBConfig =>
-  import Parse.Implicits._
 
   implicit def executionContext = context.dispatcher
   
@@ -69,13 +66,13 @@ class CrudServiceActor extends Actor with ActorLogging with PomfCachingService w
   }
 
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    //cache.lpush(fridgeName+".chat", message)
+    //send to fridge chat history
     context.actorFor(notification) ! Notifications.message(fridgeName, message, token)
     message
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-    //cache.get[List[ChatMessage]](fridgeName+".chat")
+    //get fridge chat history
     List()
   }
 }
