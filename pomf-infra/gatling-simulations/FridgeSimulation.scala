@@ -1,4 +1,3 @@
-
 import com.excilys.ebi.gatling.core.Predef._
 import com.excilys.ebi.gatling.http.Predef._
 import com.excilys.ebi.gatling.jdbc.Predef._
@@ -84,7 +83,7 @@ class FridgeSimulation extends Simulation {
 							.body("""{"author":"${user_name}","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.5,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48"}""")
 							.check(jsonPath("id")saveAs("post_id"))
 
-    def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
+	def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
 								 .get("/stream/${fridge_id}/${user_token}")
 								 .headers(headers_8)
 
@@ -147,25 +146,25 @@ class FridgeSimulation extends Simulation {
 	    .pause(10 milliseconds)
 	    .exec(retrieveAndSetUserToken)
 	    .pause(20 milliseconds)
-		.exec(retrieveChatHistory)
-		.pause(20 milliseconds)
-		//.exec(suscribeToNotification)
-		.pause(20 milliseconds)
-		.exec(retrieveFridgeContent)
-		.pause(2)
-		.exec(createPostOnFridge)
-		.pause(2)
-        .exec(sendMessage)
-		.pause(2)
-		.exec(movePostAround)
-		.pause(2)
-		.exec(changePostColor)
-		.pause(2)
-		.exec(changePostContent)
-		.pause(2)
-		.exec(deletePost)
-		.pause(2)		
-		.exec(searchForFridge)
+	    .exec(retrieveChatHistory)
+	    .pause(20 milliseconds)
+	    //.exec(suscribeToNotification)
+	    .pause(20 milliseconds)
+	    .exec(retrieveFridgeContent)
+	    .pause(2)
+	    .exec(createPostOnFridge)
+	    .pause(2)
+	    .exec(sendMessage)
+	    .pause(2)
+	    .exec(movePostAround)
+	    .pause(2)
+	    .exec(changePostColor)
+	    .pause(2)
+	    .exec(changePostContent)
+	    .pause(2)
+	    .exec(deletePost)
+	    .pause(2)		
+	    .exec(searchForFridge)
 
 	setUp(scn.users(250).ramp(10).protocolConfig(httpConf))
 }
