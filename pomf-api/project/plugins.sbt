@@ -1,4 +1,4 @@
-addSbtPlugin("io.spray" % "sbt-revolver" % "0.6.2")
+addSbtPlugin("io.spray" % "sbt-revolver" % "0.7.0")
 
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "2.2.0")
 
