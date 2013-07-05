@@ -4,21 +4,19 @@
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
-This project is a sandbox that demonstrates modern technologies for modern webapps.
-
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
 The application´s architecture is composed from several parts. *(pomf stands for post-on-my-fridge)*
 
 ### pomf-client
 
-A single page web app built with Ember.js that displays the content of a fridge and allows collaborative edition in realtime.
-The client calls the rest API on pomf-api and subscribes to notifications for the current fridge with pomf-pusher.
+A single page web app built with Ember.js displaying the content of a fridge and allowing collaborative edition in realtime.
+This client calls the rest API on pomf-api and subscribes to notifications for the current fridge with pomf-pusher.
 
 ### pomf-api  
 
 This is a non blocking rest API that reads and modifies fridges. It is built with Spray.io and Slick for persistence.
-When an action on a fridge such as creating or moving a post is called, a notification is sent to pomf-pusher via akka-remote to notify all the current fridge´s clients about the new state. 
+When an action such as creating or moving a post is called on a fridge, a notification is sent to pomf-pusher via akka-remote to notify all the current fridge´s clients about the new state. 
 This technique allows near real time collaboration on a fridge.
 
 ### pomf-pusher 
