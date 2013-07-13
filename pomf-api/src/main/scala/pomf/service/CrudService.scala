@@ -40,7 +40,7 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
 
   def addPost(post: Post, token: String): Post = {
     val persistedPost = dao.addPost(post)
-    context.actorFor(notification) ! Notifications.create(post.fridgeId, persistedPost, token)
+    context.actorSelection(notification) ! Notification.create(post.fridgeId, persistedPost, token)
     persistedPost
   }
 
@@ -56,18 +56,18 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
-    context.actorFor(notification) ! Notifications.delete(getPost(id).get.fridgeId, id, token)
+    context.actorSelection(notification) ! Notification.delete(getPost(id).get.fridgeId, id, token)
     "post " + dao.deletePost(id) + " deleted"
   }
 
   def updatePost(post: Post, token: String): Post = {
-    context.actorFor(notification) ! Notifications.update(post.fridgeId, post, token)
+    context.actorSelection(notification) ! Notification.update(post.fridgeId, post, token)
     dao.updatePost(post).orNull
   }
 
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
     //send to fridge chat history
-    context.actorFor(notification) ! Notifications.message(fridgeName, message, token)
+    context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
   }
 

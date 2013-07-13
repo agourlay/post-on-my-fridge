@@ -5,21 +5,17 @@ import akka.actor.Props
 import spray.json.DefaultJsonProtocol._
 import scala.io.Codec
 import spray.json.JsValue
-import pomf.domain.model.Notification
 import akka.actor.actorRef2Scala
 import akka.actor.ActorLogging
+import pomf.domain.model.Notification
+
 
 class NotificationActor extends Actor with ActorLogging {
   import pomf.api.JsonSupport._
   
   implicit val actorSystem = context.system
-
-  val remote = "akka://pomf-pusher@127.0.0.1:2553/user/pusher-listener"
   
   def receive = {
-    case Notification(fridgeName,command,payload,timestamp,token) =>  {    
-      val jsonNotif  = formatNotif.write(Notification(fridgeName,command,payload,timestamp,token))
-      context.actorFor(remote) ! jsonNotif.toString
-    }
+    case n : Notification => actorSystem.eventStream.publish(n)
   }
 }

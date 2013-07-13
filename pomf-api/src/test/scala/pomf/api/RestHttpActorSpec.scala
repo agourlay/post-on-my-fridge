@@ -8,7 +8,7 @@ import spray.http._
 import spray.http.StatusCodes._
 import java.text.SimpleDateFormat
 import pomf.domain.model._
-import pomf.util.JsonImplicits._
+
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner]) // Only required if testing from within Eclipse
@@ -78,7 +78,7 @@ class PomfServiceSpec extends Specification with Specs2RouteTest {
       					  id = Some(1L))
 
   def getEmptyFridge = {
-    Get("/api/fridge") ~> pomfRoute ~> check {
+    Get("/api/fridge") ~> restRoute ~> check {
       entityAs[FridgeRest] === List()
       ok
     } 

@@ -51,5 +51,5 @@ object JsonSupport{
   implicit val formatFridge = jsonFormat3(Fridge)
   implicit val formatFridgeRest = jsonFormat4(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
-  implicit val formatNotif = jsonFormat5(Notification)
+  implicit val formatEvent = jsonFormat3(PushedEvent)
 }
