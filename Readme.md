@@ -1,6 +1,6 @@
 #post-on-my-fridge  
 
-https://travis-ci.org/agourlay/post-on-my-fridge.png
+![ScreenShot](https://travis-ci.org/agourlay/post-on-my-fridge.png)
 
 > Just sticky notes on virtual fridges shared in real time.
 
