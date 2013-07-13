@@ -19,7 +19,7 @@ window.App = Ember.Application.createWithMixins({
     app.deferReadiness();
 
     var promises = templates.map(function(name) {
-      return Ember.$.get('static/js/templates/'+name+'.hbs').then(function(data) {
+      return Ember.$.get('/js/templates/'+name+'.hbs').then(function(data) {
         Ember.TEMPLATES[name] = Ember.Handlebars.compile(data);
       });
     });

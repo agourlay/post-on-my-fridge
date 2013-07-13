@@ -24,15 +24,15 @@ import reflect.ClassTag
 import JsonSupport._
 
 
-class RestHttpActor extends HttpServiceActor with ActorLogging{
+class PomfHttpActor extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
 
-  def receive = runRoute(restRoute)
+  def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~  staticRoute)
   
   private var crud = "/user/crud-service"
 
- private val restRoute =
+  def restRoute =
     pathPrefix("api") {
       path("fridges" / Rest) { fridgeName =>
         get {
@@ -127,13 +127,37 @@ class RestHttpActor extends HttpServiceActor with ActorLogging{
           get {
             complete(TokenSupport.nextSessionId)
           }
-        } ~ 
-        path("stats") {
-          complete {
-            actorRefFactory.actorSelection("/user/IO-HTTP/listener-0")
-              .ask(Http.GetStats)(1.second)
-              .mapTo[Stats]
-          }
         }
-    }
-  }
+      } 
+      
+  def streamRoute = 
+    pathPrefix("stream") {
+      get {
+        path("fridge" / Rest) { fridgeName =>
+            parameters("token") { token =>
+              streamActivity(Some(fridgeName),Some(token))
+            }    
+        } ~  
+        path("firehose") {
+          streamActivity() 
+        }    
+      }
+    } 
+  
+  def statsRoute = 
+    path("stats") {
+        complete {
+          actorRefFactory.actorSelection("/user/IO-HTTP/listener-0")
+            .ask(Http.GetStats)(1.second)
+            .mapTo[Stats]
+        }
+      }
+
+  def staticRoute = path("")(getFromResource("web/index.html")) ~ getFromResourceDirectory("web")  
+
+  def streamActivity(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
+    val connectionHandler = context.actorOf(Props(new ServerSentEventActor(fridgeTarget, userToken, ctx)))
+    //subscribe to notification event
+    context.system.eventStream.subscribe(connectionHandler, classOf[Notification])
+  }  
+}

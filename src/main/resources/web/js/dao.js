@@ -61,7 +61,7 @@ App.Dao = Em.Object.create({
 
 	streamManagement : function (postsController,messagesController) {
 		var me = this;
-		me.set("source", new EventSource("stream/" + this.get('fridgeId') +"/"+ this.get("userToken")));
+		me.set("source", new EventSource("stream/fridge/" + this.get('fridgeId') +"?token="+ this.get("userToken")));
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);

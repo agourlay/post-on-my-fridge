@@ -31,7 +31,7 @@ class ServerSentEventActor(fridgeTarget:Option[String],userToken:Option[String],
 	  MediaType.custom(
 	    mainType = "text",
 	    subType = "event-stream",
-	    compressible = true,
+	    compressible = false,
 	    binary = false
 	   ))
 
@@ -56,7 +56,7 @@ class ServerSentEventActor(fridgeTarget:Option[String],userToken:Option[String],
       } 
     }    
     case ev: Http.ConnectionClosed =>
-      log.warning("Stopping response streaming due to {}", ev)
+      log.debug("Stopping response streaming due to {}", ev)
       context.stop(self)
      
     case ReceiveTimeout =>
