@@ -11,11 +11,8 @@ import pomf.domain.model.Notification
 
 
 class NotificationActor extends Actor with ActorLogging {
-  import pomf.api.JsonSupport._
-  
-  implicit val actorSystem = context.system
-  
+    
   def receive = {
-    case n : Notification => actorSystem.eventStream.publish(n)
+    case n : Notification => context.system.eventStream.publish(n)
   }
 }

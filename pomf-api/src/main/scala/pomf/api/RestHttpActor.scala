@@ -130,20 +130,10 @@ class RestHttpActor extends HttpServiceActor with ActorLogging{
         } ~ 
         path("stats") {
           complete {
-              context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats map {
-                case stats: Stats ⇒
-                  s"""
-                  | Uptime                : ${Duration(stats.uptime.toHours, TimeUnit.HOURS)}
-                  | Total requests        : ${stats.totalRequests}
-                  | Open requests         : ${stats.openRequests}
-                  | Max open requests     : ${stats.maxOpenRequests}
-                  | Total connections     : ${stats.totalConnections}
-                  | Open connections      : ${stats.openConnections}
-                  | Max open connections  : ${stats.maxOpenConnections}
-                  | Requests timed out    : ${stats.requestTimeouts}
-                  """.trim.stripMargin
-              }
-           }
+            actorRefFactory.actorSelection("/user/IO-HTTP/listener-0")
+              .ask(Http.GetStats)(1.second)
+              .mapTo[Stats]
+          }
         }
     }
   }

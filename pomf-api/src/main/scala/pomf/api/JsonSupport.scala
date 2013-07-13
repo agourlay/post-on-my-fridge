@@ -3,7 +3,12 @@ package pomf.api
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.text.ParseException
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration._
 import spray.json._
+import spray.httpx.marshalling.Marshaller
+import spray.http._
+import spray.can.server.Stats
 import pomf.domain.model._
 import pomf.domain.model.ChatMessage
 import pomf.domain.model.Notification
@@ -52,4 +57,16 @@ object JsonSupport{
   implicit val formatFridgeRest = jsonFormat4(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
   implicit val formatEvent = jsonFormat3(PushedEvent)
+
+  implicit val statsMarshaller: Marshaller[Stats] =
+    Marshaller.delegate[Stats, String](ContentTypes.`text/plain`) { stats =>
+      "Uptime                : " + Duration(stats.uptime.toHours, TimeUnit.HOURS) + '\n' +
+      "Total requests        : " + stats.totalRequests + '\n' +
+      "Open requests         : " + stats.openRequests + '\n' +
+      "Max open requests     : " + stats.maxOpenRequests + '\n' +
+      "Total connections     : " + stats.totalConnections + '\n' +
+      "Open connections      : " + stats.openConnections + '\n' +
+      "Max open connections  : " + stats.maxOpenConnections + '\n' +
+      "Requests timed out    : " + stats.requestTimeouts + '\n'
+    }
 }
