@@ -84,7 +84,7 @@ class FridgeSimulation extends Simulation {
 							.check(jsonPath("id")saveAs("post_id"))
 
 	def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
-								 .get("/stream/${fridge_id}/${user_token}")
+								 .get("/stream/fridge/${fridge_id}?token=${user_token}")
 								 .headers(headers_8)
 
 	def retrieveChatHistory = http("retrieve chat history ${fridge_id}")
