@@ -1,34 +1,19 @@
 #post-on-my-fridge  
 
+![ScreenShot](https://travis-ci.org/agourlay/post-on-my-fridge.png)
+
 > Just sticky notes on virtual fridges shared in real time.
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
-The application´s architecture is composed from several parts. *(pomf stands for post-on-my-fridge)*
+### Architecture
 
-### pomf-client
+A single page web app built with Ember.js displays the content of a fridge and subscribes to notifications for the current fridge.
 
-A single page web app built with Ember.js displaying the content of a fridge and allowing collaborative edition in realtime.
-This client calls the rest API on pomf-api and subscribes to notifications for the current fridge with pomf-pusher.
+The backend is a non blocking rest API that reads and modifies fridges. It is built with Spray.io and Slick for persistence. When an action such as creating or moving a post is called on a fridge, a notification about the new state is sent via Server Sent Event to all the current fridge´s clients. 
 
-### pomf-api  
-
-This is a non blocking rest API that reads and modifies fridges. It is built with Spray.io and Slick for persistence.
-When an action such as creating or moving a post is called on a fridge, a notification is sent to pomf-pusher via akka-remote to notify all the current fridge´s clients about the new state. 
 This technique allows near real time collaboration on a fridge.
 
-### pomf-pusher 
-
-This module allows a client to subscribe to all notifications as Server Sent Event on a fridge. 
-This is built using Play 2.1 and Iteratees.
-
-### pomf-infra
-
-This folder contains : 
-
-* the Nginx reverse proxy configuration used to route clients between the API and the SSE pusher.
-
-* a Gatling simulation to stress the application.
 
