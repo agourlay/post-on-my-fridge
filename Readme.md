@@ -2,7 +2,7 @@
 
 > Just sticky notes on virtual fridges shared in real time.
 
-![ScreenShot](https://travis-ci.org/agourlay/post-on-my-fridge.png)
+![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
