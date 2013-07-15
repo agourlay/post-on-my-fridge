@@ -12,7 +12,7 @@ import pomf.domain.model._
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner]) // Only required if testing from within Eclipse
-class PomfServiceSpec extends Specification with Specs2RouteTest {
+abstract class PomfServiceSpec extends Specification with Specs2RouteTest {
   def actorRefFactory = system
   
  /* def is = {
