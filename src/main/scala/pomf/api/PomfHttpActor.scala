@@ -9,7 +9,9 @@ import akka.actor._
 
 import spray.json._
 import spray.httpx.SprayJsonSupport._
+import spray.httpx.encoding._
 import spray.routing._
+import spray.routing.directives.CachingDirectives._
 import spray.http._
 import spray.http.MediaTypes._
 import spray.can.Http
@@ -28,9 +30,10 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
 
-  def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~  staticRoute)
+  def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~ staticRoute)
   
-  private var crud = "/user/crud-service"
+  val crud = "/user/crud-service"
+  val simpleCache = routeCache(maxCapacity = 1000, timeToIdle = Duration("30 min"))
 
   def restRoute =
     pathPrefix("api") {
@@ -147,13 +150,25 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
   def statsRoute = 
     path("stats") {
         complete {
-          actorRefFactory.actorSelection("/user/IO-HTTP/listener-0")
+          context.actorSelection("/user/IO-HTTP/listener-0")
             .ask(Http.GetStats)(1.second)
             .mapTo[Stats]
         }
       }
 
-  def staticRoute = path("")(getFromResource("web/index.html")) ~ getFromResourceDirectory("web")  
+  def staticRoute = 
+    path(""){
+        cache(simpleCache) {
+            encodeResponse(Gzip){
+                getFromResource("web/index.html")   
+            }
+        }
+    } ~
+    cache(simpleCache) {
+        encodeResponse(Gzip){
+            getFromResourceDirectory("web")
+        }
+    }    
 
   def streamActivity(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
     val connectionHandler = context.actorOf(Props(new ServerSentEventActor(fridgeTarget, userToken, ctx)))
