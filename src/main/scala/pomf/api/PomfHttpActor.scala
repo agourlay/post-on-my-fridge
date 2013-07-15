@@ -16,6 +16,7 @@ import spray.http._
 import spray.http.MediaTypes._
 import spray.can.Http
 import spray.can.server.Stats
+import CachingDirectives._
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
