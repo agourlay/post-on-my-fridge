@@ -33,7 +33,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
   def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~ staticRoute)
   
   val crud = "/user/crud-service"
-  val simpleCache = routeCache(maxCapacity = 1000, timeToIdle = Duration("30 min"))
+  val simpleCache = routeCache(maxCapacity = 500)
 
   def restRoute =
     pathPrefix("api") {
