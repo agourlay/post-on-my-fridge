@@ -1,6 +1,6 @@
 #post-on-my-fridge  
 
-> Just sticky notes on virtual fridges shared in real time.
+> Just sticky notes shared in real time on virtual fridges .
 
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
