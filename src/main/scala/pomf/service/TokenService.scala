@@ -18,8 +18,8 @@ class TokenServiceActor extends Actor with ActorLogging {
   def receive = {
     case RequestToken => sender ! new BigInteger(130, random).toString(32)
   }
-  
-  object TokenServiceActor{
-      case class RequestToken
-  }
+}
+
+object TokenServiceActor{
+  case class RequestToken
 }

@@ -3,6 +3,7 @@ package pomf.api
 import pomf.util._
 import pomf.service.CrudServiceActor
 import pomf.service.ChatServiceActor
+import pomf.service.TokenServiceActor
 import pomf.domain.model._
 
 import akka.pattern._

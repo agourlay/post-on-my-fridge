@@ -10,6 +10,7 @@ import akka.actor.ActorLogging
 import pomf.domain.model.ChatMessage
 import pomf.service.ChatServiceActor._
 import pomf.domain.model._
+import pomf.api.JsonSupport._
 
 
 class ChatServiceActor extends Actor with ActorLogging {
