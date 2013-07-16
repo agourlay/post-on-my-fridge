@@ -2,6 +2,7 @@ package pomf.api
 
 import pomf.util._
 import pomf.service.CrudServiceActor
+import pomf.service.ChatServiceActor
 import pomf.domain.model._
 
 import akka.pattern._
@@ -32,8 +33,9 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
 
   def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~ staticRoute)
   
-  val crud = "/user/crud-service"
-  val simpleCache = routeCache(maxCapacity = 500)
+  val crudActor = "/user/crud-service"
+  val chatActor = "/user/chat-service"
+  val tokenActor = "/user/token-service"
 
   def restRoute =
     pathPrefix("api") {
@@ -41,9 +43,9 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         get {
           complete {
             if (fridgeName.isEmpty)
-              (context.actorSelection(crud) ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
+              (context.actorSelection(crudActor) ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
             else
-              (context.actorSelection(crud) ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
+              (context.actorSelection(crudActor) ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }
         }
       } ~
@@ -51,7 +53,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         post {
           entity(as[Fridge]) { fridge =>
             complete {
-              (context.actorSelection(crud) ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
+              (context.actorSelection(crudActor) ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
             }
           }
         }
@@ -61,7 +63,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
           parameters("token") { token =>
             entity(as[Post]) { post =>
               complete {
-                (context.actorSelection(crud) ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
+                (context.actorSelection(crudActor) ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
               }
             }
           }
@@ -70,7 +72,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
             parameters("token") { token =>
               entity(as[Post]) { post =>
                 complete {
-                  (context.actorSelection(crud) ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
+                  (context.actorSelection(crudActor) ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
                 }
               }
             }
@@ -79,13 +81,13 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         path("posts" / LongNumber) { postId =>
           get {
             complete {
-              (context.actorSelection(crud) ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
+              (context.actorSelection(crudActor) ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
             }
           } ~
             delete {
               parameters("token") { token =>
                 complete {
-                  (context.actorSelection(crud) ? CrudServiceActor.DeletePost(postId, token)).mapTo[String]
+                  (context.actorSelection(crudActor) ? CrudServiceActor.DeletePost(postId, token)).mapTo[String]
                 }
               }
             }
@@ -94,7 +96,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
           path("fridge" / Rest) { fridgeName =>
             get {
               complete {
-                (context.actorSelection(crud) ? CrudServiceActor.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
+                (context.actorSelection(crudActor) ? CrudServiceActor.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
               }
             }
           }
@@ -104,7 +106,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
             parameters("term") { term =>
               get {
                 complete {
-                  (context.actorSelection(crud) ? CrudServiceActor.SearchFridge(term)).mapTo[List[String]]
+                  (context.actorSelection(crudActor) ? CrudServiceActor.SearchFridge(term)).mapTo[List[String]]
                 }
               }
             }
@@ -115,20 +117,22 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
             parameters("token") { token =>
               entity(as[ChatMessage]) { message =>
                 complete {
-                  (context.actorSelection(crud) ? CrudServiceActor.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
+                  (context.actorSelection(chatActor) ? ChatServiceActor.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
                 }
               }
             }
           } ~
             get {
               complete {
-                (context.actorSelection(crud) ? CrudServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
+                (context.actorSelection(chatActor) ? ChatServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
               }
             }
         } ~
         path("token") {
           get {
-            complete(TokenSupport.nextSessionId)
+            complete{
+                (context.actorSelection(tokenActor) ? TokenServiceActor.RequestToken).mapTo[String]
+            }
           }
         }
       } 
@@ -156,6 +160,8 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         }
       }
 
+  val simpleCache = routeCache(maxCapacity = 500)
+  
   def staticRoute = 
     path(""){
         cache(simpleCache) {

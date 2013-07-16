@@ -8,7 +8,6 @@ import pomf.service.CrudServiceActor._
 
 import akka.actor._
 import akka.pattern._
-import akka.event.LoggingReceive
 import akka.util.Timeout
 
 import scala.concurrent._
@@ -18,20 +17,18 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
 
   implicit def executionContext = context.dispatcher
   
-  private var notification = "/user/notification-service"
+  val notification = "/user/notification-service"
 
-  def receive = LoggingReceive {
-      case FullFridge(fridgeName)               => sender ! getFridgeRest(fridgeName)
-      case AllFridge()                          => sender ! getAllFridge()
-      case CreateFridge(fridge)                 => sender ! addFridge(fridge)
-      case GetPost(postId)                      => sender ! getPost(postId)
-      case DeletePost(postId, token)            => sender ! deletePost(postId, token)
-      case CreatePost(post, token)              => sender ! addPost(post, token)
-      case UpdatePost(post, token)              => sender ! updatePost(post, token)
-      case FridgeRss(fridgeName)                => sender ! getFridgeRss(fridgeName)
-      case SearchFridge(term)                   => sender ! searchByNameLike(term)
-      case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
-      case ChatHistory(fridgeName)              => sender ! retrieveChatHistory(fridgeName)
+  def receive = {
+      case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
+      case AllFridge()                => sender ! getAllFridge()
+      case CreateFridge(fridge)       => sender ! addFridge(fridge)
+      case GetPost(postId)            => sender ! getPost(postId)
+      case DeletePost(postId, token)  => sender ! deletePost(postId, token)
+      case CreatePost(post, token)    => sender ! addPost(post, token)
+      case UpdatePost(post, token)    => sender ! updatePost(post, token)
+      case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
+      case SearchFridge(term)         => sender ! searchByNameLike(term)
   }
 
   def getAllFridge(): List[Fridge] = dao.getAllFridge
@@ -64,17 +61,6 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
     context.actorSelection(notification) ! Notification.update(post.fridgeId, post, token)
     dao.updatePost(post).orNull
   }
-
-  def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    //send to fridge chat history
-    context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
-    message
-  }
-
-  def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-    //get fridge chat history
-    List()
-  }
 }
 
 object CrudServiceActor {
@@ -87,6 +73,4 @@ object CrudServiceActor {
   case class DeletePost(postId: Long, token: String)
   case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
-  case class PushChat(fridgeName: String, message: ChatMessage, token: String)
-  case class ChatHistory(fridgeName: String)
 }
