@@ -8,6 +8,8 @@ import spray.json.JsValue
 import akka.actor.actorRef2Scala
 import akka.actor.ActorLogging
 import pomf.domain.model.ChatMessage
+import pomf.service.ChatServiceActor._
+import pomf.domain.model._
 
 
 class ChatServiceActor extends Actor with ActorLogging {
