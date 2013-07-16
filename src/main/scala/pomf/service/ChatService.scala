@@ -31,10 +31,9 @@ class ChatServiceActor extends Actor with ActorLogging {
     //get fridge chat history
     List()
   }
-  
-  object ChatServiceActor {
-      case class PushChat(fridgeName: String, message: ChatMessage, token: String)
-      case class ChatHistory(fridgeName: String)
-  }
-  
+} 
+
+object ChatServiceActor {
+  case class PushChat(fridgeName: String, message: ChatMessage, token: String)
+  case class ChatHistory(fridgeName: String)
 }
