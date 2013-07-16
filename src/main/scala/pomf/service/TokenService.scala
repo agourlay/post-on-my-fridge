@@ -9,6 +9,7 @@ import akka.actor.actorRef2Scala
 import akka.actor.ActorLogging
 import java.security.SecureRandom
 import java.math.BigInteger
+import pomf.service.TokenServiceActor._
 
 
 class TokenServiceActor extends Actor with ActorLogging {
