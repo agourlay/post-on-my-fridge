@@ -30,13 +30,13 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
   
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    cache(fridgeName, cache.get(fridgeName).getOrElse(List()) :: message)
+    cache(fridgeName, (message :: cache.get(fridgeName).getOrElse(List()).sortBy(_.timestamp))
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-   cache.get(fridgeName).getOrElse(List()).sortBy(_.timestamp)
+   cache.get(fridgeName).getOrElse(List())
   }
 } 
 
