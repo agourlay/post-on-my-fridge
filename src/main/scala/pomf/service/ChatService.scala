@@ -11,11 +11,18 @@ import pomf.domain.model.ChatMessage
 import pomf.service.ChatServiceActor._
 import pomf.domain.model._
 import pomf.api.JsonSupport._
+import spray.caching.{LruCache, Cache}
+import spray.util._
+import java.util.concurrent.TimeUnit
+import scala.concurrent.duration._
 
 
 class ChatServiceActor extends Actor with ActorLogging {
       
   val notification = "/user/notification-service"
+  
+  val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
+  
   
   def receive = {
       case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
@@ -23,14 +30,13 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
   
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    //send to fridge chat history
+    cache(fridgeName, cache.get(fridgeName).getOrElse(List()) :: message)
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-    //get fridge chat history
-    List()
+   cache.get(fridgeName).getOrElse(List()).sortBy(_.timestamp)
   }
 } 
 
