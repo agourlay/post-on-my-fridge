@@ -23,14 +23,13 @@ class ChatServiceActor extends Actor with ActorLogging {
   
   val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
   
-  
   def receive = {
       case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
       case ChatHistory(fridgeName)              => sender ! retrieveChatHistory(fridgeName)
   }
   
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    cache(fridgeName, (message :: cache.get(fridgeName).getOrElse(List()).sortBy(_.timestamp))
+    cache(fridgeName, (message :: cache.get(fridgeName).getOrElse(List()).sortBy(_.timestamp)))
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
   }
