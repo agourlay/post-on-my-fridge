@@ -27,8 +27,6 @@ class ChatServiceActor extends Actor with ActorLogging {
   
   val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
   
-  val defaultResponse: Future[List[ChatMessage]] = future { List[ChatMessage]() }
-  
   def receive = {
       case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
       case ChatHistory(fridgeName)              => sender ! retrieveChatHistory(fridgeName)
@@ -46,7 +44,7 @@ class ChatServiceActor extends Actor with ActorLogging {
      for {
           maybeMessages <- cache.get(fridgeName)
       } yield {      
-      maybeMessages.getOrElse(defaultResponse)
+      maybeMessages.getOrElse(List[ChatMessage]())
   }
 } 
 
