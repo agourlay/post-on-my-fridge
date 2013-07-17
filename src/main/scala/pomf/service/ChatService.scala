@@ -27,24 +27,28 @@ class ChatServiceActor extends Actor with ActorLogging {
   
   val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
   
+  val defaultResponse: Future[List[ChatMessage]] = future { List[ChatMessage]() }
+  
   def receive = {
       case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
       case ChatHistory(fridgeName)              => sender ! retrieveChatHistory(fridgeName)
   }
   
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    val messagesInCache : List[ChatMessage] = retrieveChatHistory(fridgeName)
-    cache.remove(fridgeName)
-    cache(fridgeName)(message :: messagesInCache).sortBy(_.timestamp)
+    val messagesInCache : Future[List[ChatMessage]] = retrieveChatHistory(fridgeName)
+    messagesInCache.onComplete { messages ⇒
+         cache.remove(fridgeName)
+         cache(fridgeName)(message :: messages).sortBy(_.timestamp)
+      }
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
   }
-
-  def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
+  
+  def retrieveChatHistory(fridgeName: String): Future[List[ChatMessage]] = {
      val maybeMessages : Option[Future[List[ChatMessage]]] = cache.get(fridgeName)
      maybeMessages match{
-         case None => List[ChatMessage]()
-         case Some(futureMessage) => futureMessage.mapTo[List[ChatMessage]]
+         case None => defaultResponse
+         case Some(futureMessage) => futureMessage
      }
   }
 } 
