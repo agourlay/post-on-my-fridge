@@ -16,6 +16,7 @@ import spray.util._
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
 import scala.concurrent.Future
+import scala.concurrent._
 
 
 class ChatServiceActor extends Actor with ActorLogging {
@@ -41,7 +42,7 @@ class ChatServiceActor extends Actor with ActorLogging {
     message
   }
 
-  def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
+  def retrieveChatHistory(fridgeName: String): Future[List[ChatMessage]] = {
    cache.get(fridgeName).getOrElse(defaultResponse)
   }
 } 
