@@ -19,10 +19,14 @@ import scala.concurrent.Future
 
 
 class ChatServiceActor extends Actor with ActorLogging {
+    
+  implicit def executionContext = context.dispatcher
       
   val notification = "/user/notification-service"
   
   val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
+  
+  val defaultResponse: Future[List[ChatMessage]] = future { List[ChatMessage]() }
   
   def receive = {
       case PushChat(fridgeName, message, token) => sender ! addChatMessage(fridgeName, message, token)
@@ -38,7 +42,7 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-   cache.get(fridgeName).getOrElse(List[ChatMessage]())
+   cache.get(fridgeName).getOrElse(defaultResponse)
   }
 } 
 
