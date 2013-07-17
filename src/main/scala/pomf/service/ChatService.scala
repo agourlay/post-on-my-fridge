@@ -38,7 +38,7 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-   cache.get(fridgeName).getOrElse(Future[List[ChatMessage]()])
+   cache.get(fridgeName).getOrElse(future {[List[ChatMessage]()]})
   }
 } 
 
