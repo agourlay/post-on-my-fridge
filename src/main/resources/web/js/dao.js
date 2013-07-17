@@ -10,6 +10,7 @@ App.Dao = Em.Object.create({
 	initSessionData : function(fridgeId) {
 		this.set('fridgeId',fridgeId);
 		this.set("userToken",null);
+		debugger;
 		if (this.get("messagesController") != null){
 			this.get("messagesController").reload();
 		}
