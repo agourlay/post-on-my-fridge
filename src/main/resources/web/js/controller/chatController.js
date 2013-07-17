@@ -17,7 +17,7 @@ App.ChatController = Ember.ObjectController.extend({
 	postMessage : function(payload) {
 		return $.ajax({
 			type: "POST",
-			url: "api/messages/" + App.Dao.get('fridgeId') + "?token=" + App.Dao.get("userToken"),
+			url: "messages/" + App.Dao.get('fridgeId') + "?token=" + App.Dao.get("userToken"),
 			contentType: "application/json",
 			dataType: "text",
 			data: JSON.stringify(payload),

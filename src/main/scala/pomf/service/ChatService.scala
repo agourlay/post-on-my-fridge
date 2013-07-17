@@ -39,7 +39,7 @@ class ChatServiceActor extends Actor with ActorLogging {
     messagesInCache.onSuccess { 
         case messages : List[ChatMessage] ⇒
              cache.remove(fridgeName)
-             cache(fridgeName)(message :: messages.sortBy(_.timestamp))
+             cache(fridgeName)((message :: messages).sortBy(_.timestamp))
       }
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message

@@ -3,7 +3,7 @@ App.MessagesController = Ember.ArrayController.extend({
 		
 	init: function () {
 		App.Dao.streamRegistering(null,this);
-		this.reload();
+		this.retrievePreviousMessages();
 	},
 
 	reload : function (){
@@ -18,10 +18,10 @@ App.MessagesController = Ember.ArrayController.extend({
 	
 	retrievePreviousMessages: function() {
 		var me = this;
-		$.getJSON("api/messages/" + App.Dao.get('fridgeId') , function(messages) {
+		$.getJSON("messages/" + App.Dao.get('fridgeId') , function(messages) {
 			if (messages !== null && messages.length !== 0) {
 				$.each(messages, function(index, message) {
-					me.messageManagement(message.user, message.message,message.timestamp);
+					me.messageManagement(message);
 				});
 			}
 		});

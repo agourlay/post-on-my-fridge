@@ -21,6 +21,7 @@ import spray.can.server.Stats
 
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
+import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
 
 import DefaultJsonProtocol._
@@ -137,7 +138,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
           } ~
             get {
               complete {
-                (context.actorSelection(chatActor) ? ChatServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
+                (context.actorSelection(chatActor) ? ChatServiceActor.ChatHistory(fridgeName)).mapTo[Future[List[ChatMessage]]]
               }
             }
         }
