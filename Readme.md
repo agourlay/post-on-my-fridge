@@ -8,7 +8,7 @@ You can **[try it](http://fridge.arnaud-gourlay.info)**
 
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
-This application focus on realtime interactions and simplicity. 
+This application focuses on realtime interactions and simplicity. 
 
 The backend is written in Scala 2.10 using Akka actor's model and Spray for the rest/http interface. 
 
