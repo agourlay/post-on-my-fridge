@@ -1,20 +1,41 @@
 #post-on-my-fridge  
 
-> Just sticky notes shared in real time on virtual fridges .
+Just sticky notes shared in real time on virtual fridges.
+
+You can **[try it](http://fridge.arnaud-gourlay.info)**
 
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
-You can **[try it](http://fridge.arnaud-gourlay.info)**
+This application focus on realtime interactions and simplicity. 
+
+The backend is written in Scala 2.10 using Akka actor's model and Spray for the rest/http interface. 
+
+The frontend is written in javascript and makes heavy use of Ember.js.
 
 ![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
 
 ## Architecture
 
-A single page web app built with Ember.js displays the content of a fridge and subscribes to notifications for the current fridge.
+A single page web app built displays the content of a fridge and subscribes to notifications for the current fridge.
 
-The backend is a non blocking rest API built with Spray.io and Slick. When an action such as creating or moving a post is called on a fridge, a notification about the new state is sent via Server Sent Event to all the current fridge´s clients. 
+The backend is a non blocking rest API that manages CRUD and notification operations. 
+
+When an action such as creating or moving a post is called on a fridge, a notification about the new state is sent via Server Sent Event to all the current fridge´s clients. 
 
 This technique allows near real time collaboration on a fridge.
+
+## Installation
+
+This is full-stack application, you need a postgreSQL and SBT to build the project.
+
+I have provided my nginx configuration in the [misc](https://github.com/agourlay/post-on-my-fridge/blob/master/misc/nginx.conf) folder, it assumes that the application runs on 127.0.0.1:8080 
+
+The easiest way to deploy the project is to build and run a fatjar using sbt
+
+```sh
+sbt assembly
+java -jar pomf-api.jar &
+```
 
 ## Licence
 
