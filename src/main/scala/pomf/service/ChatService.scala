@@ -41,10 +41,11 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-     for {
-          maybeMessages <- cache.get(fridgeName)
-      } yield {      
-      maybeMessages.getOrElse(List[ChatMessage]())
+     val maybeMessages : Option[Future[List[ChatMessage]]] = cache.get(fridgeName)
+     maybeMessages match{
+         case None => List[ChatMessage]()
+         case Some(futureMessage) => futureMessage.mapTo[List[ChatMessage]]
+     }
   }
 } 
 
