@@ -15,6 +15,7 @@ import spray.caching.{LruCache, Cache}
 import spray.util._
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
+import scala.concurrent.Future
 
 
 class ChatServiceActor extends Actor with ActorLogging {
@@ -29,7 +30,7 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
   
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    messagesInCache = cache.get(fridgeName).getOrElse(List[ChatMessage]())
+    val messagesInCache = cache.get(fridgeName).getOrElse(List[ChatMessage]())
     cache.remove(fridgeName)
     cache(fridgeName)(message :: messagesInCache).sortBy(_.timestamp)
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
@@ -37,7 +38,7 @@ class ChatServiceActor extends Actor with ActorLogging {
   }
 
   def retrieveChatHistory(fridgeName: String): List[ChatMessage] = {
-   cache.get(fridgeName).getOrElse(List[ChatMessage]())
+   cache.get(fridgeName).getOrElse(Future[List[ChatMessage]()])
   }
 } 
 
