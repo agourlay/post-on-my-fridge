@@ -12,7 +12,7 @@ App.PostsView = Ember.CollectionView.extend({
 		$('#search').typeahead({
 		    name: 'fridges',
 		    minLength : 2,
-		    remote: 'api/search/fridge/?term=%QUERY'
+		    remote: 'search/fridge/?term=%QUERY'
 		})
 		.on('typeahead:selected', function(e,datum) {
 		    view.get('controller').get('target').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));
