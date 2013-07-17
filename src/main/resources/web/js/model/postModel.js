@@ -9,7 +9,7 @@ App.Post = Em.Object.extend({
 	dueDate: null,
 	fridgeId: null,
 	resourceUrl: function(){
-		return "api/posts/";
+		return "posts/";
 	}.property(),
 
 	resourceUrlWithToken: function(){

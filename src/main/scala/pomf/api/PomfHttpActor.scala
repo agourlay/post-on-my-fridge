@@ -32,14 +32,13 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(60.seconds)
 
-  def receive = runRoute(restRoute ~ streamRoute ~ statsRoute ~ staticRoute)
+  def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
   
   val crudActor = "/user/crud-service"
   val chatActor = "/user/chat-service"
   val tokenActor = "/user/token-service"
 
-  def restRoute =
-    pathPrefix("api") {
+  def fridgeRoute =
       path("fridges" / Rest) { fridgeName =>
         get {
           complete {
@@ -58,7 +57,9 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
             }
           }
         }
-      } ~
+      }
+      
+  def postRoute = 
       path("posts") {
         post {
           parameters("token") { token =>
@@ -92,7 +93,9 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
                 }
               }
             }
-        } ~
+          }
+     
+    def miscRoute =
         pathPrefix("rss") {
           path("fridge" / Rest) { fridgeName =>
             get {
@@ -112,7 +115,16 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
               }
             }
           }
-        } ~
+        } ~ 
+        path("token") {
+          get {
+            complete{
+              (context.actorSelection(tokenActor) ? TokenServiceActor.RequestToken).mapTo[String]
+            }
+          }
+        }
+    
+    def chatRoute = 
         path("messages" / Rest) { fridgeName =>
           post {
             parameters("token") { token =>
@@ -128,15 +140,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
                 (context.actorSelection(chatActor) ? ChatServiceActor.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
               }
             }
-        } ~
-        path("token") {
-          get {
-            complete{
-                (context.actorSelection(tokenActor) ? TokenServiceActor.RequestToken).mapTo[String]
-            }
-          }
         }
-      } 
       
   def streamRoute = 
     pathPrefix("stream") {

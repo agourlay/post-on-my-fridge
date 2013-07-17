@@ -103,7 +103,7 @@ App.Dao = Em.Object.create({
 		var model = App.Fridge.create();
 		model.set('id', fridgeId);
 		$.ajax({
-	        url: "api/fridges/" + fridgeId,
+	        url: "fridges/" + fridgeId,
 	        type: 'GET',
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
@@ -121,7 +121,7 @@ App.Dao = Em.Object.create({
 
 	retrieveUserToken : function() {
 		$.ajax({
-	        url: "api/token/",
+	        url: "token/",
 	        type: 'GET',
 	        success: function(token) {
 				if (token !== null && token !== undefined) {
