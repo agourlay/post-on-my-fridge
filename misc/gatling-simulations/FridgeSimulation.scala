@@ -166,5 +166,5 @@ class FridgeSimulation extends Simulation {
 	    .pause(2)		
 	    .exec(searchForFridge)
 
-	setUp(scn.users(200).ramp(5).protocolConfig(httpConf))
+	setUp(scn.users(150).ramp(5).protocolConfig(httpConf))
 }
