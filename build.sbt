@@ -20,8 +20,8 @@ scalacOptions := Seq(
   "-unchecked",
   "-Xlint",
   "-deprecation",
-  "-encoding",
-  "utf8",
+  "-encoding","utf8",
+  "-Ywarn-dead-code",
   "-language:_",
   "-target:jvm-1.7",
   "-feature")
@@ -35,6 +35,8 @@ resolvers ++= Seq(
   ,"spray repo"         at "http://repo.spray.io/"
   ,"spray nightly"      at "http://nightlies.spray.io/"
 )
+
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= Seq(
    "io.spray"           %   "spray-can"       % "1.2-20130712"               withSources() 
