@@ -4,6 +4,8 @@ Just sticky notes shared in real time on virtual fridges.
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
+![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
+
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
 This application focus on realtime interactions and simplicity. 
@@ -12,7 +14,7 @@ The backend is written in Scala 2.10 using Akka actor's model and Spray for the 
 
 The frontend is written in javascript and makes heavy use of Ember.js.
 
-![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
+
 
 ## Architecture
 
