@@ -72,12 +72,12 @@ class FridgeSimulation extends Simulation {
 	)
 
 	def retrieveAndSetUserToken = http("retrieve user token on ${fridge_id}")
-						         .get("/api/token/")
+						         .get("/token/")
 						         .headers(headers_3)
 						         .check(bodyString.saveAs("user_token"))
 
 	def createPostOnFridge = http("create post on ${fridge_id}")
-							.post("/api/posts/")
+							.post("/posts/")
 							.headers(headers_13)
 							.queryParam("""token""", """${user_token}""")
 							.body("""{"author":"${user_name}","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.5,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48"}""")
@@ -88,40 +88,40 @@ class FridgeSimulation extends Simulation {
 								 .headers(headers_8)
 
 	def retrieveChatHistory = http("retrieve chat history ${fridge_id}")
-					.get("/api/messages/${fridge_id}")
+					.get("/messages/${fridge_id}")
 					.headers(headers_2)
 
 	def retrieveFridgeContent = http("retrieve fridge ${fridge_id}")
-					.get("/api/fridges/${fridge_id}")
+					.get("/fridges/${fridge_id}")
 					.headers(headers_3)			
 
 	def sendMessage = http("send chat message on ${fridge_id}")
-					.post("/api/messages/${fridge_id}")
+					.post("/messages/${fridge_id}")
 					.headers(headers_6)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"user":"${user_name}","message":"Hello from Gatling blasting fridge ${fridge_id}","timestamp":1365329980732}""")
 
 	def searchForFridge = http("search for fridge term ${next_fridge_id}")
-					.get("/api/search/fridge/")
+					.get("/search/fridge/")
 					.headers(headers_9)
 					.queryParam("""term""", """${next_fridge_id}""")
 
 	def movePostAround = http("moving post ${post_id} on fridge ${fridge_id}")
-					.put("/api/posts/")
+					.put("/posts/")
 					.headers(headers_3)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","id":${post_id},"date":"2013-04-08T12:40:48"}""")
 					.asJSON
 
 	def changePostColor = http("change post ${post_id} color on fridge ${fridge_id}")
-					.put("/api/posts/")
+					.put("/posts/")
 					.headers(headers_3)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
 					.asJSON
 
 	def changePostContent = http("change post ${post_id} content on fridge ${fridge_id}")
-					.put("/api/posts/")
+					.put("/posts/")
 					.headers(headers_3)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"Gatling rocks!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
@@ -129,7 +129,7 @@ class FridgeSimulation extends Simulation {
 			
 
 	def deletePost = http("delete post ${post_id} from fridge ${fridge_id}")
-					.delete("/api/posts/${post_id}")
+					.delete("/posts/${post_id}")
 					.headers(headers_14)
 					.queryParam("""token""", """${user_token}""")
 
