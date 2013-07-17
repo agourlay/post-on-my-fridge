@@ -38,7 +38,7 @@ class ChatServiceActor extends Actor with ActorLogging {
     val messagesInCache : Future[List[ChatMessage]] = retrieveChatHistory(fridgeName)
     messagesInCache.onSuccess { messages : List[ChatMessage] ⇒
          cache.remove(fridgeName)
-         cache(fridgeName)(message :: messages).sortBy(_.timestamp)
+         cache(fridgeName)(message :: messages.sortBy(_.timestamp))
       }
     context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
     message
