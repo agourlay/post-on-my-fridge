@@ -22,5 +22,5 @@ class TokenServiceActor extends Actor with ActorLogging {
 }
 
 object TokenServiceActor{
-  case class RequestToken
+  case object RequestToken
 }
