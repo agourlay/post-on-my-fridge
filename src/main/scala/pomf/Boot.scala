@@ -8,8 +8,10 @@ import spray.can.Http
 import akka.actor.actorRef2Scala
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import java.util.concurrent.TimeUnit
 import pomf.service.NotificationActor
 import pomf.service.CrudServiceActor
+import pomf.service.CrudServiceActor._
 import pomf.service.ChatServiceActor
 import pomf.service.TokenServiceActor
 import org.slf4j.Logger
@@ -29,8 +31,11 @@ object Boot extends App {
   val chatService = system.actorOf(Props[ChatServiceActor], "chat-service")
   
   val tokenService = system.actorOf(Props[TokenServiceActor], "token-service")
-    
+      
   val httpService = system.actorOf(Props[PomfHttpActor], "http-service")
   
-  IO(Http) ! Http.Bind(httpService, "localhost", port = 8080)  
+  IO(Http) ! Http.Bind(httpService, "localhost", port = 8080) 
+  
+  // schedule delete outdated post every 24 hours
+  system.scheduler.schedule(Duration(24, HOURS), Duration(24, HOURS), crudService, DeleteOutdatedPost)
 }

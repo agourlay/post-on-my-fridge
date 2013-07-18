@@ -63,4 +63,6 @@ class Dao(name: String, dal: DAL, db: Database) {
   def deletePost(id :Long):Long = Posts.deletePost(id)
   
   def updatePost(post :Post):Option[Post] = Posts.updatePost(post)
+  
+  def deleteOutdatedPost = Posts.deleteOutdatedPost
 }

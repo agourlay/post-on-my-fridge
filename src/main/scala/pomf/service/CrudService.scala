@@ -29,6 +29,8 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
       case UpdatePost(post, token)    => sender ! updatePost(post, token)
       case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
       case SearchFridge(term)         => sender ! searchByNameLike(term)
+      
+      case DeleteOutdatedPost         => deleteOutdatedPost
   }
 
   def getAllFridge(): List[Fridge] = dao.getAllFridge
@@ -57,6 +59,11 @@ class CrudServiceActor extends Actor with ActorLogging with ProductionDB {
     "post " + dao.deletePost(id) + " deleted"
   }
 
+  def deleteOutdatedPost = {
+      log.info("Deleting outdated post")
+      dao.deleteOutdatedPost
+  }  
+
   def updatePost(post: Post, token: String): Post = {
     context.actorSelection(notification) ! Notification.update(post.fridgeId, post, token)
     dao.updatePost(post).orNull
@@ -73,4 +80,6 @@ object CrudServiceActor {
   case class DeletePost(postId: Long, token: String)
   case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
+  
+  case object DeleteOutdatedPost
 }
