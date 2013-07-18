@@ -21,7 +21,7 @@ import pomf.api.PomfHttpActor
 object Boot extends App {
  
   val log: Logger = LoggerFactory.getLogger("boot");
-
+  log.info(" ...")
   log.info(" +--------------------+")
   log.info(" |  Fridge starting   |")
   log.info(" |--------------------|")
@@ -47,7 +47,7 @@ object Boot extends App {
   val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
 
   val crudService = system.actorOf(Props[CrudServiceActor]
-                          .withRouter(RoundRobinRouter(2)), "crud-service")
+                          .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
   
   val chatService = system.actorOf(Props[ChatServiceActor], "chat-service")
   
