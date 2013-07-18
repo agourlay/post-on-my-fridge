@@ -7,6 +7,11 @@ App.FridgeView = Em.View.extend({
 		var fridgeName = this.get('content').get('id');
 		return "/rss/fridge/" + fridgeName;
 	}.property('content.id'),
+    
+    hearderTitle : function() {
+        var fridgeName = this.get('content').get('id');
+    	return "Fridge / " + fridgeName;
+	}.property('content.id'),
 
 	didInsertElement : function() {
 		var view = this;
@@ -18,7 +23,6 @@ App.FridgeView = Em.View.extend({
 		    remote: 'search/fridge/?term=%QUERY'
 		})
 		.on('typeahead:selected', function(e,datum) {
-			debugger;
 		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));
 		});
 	}
