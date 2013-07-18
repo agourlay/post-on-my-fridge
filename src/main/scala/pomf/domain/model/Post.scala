@@ -74,7 +74,7 @@ trait PostComponent { this: Profile =>
     
     def deleteOutdatedPost(implicit session: Session) = {
         val now = new Date()
-       (for(p <- Posts if p.dueDate.before(now)) yield p).delete 
+       (for(p <- Posts if p.dueDate < now) yield p).delete 
     }
   }
 }

@@ -23,6 +23,8 @@ object Boot extends App {
   val log: Logger = LoggerFactory.getLogger("pomf.boot");
 
   implicit val system = ActorSystem("pomf-api")
+  
+  implicit def executionContext = system.dispatcher
 
   val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
 
