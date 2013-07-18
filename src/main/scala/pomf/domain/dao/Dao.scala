@@ -17,7 +17,7 @@ class Dao(name: String, dal: DAL, db: Database) {
   // Put an implicitSession in scope for database actions
   implicit val implicitSession = db.createSession
   
-  val logger: Logger = LoggerFactory.getLogger("pomf.dao");
+  val logger: Logger = LoggerFactory.getLogger("dao");
 
   def createDB = dal.create
 

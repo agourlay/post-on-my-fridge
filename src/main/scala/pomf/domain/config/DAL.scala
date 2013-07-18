@@ -14,7 +14,7 @@ trait Profile {
 class DAL(override val profile: ExtendedProfile) extends FridgeComponent with PostComponent with Profile {
   import profile.simple._
 
-  val logger: Logger = LoggerFactory.getLogger("pomf.domain");
+  val logger: Logger = LoggerFactory.getLogger("domain");
   logger.info("Model class instantiated")
 
   def ddls = List(Posts.ddl,Fridges.ddl)
