@@ -89,7 +89,7 @@ setInterval( function() {
     globalTimestamp = new Date().getTime();
 	gauge.set(0);
 	$('#ssespeed').text(0);
-}, 3000 );
+}, 4000 );
 });
 
 function updateData(series) {
@@ -139,7 +139,7 @@ function initSseGauge(){
 	    strokeWidth: 0.035, // The rotation offset
 	    color: '#000000' // Fill color
 	  },
-	  limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+	  limitMax: 'true',   // If true, the pointer will not go past the end of the gauge
 
 	  colorStart: '#6FADCF',   // Colors
 	  colorStop: '#8FC0DA',    // just experiment with them
