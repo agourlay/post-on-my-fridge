@@ -14,6 +14,7 @@ var graph = new Rickshaw.Graph( {
 	width: 900,
 	height: 450,
 	renderer: 'line',
+	padding : {top : 0.09},
 	stroke: true,
 	preserve: true,
 	series: [
@@ -71,11 +72,6 @@ var order = new Rickshaw.Graph.Behavior.Series.Order( {
 var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
 	graph: graph,
 	legend: legend
-} );
-
-var smoother = new Rickshaw.Graph.Smoother( {
-	graph: graph,
-	element: $('#smoother')
 } );
 
 var ticksTreatment = 'glow';
