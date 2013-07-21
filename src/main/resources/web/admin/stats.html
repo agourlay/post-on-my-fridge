@@ -32,6 +32,7 @@
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.js"></script>
 	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src = "/admin/js/gauge.min.js"></script>
 	<script src = "/admin/js/stats.js"></script>
 </head>
 <body>
@@ -52,22 +53,24 @@
 				<td>Total requests : <span id="totalRequests"></span></td>
 				<td>Max open requests : <span id="maxOpenRequests"></span></td>
 				<td>Open requests : <span id="openRequests"></span></td>
+				<td>Requests timed out : <span id="requestTimeouts"></span></td>
 			<tr>
 			<tr>
 				<td>Total connections : <span id="totalConnections"></span></td>
 				<td>Max open connections : <span id="maxOpenConnections"></span></td>
 				<td>Open connections : <span id="openConnections"></span></td>
 			</tr>
-			<tr>
-				<td>Requests timed out : <span id="requestTimeouts"></span></td>
-			</tr>
 		</table>
-		<div id="legend"></div>
+		<div id="sse-container">
+			Firehose's throughput : <b><span id="ssespeed">0</span> msg / sec<b>
+			<canvas id="sse-gauge" width="220" height="70"></canvas>
+		</div>
 		<div id="chart_container">
 			<div id="chart"></div>
 			<div id="timeline"></div>
 			<div id="slider"></div>
 		</div>
+		<div id="legend"></div>
 	</div>
 </body>
 </html>

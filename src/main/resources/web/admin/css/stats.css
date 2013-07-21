@@ -47,7 +47,7 @@ header {
 
 #stats-container{
 	position:relative;
-	width: 95%;
+	width: 96%;
 	margin: 40px 10px 0px 10px;}
 
 #chart_container{
@@ -55,13 +55,18 @@ header {
 	float: left;
 }	
 
-#legend{
-	width: 15%;
+#sse-container{
+	width: 25%;
+	margin-bottom: 10px;
 	float: right;
 }
 
+#legend{
+	width: 10%;
+}
+
 #stats_table{
-	width: 80%;
+	width: 60%;
 	float: left;
 }
 
