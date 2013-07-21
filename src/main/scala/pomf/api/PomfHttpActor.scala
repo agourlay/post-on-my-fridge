@@ -31,7 +31,7 @@ import JsonSupport._
 
 class PomfHttpActor extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
-  implicit val timeout = akka.util.Timeout(60.seconds)
+  implicit val timeout = akka.util.Timeout(30.seconds)
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
   
@@ -161,7 +161,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
     path("stats") {
         complete {
           context.actorSelection("/user/IO-HTTP/listener-0")
-            .ask(Http.GetStats)(1.second)
+            .ask(Http.GetStats)
             .mapTo[Stats]
         }
       }

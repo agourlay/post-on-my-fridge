@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META -->
+	<title>Post on my fridge : stats</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
+
+	<!-- CSS -->	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery.ui.all.min.css"/>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.css"/>
+	<link rel="stylesheet" href="/admin/css/stats.css"/>
+
+	<!-- JS -->
+	<script type="text/javascript">
+	  	var _gaq = _gaq || [];
+	  	_gaq.push(['_setAccount', 'UA-25345034-1']);
+	  	_gaq.push(['_setSiteSpeedSampleRate', 100]);
+	  	_gaq.push(['_trackPageview']);
+	   
+	  	(function() {
+	    	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    	ga.src = ('https:' == document.location.protocol ? 'https:http://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  	})();
+	</script>
+	<script src = "/vendor/js/jquery.min.js"></script>
+	<script src = "/vendor/js/moment.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.js"></script>
+	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+	<script src = "/admin/js/stats.js"></script>
+</head>
+<body>
+	<h1>Admin Panel : Post on my fridges</h1>
+	<h2>Realtime statistics at <span id="updatetime"></span></h2>
+
+	<div id="chart_container">
+		<div id="chart"></div>
+		<div id="timeline"></div>
+		<div id="slider"></div>
+		<h6>Smoothing</h6>
+		<div id="smoother"></div>
+	</div>
+	<div id="legend"></div>
+	<table id="stats_table">
+		<tr>
+			<td>Uptime</td>
+			<td id="uptime"></td>
+		</tr>
+		<tr>
+			<td>Total requests</td>
+			<td id="totalRequests"></td>
+		</tr>
+		<tr>
+			<td>Open requests</td>
+			<td id="openRequests"></td>
+		</tr>
+		<tr>
+			<td>Max open requests</td>
+			<td id="maxOpenRequests"></td>
+		</tr>
+		<tr>
+			<td>Total connections</td>
+			<td id="totalConnections"></td>
+		</tr>
+		<tr>
+			<td>Open connections</td>
+			<td id="openConnections"></td>
+		</tr>
+		<tr>
+			<td>Max open connections</td>
+			<td id="maxOpenConnections"></td>
+		</tr>
+		<tr>
+			<td>Requests timed out</td>
+			<td id="requestTimeouts"></td>
+		</tr>
+	</table>
+</body>
+</html>

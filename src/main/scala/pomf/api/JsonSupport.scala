@@ -57,16 +57,34 @@ object JsonSupport{
   implicit val formatFridgeRest = jsonFormat4(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
   implicit val formatEvent = jsonFormat3(PushedEvent)
+  implicit val formatHttpServerStats = new RootJsonFormat[Stats] {
+    def write(obj: Stats): JsValue = JsObject(
+      "uptime" -> JsObject("length" -> JsNumber(obj.uptime.length), "unit" -> JsString(obj.uptime.unit.name)),
+      "totalRequests" -> JsNumber(obj.totalRequests),
+      "openRequests" -> JsNumber(obj.openRequests),
+      "maxOpenRequests" -> JsNumber(obj.maxOpenRequests),
+      "totalConnections" -> JsNumber(obj.totalConnections),
+      "openConnections" -> JsNumber(obj.openConnections),
+      "maxOpenConnections" -> JsNumber(obj.maxOpenConnections),
+      "requestTimeouts" -> JsNumber(obj.requestTimeouts)
+    )
 
-  implicit val statsMarshaller: Marshaller[Stats] =
-    Marshaller.delegate[Stats, String](ContentTypes.`text/plain`) { stats =>
-      "Uptime                : " + Duration(stats.uptime.toHours, TimeUnit.HOURS) + '\n' +
-      "Total requests        : " + stats.totalRequests + '\n' +
-      "Open requests         : " + stats.openRequests + '\n' +
-      "Max open requests     : " + stats.maxOpenRequests + '\n' +
-      "Total connections     : " + stats.totalConnections + '\n' +
-      "Open connections      : " + stats.openConnections + '\n' +
-      "Max open connections  : " + stats.maxOpenConnections + '\n' +
-      "Requests timed out    : " + stats.requestTimeouts + '\n'
+    def read(json: JsValue): Stats = {
+      val fields = json.asJsObject.fields
+      val uptimeFields = fields.get("uptime").get.asJsObject.fields
+      Stats(
+        FiniteDuration(
+          uptimeFields.get("length").get.asInstanceOf[JsNumber].value.toLong,
+          uptimeFields.get("unit").get.asInstanceOf[JsString].value
+        ),
+        fields.get("totalRequests").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("openRequests").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("maxOpenRequests").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("totalConnections").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("openConnections").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("maxOpenConnections").get.asInstanceOf[JsNumber].value.toLong,
+        fields.get("requestTimeouts").get.asInstanceOf[JsNumber].value.toLong
+      )
     }
+  }
 }

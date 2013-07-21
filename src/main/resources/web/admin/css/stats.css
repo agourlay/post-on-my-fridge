@@ -1,0 +1,14 @@
+html{
+height:  100%;}
+
+body {	
+	margin: 10px;
+	min-height: 100%; }
+
+#chart_container{
+	float: left;
+}	
+
+#stats_table{
+	float: right;
+}	
