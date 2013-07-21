@@ -10,6 +10,8 @@
 	<!-- CSS -->	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery.ui.all.min.css"/>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.css"/>
+	<link rel="stylesheet" href="/vendor/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/vendor/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="/admin/css/stats.css"/>
 
 	<!-- JS -->
@@ -33,50 +35,41 @@
 	<script src = "/admin/js/stats.js"></script>
 </head>
 <body>
-	<h1>Admin Panel : Post on my fridges</h1>
-	<h2>Realtime statistics at <span id="updatetime"></span></h2>
-
-	<div id="chart_container">
-		<div id="chart"></div>
-		<div id="timeline"></div>
-		<div id="slider"></div>
-		<h6>Smoothing</h6>
-		<div id="smoother"></div>
+	<header>
+	    <div id="stats-title">
+	    	<a href="/" target="_blank">
+		    	<img class="index-link" src="/images/fridge-link.png" alt="index"/>
+		    </a>
+			Post on my fridge - realtime statistics at <i><span id="updatetime"></span></i>
+	    </div>
+	    <div id="uptime-box">
+	    System uptime : <span id="uptime"></span>
+	    </div>
+	</header>
+	<div id="stats-container">
+		<table id="stats_table">
+			<tr>
+				<td>Total requests : <span id="totalRequests"></span></td>
+				<td>Max open requests : <span id="maxOpenRequests"></span></td>
+				<td>Open requests : <span id="openRequests"></span></td>
+			<tr>
+			<tr>
+				<td>Total connections : <span id="totalConnections"></span></td>
+				<td>Max open connections : <span id="maxOpenConnections"></span></td>
+				<td>Open connections : <span id="openConnections"></span></td>
+			</tr>
+			<tr>
+				<td>Requests timed out : <span id="requestTimeouts"></span></td>
+			</tr>
+		</table>
+		<div id="legend"></div>
+		<div id="chart_container">
+			<div id="chart"></div>
+			<div id="timeline"></div>
+			<div id="slider"></div>
+			<h6>Smoothing</h6>
+			<div id="smoother"></div>
+		</div>
 	</div>
-	<div id="legend"></div>
-	<table id="stats_table">
-		<tr>
-			<td>Uptime</td>
-			<td id="uptime"></td>
-		</tr>
-		<tr>
-			<td>Total requests</td>
-			<td id="totalRequests"></td>
-		</tr>
-		<tr>
-			<td>Open requests</td>
-			<td id="openRequests"></td>
-		</tr>
-		<tr>
-			<td>Max open requests</td>
-			<td id="maxOpenRequests"></td>
-		</tr>
-		<tr>
-			<td>Total connections</td>
-			<td id="totalConnections"></td>
-		</tr>
-		<tr>
-			<td>Open connections</td>
-			<td id="openConnections"></td>
-		</tr>
-		<tr>
-			<td>Max open connections</td>
-			<td id="maxOpenConnections"></td>
-		</tr>
-		<tr>
-			<td>Requests timed out</td>
-			<td id="requestTimeouts"></td>
-		</tr>
-	</table>
 </body>
 </html>

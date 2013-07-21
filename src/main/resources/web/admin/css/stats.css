@@ -2,13 +2,69 @@ html{
 height:  100%;}
 
 body {	
-	margin: 10px;
+	margin: 0px;
 	min-height: 100%; }
 
+header {
+	width: 100%;
+	height: 40px;
+	background-image: url(../../images/carbon.png);
+	opacity: 0.9;
+	z-index : 500;
+	box-shadow: 5px 5px 4px #aaa;
+	-moz-box-shadow: 5px 5px 4px #aaa;
+	-webkit-box-shadow: 5px 5px 4px #aaa;
+	border-bottom: 1px solid rgb(0, 0, 0);
+	vertical-align: middle; }
+
+.header a{text-decoration:none;}
+	
+#stats-title{
+	width: 50%;
+	color : white;
+	font-size : large;
+	font-weight: bold;
+	float: left;
+	margin-left: 15px;
+	margin-top: 7px; }	
+
+#uptime-box{
+	text-align: right;
+	width:30%;
+	height:100%;
+	color : white;
+	color : #9bcd9b;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-top: 8px;
+	float : right;}	
+
+.index-link{
+	border:none;
+	height:33px;
+	padding-right:10px;
+	cursor: pointer;}		
+
+#stats-container{
+	position:relative;
+	width: 95%;
+	margin: 40px 10px 0px 10px;}
+
 #chart_container{
+	margin-top: 10px;
 	float: left;
 }	
 
-#stats_table{
+#legend{
+	width: 15%;
 	float: right;
+}
+
+#stats_table{
+	width: 80%;
+	float: left;
+}
+
+#requestTimeouts{
+	color:red;
 }	

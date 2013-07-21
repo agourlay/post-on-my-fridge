@@ -1,16 +1,18 @@
 $(function() {
      
-var seriesData = [ [], [], [], [], [], [], [] ];
+var seriesData = [ [], [], [], [], []];
 seriesData.forEach(function(series) {
 	series.push(  {x: moment().unix(), y: NaN} );
 });
 
-var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
+updateData(seriesData);
+
+var palette = new Rickshaw.Color.Palette( { scheme: 'colorwheel' } );
 
 var graph = new Rickshaw.Graph( {
 	element: document.getElementById("chart"),
-	width: 800,
-	height: 400,
+	width: 900,
+	height: 450,
 	renderer: 'line',
 	stroke: true,
 	preserve: true,
@@ -18,30 +20,22 @@ var graph = new Rickshaw.Graph( {
 		{
 			color: palette.color(),
 			data: seriesData[0],
-			name: 'Total requests'
-		}, {
-			color: palette.color(),
-			data: seriesData[1],
 			name: 'Open requests'
 		}, {
 			color: palette.color(),
-			data: seriesData[2],
+			data: seriesData[1],
 			name: 'Max open request'
 		}, {
 			color: palette.color(),
-			data: seriesData[3],
-			name: 'Total connections'
-		}, {
-			color: palette.color(),
-			data: seriesData[4],
+			data: seriesData[2],
 			name: 'Open connections'
 		}, {
 			color: palette.color(),
-			data: seriesData[5],
+			data: seriesData[3],
 			name: 'Max open connections '
 		}, {
 			color: palette.color(),
-			data: seriesData[6],
+			data: seriesData[4],
 			name: 'Requests timeout '
 		}
 	]
@@ -126,13 +120,11 @@ function updateData(series) {
 					var requestTimeouts = stats.requestTimeouts;
 
 					var xNow = moment().unix();
-					series[0].push({x: xNow, y:totalRequests});
-					series[1].push({x: xNow, y:openRequests});
-					series[2].push({x: xNow, y:maxOpenRequests});
-					series[3].push({x: xNow, y:totalConnections});
-					series[4].push({x: xNow, y:openConnections});
-					series[5].push({x: xNow, y:maxOpenConnections});
-					series[6].push({x: xNow, y:requestTimeouts});
+					series[0].push({x: xNow, y:openRequests});
+					series[1].push({x: xNow, y:maxOpenRequests});
+					series[2].push({x: xNow, y:openConnections});
+					series[3].push({x: xNow, y:maxOpenConnections});
+					series[4].push({x: xNow, y:requestTimeouts});
 
 					$('#totalRequests').text(totalRequests);
 					$('#openRequests').text(openRequests);
