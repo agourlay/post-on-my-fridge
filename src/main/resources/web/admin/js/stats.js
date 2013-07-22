@@ -8,11 +8,13 @@ seriesData.forEach(function(series) {
 	series.push(  {x: moment().unix(), y: NaN} );
 });
 
+updateData(seriesData);
+
 var palette = new Rickshaw.Color.Palette( { scheme: 'colorwheel' } );
 
 var graph = new Rickshaw.Graph( {
 	element: document.getElementById("chart"),
-	width: 900,
+	width: 1000,
 	height: 450,
 	renderer: 'line',
 	padding : {top : 0.09},
@@ -79,15 +81,14 @@ var yAxis = new Rickshaw.Graph.Axis.Y( {
 } );
 
 yAxis.render();
-var gauge = initSseGauge();
-listenFirehose(gauge);
+
+listenFirehose();
 
 setInterval( function() {
 	updateData(seriesData);
 	graph.update();
 	globalCounter = 0;
     globalTimestamp = new Date().getTime();
-	gauge.set(0);
 	$('#ssespeed').text(0);
 }, 4000 );
 });
@@ -129,38 +130,22 @@ function updateData(series) {
     	});
 }
 
-function initSseGauge(){
-	var opts = {
-	  lines: 12, // The number of lines to draw
-	  angle: 0.15, // The length of each line
-	  lineWidth: 0.44, // The line thickness
-	  pointer: {
-	    length: 0.9, // The radius of the inner circle
-	    strokeWidth: 0.035, // The rotation offset
-	    color: '#000000' // Fill color
-	  },
-	  limitMax: 'true',   // If true, the pointer will not go past the end of the gauge
-
-	  colorStart: '#6FADCF',   // Colors
-	  colorStop: '#8FC0DA',    // just experiment with them
-	  strokeColor: '#E0E0E0',   // to see which ones work best for you
-	  generateGradient: true
-	};
-	var target = document.getElementById('sse-gauge'); // your canvas element
-	var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-	gauge.maxValue = 200; // set max gauge value
-	gauge.animationSpeed = 32; // set animation speed (32 is default value)
-	gauge.set(0); // set actual value
-	return gauge;
-}
-
-function listenFirehose(gauge){
+function listenFirehose(){
 	var source = new EventSource("/stream/firehose");
 	source.addEventListener('message', function(e) {
 		globalCounter = globalCounter + 1;
 		interval = (new Date().getTime() - globalTimestamp) / 1000;
 		var newValue = (globalCounter / interval).toFixed(1);
-		gauge.set(newValue);
 		$('#ssespeed').text(newValue);
+	}, false);
+    
+    source.addEventListener('open', function(e) {
+		console.log("SSE opened!")
+	}, false);
+
+	source.addEventListener('error', function(e) {
+	    if (e.readyState == EventSource.CLOSED) {
+		    console.log("Streaming service error");
+		}
 	}, false);
 }

@@ -55,19 +55,15 @@ header {
 	float: left;
 }	
 
-#sse-container{
-	width: 25%;
-	margin-bottom: 10px;
-	float: right;
-}
-
 #legend{
-	width: 10%;
+	width: 100%;
 }
 
 #stats_table{
-	width: 60%;
-	float: left;
+	width: 90%;
+	margin-left : auto;
+    margin-right : auto;
+    margin-bottom: 10px;
 }
 
 #requestTimeouts{
