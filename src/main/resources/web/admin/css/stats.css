@@ -52,7 +52,8 @@ header {
 
 #chart_container{
 	margin-top: 10px;
-	float: left;
+	margin-left : auto;
+    margin-right : auto;
 }	
 
 #legend{

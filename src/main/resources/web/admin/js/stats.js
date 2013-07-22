@@ -3,94 +3,100 @@ var globalTimestamp = 0;
 
 $(function() {
 
-var seriesData = [ [], []];
-seriesData.forEach(function(series) {
-	series.push(  {x: moment().unix(), y: NaN} );
-});
+	var seriesData = [ [], []];
+	seriesData.forEach(function(series) {
+		series.push(  {x: moment().unix(), y: NaN} );
+	});
 
-updateData(seriesData);
-
-var palette = new Rickshaw.Color.Palette( { scheme: 'colorwheel' } );
-
-var graph = new Rickshaw.Graph( {
-	element: document.getElementById("chart"),
-	width: 1000,
-	height: 450,
-	renderer: 'line',
-	padding : {top : 0.09},
-	stroke: true,
-	preserve: true,
-	series: [
-		{
-			color: palette.color(),
-			data: seriesData[0],
-			name: 'Opened requests'
-		}, {
-			color: palette.color(),
-			data: seriesData[1],
-			name: 'Opened connections'
-		}
-	]
-} );
-
-graph.render();
-
-var slider = new Rickshaw.Graph.RangeSlider( {
-	graph: graph,
-	element: $('#slider')
-} );
-
-var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-	graph: graph
-} );
-
-var annotator = new Rickshaw.Graph.Annotate( {
-	graph: graph,
-	element: document.getElementById('timeline')
-} );
-
-var legend = new Rickshaw.Graph.Legend( {
-	graph: graph,
-	element: document.getElementById('legend')
-
-} );
-
-var order = new Rickshaw.Graph.Behavior.Series.Order( {
-	graph: graph,
-	legend: legend
-} );
-
-var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
-	graph: graph,
-	legend: legend
-} );
-
-var ticksTreatment = 'glow';
-
-var xAxis = new Rickshaw.Graph.Axis.Time( {
-	graph: graph,
-	ticksTreatment: ticksTreatment
-} );
-
-xAxis.render();
-
-var yAxis = new Rickshaw.Graph.Axis.Y( {
-	graph: graph,
-	tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-	ticksTreatment: ticksTreatment
-} );
-
-yAxis.render();
-
-listenFirehose();
-
-setInterval( function() {
 	updateData(seriesData);
-	graph.update();
-	globalCounter = 0;
-    globalTimestamp = new Date().getTime();
-	$('#ssespeed').text(0);
-}, 3000 );
+
+	var palette = new Rickshaw.Color.Palette( { scheme: 'colorwheel' } );
+
+	var graph = new Rickshaw.Graph( {
+		element: document.getElementById("chart"),
+		width: 1100,
+		height: 450,
+		renderer: 'line',
+		padding : {top : 0.09},
+		stroke: true,
+		preserve: true,
+		series: [
+			{
+				color: palette.color(),
+				data: seriesData[0],
+				name: 'Opened requests'
+			}, {
+				color: palette.color(),
+				data: seriesData[1],
+				name: 'Opened connections'
+			}
+		]
+	} );
+
+	graph.render();
+
+	var slider = new Rickshaw.Graph.RangeSlider( {
+		graph: graph,
+		element: $('#slider')
+	} );
+
+	var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+		graph: graph
+	} );
+
+	var annotator = new Rickshaw.Graph.Annotate( {
+		graph: graph,
+		element: document.getElementById('timeline')
+	} );
+
+	var legend = new Rickshaw.Graph.Legend( {
+		graph: graph,
+		element: document.getElementById('legend')
+
+	} );
+
+	var order = new Rickshaw.Graph.Behavior.Series.Order( {
+		graph: graph,
+		legend: legend
+	} );
+
+	var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
+		graph: graph,
+		legend: legend
+	} );
+
+	var ticksTreatment = 'glow';
+
+	var xAxis = new Rickshaw.Graph.Axis.Time( {
+		graph: graph,
+		ticksTreatment: ticksTreatment
+	} );
+
+	xAxis.render();
+
+	var yAxis = new Rickshaw.Graph.Axis.Y( {
+		graph: graph,
+		tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+		ticksTreatment: ticksTreatment
+	} );
+
+	yAxis.render();
+
+	listenFirehose();
+
+	//long polling 1s
+	setInterval( function() {
+		updateData(seriesData);
+		graph.update();
+	}, 1000 );
+
+	// reboot counters
+	setInterval( function() {
+		globalCounter = 0;
+	    globalTimestamp = new Date().getTime();
+		$('#ssespeed').text(0.0);
+	}, 10000 );
+
 });
 
 function updateData(series) {
@@ -100,9 +106,6 @@ function updateData(series) {
 	        dataType: "json",
 	        success: function(stats) {
 				if (stats !== null && stats !== undefined) {
-					$('#updatetime').text(moment().format('HH:mm:ss'));
-					$('#uptime').text(moment.duration(stats.uptime.length).humanize());
-
 					var totalRequests = stats.totalRequests;
 					var openRequests = stats.openRequests;
 					var maxOpenRequests = stats.maxOpenRequests;
@@ -122,6 +125,7 @@ function updateData(series) {
 					$('#openConnections').text(openConnections);
 					$('#maxOpenConnections').text(maxOpenConnections);
 					$('#requestTimeouts').text(requestTimeouts);
+					$('#uptime').text(moment.duration(stats.uptime.length).humanize());
 				}
 	        },
 	        error: function(xhr, ajaxOptions, thrownError) {
