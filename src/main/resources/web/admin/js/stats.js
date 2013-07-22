@@ -24,11 +24,11 @@ var graph = new Rickshaw.Graph( {
 		{
 			color: palette.color(),
 			data: seriesData[0],
-			name: 'Open requests'
+			name: 'Opened requests'
 		}, {
 			color: palette.color(),
 			data: seriesData[1],
-			name: 'Open connections'
+			name: 'Opened connections'
 		}
 	]
 } );
@@ -90,7 +90,7 @@ setInterval( function() {
 	globalCounter = 0;
     globalTimestamp = new Date().getTime();
 	$('#ssespeed').text(0);
-}, 4000 );
+}, 3000 );
 });
 
 function updateData(series) {
