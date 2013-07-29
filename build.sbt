@@ -39,10 +39,10 @@ resolvers ++= Seq(
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"       % "1.2-20130719"               withSources() 
-  ,"io.spray"           %   "spray-routing"   % "1.2-20130719"               withSources()
-  ,"io.spray"           %   "spray-caching"   % "1.2-20130719"               withSources()
-  ,"io.spray"           %   "spray-testkit"   % "1.2-20130719"    % "test"   withSources()
+   "io.spray"           %   "spray-can"       % "1.2-20130727"               withSources() 
+  ,"io.spray"           %   "spray-routing"   % "1.2-20130727"               withSources()
+  ,"io.spray"           %   "spray-caching"   % "1.2-20130727"               withSources()
+  ,"io.spray"           %   "spray-testkit"   % "1.2-20130727"    % "test"   withSources()
   ,"io.spray"           %%  "spray-json"      % "1.2.5"                      withSources()
   ,"com.typesafe.akka"  %%  "akka-actor"      % "2.2.0"                      withSources()
   ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.2.0"                      withSources()
@@ -51,7 +51,7 @@ libraryDependencies ++= Seq(
   ,"org.postgresql"     %   "postgresql"      % "9.2-1003-jdbc4"             withSources()
   ,"ch.qos.logback"     %   "logback-classic" % "1.0.13"                     withSources()
   ,"junit"              %   "junit"           % "4.11"            % "test"   withSources()
-  ,"org.specs2"         %%  "specs2"          % "2.1.1"             % "test"   withSources()  
+  ,"org.specs2"         %%  "specs2"          % "2.1.1"           % "test"   withSources()  
 )
 
 seq(Revolver.settings: _*)
