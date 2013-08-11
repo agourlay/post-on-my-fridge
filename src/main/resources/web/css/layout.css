@@ -17,22 +17,24 @@ header {
 	vertical-align: middle; }
 	
 .rss-link {
-    border:none;
-    padding-left:10px}
+	border:none;
+	text-decoration: none;
+	padding-right:10px;
+    padding-left:10px;}
 
 #fridge-title{
 	width: 37%;
 	color : #768797;
-	font-size : large;
+	font-family: Perpetua, Baskerville, "Big Caslon", "Palatino Linotype", Palatino, "URW Palladio L", "Nimbus Roman No9 L", serif;	font-size : large;
 	font-weight: bold;
+	text-transform:capitalize;
 	float: left;
 	margin-left: 15px;
 	margin-top: 7px; }	
 
 .index-link{
 	border:none;
-	height:29px;
-	padding-right:10px;
+	height:28px;
 	cursor: pointer;}	
 
 #header-interaction{
