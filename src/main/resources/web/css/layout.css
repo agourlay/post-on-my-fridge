@@ -9,12 +9,11 @@ header {
 	position : fixed;
 	width: 100%;
 	height: 36px;
-	background-color: white;
+	background-color: #E3E5EE;
 	z-index : 500;
 	box-shadow: 1px 5px 5px #aaa;
 	-moz-box-shadow: 1px 5px 5px #aaa;
-	-webkit-box-shadow: 1px 5px 5px #aaa;
-	vertical-align: middle; }
+	-webkit-box-shadow: 1px 5px 5px #aaa;}
 	
 .rss-link {
 	border:none;
@@ -23,11 +22,11 @@ header {
     padding-left:10px;}
 
 #fridge-title{
-	width: 37%;
-	color : #768797;
-	font-family: Perpetua, Baskerville, "Big Caslon", "Palatino Linotype", Palatino, "URW Palladio L", "Nimbus Roman No9 L", serif;	font-size : large;
+	width: 35%;
+	color : #3C4044;
+	font-family: Perpetua, Baskerville, "Big Caslon", "Palatino Linotype", Palatino, "URW Palladio L", "Nimbus Roman No9 L", serif;
 	font-weight: bold;
-	text-transform:capitalize;
+	text-transform:uppercase;
 	float: left;
 	margin-left: 15px;
 	margin-top: 7px; }	
@@ -41,7 +40,7 @@ header {
 	margin-top: 3px;
 	float:right;
 	text-align: right;
-	width:61%;
+	width:63%;
 	height:100%;}
 
 #header-interaction input{
@@ -88,6 +87,7 @@ header {
 	height: 83%;
 	float :left;
 	background-color : white;
+	color : #3C4044;
 	font-size: small;
 	opacity:0.85;
 	overflow-y : scroll;
