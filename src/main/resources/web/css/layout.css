@@ -54,14 +54,14 @@ header a{text-decoration:none;}
 	float: right;
 	text-align: center;
 	height: 1200px;
-	width: 80%;
+	width: 82%;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
 
 #panel {
 	position : fixed;
 	z-index: 900;
-	width: 20%;
+	width: 18%;
 	height: 100%;
   	padding-left: 2px;
   	box-shadow: 7px 0px 9px -2px #aaa;
