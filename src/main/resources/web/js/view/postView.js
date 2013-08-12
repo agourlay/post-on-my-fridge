@@ -36,7 +36,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 			revert: 'invalid',
 			containment: "parent",
 			stop: function(event) {
-				var fridge = $('#fridge'),
+				var fridge = $('#fridge-content'),
 				    fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
 				view.get('content').set('fullPosition', fullPosition);
 				view.get('content').updatePost()
@@ -47,7 +47,7 @@ App.PostView = Em.View.extend(App.Draggable, {
 	updatePhysicalPosition: function() {
 		var left = this.get('content').get('positionX'),
 		    top = this.get('content').get('positionY'),
-		    fridge = $('#fridge'),
+		    fridge = $('#fridge-content'),
 		    xTranslation = (left * fridge.width() - parseInt(this.$().offset().left, 10)),
 		    yTranslation = (top * fridge.height() - parseInt(this.$().offset().top, 10));
 

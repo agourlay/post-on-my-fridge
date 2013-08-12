@@ -1,7 +1,4 @@
-{{partial "fridge/header"}}
 {{#if view.content.loaded}}
-    <div id="main-content">
-        {{render "chat"}}
-		{{render "posts" view.content.posts}}
-	</div> 
+	{{render "panel" view.content}}
+    {{render "posts" view.content.posts}} 
 {{/if}}

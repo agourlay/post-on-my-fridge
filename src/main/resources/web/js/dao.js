@@ -5,7 +5,6 @@ App.Dao = Em.Object.create({
 	messagesController : null,
 	postsController : null,
 	userToken: null,
-	chatMode: false,
 
 	initSessionData : function(fridgeId) {
 		this.set('fridgeId',fridgeId);
@@ -18,11 +17,6 @@ App.Dao = Em.Object.create({
 		}
 		this.retrieveUserToken();
 		return this.findFridgeByName(fridgeId);
-	},
-
-	toggleChatMode : function (){
-		this.set("chatMode",!this.get("chatMode"));
-		$('.chatPanel').animate({width:'toggle'},300);
 	},
 
 	addDefaultPost : function (){

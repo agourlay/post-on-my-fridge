@@ -1,6 +1,6 @@
 App.MessagesView = Ember.CollectionView.extend({
 	tagName: 'div',
-	classNames: ['chatLog'],
+	elementId: 'chat-messages',
 	itemViewClass: 'App.MessageView',
 	contentBinding: 'controller.content'
 });

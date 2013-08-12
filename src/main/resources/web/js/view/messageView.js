@@ -1,10 +1,10 @@
 App.MessageView = Em.View.extend({
 	tagName: 'span',
 	templateName: 'message',
-    classNames: ['chatMessage'],
+    classNames: ['chat-message'],
 	didInsertElement: function() {
-		$(".chatLog").animate({
-			scrollTop: $(".chatLog").prop("scrollHeight")
+		$("#chat-messages").animate({
+			scrollTop: $("#chat-messages").prop("scrollHeight")
 		}, 250);
 	}
 });

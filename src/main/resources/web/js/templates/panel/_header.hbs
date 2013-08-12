@@ -1,0 +1,32 @@
+<header>
+    <div id="fridge-title">
+	    <img class="index-link" src="/images/fridge-link.png" alt="index" {{action "toIndex"}}/>
+		<i class="icon-angle-right icon-large"></i> {{view.fridgeName}}
+		<a {{bindAttr href="view.rssUrl"}} target="_blank" class="rss-link">
+	    	<i class="icon-rss-sign"></i> 
+	    </a>
+	</div> 
+    <div id="search-box">
+	    <form class="form-inline">
+	    	<div class="input-prepend">
+	  			<span class="add-on">
+	  				<i class="icon-search icon-large"></i>
+	  			</span>	
+	  			<input type="text" class="input-small" placeholder="Search fridge" id="search"/>
+	  		</div>
+		</form>	
+    </div>
+	<div id="social-box">
+		<form class="form-inline">
+			<div class="input-prepend">
+				<span class="add-on">
+					<i class="icon-user icon-large"></i>
+				</span>	
+				<input type="text" placeholder="Username" class="input-small" id="pseudo"/>
+			</div>
+			<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
+				<i class="icon-plus-sign icon-large"></i> Post
+			</button>
+		</form>					
+    </div>
+</header>

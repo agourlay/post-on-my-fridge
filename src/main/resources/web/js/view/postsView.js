@@ -1,6 +1,6 @@
 App.PostsView = Ember.CollectionView.extend({
 	tagName : 'section',
-	elementId : 'fridge',
+	elementId : 'fridge-content',
 	itemViewClass : 'App.PostView',
 	contentBinding: 'controller.content',
 	
