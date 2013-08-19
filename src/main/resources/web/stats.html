@@ -8,11 +8,11 @@
 	<meta name="google-site-verification" content="FaoFVgwYaNLDiKf5175qkJiL27JyrLNVZew0Cfmroj8" />
 
 	<!-- CSS -->	
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/css/base/jquery.ui.all.min.css"/>
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.css"/>
+	<link rel="stylesheet" href="/vendor/css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="/vendor/css/rickshaw.min.css"/>
 	<link rel="stylesheet" href="/vendor/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="/vendor/css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="/admin/css/stats.css"/>
+	<link rel="stylesheet" href="/css/stats.css"/>
 
 	<!-- JS -->
 	<script type="text/javascript">
@@ -29,10 +29,10 @@
 	</script>
 	<script src = "/vendor/js/jquery.min.js"></script>
 	<script src = "/vendor/js/moment.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.3.0/rickshaw.min.js"></script>
-	<script src = "//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src = "/admin/js/stats.js"></script>
+	<script src = "/vendor/js/d3.min.js"></script>
+	<script src = "/vendor/js/rickshaw.min.js"></script>
+	<script src = "/vendor/js/jquery-ui.min.js"></script>
+	<script src = "/js/stats.js"></script>
 </head>
 <body>
 	<header>
@@ -53,13 +53,13 @@
 				<td>Max opened requests : <span id="maxOpenRequests"></span></td>
 				<td>Opened requests : <span id="openRequests"></span></td>
 				<td><i class=" icon-warning-sign"></i> Requests timed out : <span id="requestTimeouts"></span></td>
-                		<td rowspan="2"><span id="legend"></span></td>
+                <td rowspan="2"><span id="legend"></span></td>
 			</tr>
 			<tr>
 				<td>Total connections : <span id="totalConnections"></span></td>
 				<td>Max opened connections : <span id="maxOpenConnections"></span></td>
 				<td>Opened connections : <span id="openConnections"></span></td>
-                		<td><i class="icon-dashboard"></i> Firehose's throughput : <b><span id="ssespeed">0</span> msg / sec<b></td>
+                <td><i class="icon-dashboard"></i> Firehose's throughput : <b><span id="ssespeed">0</span> msg / sec<b></td>
 			</tr>
 		</table>
 		
