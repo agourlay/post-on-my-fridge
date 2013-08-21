@@ -4,7 +4,7 @@
 	height:240px;
 	padding-top: 5px;
 	position: absolute;
-	z-index: 200;
+	z-index: 10;
 	font-size: small; }
 
 .post:hover,.newPost:hover {
@@ -13,12 +13,12 @@
 .post:hover  {
     width: 250px;
     height: 250px;
-    z-index:300; }
+    z-index:30; }
 
 .post:hover .content:hover {
     width: 240px;
     height: 220px;
-    z-index:300; }
+    z-index:30; }
 
 .post .header{
 	position: absolute;

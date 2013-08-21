@@ -11,7 +11,7 @@ header {
 	height: 130px;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #e0e0e0;
-	z-index : 500;}
+	z-index : 90;}
 
 header a{text-decoration:none;}	
 
@@ -60,7 +60,7 @@ header a{text-decoration:none;}
 
 #panel {
 	position : fixed;
-	z-index: 900;
+	z-index: 80;
 	width: 18%;
 	height: 100%;
   	padding-left: 2px;

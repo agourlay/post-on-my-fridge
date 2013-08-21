@@ -99,12 +99,16 @@ App.Dao = Em.Object.create({
 		$.ajax({
 	        url: "fridges/" + fridgeId,
 	        type: 'GET',
+	        beforeSend : function (){
+            	NProgress.start(); 
+            },
 	        success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
 					model.set('description', fridge.description);
 					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
 					model.set('loaded', true);
 				}
+				NProgress.done();
 	        },
 	        error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during fridge retrieval");
