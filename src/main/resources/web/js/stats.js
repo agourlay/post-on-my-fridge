@@ -3,7 +3,7 @@ var globalTimestamp = 0;
 
 $(function() {
 
-	var seriesData = [ [], []];
+	var seriesData = [ [], [] ];
 	seriesData.forEach(function(series) {
 		series.push(  {x: moment().unix(), y: NaN} );
 	});
@@ -14,8 +14,8 @@ $(function() {
 
 	var graph = new Rickshaw.Graph( {
 		element: document.getElementById("chart"),
-		width: 1100,
-		height: 450,
+		width: 1220,
+		height: 500,
 		renderer: 'line',
 		padding : {top : 0.09},
 		stroke: true,
@@ -129,7 +129,7 @@ function updateData(series) {
 				}
 	        },
 	        error: function(xhr, ajaxOptions, thrownError) {
-				console.log("Error during stats retrieval");
+				Alertify.log.error("Error during stats retrieval");
 			}
     	});
 }
@@ -144,12 +144,12 @@ function listenFirehose(){
 	}, false);
     
     source.addEventListener('open', function(e) {
-		console.log("SSE opened!")
+		Alertify.log.success("Listening to Streaming service");
 	}, false);
 
 	source.addEventListener('error', function(e) {
 	    if (e.readyState == EventSource.CLOSED) {
-		    console.log("Streaming service error");
+		    Alertify.log.error("Streaming service error");
 		}
 	}, false);
 }
