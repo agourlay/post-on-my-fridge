@@ -10,7 +10,7 @@ You can **[try it](http://fridge.arnaud-gourlay.info)**
 
 This application focuses on realtime interactions and simplicity. 
 
-The backend is written in Scala 2.10 using Akka actor's model and Spray for the rest/http interface. 
+The backend is written in Scala using Akka actor's model and Spray for the rest/http interface. 
 
 The frontend is written in javascript and makes heavy use of Ember.js.
 
@@ -20,24 +20,24 @@ The frontend is written in javascript and makes heavy use of Ember.js.
 
 A single page web app built displays the content of a fridge and subscribes to notifications for the current fridge.
 
-The backend is a non blocking rest API that manages CRUD and notification operations. 
+The backend is a non blocking rest API that manages CRUD and pushed notifications. 
 
 When an action such as creating or moving a post is called on a fridge, a notification about the new state is sent via Server Sent Event to all the current fridge´s clients. 
 
 This technique allows near real time collaboration on a fridge.
 
-## Installation
+## Setup
 
-This is full-stack application, you need a postgreSQL and SBT to build the project.
+This is full-stack application, you need SBT to build it and a postgreSQL instance to run it.
 
-I have provided my nginx configuration in the [misc](https://github.com/agourlay/post-on-my-fridge/blob/master/misc/nginx.conf) folder, it assumes that the application runs on 127.0.0.1:8080 
-
-The easiest way to deploy the project is to build and run a fatjar using sbt
+The easiest way to deploy the project on a server is to build and run a fatjar.
 
 ```sh
 sbt assembly
 java -jar pomf-api.jar &
 ```
+I have provided my nginx configuration in the [misc](https://github.com/agourlay/post-on-my-fridge/blob/master/misc/nginx.conf) folder, it assumes that the application runs on 127.0.0.1:8080 
+
 
 ## Licence
 
