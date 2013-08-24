@@ -65,4 +65,10 @@ class Dao(name: String, dal: DAL, db: Database) {
   def updatePost(post :Post):Option[Post] = Posts.updatePost(post)
   
   def deleteOutdatedPost = Posts.deleteOutdatedPost
+
+	
+  def countPosts() = Posts.count
+
+  def countFridges() = Fridges.count
+
 }
