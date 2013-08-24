@@ -42,5 +42,8 @@ trait FridgeComponent { this: Profile =>
       } yield (fridge.name)
       query.list
     }
+
+    def count(implicit session: Session) = Query(Fridges).list.length
+
   }
 }

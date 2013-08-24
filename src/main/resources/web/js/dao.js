@@ -97,23 +97,23 @@ App.Dao = Em.Object.create({
 		var model = App.Fridge.create();
 		model.set('id', fridgeId);
 		$.ajax({
-	        url: "fridges/" + fridgeId,
-	        type: 'GET',
-	        beforeSend : function (){
-            	NProgress.start(); 
-            },
-	        success: function(fridge) {
+	        	url: "fridges/" + fridgeId,
+	        	type: 'GET',
+	        	beforeSend : function (){
+            			NProgress.start(); 
+                	},
+	        	success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
 					model.set('description', fridge.description);
 					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
 					model.set('loaded', true);
 				}
 				NProgress.done();
-	        },
-	        error: function(xhr, ajaxOptions, thrownError) {
+	        	},
+	        	error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during fridge retrieval");
 			}
-    	});
+    		});
 		return model;
 	},
 
@@ -130,5 +130,39 @@ App.Dao = Em.Object.create({
 				errorMessage("Error during token retrieval");
 			}
     	});
+	},
+
+	getStats : function () {
+
+		var idxModel = App.Index.create();
+
+		var fridgeCountDefer = $.ajax({
+	        	url: "count/fridges/",
+	        	type: 'GET',
+	        	success: function(nbfridge) {
+				if (nbfridge !== null && nbfridge !== undefined) {
+					idxModel.set('nbFridges', nbfridge);
+				}
+	        	},
+	        	error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during count fridges retrieval");
+			}
+    		});
+
+		var postCountDefer = $.ajax({
+	        	url: "count/posts/",
+	        	type: 'GET',
+	        	success: function(nbpost) {
+				if (nbpost !== null && nbpost !== undefined) {
+					idxModel.set('nbPosts', nbpost);
+				}
+	        	},
+	        	error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during count posts retrieval");
+			}
+    		});
+
+		return idxModel;
 	}
 });
+
