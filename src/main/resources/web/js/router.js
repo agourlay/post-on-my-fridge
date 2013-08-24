@@ -10,3 +10,12 @@ App.FridgeRoute = Ember.Route.extend({
 		return App.Dao.initSessionData(fridgeName);
   	}
 });
+
+App.IndexRoute = Ember.Route.extend({
+	model: function() {
+		var idxModel = App.Dao.getStats();
+		console.dir(idxModel); 
+		return idxModel;
+  	}
+});
+

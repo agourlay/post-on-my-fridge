@@ -123,7 +123,24 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
               (context.actorSelection(tokenActor) ? TokenServiceActor.RequestToken).mapTo[String]
             }
           }
-        }
+        } ~ 
+        pathPrefix("count") {
+          path("fridges") {
+              get {
+                complete {
+   
+                  (context.actorSelection(crudActor) ? CrudServiceActor.CountFridges).mapTo[String]
+                }
+              }
+          } ~ 
+          path("posts") {
+              get {
+                complete {
+                  (context.actorSelection(crudActor) ? CrudServiceActor.CountPosts).mapTo[String]
+                }
+              }
+          }
+        } 
     
     def chatRoute = 
         path("messages" / Rest) { fridgeName =>

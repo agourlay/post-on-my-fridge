@@ -1,4 +1,5 @@
 App.IndexView = Ember.View.extend({
+	contentBinding: 'controller.content',	
 	didInsertElement : function() {	
 		var view = this;
 

@@ -76,5 +76,8 @@ trait PostComponent { this: Profile =>
         val now = new Date()
        (for(p <- Posts if p.dueDate < now) yield p).delete 
     }
+
+    def count(implicit session: Session) = Query(Posts).list.length
+
   }
 }
