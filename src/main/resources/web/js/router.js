@@ -1,6 +1,7 @@
 App.Router.map(function() {
     this.resource('index', { path:'/'}); 
     this.resource('fridges');
+    this.resource('trends');
     this.resource('fridge', { path:'/fridge/:fridge_id' });
 });
 
@@ -11,11 +12,15 @@ App.FridgeRoute = Ember.Route.extend({
   	}
 });
 
+App.FridgesRoute = Ember.Route.extend({
+	model: function() {
+		return App.Dao.getFridges();
+  	}
+});
+
 App.IndexRoute = Ember.Route.extend({
 	model: function() {
-		var idxModel = App.Dao.getStats();
-		console.dir(idxModel); 
-		return idxModel;
+		return App.Dao.getStats();
   	}
 });
 

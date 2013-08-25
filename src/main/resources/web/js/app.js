@@ -9,6 +9,7 @@ window.App = Ember.Application.createWithMixins({
     'panel',
     'chatInput',
     'message',
+    'trends',
     'post/_header',
     'post/_form',
     'post'

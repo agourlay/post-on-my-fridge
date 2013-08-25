@@ -3,8 +3,15 @@
 	<div class="row-fluid">
 		<div class="span10 offset1">
 			<div class="row-fluid">
-				<div class="span12">
-					<p class="muted pull-right control" >
+				<div class="span5"></div>
+				<div class="span2">  
+					<a {{action "toTrends"}} class="pull-right"><i class="icon-rocket"></i> Trends</a>
+				</div>
+				<div class="span2">  
+					<a {{action "toFridges"}} class="pull-right"><i class="icon-road"></i> Explore</a>
+				</div>
+				<div class="span3">
+					<p class="muted pull-right" >
 					Already <b>{{view.content.nbFridges}}</b> fridges and <b>{{view.content.nbPosts}}</b> posts!</p>
 				</div>		
 			</div>

@@ -9,6 +9,13 @@ App.IndexController = Ember.ObjectController.extend({
 
 	toNewFridge : function(name){
 		this.transitionToRoute('fridge', App.Dao.initSessionData(name));	
-	}
+	},
 
+	toTrends : function(){
+		this.transitionToRoute('trends');	
+	},
+
+	toFridges : function(){
+		this.transitionToRoute('fridges');	
+	}
 });

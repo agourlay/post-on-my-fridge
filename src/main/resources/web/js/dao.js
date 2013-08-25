@@ -158,11 +158,16 @@ App.Dao = Em.Object.create({
 				}
 	        	},
 	        	error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Error during count posts retrieval");
-			}
+					errorMessage("Error during count posts retrieval");
+				}
     		});
 
 		return idxModel;
+	},
+
+	getFridges : function () {
+		console.log("todo : retrieve fridges")
+		return [];
 	}
 });
 
