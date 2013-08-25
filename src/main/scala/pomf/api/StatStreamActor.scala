@@ -23,9 +23,9 @@ import spray.can.parsing.Result.Ok
 import pomf.domain.model.PushedEvent
 
 
-class ServerSentEventActor(fridgeTarget:Option[String],userToken:Option[String], ctx: RequestContext) extends Actor with ActorLogging {
+class StatStreamActor(ctx: RequestContext) extends Actor with ActorLogging {
 
-  val streamStart = "Starts streaming: ...\n"
+  val streamStart = "Starts streaming stats...\n"
 
   val EventStreamType = register(
 	  MediaType.custom(
@@ -37,24 +37,17 @@ class ServerSentEventActor(fridgeTarget:Option[String],userToken:Option[String],
 
   val responseStart = HttpResponse(
  			entity  = HttpEntity(EventStreamType, streamStart),
-  			headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
-            )
+  		headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
+      )
 
   ctx.responder ! ChunkedResponseStart(responseStart) 
-          
-  def domainFilter(fridgeName:String, token : String) : Boolean = 
-    if (fridgeTarget.isDefined && userToken.isDefined)
-      fridgeName == fridgeTarget.get && token != userToken.get 
-    else true
   
   def receive = {
-    case Notification(fridgeNameNotif,command,payload,timestamp,token) => {
-      if (domainFilter(fridgeNameNotif,token)){
-        val pushedEvent = PushedEvent(command,payload,timestamp)
-        val nextChunk = MessageChunk("data: "+ formatEvent.write(pushedEvent) +"\n\n")
+    case stat : Stats => {
+        val nextChunk = MessageChunk("data: "+ formatHttpServerStats.write(stat) +"\n\n")
         ctx.responder ! nextChunk 
-      } 
-    }    
+    }   
+     
     case ev: Http.ConnectionClosed =>
       log.debug("Stopping response streaming due to {}", ev)
       context.stop(self)

@@ -165,12 +165,15 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
       get {
         path("fridge" / Rest) { fridgeName =>
             parameters("token") { token =>
-              streamActivity(Some(fridgeName),Some(token))
+              streamFirehose(Some(fridgeName),Some(token))
             }    
         } ~  
         path("firehose") {
-          streamActivity() 
-        }    
+          streamFirehose() 
+        } ~  
+        path("stats") {
+          streamStat 
+        }        
       }
     } 
   
@@ -199,9 +202,16 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         }
     }    
 
-  def streamActivity(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
-    val connectionHandler = context.actorOf(Props(new ServerSentEventActor(fridgeTarget, userToken, ctx)))
-    //subscribe to notification event
-    context.system.eventStream.subscribe(connectionHandler, classOf[Notification])
+  def streamFirehose(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
+    val fireHoseActor = context.actorOf(Props(new FirehoseStreamActor(fridgeTarget, userToken, ctx)))
+    context.system.eventStream.subscribe(fireHoseActor, classOf[Notification])
+  }
+
+  def streamStat (ctx: RequestContext): Unit = {
+    val statActor = context.actorOf(Props(new StatStreamActor(ctx)))
+    context.system.scheduler.schedule(1.seconds,1.seconds){
+      val stats = context.actorSelection("/user/IO-HTTP/listener-0").ask(Http.GetStats).mapTo[Stats]
+      stats pipeTo statActor
+    }
   }  
 }

@@ -7,17 +7,18 @@ $(function() {
 	seriesData.forEach(function(series) {
 		series.push(  {x: moment().unix(), y: NaN} );
 	});
-
-	updateData(seriesData);
+	
+	listenStats(seriesData);
+	listenFirehose();
 
 	var palette = new Rickshaw.Color.Palette( { scheme: 'colorwheel' } );
 
 	var graph = new Rickshaw.Graph( {
 		element: document.getElementById("chart"),
-		width: 1220,
+		width: 1200,
 		height: 500,
 		renderer: 'line',
-		padding : {top : 0.09},
+		padding : {top : 0.09, bottom : 0.09},
 		stroke: true,
 		preserve: true,
 		series: [
@@ -82,15 +83,12 @@ $(function() {
 
 	yAxis.render();
 
-	listenFirehose();
-
 	//long polling 1s
 	setInterval( function() {
-		updateData(seriesData);
 		graph.update();
 	}, 1000 );
 
-	// reboot counters
+	// reboot speed counters
 	setInterval( function() {
 		globalCounter = 0;
 	    globalTimestamp = new Date().getTime();
@@ -98,41 +96,6 @@ $(function() {
 	}, 10000 );
 
 });
-
-function updateData(series) {
-	$.ajax({
-	        url: "/stats",
-	        type: 'GET',
-	        dataType: "json",
-	        success: function(stats) {
-				if (stats !== null && stats !== undefined) {
-					var totalRequests = stats.totalRequests;
-					var openRequests = stats.openRequests;
-					var maxOpenRequests = stats.maxOpenRequests;
-					var totalConnections = stats.totalConnections;
-					var openConnections = stats.openConnections;
-					var maxOpenConnections = stats.maxOpenConnections;
-					var requestTimeouts = stats.requestTimeouts;
-
-					var xNow = moment().unix();
-					series[0].push({x: xNow, y:openRequests});
-					series[1].push({x: xNow, y:openConnections});
-
-					$('#totalRequests').text(totalRequests);
-					$('#openRequests').text(openRequests);
-					$('#maxOpenRequests').text(maxOpenRequests);
-					$('#totalConnections').text(totalConnections);
-					$('#openConnections').text(openConnections);
-					$('#maxOpenConnections').text(maxOpenConnections);
-					$('#requestTimeouts').text(requestTimeouts);
-					$('#uptime').text(moment.duration(stats.uptime.length).humanize());
-				}
-	        },
-	        error: function(xhr, ajaxOptions, thrownError) {
-				Alertify.log.error("Error during stats retrieval");
-			}
-    	});
-}
 
 function listenFirehose(){
 	var source = new EventSource("/stream/firehose");
@@ -144,12 +107,49 @@ function listenFirehose(){
 	}, false);
     
     source.addEventListener('open', function(e) {
-		Alertify.log.success("Listening to Streaming service");
+		Alertify.log.success("Listening to firehose stream");
 	}, false);
 
 	source.addEventListener('error', function(e) {
 	    if (e.readyState == EventSource.CLOSED) {
-		    Alertify.log.error("Streaming service error");
+		    Alertify.log.error("Firehose stream error");
+		}
+	}, false);
+}
+
+function listenStats(series){
+	var source = new EventSource("/stream/stats");
+	source.addEventListener('message', function(e) {
+		var stats = $.parseJSON(e.data);
+		var totalRequests = stats.totalRequests;
+		var openRequests = stats.openRequests;
+		var maxOpenRequests = stats.maxOpenRequests;
+		var totalConnections = stats.totalConnections;
+		var openConnections = stats.openConnections;
+		var maxOpenConnections = stats.maxOpenConnections;
+		var requestTimeouts = stats.requestTimeouts;
+
+		var xNow = moment().unix();
+		series[0].push({x: xNow, y:openRequests});
+		series[1].push({x: xNow, y:openConnections});
+
+		$('#totalRequests').text(totalRequests);
+		$('#openRequests').text(openRequests);
+		$('#maxOpenRequests').text(maxOpenRequests);
+		$('#totalConnections').text(totalConnections);
+		$('#openConnections').text(openConnections);
+		$('#maxOpenConnections').text(maxOpenConnections);
+		$('#requestTimeouts').text(requestTimeouts);
+		$('#uptime').text(moment.duration(stats.uptime.length).humanize());
+	}, false);
+    
+    source.addEventListener('open', function(e) {
+		Alertify.log.success("Listening to stats stream");
+	}, false);
+
+	source.addEventListener('error', function(e) {
+	    if (e.readyState == EventSource.CLOSED) {
+		    Alertify.log.error("Stats stream error");
 		}
 	}, false);
 }
