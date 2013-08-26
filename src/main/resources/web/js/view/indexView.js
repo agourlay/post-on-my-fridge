@@ -1,14 +1,10 @@
 App.IndexView = Ember.View.extend({
-	contentBinding: 'controller.content',	
-	didInsertElement : function() {	
-		var view = this;
+	contentBinding: 'controller.content',
+	
+	newFridgeName:null,
+	
 
-		$("#button-newfridge").click(function(e) {
-		   e.preventDefault();
-		   var target = $("#newFridgeValue").val();
-		   if (target !== undefined && target !== ""){
-		   	  view.get('controller').toNewFridge(target);
-		   }
-		});
+	didInsertElement : function() {
+		document.title = "Post on my fridge ";		
 	}
 });

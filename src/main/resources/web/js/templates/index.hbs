@@ -28,14 +28,15 @@
   					</br>
 					<div class="span12">
 						<form class="form-inline">
-							<button class="btn btn-primary" {{action "toDemo"}} >
+							<button class="btn btn-primary" {{action "toDemo"}} type="button" >
 								<i class="icon-white icon-signin"></i> Try the demo
 							</button>
 							&nbsp/&nbsp
 							<div class="input-append">
-                    			<input type="text" placeholder="Create your fridge" class="input-medium" id="newFridgeValue"> 
-                				<button class="btn" id="button-newfridge">
+                    			{{view Ember.TextField valueBinding="App.IndexView.newFridgeName" placeholder="Create your fridge" class="input-medium" id="newFridgeValue"}}                				
+                				<button class="btn" id="button-newfridge" {{action "toNewFridge" App.IndexView.newFridgeName}}>
     								<i class="icon-ok-circle"></i> 
+    								{{App.IndexView.newFrigeName}}
     							</button>
     		    			</div>
 						</form>		  	      
