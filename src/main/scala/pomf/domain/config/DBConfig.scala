@@ -14,11 +14,11 @@ class TestDB extends DBConfig {
   dao.createDB
 }
 
-class PostGresDB(user: String, password : String) extends DBConfig {
+class PostGresDB(user: String, password : String, schema : String) extends DBConfig {
   val dao = new Dao("PostgreSQL", new DAL(PostgresDriver),
-    Database.forURL("jdbc:postgresql:pomf",
-                           driver="org.postgresql.Driver",
-                           user="pomf_api",
-                           password="root"))
+    Database.forURL("jdbc:postgresql:" + schema,
+                           driver = "org.postgresql.Driver",
+                           user = user,
+                           password = password))
   dao.createDB
 }

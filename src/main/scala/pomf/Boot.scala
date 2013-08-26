@@ -51,9 +51,10 @@ object Boot extends App {
 
   val dbUser = pomfConfig.getString("database.user")
   val dbPassword = pomfConfig.getString("database.password")
+  val dbSchema = pomfConfig.getString("database.schema")
   val urlSite = pomfConfig.getString("url")
 
-  val dbConfig = new PostGresDB(dbUser,dbPassword)
+  val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
 
   val crudService = system.actorOf(Props(new CrudServiceActor(dbConfig.dao, urlSite))
                           .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
