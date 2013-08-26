@@ -5,7 +5,6 @@ import pomf.domain.config.DAL
 import pomf.domain.model.Fridge
 import pomf.domain.model.FridgeRest
 import pomf.domain.model.Post
-import pomf.util.RssSupport
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -25,7 +24,7 @@ class Dao(name: String, dal: DAL, db: Database) {
   
   def purgeDB = dal.purge
 
-   def getAllFridge(): List[Fridge] = {
+  def getAllFridge(): List[Fridge] = {
     val result = Fridges.findAllFridge
     result
   }
@@ -50,12 +49,7 @@ class Dao(name: String, dal: DAL, db: Database) {
       case _ => FridgeRest(name = fridgeName, description = "" ,posts = List[Post](), id = None)
     }							 
   }
-  
-  def getFridgeRss(fridgeName: String): scala.xml.Elem = {
-    val fridge = getFridgeRest(fridgeName)
-    RssSupport.generateFridgeRss(fridge)
-  }
-  
+    
   def getPost(id :Long):Option[Post] = Posts.getPost(id)
   
   def searchByNameLike(term:String):List[String] = Fridges.searchByNameLike(term)
@@ -66,7 +60,6 @@ class Dao(name: String, dal: DAL, db: Database) {
   
   def deleteOutdatedPost = Posts.deleteOutdatedPost
 
-	
   def countPosts() = Posts.count
 
   def countFridges() = Fridges.count

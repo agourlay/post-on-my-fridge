@@ -44,7 +44,7 @@ class PomfHttpActor extends HttpServiceActor with ActorLogging{
         get {
           complete {
             if (fridgeName.isEmpty)
-              (context.actorSelection(crudActor) ? CrudServiceActor.AllFridge()).mapTo[List[Fridge]]
+              (context.actorSelection(crudActor) ? CrudServiceActor.AllFridge).mapTo[List[Fridge]]
             else
               (context.actorSelection(crudActor) ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
           }

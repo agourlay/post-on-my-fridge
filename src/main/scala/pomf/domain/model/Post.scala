@@ -8,11 +8,11 @@ import pomf.util.XssFilter
 case class Post(author: String,
     content: String,
     color:String,
-	date:Date,
-	positionX:Double,
-	positionY:Double,
-	dueDate:Option[Date] = None,
-	fridgeId:String,
+	  date:Date,
+	  positionX:Double,
+	  positionY:Double,
+	  dueDate:Option[Date] = None,
+	  fridgeId:String,
     id: Option[Long] = None
 ){
   require(!author.isEmpty, "author must not be empty")

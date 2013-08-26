@@ -9,12 +9,12 @@ trait DBConfig {
   def dao: Dao
 }
 
-trait TestDB extends DBConfig {
+class TestDB extends DBConfig {
   val dao = new Dao("H2", new DAL(H2Driver), Database.forURL("jdbc:h2:mem:servicetestdb", driver = "org.h2.Driver"))
   dao.createDB
 }
 
-trait ProductionDB extends DBConfig {
+class PostGresDB(user: String, password : String) extends DBConfig {
   val dao = new Dao("PostgreSQL", new DAL(PostgresDriver),
     Database.forURL("jdbc:postgresql:pomf",
                            driver="org.postgresql.Driver",

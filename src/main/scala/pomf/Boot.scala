@@ -4,19 +4,22 @@ import akka.actor._
 import akka.routing._
 import akka.io.IO
 import akka.actor.OneForOneStrategy
-import spray.can.Http
 import akka.actor.actorRef2Scala
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import java.util.concurrent.TimeUnit
+import spray.can.Http
 import pomf.service.NotificationActor
 import pomf.service.CrudServiceActor
 import pomf.service.CrudServiceActor._
 import pomf.service.ChatServiceActor
 import pomf.service.TokenServiceActor
+import pomf.api.PomfHttpActor
+import pomf.domain.dao.Dao
+import pomf.domain.config._
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import pomf.api.PomfHttpActor
+import com.typesafe.config.ConfigFactory
 
 object Boot extends App {
  
@@ -41,14 +44,22 @@ object Boot extends App {
   log.info(" +--------------------+")
 
   implicit val system = ActorSystem("pomf-api")
-  
+
   implicit def executionContext = system.dispatcher
 
-  val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
+  val pomfConfig = ConfigFactory.load().getConfig("pomf-api")
 
-  val crudService = system.actorOf(Props[CrudServiceActor]
+  val dbUser = pomfConfig.getString("database.user")
+  val dbPassword = pomfConfig.getString("database.password")
+  val urlSite = pomfConfig.getString("url")
+
+  val dbConfig = new PostGresDB(dbUser,dbPassword)
+
+  val crudService = system.actorOf(Props(new CrudServiceActor(dbConfig.dao, urlSite))
                           .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
   
+  val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
+
   val chatService = system.actorOf(Props[ChatServiceActor], "chat-service")
   
   val tokenService = system.actorOf(Props[TokenServiceActor], "token-service")
