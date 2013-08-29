@@ -53,7 +53,7 @@ object Boot extends App {
   val dbPassword = pomfConfig.getString("database.password")
   val dbSchema = pomfConfig.getString("database.schema")
   val urlSite = pomfConfig.getString("url")
-  val port = pomfConfig.getLong("port")
+  val port = pomfConfig.getInt("port")
 
   val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
 
