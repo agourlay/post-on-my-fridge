@@ -73,6 +73,10 @@ function filterData(data) {
 	return data;
 }
 
+function randomColor() {
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
+
 function konami() {
     $(window).konami(function() {
         $('.post').addClass('barrel_roll');
