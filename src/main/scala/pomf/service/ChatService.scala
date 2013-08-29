@@ -1,6 +1,7 @@
 package pomf.service
 
 import akka.actor.Actor
+import akka.actor.ActorRef
 import akka.actor.Props
 import spray.json.DefaultJsonProtocol._
 import scala.io.Codec
