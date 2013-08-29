@@ -44,29 +44,27 @@ object Boot extends App {
   log.info(" +--------------------+")
 
   implicit val system = ActorSystem("pomf-api")
-
   implicit def executionContext = system.dispatcher
 
   val pomfConfig = ConfigFactory.load().getConfig("pomf-api")
-
-  val dbUser = pomfConfig.getString("database.user")
+  val dbUser     = pomfConfig.getString("database.user")
   val dbPassword = pomfConfig.getString("database.password")
-  val dbSchema = pomfConfig.getString("database.schema")
-  val urlSite = pomfConfig.getString("url")
-  val port = pomfConfig.getInt("port")
+  val dbSchema   = pomfConfig.getString("database.schema")
+  val urlSite    = pomfConfig.getString("url")
+  val port       = pomfConfig.getInt("port")
 
   val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
 
-  val crudService = system.actorOf(Props(new CrudServiceActor(dbConfig.dao, urlSite))
-                          .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
-  
   val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
+  
+  val crudService = system.actorOf(Props(new CrudServiceActor(dbConfig.dao, notificationService, urlSite))
+                          .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
 
-  val chatService = system.actorOf(Props[ChatServiceActor], "chat-service")
+  val chatService = system.actorOf(Props(new ChatServiceActor(notificationService)), "chat-service")
   
   val tokenService = system.actorOf(Props[TokenServiceActor], "token-service")
       
-  val httpService = system.actorOf(Props[PomfHttpActor], "http-service")
+  val httpService = system.actorOf(Props(new PomfHttpActor(crudService, chatService, tokenService)), "http-service")
   
   IO(Http) ! Http.Bind(httpService, "localhost", port = port) 
   

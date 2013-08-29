@@ -12,11 +12,9 @@ import akka.util.Timeout
 
 import scala.concurrent._
 
-class CrudServiceActor(dao : Dao, urlSite : String) extends Actor with ActorLogging { 
+class CrudServiceActor(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
 
   implicit def executionContext = context.dispatcher
-  
-  val notification = "/user/notification-service"
 
   def receive = {
       case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
@@ -39,7 +37,7 @@ class CrudServiceActor(dao : Dao, urlSite : String) extends Actor with ActorLogg
 
   def addPost(post: Post, token: String): Post = {
     val persistedPost = dao.addPost(post)
-    context.actorSelection(notification) ! Notification.create(post.fridgeId, persistedPost, token)
+    notificationService ! Notification.create(post.fridgeId, persistedPost, token)
     persistedPost
   }
 
@@ -77,7 +75,7 @@ class CrudServiceActor(dao : Dao, urlSite : String) extends Actor with ActorLogg
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
-    context.actorSelection(notification) ! Notification.delete(getPost(id).get.fridgeId, id, token)
+    notificationService ! Notification.delete(getPost(id).get.fridgeId, id, token)
     "post " + dao.deletePost(id) + " deleted"
   }
 
@@ -87,7 +85,7 @@ class CrudServiceActor(dao : Dao, urlSite : String) extends Actor with ActorLogg
   }  
 
   def updatePost(post: Post, token: String): Post = {
-    context.actorSelection(notification) ! Notification.update(post.fridgeId, post, token)
+    notificationService ! Notification.update(post.fridgeId, post, token)
     dao.updatePost(post).orNull
   }
 

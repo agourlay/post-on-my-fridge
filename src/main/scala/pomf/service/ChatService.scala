@@ -19,11 +19,9 @@ import scala.concurrent.Future
 import scala.concurrent._
 
 
-class ChatServiceActor extends Actor with ActorLogging {
+class ChatServiceActor(notificationService : ActorRef) extends Actor with ActorLogging {
     
   implicit def executionContext = context.dispatcher
-      
-  val notification = "/user/notification-service"
   
   val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
   
@@ -41,7 +39,7 @@ class ChatServiceActor extends Actor with ActorLogging {
              cache.remove(fridgeName)
              cache(fridgeName)((message :: messages).sortBy(_.timestamp))
       }
-    context.actorSelection(notification) ! Notification.message(fridgeName, message, token)
+    notificationService ! Notification.message(fridgeName, message, token)
     message
   }
   
