@@ -53,6 +53,7 @@ object Boot extends App {
   val dbPassword = pomfConfig.getString("database.password")
   val dbSchema = pomfConfig.getString("database.schema")
   val urlSite = pomfConfig.getString("url")
+  val port = pomfConfig.getLong("port")
 
   val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
 
@@ -67,7 +68,7 @@ object Boot extends App {
       
   val httpService = system.actorOf(Props[PomfHttpActor], "http-service")
   
-  IO(Http) ! Http.Bind(httpService, "localhost", port = 8080) 
+  IO(Http) ! Http.Bind(httpService, "localhost", port = port) 
   
   // schedule delete outdated post every 24 hours
   system.scheduler.schedule(Duration(24, HOURS), Duration(24, HOURS), crudService, DeleteOutdatedPost)
