@@ -58,7 +58,7 @@ object Boot extends App {
   val notificationService = system.actorOf(Props[NotificationActor], "notification-service")
   
   val crudService = system.actorOf(Props(new CrudServiceActor(dbConfig.dao, notificationService, urlSite))
-                          .withRouter(RoundRobinRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
+                          .withRouter(SmallestMailboxRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
 
   val chatService = system.actorOf(Props(new ChatServiceActor(notificationService)), "chat-service")
   
