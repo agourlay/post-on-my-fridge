@@ -24,8 +24,8 @@ App.Dao = Em.Object.create({
 		newPostData.author = App.Dao.pseudo();
 		newPostData.content = "...";
 		newPostData.color = randomColor();
-		newPostData.positionX = 0.4;
-		newPostData.positionY = 0.25;
+		newPostData.positionX = getRandomPostInitX();
+		newPostData.positionY = getRandomPostInitY();
 		newPostData.fridgeId = App.Dao.get('fridgeId');
 		newPostData.dueDate = "";
 		newPostValidation(newPostData);
