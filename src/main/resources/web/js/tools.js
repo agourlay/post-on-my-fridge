@@ -74,12 +74,12 @@ function filterData(data) {
 }
 
 function getRandomPostInitX() {
-    return getRandomArbitary (0.1, 0.4);
+    return getRandomArbitary (0.2, 0.4);
      
 }
 
 function getRandomPostInitY() {
-    getRandomArbitary (0.1,  0.25);
+    return getRandomArbitary (0.1,  0.25);
 }
 
 function getRandomArbitary (min, max) {
