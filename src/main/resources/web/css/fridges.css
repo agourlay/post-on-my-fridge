@@ -1,0 +1,4 @@
+tbody tr:nth-of-type(odd) {
+  background-color:#ddd;
+}
+

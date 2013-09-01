@@ -166,8 +166,26 @@ App.Dao = Em.Object.create({
 	},
 
 	getFridges : function () {
-		console.log("todo : retrieve fridges")
-		return [];
+
+		var fridgesModel = Ember.A([]);
+		$.ajax({
+	        	url: "fridges/",
+	        	type: 'GET',
+	        	success: function(fridges) {
+					$.each( fridges, function(i, fridge){
+						fridgesModel.pushObject(App.Fridge.create({
+							id:fridge.id,
+							name:fridge.name,
+							description:fridge.description
+						}));	
+					});					
+	        	},
+	        	error: function(xhr, ajaxOptions, thrownError) {
+					errorMessage("Error during fridges retrieval");					
+				}
+    		});
+
+		return fridgesModel;
 	}
 });
 
