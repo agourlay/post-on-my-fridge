@@ -1,1 +1,35 @@
-List of all fridges (coming soon)
+List of all fridges
+
+
+<div class="container-fluid">
+	<hr>
+	<div class="row-fluid">
+		<div class="span10 offset1 well">
+
+			<table class="table">
+			<thead>
+			<th class="muted span1">id</th>
+			<th class="muted span3">name</th>
+			<th class="muted span5">description</th>
+			<th class="muted span1">&nbsp;</th>
+			</thead>
+			<tbody>
+			   {{#each fridge in controller itemController="index"}}
+			    <tr>
+				  <td>{{id}}</td>
+				  <td><b>{{name}}</b></td>
+				  <td>{{description}}</td>
+				  <td> 
+				      <button class="btn" id="button-newfridge" 
+				      {{action "toNewFridge" name}}>
+				      <i class="icon-eye-open"></i> 
+				      </button>
+				  </td>
+			    </tr>
+			   {{/each}}
+			</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>
