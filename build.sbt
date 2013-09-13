@@ -39,10 +39,10 @@ resolvers ++= Seq(
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"       % "1.2-20130822"               withSources() 
-  ,"io.spray"           %   "spray-routing"   % "1.2-20130822"               withSources()
-  ,"io.spray"           %   "spray-caching"   % "1.2-20130822"               withSources()
-  ,"io.spray"           %   "spray-testkit"   % "1.2-20130822"    % "test"   withSources()
+   "io.spray"           %   "spray-can"       % "1.2-20130912"               withSources() 
+  ,"io.spray"           %   "spray-routing"   % "1.2-20130912"               withSources()
+  ,"io.spray"           %   "spray-caching"   % "1.2-20130912"               withSources()
+  ,"io.spray"           %   "spray-testkit"   % "1.2-20130912"    % "test"   withSources()
   ,"io.spray"           %%  "spray-json"      % "1.2.5"                      withSources()
   ,"com.typesafe.akka"  %%  "akka-actor"      % "2.2.1"                      withSources()
   ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.2.1"                      withSources()
