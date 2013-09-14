@@ -1,26 +1,17 @@
 package pomf.api
 
-import pomf.util._
-import pomf.domain.model._
-import akka.pattern._
 import akka.actor._
-import spray.json._
-import spray.httpx.SprayJsonSupport._
+
+import JsonSupport._
+import pomf.domain.model._
+
+import scala.language.postfixOps
+
 import spray.routing._
 import spray.http._
 import spray.http.MediaTypes._
-import HttpHeaders._
 import spray.can.Http
-import Directives._
-import spray.http.CacheDirectives._
-import spray.util._
-import DefaultJsonProtocol._
-import scala.concurrent.duration._
-import scala.language.postfixOps
-import JsonSupport._
-import spray.can.parsing.Result.Ok
-import pomf.domain.model.PushedEvent
-
+import HttpHeaders._
 
 class FirehoseStreamActor(fridgeTarget:Option[String],userToken:Option[String], ctx: RequestContext) extends Actor with ActorLogging {
 

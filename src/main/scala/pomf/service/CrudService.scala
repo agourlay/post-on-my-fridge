@@ -1,16 +1,11 @@
 package pomf.service
 
+import akka.actor._
+
 import pomf.api.JsonSupport._
-import pomf.Boot
 import pomf.domain.dao.Dao
 import pomf.domain.model._
 import pomf.service.CrudServiceActor._
-
-import akka.actor._
-import akka.pattern._
-import akka.util.Timeout
-
-import scala.concurrent._
 
 class CrudServiceActor(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
 

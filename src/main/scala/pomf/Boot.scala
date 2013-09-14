@@ -3,27 +3,29 @@ package pomf
 import akka.actor._
 import akka.routing._
 import akka.io.IO
-import akka.actor.OneForOneStrategy
 import akka.actor.actorRef2Scala
-import scala.concurrent.duration._
-import scala.language.postfixOps
-import java.util.concurrent.TimeUnit
-import spray.can.Http
+
+import com.typesafe.config.ConfigFactory
+
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 import pomf.service.NotificationActor
 import pomf.service.CrudServiceActor
 import pomf.service.CrudServiceActor._
 import pomf.service.ChatServiceActor
 import pomf.service.TokenServiceActor
 import pomf.api.PomfHttpActor
-import pomf.domain.dao.Dao
 import pomf.domain.config._
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import com.typesafe.config.ConfigFactory
+
+import scala.concurrent.duration._
+import scala.language.postfixOps
+
+import spray.can.Http
 
 object Boot extends App {
  
-  val log: Logger = LoggerFactory.getLogger("boot");
+  val log: Logger = LoggerFactory.getLogger("boot")
   log.info(" ...")
   log.info(" +--------------------+")
   log.info(" |  Fridge starting   |")
@@ -69,5 +71,5 @@ object Boot extends App {
   IO(Http) ! Http.Bind(httpService, "localhost", port = port) 
   
   // schedule delete outdated post every 24 hours
-  system.scheduler.schedule(Duration(24, HOURS), Duration(24, HOURS), crudService, DeleteOutdatedPost)
+  system.scheduler.schedule(24 hour, 24 hour, crudService, DeleteOutdatedPost)
 }

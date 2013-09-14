@@ -1,9 +1,10 @@
 package pomf.domain.config
 
 import scala.slick.driver.ExtendedProfile
-import scala.slick.session.Session
+
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
 import pomf.domain.model.FridgeComponent
 import pomf.domain.model.PostComponent
 
@@ -14,7 +15,7 @@ trait Profile {
 class DAL(override val profile: ExtendedProfile) extends FridgeComponent with PostComponent with Profile {
   import profile.simple._
 
-  val logger: Logger = LoggerFactory.getLogger("domain");
+  val logger: Logger = LoggerFactory.getLogger("domain")
   logger.info("Model class instantiated")
 
   def ddls = List(Posts.ddl,Fridges.ddl)

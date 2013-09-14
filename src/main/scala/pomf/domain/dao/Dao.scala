@@ -11,12 +11,11 @@ import org.slf4j.LoggerFactory
 class Dao(name: String, dal: DAL, db: Database) {
   // We only need the DB/session imports outside the DAL
   import dal._
-  import dal.profile.simple._
 
   // Put an implicitSession in scope for database actions
   implicit val implicitSession = db.createSession
   
-  val logger: Logger = LoggerFactory.getLogger("dao");
+  val logger: Logger = LoggerFactory.getLogger("dao")
 
   def createDB = dal.create
 
@@ -58,7 +57,7 @@ class Dao(name: String, dal: DAL, db: Database) {
   
   def updatePost(post :Post):Option[Post] = Posts.updatePost(post)
   
-  def deleteOutdatedPost = Posts.deleteOutdatedPost
+  def deleteOutdatedPost() = Posts.deleteOutdatedPost
 
   def countPosts() = Posts.count
 

@@ -1,6 +1,5 @@
 package pomf.api
 
-import pomf.util._
 import pomf.service.CrudServiceActor
 import pomf.service.ChatServiceActor
 import pomf.service.TokenServiceActor
@@ -14,15 +13,11 @@ import spray.httpx.SprayJsonSupport._
 import spray.httpx.encoding._
 import spray.routing._
 import spray.routing.directives.CachingDirectives._
-import spray.http._
-import spray.http.MediaTypes._
 import spray.can.Http
 import spray.can.server.Stats
 
-import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext
 
 import DefaultJsonProtocol._
 import reflect.ClassTag

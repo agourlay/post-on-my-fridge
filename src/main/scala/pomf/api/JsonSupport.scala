@@ -6,14 +6,8 @@ import java.text.ParseException
 import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
 import spray.json._
-import spray.httpx.marshalling.Marshaller
-import spray.http._
 import spray.can.server.Stats
 import pomf.domain.model._
-import pomf.domain.model.ChatMessage
-import pomf.domain.model.Notification
-import pomf.domain.model.Notification
-import pomf.domain.model.ChatMessage
 
 object CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[Date] with IsoDateChecker {

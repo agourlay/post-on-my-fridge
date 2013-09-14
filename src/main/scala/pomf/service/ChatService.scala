@@ -2,21 +2,13 @@ package pomf.service
 
 import akka.actor.Actor
 import akka.actor.ActorRef
-import akka.actor.Props
-import spray.json.DefaultJsonProtocol._
-import scala.io.Codec
-import spray.json.JsValue
 import akka.actor.actorRef2Scala
 import akka.actor.ActorLogging
-import pomf.domain.model.ChatMessage
 import pomf.service.ChatServiceActor._
 import pomf.domain.model._
 import pomf.api.JsonSupport._
 import spray.caching.{LruCache, Cache}
-import spray.util._
-import java.util.concurrent.TimeUnit
 import scala.concurrent.duration._
-import scala.concurrent.Future
 import scala.concurrent._
 
 
