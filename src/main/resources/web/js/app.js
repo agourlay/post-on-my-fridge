@@ -1,4 +1,12 @@
 window.App = Ember.Application.createWithMixins({
+    
+    LOG_TRANSITIONS: true,
+    LOG_BINDINGS: true,
+    LOG_VIEW_LOOKUPS: true,
+    LOG_STACKTRACE_ON_DEPRECATION: true,
+    LOG_VERSION: true,
+    debugMode: true,
+    
    templates: [
     'application',
     'index',
@@ -35,10 +43,7 @@ window.App = Ember.Application.createWithMixins({
   init: function() {
       this._super();
       this.loadTemplates();
-  },
-
-  LOG_TRANSITIONS: true,
-  LOG_BINDINGS : true
+  }
 });
 
 App.ApplicationController = Ember.Controller.extend({
