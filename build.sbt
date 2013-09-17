@@ -31,7 +31,7 @@ resolvers ++= Seq(
   ,"sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
   ,"typesafe release"   at "http://repo.typesafe.com/typesafe/releases/"
   ,"typesafe repo"      at "http://repo.typesafe.com/typesafe/repo/"
-  ,"typesafe snapshots" at  http://repo.typesafe.com/typesafe/snapshots/ 
+  ,"typesafe snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"
   ,"maven central"      at "http://repo1.maven.org/maven2/"
   ,"akka repo"          at "http://repo.akka.io/"
   ,"spray repo"         at "http://repo.spray.io/"
