@@ -26,7 +26,7 @@ class CrudServiceActor(dao : Dao, notificationService : ActorRef, urlSite : Stri
       case DeleteOutdatedPost         => deleteOutdatedPost
   }
 
-  def getAllFridge(): List[Fridge] = dao.getAllFridge
+  def getAllFridge(): List[FridgeRest] = dao.getAllFridge
 
   def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
 

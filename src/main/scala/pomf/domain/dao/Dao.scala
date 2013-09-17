@@ -23,32 +23,25 @@ class Dao(name: String, dal: DAL, db: Database) {
   
   def purgeDB = dal.purge
 
-  def getAllFridge(): List[Fridge] = {
-    val result = Fridges.findAllFridge
-    result
-  }
-
-  def addFridge(fridge: Fridge): Fridge = {
-    val result = Fridges.insert(fridge)
-    logger.debug("Inserted fridge: {}", result)
-    result
-  }
+  def addFridge(fridge: Fridge): Fridge = Fridges.insert(fridge)
   
-   def addPost(post: Post): Post = {
+  def addPost(post: Post): Post = {
     Fridges.findByName(post.fridgeId).getOrElse(addFridge(Fridge(name = post.fridgeId))) 
-    val result = Posts.insert(post)
-    logger.debug("Inserted post: {}", result)
-    result
+    Posts.insert(post)
   }
   
   def getFridgeRest(fridgeName: String):FridgeRest = {
     val fridgeOpt:Option[Fridge] = Fridges.findByName(fridgeName)
     fridgeOpt match {
-      case Some(fridge) => FridgeRest(fridge.name, fridge.description ,fridge.id, Posts.findPostByFridge(fridgeName))
+      case Some(fridge) => completeFridge(fridge)
       case _ => FridgeRest(name = fridgeName, description = "" ,posts = List[Post](), id = None)
     }							 
   }
-    
+
+  def getAllFridge(): List[FridgeRest] = Fridges.findAllFridge.map(completeFridge(_))
+
+  def completeFridge(f : Fridge):FridgeRest = FridgeRest(f.name, f.description ,f.id, Posts.findPostByFridge(f.name))
+  
   def getPost(id :Long):Option[Post] = Posts.getPost(id)
   
   def searchByNameLike(term:String):List[String] = Fridges.searchByNameLike(term)

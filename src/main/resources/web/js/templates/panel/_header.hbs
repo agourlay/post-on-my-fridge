@@ -1,6 +1,8 @@
 <header>
     <div id="fridge-title">
-	    <img class="index-link" src="/images/fridge-link.png" alt="index" {{action "toIndex"}}/>
+	   	{{#link-to 'index'}}
+	    	<img class="index-link" src="/images/fridge-link.png" alt="index"/>
+	    {{/link-to}}
 		<i class="icon-angle-right icon-large"></i> {{view.fridgeName}}
 		<a {{bindAttr href="view.rssUrl"}} target="_blank" class="rss-link">
 	    	<i class="icon-rss-sign"></i> 

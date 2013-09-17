@@ -4,8 +4,6 @@ Just sticky notes shared in real time on virtual fridges.
 
 You can **[try it](http://fridge.arnaud-gourlay.info)**
 
-![ScreenShot](http://fridge.arnaud-gourlay.info/images/demo.jpeg)
-
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
 This application focuses on realtime interactions and simplicity. 

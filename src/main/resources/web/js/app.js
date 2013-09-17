@@ -10,6 +10,7 @@ window.App = Ember.Application.createWithMixins({
    templates: [
     'application',
     'index',
+    'footer',
     'fridges',
     'fridge',
     'panel/_header',
@@ -44,6 +45,11 @@ window.App = Ember.Application.createWithMixins({
       this._super();
       this.loadTemplates();
   }
+});
+
+App.ApplicationView = Em.View.extend({
+  tagName : 'div',
+  elementId: 'app'
 });
 
 App.ApplicationController = Ember.Controller.extend({

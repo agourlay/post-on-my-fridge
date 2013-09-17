@@ -21,14 +21,7 @@ App.LazyTextArea = Ember.TextArea.extend({
 });
 
 App.ChatTextArea = Ember.TextArea.extend({
-  didInsertElement: function() {
-    var view = this;
-    var handleReturnKey = function(e) {
-        if(e.charCode === 13 || e.keyCode === 13) {
-          e.preventDefault();
-          view.get('controller').sendChatMessage();
-        }
-      };
-    view.$().keypress(handleReturnKey);  
+  insertNewLine : function (event) {
+    this.get('controller').sendChatMessage();
   }
 });

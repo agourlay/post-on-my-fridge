@@ -3,5 +3,10 @@ App.Fridge = Em.Object.extend({
 	name : null,
 	description : null,
 	posts: [],
-	loaded: false
+	loaded: false,
+
+	postNumber: function(){
+		console.dir(this.posts)
+		return this.posts.length ;
+	}.property("loaded"),
 });

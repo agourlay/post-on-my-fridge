@@ -1,6 +1,7 @@
 App.IndexView = Ember.View.extend({
 	contentBinding: 'controller.content',
-	
+	tagName : 'div',
+    elementId: 'indexView',
 	newFridgeName:null,
 	
 

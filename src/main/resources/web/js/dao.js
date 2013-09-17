@@ -173,11 +173,13 @@ App.Dao = Em.Object.create({
 	        	type: 'GET',
 	        	success: function(fridges) {
 					$.each( fridges, function(i, fridge){
-						fridgesModel.pushObject(App.Fridge.create({
+						var fridge = App.Fridge.create({
 							id:fridge.id,
 							name:fridge.name,
-							description:fridge.description
-						}));	
+							description:fridge.description,
+							posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
+						});
+						fridgesModel.pushObject(fridge);	
 					});					
 	        	},
 	        	error: function(xhr, ajaxOptions, thrownError) {

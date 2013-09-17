@@ -35,7 +35,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
       get {
         complete {
           if (fridgeName.isEmpty)
-            (crudService ? CrudServiceActor.AllFridge).mapTo[List[Fridge]]
+            (crudService ? CrudServiceActor.AllFridge).mapTo[List[FridgeRest]]
           else
             (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
         }
