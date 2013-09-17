@@ -32,6 +32,7 @@ resolvers ++= Seq(
   ,"typesafe release"   at "http://repo.typesafe.com/typesafe/releases/"
   ,"typesafe repo"      at "http://repo.typesafe.com/typesafe/repo/"
   ,"maven central"      at "http://repo1.maven.org/maven2/"
+  ,"akka repo"          at "http://repo.akka.io/"
   ,"spray repo"         at "http://repo.spray.io/"
   ,"spray nightly"      at "http://nightlies.spray.io/"
 )
@@ -44,8 +45,8 @@ libraryDependencies ++= Seq(
   ,"io.spray"           %   "spray-caching"   % "1.2-20130912"               withSources()
   ,"io.spray"           %   "spray-testkit"   % "1.2-20130912"    % "test"   withSources()
   ,"io.spray"           %%  "spray-json"      % "1.2.5"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-actor"      % "2.2.1"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.2.1"                      withSources()
+  ,"com.typesafe.akka"  %%  "akka-actor"      % "2.3-20130916-200212"        withSources()
+  ,"com.typesafe.akka"  %%  "akka-slf4j"      % "2.3-20130916-200212"        withSources()
   ,"com.typesafe.slick" %%  "slick"           % "1.0.1"                      withSources()
   ,"com.h2database"     %   "h2"              % "1.3.173"       
   ,"org.postgresql"     %   "postgresql"      % "9.2-1003-jdbc4"             withSources()
