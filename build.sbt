@@ -34,6 +34,7 @@ resolvers ++= Seq(
   ,"typesafe snapshots" at "http://repo.typesafe.com/typesafe/snapshots/"
   ,"maven central"      at "http://repo1.maven.org/maven2/"
   ,"akka repo"          at "http://repo.akka.io/"
+  ,"akka snapshots"     at "http://repo.akka.io/snapshots"
   ,"spray repo"         at "http://repo.spray.io/"
   ,"spray nightly"      at "http://nightlies.spray.io/"
 )
