@@ -12,7 +12,7 @@ organization := "com.agourlay"
 
 name := "pomf-api"
 
-version := "0.1"
+version := "0.1-SNAPSHOT"
 
 scalaVersion := "2.10.2"
 
@@ -41,22 +41,25 @@ resolvers ++= Seq(
 
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
-libraryDependencies ++= Seq(
-   "io.spray"           %   "spray-can"                     % "1.2-20130912"               withSources() 
-  ,"io.spray"           %   "spray-routing"                 % "1.2-20130912"               withSources()
-  ,"io.spray"           %   "spray-caching"                 % "1.2-20130912"               withSources()
-  ,"io.spray"           %   "spray-testkit"                 % "1.2-20130912"    % "test"   withSources()
-  ,"io.spray"           %%  "spray-json"                    % "1.2.5"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-actor"                    % "2.2.1"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-slf4j"                    % "2.2.1"                      withSources()
-  ,"com.typesafe.akka"  %%  "akka-testkit"                  % "2.2.1"           % "test"   withSources()
- // ,"com.typesafe.akka"  %%  "akka-persistence-experimental" % "2.3-SNAPSHOT"               withSources()
-  ,"com.typesafe.slick" %%  "slick"                         % "1.0.1"                      withSources()
-  ,"com.h2database"     %   "h2"                            % "1.3.173"       
-  ,"org.postgresql"     %   "postgresql"                    % "9.2-1003-jdbc4"             withSources()
-  ,"ch.qos.logback"     %   "logback-classic"               % "1.0.13"                     withSources()
-  ,"junit"              %   "junit"                         % "4.11"            % "test"   withSources()
-  ,"org.specs2"         %%  "specs2"                        % "2.2.2"           % "test"   withSources()  
-)
+libraryDependencies ++= {
+  val akkaVersion   = "2.2.1"
+  val sprayVersion  = "1.2-20130912"
+  Seq(
+       "io.spray"           %   "spray-can"         % sprayVersion               withSources() 
+      ,"io.spray"           %   "spray-routing"     % sprayVersion               withSources()
+      ,"io.spray"           %   "spray-caching"     % sprayVersion               withSources()
+      ,"io.spray"           %   "spray-testkit"     % sprayVersion    % "test"   withSources()
+      ,"io.spray"           %%  "spray-json"        % "1.2.5"                    withSources()
+      ,"com.typesafe.akka"  %%  "akka-actor"        % akkaVersion                withSources()
+      ,"com.typesafe.akka"  %%  "akka-slf4j"        % akkaVersion                withSources()
+      ,"com.typesafe.akka"  %%  "akka-testkit"      % akkaVersion     % "test"   withSources()
+      ,"com.typesafe.slick" %%  "slick"             % "1.0.1"                    withSources()
+      ,"com.h2database"     %   "h2"                % "1.3.173"       
+      ,"org.postgresql"     %   "postgresql"        % "9.2-1003-jdbc4"           withSources()
+      ,"ch.qos.logback"     %   "logback-classic"   % "1.0.13"                   withSources()
+      ,"junit"              %   "junit"             % "4.11"          % "test"   withSources()
+      ,"org.specs2"         %%  "specs2"            % "2.2.2"         % "test"   withSources()  
+  )
+}
 
 seq(Revolver.settings: _*)
