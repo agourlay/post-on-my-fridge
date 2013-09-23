@@ -19,9 +19,3 @@ App.LazyTextField = Ember.TextField.extend({
 App.LazyTextArea = Ember.TextArea.extend({
   valueBinding: Ember.Binding.oneWay('source')
 });
-
-App.ChatTextArea = Ember.TextArea.extend({
-  insertNewLine : function (event) {
-    this.get('controller').sendChatMessage();
-  }
-});
