@@ -133,9 +133,7 @@ App.Dao = Em.Object.create({
 	},
 
 	getStats : function () {
-
 		var idxModel = App.Index.create();
-
 		var fridgeCountDefer = $.ajax({
 	        	url: "count/fridges/",
 	        	type: 'GET',

@@ -11,6 +11,7 @@ window.App = Ember.Application.createWithMixins({
     'application',
     'index',
     'footer',
+    'header',
     'fridges',
     'fridge',
     'panel/_header',

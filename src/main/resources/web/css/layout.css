@@ -11,7 +11,9 @@ header {
 	border-bottom: 1px solid #e0e0e0;
 	z-index : 90;}
 
-header a{text-decoration:none;}	
+a{
+	text-decoration:none;
+}	
 
 #app, #indexView {
 	min-height: 100%;
@@ -100,16 +102,20 @@ header a{text-decoration:none;}
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -60px;
+	margin: 0 auto -40px;
 }
 
 #push, #footer {
 	display: block;
-	height: 60px;
+	height: 40px;
+}
+
+#header {
+	border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle !important;
 }
 
 #footer {
-	border-top: 1px solid #e0e0e0;
     vertical-align: middle !important;
 }
 

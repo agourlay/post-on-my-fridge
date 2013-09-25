@@ -6,6 +6,12 @@ App.IndexView = Ember.View.extend({
 	
 
 	didInsertElement : function() {
-		document.title = "Post on my fridge ";		
+		document.title = "Post on my fridge ";	
+		var actionBlock = $('#action-block');
+		actionBlock.position({
+		   my: "center",
+		   at: "center",
+		   of: window
+		});
 	}
 });

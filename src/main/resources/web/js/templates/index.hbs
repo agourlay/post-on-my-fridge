@@ -1,65 +1,38 @@
 <div id = "wrap">
-	<hr>
+	{{partial "header"}}
 	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span10 offset1">
-				<div class="row-fluid">
-					<div class="span5">
-						
-					</div>
-					<div class="span2">  
-						{{#link-to 'trends'}}
-			    			<i class="icon-rocket"></i> Trends
-			    		{{/link-to}}
-					</div>
-					<div class="span2">
-						{{#link-to 'fridges'}}
-			    			<i class="icon-road"></i> Explore
-			    		{{/link-to}}
-					</div>
-					<div class="span3">
-						<p class="muted" >
-						Already <b>{{view.content.nbFridges}}</b> fridges and <b>{{view.content.nbPosts}}</b> posts!</p>
-					</div>		
-				</div>
-			</div>	
-		</div>	
 		<div class="row-fluid">		
-			<div class="span10 offset1 well">
+			<div id="action-block" class="span6 offset3 well">
 				<div class="row-fluid">
-					<div class="span12 text-center">
-						<h1>Post on my fridge</h1>
-	  					<h4 class="muted">
-	  						Solving the last problem Humanity is facing, i.e. sharing sticky notes on virtual fridges!
-	  					</h4>
-	  					</br>
-						<div class="span12">
-							<form class="form-inline">
-								{{#link-to 'fridge' "demo"}}
-									<button class="btn btn-primary"  type="button" >
-										<i class="icon-white icon-signin"></i> Try the demo
-									</button>
-								{{/link-to}}
-								&nbsp/&nbsp
-								<div class="input-append">
-	                    			{{view Ember.TextField valueBinding="App.IndexView.newFridgeName" placeholder="Create your fridge" class="input-medium"}}
-	                				<button class="btn" {{action "toNewFridge" App.IndexView.newFridgeName}}>
-	    								<i class="icon-ok-circle"></i> 
-	    								{{App.IndexView.newFrigeName}}
-	    							</button>
-	    		    			</div>
-							</form>		  	      
-						</div>
+					<div class="span10 offset1 text-center">
+						<h4>Welcome to Post On My Fridge</h4>
+						<p class="muted" >
+							Share whatever you want with anyone in real-time.
+						</p>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span10 offset1">
-				<div class="alert">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-				 	<strong> <i class="icon-warning-sign"></i> Warning </strong>
-				 	The application is still under heavy development, the data are likely to be lost, have fun!
+				<div class="row-fluid">	
+					<div class="span10 offset1 text-center">
+						<p class="muted" >
+							Already <b>{{view.content.nbFridges}}</b> fridges and <b>{{view.content.nbPosts}}</b> posts!
+						</p>
+						</br>
+						<form class="form-inline">
+							{{#link-to 'fridge' "demo"}}
+								<button class="btn btn-primary"  type="button" >
+									<i class="icon-white icon-signin"></i> Try the demo
+								</button>
+							{{/link-to}}
+							&nbsp/&nbsp
+							<div class="input-append">
+	                			{{view Ember.TextField valueBinding="App.IndexView.newFridgeName" placeholder="Create your fridge" class="input-medium"}}
+	            				<button class="btn" {{action "toNewFridge" App.IndexView.newFridgeName}}>
+									<i class="icon-ok-circle"></i> 
+									{{App.IndexView.newFrigeName}}
+								</button>
+			    			</div>
+						</form>		  	      
+					</div>
 				</div>
 			</div>
 		</div>
