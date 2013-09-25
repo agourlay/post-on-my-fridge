@@ -16,7 +16,7 @@ class ChatServiceActor(notificationService : ActorRef) extends Actor with ActorL
     
   implicit def executionContext = context.dispatcher
   
-  val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = Duration(2, HOURS), timeToLive = Duration(48, HOURS))
+  val cache: Cache[List[ChatMessage]] = LruCache(maxCapacity = 500, timeToIdle = 2 hour, timeToLive = 48 hour)
   
   val defaultResponse: Future[List[ChatMessage]] = future { List[ChatMessage]() }
   

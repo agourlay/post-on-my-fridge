@@ -15,6 +15,8 @@ import spray.routing._
 import spray.routing.directives.CachingDirectives._
 import spray.can.Http
 import spray.can.server.Stats
+import spray.caching.{LruCache, Cache}
+import scala.concurrent.duration._
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -30,12 +32,16 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
 
+  val fridgesCache: Cache[List[FridgeRest]] = LruCache(maxCapacity = 1, timeToLive = 2 minute)
+
   def fridgeRoute =
     path("fridges" / Rest) { fridgeName =>
       get {
         complete {
           if (fridgeName.isEmpty)
-            (crudService ? CrudServiceActor.AllFridge).mapTo[List[FridgeRest]]
+            fridgesCache("fridges"){
+              (crudService ? CrudServiceActor.AllFridge).mapTo[List[FridgeRest]]
+            }
           else
             (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
         }
