@@ -92,7 +92,9 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
             }
           }
         }
-     
+    
+    val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 2 minute)
+
     def miscRoute =
       pathPrefix("rss") {
         path("fridge" / Rest) { fridgeName =>
@@ -125,14 +127,18 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
         path("fridges") {
             get {
               complete {
-                (crudService ? CrudServiceActor.CountFridges).mapTo[String]
+                countCache("fridges"){
+                  (crudService ? CrudServiceActor.CountFridges).mapTo[String]
+                }     
               }
             }
         } ~ 
         path("posts") {
             get {
               complete {
-                (crudService ? CrudServiceActor.CountPosts).mapTo[String]
+                 countCache("posts"){
+                  (crudService ? CrudServiceActor.CountPosts).mapTo[String]
+                 }   
               }
             }
         }
