@@ -1,13 +1,13 @@
 window.App = Ember.Application.createWithMixins({
     
-    LOG_TRANSITIONS: true,
-    LOG_BINDINGS: true,
-    LOG_VIEW_LOOKUPS: true,
-    LOG_STACKTRACE_ON_DEPRECATION: true,
-    LOG_VERSION: true,
-    debugMode: true,
-    
-   templates: [
+  debugMode: false,
+  LOG_BINDINGS: false,
+  LOG_VIEW_LOOKUPS: false,
+  LOG_TRANSITIONS: true,
+  LOG_STACKTRACE_ON_DEPRECATION: true,
+  LOG_VERSION: true,
+     
+  templates: [
     'application',
     'index',
     'footer',

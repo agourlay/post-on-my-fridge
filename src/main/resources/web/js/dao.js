@@ -22,7 +22,7 @@ App.Dao = Em.Object.create({
 	addDefaultPost : function (){
 		var newPostData = {};
 		newPostData.author = App.Dao.pseudo();
-		newPostData.content = "...";
+		newPostData.content = "?";
 		newPostData.color = randomColor();
 		newPostData.positionX = getRandomPostInitX();
 		newPostData.positionY = getRandomPostInitY();
@@ -59,7 +59,6 @@ App.Dao = Em.Object.create({
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
-			console.dir(data);
 			var payload = $.parseJSON(data.payload);
 			if (data.command === "update" || data.command === "create" ) {
 				postsController.createOrUpdate(payload);
@@ -138,12 +137,12 @@ App.Dao = Em.Object.create({
 	        	url: "count/fridges/",
 	        	type: 'GET',
 	        	success: function(nbfridge) {
-				if (nbfridge !== null && nbfridge !== undefined) {
-					idxModel.set('nbFridges', nbfridge);
-				}
+					if (nbfridge !== null && nbfridge !== undefined) {
+						idxModel.set('nbFridges', nbfridge);
+					}
 	        	},
 	        	error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Error during count fridges retrieval");
+					errorMessage("Error during count fridges retrieval");
 			}
     		});
 
@@ -151,9 +150,9 @@ App.Dao = Em.Object.create({
 	        	url: "count/posts/",
 	        	type: 'GET',
 	        	success: function(nbpost) {
-				if (nbpost !== null && nbpost !== undefined) {
-					idxModel.set('nbPosts', nbpost);
-				}
+					if (nbpost !== null && nbpost !== undefined) {
+						idxModel.set('nbPosts', nbpost);
+					}
 	        	},
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during count posts retrieval");
@@ -164,7 +163,6 @@ App.Dao = Em.Object.create({
 	},
 
 	getFridges : function () {
-
 		var fridgesModel = Ember.A([]);
 		$.ajax({
 	        	url: "fridges/",
@@ -184,7 +182,6 @@ App.Dao = Em.Object.create({
 					errorMessage("Error during fridges retrieval");					
 				}
     		});
-
 		return fridgesModel;
 	}
 });
