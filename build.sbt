@@ -2,11 +2,13 @@ import AssemblyKeys._
 
 assemblySettings
 
+net.virtualvoid.sbt.graph.Plugin.graphSettings
+
+atmosSettings
+
 jarName in assembly := "pomf-api.jar"
 
 test in assembly := {}
-
-net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 organization := "com.agourlay"
 
@@ -14,7 +16,7 @@ name := "pomf-api"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.10.3-RC3"
+scalaVersion := "2.10.2"
 
 scalacOptions := Seq(
   "-unchecked",
