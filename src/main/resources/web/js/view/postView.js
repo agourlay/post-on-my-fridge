@@ -29,9 +29,9 @@ App.PostView = Em.View.extend(App.Draggable, {
 
 	didInsertElement: function() {
 		var view = this;
-		view.initIcons();
 		view.colorize();
-		view.updatePhysicalPosition();
+		view.setupPosition();
+		view.initIcons();
 		view.$().draggable({
 			revert: 'invalid',
 			containment: "parent",
@@ -42,6 +42,15 @@ App.PostView = Em.View.extend(App.Draggable, {
 				view.get('content').updatePost()
 			}
 		});
+	},
+
+	setupPosition: function() {
+		var left = this.get('content').get('positionX'),
+	    	top = this.get('content').get('positionY'),
+	    	fridge = $('#fridge-content');
+
+	    this.$().offset({ "left" : left * fridge.width(), "top" : top * fridge.height()})
+	    	    .effect("bounce", {	times: 2}, 300);
 	},
 
 	updatePhysicalPosition: function() {
@@ -92,26 +101,29 @@ App.PostView = Em.View.extend(App.Draggable, {
   	},
 
 	generateContent: function() {
-		var content = jQuery.trim(this.get('content').get('content')),
-		    urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/,
-            pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/,
-		    firstWordUrl = content.split(' ').find(function(word) { return isRegExp(urlRegexp, word); });
-		if (firstWordUrl === undefined) {
-			return content;
-		}else {
-			if (isRegExp(pictureRegexp, firstWordUrl)) {
+		var content = jQuery.trim(this.get('content').get('content'));
+				
+		if (textContainsSupportedMediaUrl(content)){
+			firstWordUrl = content.split(' ').find(function(word) { return isUrl(word); });
+
+			if (isPictureUrl(firstWordUrl)) {
 				return generatePictureLink(firstWordUrl);
-			}	
+			}
+
 			switch (url('domain', firstWordUrl)) {
 			    case "youtube.com":
-			        return generateYoutubeFrame(url('?v',firstWordUrl));
+			        return generateYoutubeFrame(firstWordUrl);
 			    case "vimeo.com":
-			        return generateVimeoFrame(url('1',firstWordUrl));
+			        return generateVimeoFrame(firstWordUrl);
 			    case "dailymotion.com":
-			        return generateDailyMotionLink((url('2',firstWordUrl)).split('_')[0]);
-			    default:
-			    	return generateHrefLink(firstWordUrl);
-			}
+			        return generateDailyMotionLink(firstWordUrl);
+			}        
+		} else {
+			// it does not contain supported media url, we just replace all url by href
+			genArray = $.map( content.split(' '), function( word, i ) {
+			  return (isUrl(word)) ? generateHrefLink(word) : word
+			});
+			return genArray.join(' ');;
 		}
 	}
 });

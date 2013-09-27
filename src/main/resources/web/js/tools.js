@@ -12,15 +12,18 @@ function newPostValidation(newPostData) {
 	if (newPostData.content === "") {newPostData.content = "What's up";	}
 }
 
-function generateYoutubeFrame(videoId) {
+function generateYoutubeFrame(videoUrl) {
+	var videoId = url('?v',videoUrl);
 	return "<iframe class='youtube-player' type='text/html' width='225' height='210' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1' frameborder='0'></iframe>";
 }
 
-function generateVimeoFrame(videoId) {
+function generateVimeoFrame(videoUrl) {
+	var videoId = url('1',videoUrl);
 	return "<iframe src='http://player.vimeo.com/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
 }
 
-function generateDailyMotionLink(videoId) {
+function generateDailyMotionLink(videoUrl) {
+	var videoId = (url('2',videoUrl)).split('_')[0];
 	return "<iframe src='http://www.dailymotion.com/embed/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
 }
 
@@ -49,6 +52,36 @@ function cutHex(h) {
 
 function isRegExp(regExp, content) {
 	return regExp.test(content);
+}
+
+function isUrl(content) {
+	var urlRegexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+	return isRegExp(urlRegexp,content);
+}
+
+function isPictureUrl(content) {
+	var pictureRegexp = /(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/\S*)?(?:[a-zA-Z0-9_])+\.(?:jpg|JPG|jpeg|gif|png)$/;
+	return isRegExp(pictureRegexp,content);
+}
+
+function isMediaUrlSupported(urlContent){
+	if (isPictureUrl(urlContent)) {
+			return true;
+	}
+	switch (url('domain', urlContent)) {
+		case "youtube.com":
+		    return true;
+		case "vimeo.com":
+		    return true;
+		case "dailymotion.com":
+		    return true;
+		default:
+		   	return false;
+	}
+}
+
+function textContainsSupportedMediaUrl(text) {
+	return text.split(' ').find(function(word) { return isMediaUrlSupported(word); }) !== undefined ;
 }
 
 function successMessage(message){
@@ -89,7 +122,7 @@ function getRandomArbitary (min, max) {
 function randomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }
-
+	
 function konami() {
     $(window).konami(function() {
         $('.post').addClass('barrel_roll');
