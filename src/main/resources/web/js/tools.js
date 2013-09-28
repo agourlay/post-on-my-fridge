@@ -107,7 +107,7 @@ function filterData(data) {
 }
 
 function getRandomPostInitX() {
-    return getRandomArbitary (0.2, 0.4);
+    return getRandomArbitary (0.3, 0.5);
      
 }
 

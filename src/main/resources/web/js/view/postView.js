@@ -50,7 +50,8 @@ App.PostView = Em.View.extend(App.Draggable, {
 	    	fridge = $('#fridge-content');
 
 	    this.$().offset({ "left" : left * fridge.width(), "top" : top * fridge.height()})
-	    	    .effect("bounce", {	times: 1}, 300);
+	    		.hide()
+	    	    .fadeIn();
 	},
 
 	updatePhysicalPosition: function() {
@@ -77,15 +78,14 @@ App.PostView = Em.View.extend(App.Draggable, {
 	initIcons: function() {
 		var view = this;
 		// Trash
-		view.$().find(" .icon-trash").click(function() {
-			view.$().effect("bounce", {	times: 1}, 300)
-				    .effect("clip", { times: 1}, 300, function(){
+		view.$().find(".icon-trash").click(function() {
+			view.$().effect("clip", 300, function(){
 				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
 						view.get('controller').deletePost(view.get('content').get('id'));
 				    });
 		});
 		// Edit
-		view.$().find(" .icon-edit").click(function() {
+		view.$().find(".icon-edit").click(function() {
 			view.set('readMode',!view.get('readMode'));
 		});
 	},
