@@ -131,7 +131,7 @@ function listenStats(series){
 		var openConnections = stats.openConnections;
 		var maxOpenConnections = stats.maxOpenConnections;
 		var requestTimeouts = stats.requestTimeouts;
-
+		
 		var xNow = moment().unix();
 		series[0].push({x: xNow, y:openRequests});
 		series[1].push({x: xNow, y:openConnections});
@@ -143,7 +143,7 @@ function listenStats(series){
 		$('#openConnections').text(openConnections);
 		$('#maxOpenConnections').text(maxOpenConnections);
 		$('#requestTimeouts').text(requestTimeouts);
-		$('#uptime').text(moment.duration(stats.uptime.length).humanize());
+		$('#uptime').text(moment.duration(stats.uptime.length,stats.uptime.unit).humanize());
 	}, false);
     
     source.addEventListener('open', function(e) {
