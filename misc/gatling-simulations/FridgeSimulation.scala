@@ -17,112 +17,75 @@ class FridgeSimulation extends Simulation {
 			.connection("keep-alive")
 			.userAgentHeader("Mozilla/5.0 (Windows NT 6.1; WOW64; rv:20.0) Gecko/20100101 Firefox/20.0")
 
-
-	val headers_1 = Map(
-			"Accept" -> """text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8""",
-			"Cache-Control" -> """max-age=0"""
-	)
-
-	val headers_2 = Map(
-			"Cache-Control" -> """max-age=0""",
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
-
-	val headers_3 = Map(
-			"Accept" -> """*/*""",
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
-
-	val headers_5 = Map(
-			"Accept" -> """image/png,image/*;q=0.8,*/*;q=0.5"""
-	)
-
-	val headers_6 = Map(
-			"Accept" -> """text/plain, */*; q=0.01""",
+	val headers_req = Map(
 			"Cache-Control" -> """no-cache""",
 			"Content-Type" -> """application/json; charset=UTF-8""",
 			"Pragma" -> """no-cache""",
 			"X-Requested-With" -> """XMLHttpRequest"""
 	)
 
-	val headers_8 = Map(
+	val headers_SSE = Map(
 			"Accept" -> """text/event-stream""",
 			"Cache-Control" -> """no-cache""",
 			"Pragma" -> """no-cache"""
 	)
 
-	val headers_9 = Map(
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
-
-	val headers_12 = Map(
-			"Accept" -> """*/*""",
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
-
-	val headers_13 = Map(
-			"Cache-Control" -> """no-cache""",
-			"Content-Type" -> """application/json; charset=UTF-8""",
-			"Pragma" -> """no-cache""",
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
-
-	val headers_14 = Map(
-			"X-Requested-With" -> """XMLHttpRequest"""
-	)
+	def getAllFridges = http("retrieve all fridges")
+					    .get("/fridges/")
+						.headers(headers_req)
 
 	def retrieveAndSetUserToken = http("retrieve user token on ${fridge_id}")
 						         .get("/token/")
-						         .headers(headers_3)
+						         .headers(headers_req)
 						         .check(bodyString.saveAs("user_token"))
 
 	def createPostOnFridge = http("create post on ${fridge_id}")
 							.post("/posts/")
-							.headers(headers_13)
+							.headers(headers_req)
 							.queryParam("""token""", """${user_token}""")
 							.body("""{"author":"${user_name}","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.5,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48"}""")
 							.check(jsonPath("id")saveAs("post_id"))
 
 	def suscribeToNotification = http("subscribe to fridge ${fridge_id}")
 								 .get("/stream/fridge/${fridge_id}?token=${user_token}")
-								 .headers(headers_8)
+								 .headers(headers_SSE)
 
 	def retrieveChatHistory = http("retrieve chat history ${fridge_id}")
 					.get("/messages/${fridge_id}")
-					.headers(headers_2)
+					.headers(headers_req)
 
 	def retrieveFridgeContent = http("retrieve fridge ${fridge_id}")
 					.get("/fridges/${fridge_id}")
-					.headers(headers_3)			
+					.headers(headers_req)			
 
 	def sendMessage = http("send chat message on ${fridge_id}")
 					.post("/messages/${fridge_id}")
-					.headers(headers_6)
+					.headers(headers_req)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"user":"${user_name}","message":"Hello from Gatling blasting fridge ${fridge_id}","timestamp":1365329980732}""")
 
 	def searchForFridge = http("search for fridge term ${next_fridge_id}")
 					.get("/search/fridge/")
-					.headers(headers_9)
+					.headers(headers_req)
 					.queryParam("""term""", """${next_fridge_id}""")
 
 	def movePostAround = http("moving post ${post_id} on fridge ${fridge_id}")
 					.put("/posts/")
-					.headers(headers_3)
+					.headers(headers_req)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#f7f083","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","id":${post_id},"date":"2013-04-08T12:40:48"}""")
 					.asJSON
 
 	def changePostColor = http("change post ${post_id} color on fridge ${fridge_id}")
 					.put("/posts/")
-					.headers(headers_3)
+					.headers(headers_req)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"New post -> edit me with a double click!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
 					.asJSON
 
 	def changePostContent = http("change post ${post_id} content on fridge ${fridge_id}")
 					.put("/posts/")
-					.headers(headers_3)
+					.headers(headers_req)
 					.queryParam("""token""", """${user_token}""")
 					.body("""{"author":"Anonymous","content":"Gatling rocks!","color":"#8386f8","positionX":0.8627935723114957,"positionY":0.04,"fridgeId":"${fridge_id}","date":"2013-04-08T12:40:48","id":${post_id}}""")
 					.asJSON
@@ -130,41 +93,40 @@ class FridgeSimulation extends Simulation {
 
 	def deletePost = http("delete post ${post_id} from fridge ${fridge_id}")
 					.delete("/posts/${post_id}")
-					.headers(headers_14)
+					.headers(headers_req)
 					.queryParam("""token""", """${user_token}""")
 
+	val fridgeChoice = Array("gatling1","gatling2","gatling3")
 
-	val fridgeChoice = Array("gatling1","gatling2")
 	val rand = new Random(System.currentTimeMillis())
 
-	val scn = scenario("Fridge use case")
+	val scn = scenario("Some users having fun")
+		.exec(getAllFridges)
+		.pause(2 seconds)
 	    .exec(session => session.setAttribute("fridge_id", fridgeChoice(rand.nextInt(fridgeChoice.length))))
-	    .pause(10 milliseconds)
 	    .exec(session => session.setAttribute("user_name","Joe"))
-	    .pause(10 milliseconds)
 	    .exec(session => session.setAttribute("next_fridge_id", fridgeChoice(rand.nextInt(fridgeChoice.length))))
-	    .pause(10 milliseconds)
 	    .exec(retrieveAndSetUserToken)
-	    .pause(20 milliseconds)
+	    .pause(2 seconds)
 	    .exec(retrieveChatHistory)
-	    .pause(20 milliseconds)
+	    .pause(2 seconds)
 	    //.exec(suscribeToNotification)
-	    .pause(20 milliseconds)
+	    .pause(2 seconds)
 	    .exec(retrieveFridgeContent)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(createPostOnFridge)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(sendMessage)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(movePostAround)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(changePostColor)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(changePostContent)
-	    .pause(2)
+	    .pause(2 seconds)
 	    .exec(deletePost)
-	    .pause(2)		
+	    .pause(2 seconds)		
 	    .exec(searchForFridge)
 
-	setUp(scn.users(150).ramp(5).protocolConfig(httpConf))
+	setUp(scn.users(150).ramp(2).protocolConfig(httpConf))
 }
