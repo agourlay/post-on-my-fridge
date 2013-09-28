@@ -3,8 +3,9 @@ App.MessageView = Em.View.extend({
 	templateName: 'message',
     classNames: ['chat-message'],
 	didInsertElement: function() {
-		$("#chat-messages").animate({
-			scrollTop: $("#chat-messages").prop("scrollHeight")
-		}, 250);
+		var parentViewJq = this.get('parentView').$();
+		parentViewJq.animate({
+			scrollTop: parentViewJq.prop("scrollHeight")
+		}, 200);
 	}
 });
