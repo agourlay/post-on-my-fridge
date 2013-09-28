@@ -15,10 +15,13 @@ $(function() {
 
 	var graph = new Rickshaw.Graph( {
 		element: document.getElementById("chart"),
-		width: 1200,
-		height: 500,
+		width: calculateFitWidth(),
+		height: calculateFitHeight(),
 		renderer: 'line',
-		padding : {top : 0.09, bottom : 0.09},
+		padding : {
+			top : 0.05,
+			bottom : 0.05
+		},
 		stroke: true,
 		preserve: true,
 		series: [
@@ -152,4 +155,12 @@ function listenStats(series){
 		    Alertify.log.error("Stats stream error");
 		}
 	}, false);
+}
+
+function calculateFitWidth() {
+	return $(window).width() - $("#chart").offset().left - 200;
+}
+
+function calculateFitHeight() {
+	return $(window).height() - $("#chart").offset().top - 70;
 }
