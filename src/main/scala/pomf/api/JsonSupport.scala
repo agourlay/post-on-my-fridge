@@ -53,7 +53,7 @@ object JsonSupport{
   implicit val formatEvent = jsonFormat3(PushedEvent)
   implicit val formatHttpServerStats = new RootJsonFormat[Stats] {
     def write(obj: Stats): JsValue = JsObject(
-      "uptime" -> JsObject("length" -> JsNumber(obj.uptime.length), "unit" -> JsString(obj.uptime.unit.name)),
+      "uptimeInMilli" -> JsNumber(obj.uptime.toMillis),
       "totalRequests" -> JsNumber(obj.totalRequests),
       "openRequests" -> JsNumber(obj.openRequests),
       "maxOpenRequests" -> JsNumber(obj.maxOpenRequests),

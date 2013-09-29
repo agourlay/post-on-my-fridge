@@ -143,7 +143,7 @@ function listenStats(series){
 		$('#openConnections').text(openConnections);
 		$('#maxOpenConnections').text(maxOpenConnections);
 		$('#requestTimeouts').text(requestTimeouts);
-		$('#uptime').text(moment.duration(stats.uptime.length,stats.uptime.unit).humanize());
+		$('#uptime').text(moment.duration(stats.uptimeInMilli).humanize());
 	}, false);
     
     source.addEventListener('open', function(e) {
