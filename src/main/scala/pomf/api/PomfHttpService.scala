@@ -29,7 +29,7 @@ import JsonSupport._
 
 class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService : ActorRef) extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
-  implicit val timeout = akka.util.Timeout(30.seconds)
+  implicit val timeout = akka.util.Timeout(10 seconds)
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
 
@@ -158,7 +158,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
         } ~
           get {
             complete {
-              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[Future[List[ChatMessage]]]
+              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
             }
           }
       } 
