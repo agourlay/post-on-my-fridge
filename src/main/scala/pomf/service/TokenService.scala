@@ -7,10 +7,10 @@ import akka.actor.ActorLogging
 import java.security.SecureRandom
 import java.math.BigInteger
 
-import pomf.service.TokenServiceActor._
+import pomf.service.TokenServiceProtocol._
 
 
-class TokenServiceActor extends Actor with ActorLogging {
+class TokenService extends Actor with ActorLogging {
   
   val random :SecureRandom = new SecureRandom()
   
@@ -19,6 +19,6 @@ class TokenServiceActor extends Actor with ActorLogging {
   }
 }
 
-object TokenServiceActor{
+object TokenServiceProtocol{
   case object RequestToken
 }

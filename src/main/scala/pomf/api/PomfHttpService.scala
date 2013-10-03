@@ -1,9 +1,10 @@
 package pomf.api
 
-import pomf.service.CrudServiceActor
-import pomf.service.ChatServiceActor
-import pomf.service.TokenServiceActor
+import pomf.service.CrudServiceProtocol
+import pomf.service.ChatServiceProtocol
+import pomf.service.TokenServiceProtocol
 import pomf.domain.model._
+import pomf.api.streaming._
 
 import akka.pattern._
 import akka.actor._
@@ -26,7 +27,7 @@ import reflect.ClassTag
 import JsonSupport._
 
 
-class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService : ActorRef) extends HttpServiceActor with ActorLogging{
+class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService : ActorRef) extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(30.seconds)
 
@@ -40,10 +41,10 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
         complete {
           if (fridgeName.isEmpty)
             fridgesCache("fridges"){
-              (crudService ? CrudServiceActor.AllFridge).mapTo[List[FridgeRest]]
+              (crudService ? CrudServiceProtocol.AllFridge).mapTo[List[FridgeRest]]
             }
           else
-            (crudService ? CrudServiceActor.FullFridge(fridgeName)).mapTo[FridgeRest]
+            (crudService ? CrudServiceProtocol.FullFridge(fridgeName)).mapTo[FridgeRest]
         }
       }
     } ~
@@ -51,7 +52,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
       post {
         entity(as[Fridge]) { fridge =>
           complete {
-            (crudService ? CrudServiceActor.CreateFridge(fridge)).mapTo[Fridge]
+            (crudService ? CrudServiceProtocol.CreateFridge(fridge)).mapTo[Fridge]
           }
         }
       }
@@ -63,7 +64,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
         parameters("token") { token =>
           entity(as[Post]) { post =>
             complete {
-              (crudService ? CrudServiceActor.CreatePost(post, token)).mapTo[Post]
+              (crudService ? CrudServiceProtocol.CreatePost(post, token)).mapTo[Post]
             }
           }
         }
@@ -72,7 +73,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
           parameters("token") { token =>
             entity(as[Post]) { post =>
               complete {
-                (crudService ? CrudServiceActor.UpdatePost(post, token)).mapTo[Post]
+                (crudService ? CrudServiceProtocol.UpdatePost(post, token)).mapTo[Post]
               }
             }
           }
@@ -81,13 +82,13 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
       path("posts" / LongNumber) { postId =>
         get {
           complete {
-            (crudService ? CrudServiceActor.GetPost(postId)).mapTo[Option[Post]]
+            (crudService ? CrudServiceProtocol.GetPost(postId)).mapTo[Option[Post]]
           }
         } ~
           delete {
             parameters("token") { token =>
               complete {
-                (crudService ? CrudServiceActor.DeletePost(postId, token)).mapTo[String]
+                (crudService ? CrudServiceProtocol.DeletePost(postId, token)).mapTo[String]
               }
             }
           }
@@ -100,7 +101,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
         path("fridge" / Rest) { fridgeName =>
           get {
             complete {
-              (crudService ? CrudServiceActor.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
+              (crudService ? CrudServiceProtocol.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
             }
           }
         }
@@ -110,7 +111,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
           parameters("term") { term =>
             get {
               complete {
-                (crudService ? CrudServiceActor.SearchFridge(term)).mapTo[List[String]]
+                (crudService ? CrudServiceProtocol.SearchFridge(term)).mapTo[List[String]]
               }
             }
           }
@@ -119,7 +120,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
       path("token") {
         get {
           complete{
-            (tokenService ? TokenServiceActor.RequestToken).mapTo[String]
+            (tokenService ? TokenServiceProtocol.RequestToken).mapTo[String]
           }
         }
       } ~ 
@@ -128,7 +129,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
             get {
               complete {
                 countCache("fridges"){
-                  (crudService ? CrudServiceActor.CountFridges).mapTo[String]
+                  (crudService ? CrudServiceProtocol.CountFridges).mapTo[String]
                 }     
               }
             }
@@ -137,7 +138,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
             get {
               complete {
                  countCache("posts"){
-                  (crudService ? CrudServiceActor.CountPosts).mapTo[String]
+                  (crudService ? CrudServiceProtocol.CountPosts).mapTo[String]
                  }   
               }
             }
@@ -150,14 +151,14 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
           parameters("token") { token =>
             entity(as[ChatMessage]) { message =>
               complete {
-                (chatService ? ChatServiceActor.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
+                (chatService ? ChatServiceProtocol.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
               }
             }
           }
         } ~
           get {
             complete {
-              (chatService ? ChatServiceActor.ChatHistory(fridgeName)).mapTo[Future[List[ChatMessage]]]
+              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[Future[List[ChatMessage]]]
             }
           }
       } 
@@ -182,9 +183,7 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
   def statsRoute = 
     path("stats") {
         complete {
-          context.actorSelection("/user/IO-HTTP/listener-0")
-            .ask(Http.GetStats)
-            .mapTo[Stats]
+          (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
         }
       }
 
@@ -205,14 +204,14 @@ class PomfHttpActor(crudService: ActorRef, chatService: ActorRef, tokenService :
     }    
 
   def streamFirehose(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
-    val fireHoseActor = context.actorOf(Props(new FirehoseStreamActor(fridgeTarget, userToken, ctx)))
+    val fireHoseActor = context.actorOf(Props(new FirehoseStream(fridgeTarget, userToken, ctx)))
     context.system.eventStream.subscribe(fireHoseActor, classOf[Notification])
   }
 
   def streamStat (ctx: RequestContext): Unit = {
-    val statActor = context.actorOf(Props(new StatStreamActor(ctx)))
+    val statActor = context.actorOf(Props(new StatStream(ctx)))
     context.system.scheduler.schedule(1.seconds,1.seconds){
-      val stats = context.actorSelection("/user/IO-HTTP/listener-0").ask(Http.GetStats).mapTo[Stats]
+      val stats = (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
       stats pipeTo statActor
     }
   }  

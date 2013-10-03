@@ -4,7 +4,7 @@ import akka.actor.Actor
 import akka.actor.ActorRef
 import akka.actor.actorRef2Scala
 import akka.actor.ActorLogging
-import pomf.service.ChatServiceActor._
+import pomf.service.ChatServiceProtocol._
 import pomf.domain.model._
 import pomf.api.JsonSupport._
 import spray.caching.{LruCache, Cache}
@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 import scala.concurrent._
 
 
-class ChatServiceActor(notificationService : ActorRef) extends Actor with ActorLogging {
+class ChatService(notificationService : ActorRef) extends Actor with ActorLogging {
     
   implicit def executionContext = context.dispatcher
   
@@ -45,7 +45,7 @@ class ChatServiceActor(notificationService : ActorRef) extends Actor with ActorL
   }
 } 
 
-object ChatServiceActor {
+object ChatServiceProtocol {
   case class PushChat(fridgeName: String, message: ChatMessage, token: String)
   case class ChatHistory(fridgeName: String)
 }

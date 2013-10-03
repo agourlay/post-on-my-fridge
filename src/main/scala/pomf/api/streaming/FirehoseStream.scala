@@ -1,8 +1,8 @@
-package pomf.api
+package pomf.api.streaming
 
 import akka.actor._
 
-import JsonSupport._
+import pomf.api.JsonSupport._
 import pomf.domain.model._
 
 import scala.language.postfixOps
@@ -13,7 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class FirehoseStreamActor(fridgeTarget:Option[String],userToken:Option[String], ctx: RequestContext) extends StreamingResponseActor(ctx) {
+class FirehoseStream(fridgeTarget:Option[String], userToken:Option[String], ctx: RequestContext) extends StreamingResponse(ctx) {
          
   def domainFilter(fridgeName:String, token : String) : Boolean = 
     if (fridgeTarget.isDefined && userToken.isDefined)

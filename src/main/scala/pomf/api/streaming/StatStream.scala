@@ -1,4 +1,4 @@
-package pomf.api
+package pomf.api.streaming
 
 import akka.actor._
 import spray.routing._
@@ -8,10 +8,10 @@ import HttpHeaders._
 import spray.can.Http
 import spray.can.server.Stats
 import scala.language.postfixOps
-import JsonSupport._
+import pomf.api.JsonSupport._
 
 
-class StatStreamActor(ctx: RequestContext) extends StreamingResponseActor(ctx) {
+class StatStream(ctx: RequestContext) extends StreamingResponse(ctx) {
   
   override def receive = {
 

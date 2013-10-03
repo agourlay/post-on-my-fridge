@@ -5,9 +5,9 @@ import akka.actor._
 import pomf.api.JsonSupport._
 import pomf.domain.dao.Dao
 import pomf.domain.model._
-import pomf.service.CrudServiceActor._
+import pomf.service.CrudServiceProtocol._
 
-class CrudServiceActor(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
+class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
 
   implicit def executionContext = context.dispatcher
 
@@ -90,7 +90,7 @@ class CrudServiceActor(dao : Dao, notificationService : ActorRef, urlSite : Stri
 
 }
 
-object CrudServiceActor {
+object CrudServiceProtocol {
   case class FullFridge(fridgeName : String)
   case object AllFridge
   case class CreateFridge(fridge : Fridge) 
@@ -100,7 +100,7 @@ object CrudServiceActor {
   case class DeletePost(postId: Long, token: String)
   case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
-  case class CountFridges()
-  case class CountPosts()  
+  case object CountFridges
+  case object CountPosts  
   case object DeleteOutdatedPost
 }
