@@ -51,14 +51,14 @@ object Boot extends App with Configuration{
 
   val notificationService = system.actorOf(Props[NotificationService], "notification-service")
   
-  val crudService = system.actorOf(Props(new CrudService(dbConfig.dao, notificationService, urlSite))
+  val crudService = system.actorOf(Props(classOf[CrudService], dbConfig.dao, notificationService, urlSite)
                           .withRouter(SmallestMailboxRouter(Runtime.getRuntime.availableProcessors)), "crud-service")
 
-  val chatService = system.actorOf(Props(new ChatService(notificationService)), "chat-service")
+  val chatService = system.actorOf(Props(classOf[ChatService],notificationService), "chat-service")
   
   val tokenService = system.actorOf(Props[TokenService], "token-service")
       
-  val httpService = system.actorOf(Props(new PomfHttpService(crudService, chatService, tokenService)), "http-service")
+  val httpService = system.actorOf(Props(classOf[PomfHttpService], crudService, chatService, tokenService), "http-service")
   
   IO(Http) ! Http.Bind(httpService, "localhost", port = port) 
   
