@@ -46,3 +46,4 @@ Unless required by applicable law or agreed to in writing, software distributed 
 Copyright &copy; 2013 **[Arnaud Gourlay](http://about.arnaud-gourlay.info/)**.
 
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/agourlay/post-on-my-fridge/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
