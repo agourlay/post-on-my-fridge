@@ -151,7 +151,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           parameters("token") { token =>
             entity(as[ChatMessage]) { message =>
               complete {
-                (chatService ? ChatServiceProtocol.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
+                (chatService ? ChatServiceProtocol.SendMessage(fridgeName, message, token)).mapTo[ChatMessage]
               }
             }
           }
