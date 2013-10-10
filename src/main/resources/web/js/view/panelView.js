@@ -18,6 +18,13 @@ App.PanelView = Ember.View.extend({
 		if(typeof store.get('username') !== "undefined"){
 			$("#pseudo").val(store.get('username'));
 		}
+		
+		$("#pseudo").focusout( function(){
+			if ($("#pseudo").val() !== store.get('username')){
+				store.set('username', $("#pseudo").val());
+				App.Dao.renameParticipant($("#pseudo").val());
+			}
+		});
 
 		$('#search').typeahead({
 		    name: 'fridges',

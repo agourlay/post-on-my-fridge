@@ -6,24 +6,25 @@ import pomf.api.JsonSupport._
 import pomf.domain.dao.Dao
 import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
+import pomf.service.NotificationServiceProtocol._
 
 class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
 
   implicit def executionContext = context.dispatcher
 
   def receive = {
-      case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
-      case AllFridge                  => sender ! getAllFridge()
-      case CreateFridge(fridge)       => sender ! addFridge(fridge)
-      case GetPost(postId)            => sender ! getPost(postId)
-      case DeletePost(postId, token)  => sender ! deletePost(postId, token)
-      case CreatePost(post, token)    => sender ! addPost(post, token)
-      case UpdatePost(post, token)    => sender ! updatePost(post, token)
-      case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
-      case SearchFridge(term)         => sender ! searchByNameLike(term)
-      case CountFridges               => sender ! countFridges
-      case CountPosts                 => sender ! countPosts
-      case DeleteOutdatedPost         => deleteOutdatedPost
+    case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
+    case AllFridge                  => sender ! getAllFridge()
+    case CreateFridge(fridge)       => sender ! addFridge(fridge)
+    case GetPost(postId)            => sender ! getPost(postId)
+    case DeletePost(postId, token)  => sender ! deletePost(postId, token)
+    case CreatePost(post, token)    => sender ! addPost(post, token)
+    case UpdatePost(post, token)    => sender ! updatePost(post, token)
+    case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
+    case SearchFridge(term)         => sender ! searchByNameLike(term)
+    case CountFridges               => sender ! countFridges
+    case CountPosts                 => sender ! countPosts
+    case DeleteOutdatedPost         => deleteOutdatedPost
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -32,13 +33,13 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
 
   def addPost(post: Post, token: String): Post = {
     val persistedPost = dao.addPost(post)
-    notificationService ! Notification.create(post.fridgeId, persistedPost, token)
+    notificationService ! NotificationServiceProtocol.PostCreated(post.fridgeId, persistedPost, token)
     persistedPost
   }
 
   def getFridgeRest(fridgeName: String): FridgeRest = {
-      log.debug("Requesting fridge {}", fridgeName)
-      dao.getFridgeRest(fridgeName)
+    log.debug("Requesting fridge {}", fridgeName)
+    dao.getFridgeRest(fridgeName)
   }
 
   def getFridgeRss(fridgeName: String): scala.xml.Elem = {
@@ -70,8 +71,10 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
-    notificationService ! Notification.delete(getPost(id).get.fridgeId, id, token)
-    "post " + dao.deletePost(id) + " deleted"
+    val fridgeId = getPost(id).get.fridgeId
+    val deleteAck = "post " + dao.deletePost(id) + " deleted"
+    notificationService ! NotificationServiceProtocol.PostDeleted(fridgeId, id, token)
+    deleteAck
   }
 
   def deleteOutdatedPost = {
@@ -80,8 +83,9 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
   }  
 
   def updatePost(post: Post, token: String): Post = {
-    notificationService ! Notification.update(post.fridgeId, post, token)
-    dao.updatePost(post).orNull
+    val postUpdated = dao.updatePost(post).orNull
+    notificationService ! NotificationServiceProtocol.PostUpdated(post.fridgeId, post, token)
+    postUpdated
   }
 
   def countFridges = "" + dao.countFridges

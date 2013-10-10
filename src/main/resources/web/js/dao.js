@@ -60,14 +60,19 @@ App.Dao = Em.Object.create({
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
 			var payload = $.parseJSON(data.payload);
-			if (data.command === "update" || data.command === "create" ) {
+			var timestamp = $.parseJSON(data.timestamp);
+
+			if (data.command === "postUpdated" || data.command === "postCreated" ) {
 				postsController.createOrUpdate(payload);
 			}
-			if (data.command === "delete") {
+			if (data.command === "postDeleted") {
 				postsController.deleteById(payload);
 			}
-			if (data.command === "message") {
+			if (data.command === "messageSent") {
 				messagesController.messageManagement(payload);
+			}
+			if (data.command === "participantAdded" || data.command === "participantRemoved" || data.command === "participantRenamed") {
+				messagesController.notificationManagement(data.command, payload, timestamp);
 			}
 		}, false);
 
@@ -83,36 +88,37 @@ App.Dao = Em.Object.create({
 	},
 
 	pseudo : function() {
-		if ($("#pseudo").val() !== ""){
-			var inputName = $("#pseudo").val();
-			store.set('username', inputName);
-			return inputName;
-		}		
-		return "Anonymous";	
+		if(typeof store.get('username') == "undefined"){
+			store.set('username', "Anonymous");
+		}
+		return store.get('username');	
+	},
+
+	renameParticipant : function (newName) {
+		this.get("messagesController").renameParticipant(newName);
 	},
 
 	findFridgeByName : function(fridgeId) {
-		console.log("Dao requesting fridge : "+fridgeId);
 		var model = App.Fridge.create();
 		model.set('id', fridgeId);
 		$.ajax({
-	        	url: "fridges/" + fridgeId,
-	        	type: 'GET',
-	        	beforeSend : function (){
-            			NProgress.start(); 
-                	},
-	        	success: function(fridge) {
-				if (fridge !== null && fridge !== undefined) {
-					model.set('description', fridge.description);
-					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
-					model.set('loaded', true);
-				}
-				NProgress.done();
-	        	},
-	        	error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Error during fridge retrieval");
+        	url: "fridges/" + fridgeId,
+        	type: 'GET',
+        	beforeSend : function (){
+        			NProgress.start(); 
+            	},
+        	success: function(fridge) {
+			if (fridge !== null && fridge !== undefined) {
+				model.set('description', fridge.description);
+				model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
+				model.set('loaded', true);
 			}
-    		});
+			NProgress.done();
+        	},
+        	error: function(xhr, ajaxOptions, thrownError) {
+			errorMessage("Error during fridge retrieval");
+			}
+    	});
 		return model;
 	},
 
@@ -144,7 +150,7 @@ App.Dao = Em.Object.create({
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during count fridges retrieval");
 			}
-    		});
+    	});
 
 		var postCountDefer = $.ajax({
 	        	url: "count/posts/",
