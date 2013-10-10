@@ -22,8 +22,8 @@ class ChatRoom extends Actor with ActorLogging {
     case ChatHistory                    => sender ! retrieveChatHistory
     case PurgeChat                      => messages = Map.empty[Long, ChatMessage]
     case AddParticipant(token, name)    => participantByToken += (token -> name)
-    case RemoveParticipant(token)	      => participantByToken -= token
-    case ParticipantNumber              => sender ! participantByToken.size
+    case RemoveParticipant(token)	      => sender ! removeParticipant(token)
+    case ParticipantNumber              => sender ! participantByToken.size.toString
     case RenameParticipant(token, name) => participantByToken += (token -> name)
   }
 
@@ -33,6 +33,12 @@ class ChatRoom extends Actor with ActorLogging {
   
   def retrieveChatHistory : List[ChatMessage] = {
    	messages.values.toList.sortBy(_.timestamp)
+  }
+
+  def removeParticipant(token: String) : String = {
+    val name = participantByToken(token) 
+    participantByToken -= token
+    name
   }
 }
 

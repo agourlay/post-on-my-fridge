@@ -41,7 +41,7 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     context.actorSelection(chatRoomPath) ! ChatRoomProtocol.SendMessage(message, token) 
-    notificationService ! NotificationServiceProtocol.MessageSended(fridgeName, message, token)
+    notificationService ! NotificationServiceProtocol.MessageSent(fridgeName, message, token)
     message
   }
   
@@ -53,23 +53,28 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
 
   def retrieveParticipantNumber(fridgeName: String, sender : ActorRef) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    val participantNumber = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.ParticipantNumber).mapTo[Integer]
+    val participantNumber = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.ParticipantNumber).mapTo[String]
     participantNumber pipeTo sender
   }
 
   def addParticipant(fridgeName: String, token:String, name:String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     context.actorSelection(chatRoomPath) ! ChatRoomProtocol.AddParticipant(token, name)
+    notificationService ! NotificationServiceProtocol.ParticipantAdded(fridgeName, token, name)
   }
 
   def removeParticipant(fridgeName: String, token:String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    context.actorSelection(chatRoomPath) ! ChatRoomProtocol.RemoveParticipant(token)
+    val nameQuitter = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.RemoveParticipant(token)).mapTo[String]
+    nameQuitter.onSuccess { 
+      case name : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRemoved(fridgeName, token, name)
+    }
   }
 
   def renameParticipant(fridgeName: String, token:String, name:String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     context.actorSelection(chatRoomPath) ! ChatRoomProtocol.RenameParticipant(token, name)
+    notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeName, token, name)
   }
 } 
 

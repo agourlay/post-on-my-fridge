@@ -1,2 +1,15 @@
-<br/><i>Sent at {{view.content.date}}</i>
-<br/><b>{{view.content.user}}:</b> <span class='chat-content'>{{view.content.message}}</span>
+{{#if view.content.isNotification}}
+	<br/>
+	<i>
+		<span class='chat-content'>
+			{{view.content.user}} {{view.content.message}} at {{view.content.date}}
+		</span>
+	</i>
+{{else}}
+	<br/>
+	<i>Sent at {{view.content.date}}</i>
+	<br/>
+	<span class='chat-content'>
+		<b>{{view.content.user}}</b> : {{view.content.message}}
+	</span>
+{{/if}}		
