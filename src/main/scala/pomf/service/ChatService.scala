@@ -4,6 +4,7 @@ import akka.actor._
 import akka.pattern._
 
 import pomf.service.ChatServiceProtocol._
+import pomf.service.NotificationServiceProtocol._
 import pomf.domain.model._
 import pomf.api.JsonSupport._
 
@@ -40,7 +41,7 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
   def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     context.actorSelection(chatRoomPath) ! ChatRoomProtocol.SendMessage(message, token) 
-    notificationService ! Notification.message(fridgeName, message, token)
+    notificationService ! NotificationServiceProtocol.MessageSended(fridgeName, message, token)
     message
   }
   

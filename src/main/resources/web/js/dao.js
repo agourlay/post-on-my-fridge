@@ -60,13 +60,13 @@ App.Dao = Em.Object.create({
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
 			var payload = $.parseJSON(data.payload);
-			if (data.command === "update" || data.command === "create" ) {
+			if (data.command === "updatePost" || data.command === "createPost" ) {
 				postsController.createOrUpdate(payload);
 			}
-			if (data.command === "delete") {
+			if (data.command === "deletePost") {
 				postsController.deleteById(payload);
 			}
-			if (data.command === "message") {
+			if (data.command === "sendMessage") {
 				messagesController.messageManagement(payload);
 			}
 		}, false);

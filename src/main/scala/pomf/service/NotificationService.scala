@@ -4,19 +4,31 @@ import akka.actor.Actor
 import akka.actor.ActorLogging
 
 import pomf.domain.model._
-import pomf.service.NotificationProtocol._
+import pomf.service.NotificationServiceProtocol._
+import pomf.api.JsonSupport._
 
 
 class NotificationService extends Actor with ActorLogging {
     
   def receive = {
-    case n : Notification => context.system.eventStream.publish(n)
+  	case PostCreated(fridgeName , post, token)       => pushToEventStream(Notification.createPost(fridgeName, post, token))
+    case PostUpdated(fridgeName , post, token)       => pushToEventStream(Notification.updatePost(fridgeName, post, token))
+    case PostDeleted(fridgeName , id, token)         => pushToEventStream(Notification.deletePost(fridgeName, id, token))
+    case MessageSended(fridgeName, message, token)   => pushToEventStream(Notification.sendMessage(fridgeName, message, token))
+    case ParticipantAdded(fridgeName, token, name)   => ???
+    case ParticipantRemoved(fridgeName, token)       => ???
+    case ParticipantRenamed(fridgeName, token, name) => ???
   }
+
+  def pushToEventStream(n : Notification) = context.system.eventStream.publish(n)
 }
 
-object NotificationProtocol {
-  case class SendMessage(fridgeName: String, message: ChatMessage, token: String)
-  case class AddParticipant(fridgeName: String, token:String, name:String)
-  case class RemoveParticipant(fridgeName: String, token:String)
-  case class RenameParticipant(fridgeName: String, token:String, name:String)
+object NotificationServiceProtocol {
+  case class PostCreated(fridgeName : String, post : Post, token :String)
+  case class PostUpdated(fridgeName : String, post : Post, token :String)
+  case class PostDeleted(fridgeName : String, id : Long, token :String)
+  case class MessageSended(fridgeName: String, message: ChatMessage, token: String)
+  case class ParticipantAdded(fridgeName: String, token:String, name:String)
+  case class ParticipantRemoved(fridgeName: String, token:String)
+  case class ParticipantRenamed(fridgeName: String, token:String, name:String)
 }

@@ -8,20 +8,20 @@ case class Notification(fridgeName : String, command :String, payload :String, t
 
 object Notification{
     
-  def create(fridgeName : String, post : Post, token :String)(implicit conv : RootJsonFormat[Post]) = {
-    new Notification(fridgeName, "create", conv.write(post).toString, Platform.currentTime,token)
+  def createPost(fridgeName : String, post : Post, token :String)(implicit conv : RootJsonFormat[Post]) = {
+    new Notification(fridgeName, "createPost", conv.write(post).toString, Platform.currentTime,token)
   }
   
-  def update(fridgeName : String, post : Post, token :String)(implicit conv : RootJsonFormat[Post]) = {
-    new Notification(fridgeName, "update", conv.write(post).toString, Platform.currentTime,token)
+  def updatePost(fridgeName : String, post : Post, token :String)(implicit conv : RootJsonFormat[Post]) = {
+    new Notification(fridgeName, "updatePost", conv.write(post).toString, Platform.currentTime,token)
   }
   
-  def delete(fridgeName : String, id : Long, token :String) = {
-    new Notification(fridgeName, "delete", id.toString, Platform.currentTime,token)
+  def deletePost(fridgeName : String, id : Long, token :String) = {
+    new Notification(fridgeName, "deletePost", id.toString, Platform.currentTime,token)
   }
   
-  def message(fridgeName : String, message : ChatMessage, token :String)(implicit conv : RootJsonFormat[ChatMessage]) = {
-    new Notification(fridgeName, "message", conv.write(message).toString, Platform.currentTime,token)
+  def sendMessage(fridgeName : String, message : ChatMessage, token :String)(implicit conv : RootJsonFormat[ChatMessage]) = {
+    new Notification(fridgeName, "sendMessage", conv.write(message).toString, Platform.currentTime,token)
   }
 
 }
