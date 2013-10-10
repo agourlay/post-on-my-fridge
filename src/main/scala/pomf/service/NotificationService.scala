@@ -11,7 +11,7 @@ import pomf.api.JsonSupport._
 class NotificationService extends Actor with ActorLogging {
     
   def receive = {
-  	case PostCreated(fridgeName , post, token)       => pushToEventStream(Notification.createPost(fridgeName, post, token))
+    case PostCreated(fridgeName , post, token)       => pushToEventStream(Notification.createPost(fridgeName, post, token))
     case PostUpdated(fridgeName , post, token)       => pushToEventStream(Notification.updatePost(fridgeName, post, token))
     case PostDeleted(fridgeName , id, token)         => pushToEventStream(Notification.deletePost(fridgeName, id, token))
     case MessageSent(fridgeName, message, token)     => pushToEventStream(Notification.sendMessage(fridgeName, message, token))
