@@ -29,7 +29,7 @@ import JsonSupport._
 
 class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService : ActorRef) extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
-  implicit val timeout = akka.util.Timeout(30.seconds)
+  implicit val timeout = akka.util.Timeout(10 seconds)
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
 
@@ -94,74 +94,103 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           }
         }
     
-    val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 2 minute)
+  val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 2 minute)
 
-    def miscRoute =
-      pathPrefix("rss") {
-        path("fridge" / Rest) { fridgeName =>
+  def miscRoute =
+    pathPrefix("rss") {
+      path("fridge" / Rest) { fridgeName =>
+        get {
+          complete {
+            (crudService ? CrudServiceProtocol.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
+          }
+        }
+      }
+    } ~
+    pathPrefix("search") {
+      path("fridge") {
+        parameters("term") { term =>
           get {
             complete {
-              (crudService ? CrudServiceProtocol.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
+              (crudService ? CrudServiceProtocol.SearchFridge(term)).mapTo[List[String]]
             }
           }
         }
-      } ~
-      pathPrefix("search") {
-        path("fridge") {
-          parameters("term") { term =>
-            get {
-              complete {
-                (crudService ? CrudServiceProtocol.SearchFridge(term)).mapTo[List[String]]
-              }
+      }
+    } ~ 
+    path("token") {
+      get {
+        complete{
+          (tokenService ? TokenServiceProtocol.RequestToken).mapTo[String]
+        }
+      }
+    } ~ 
+    pathPrefix("count") {
+      path("fridges") {
+          get {
+            complete {
+              countCache("fridges"){
+                (crudService ? CrudServiceProtocol.CountFridges).mapTo[String]
+              }     
             }
           }
-        }
       } ~ 
-      path("token") {
-        get {
-          complete{
-            (tokenService ? TokenServiceProtocol.RequestToken).mapTo[String]
+      path("posts") {
+          get {
+            complete {
+               countCache("posts"){
+                (crudService ? CrudServiceProtocol.CountPosts).mapTo[String]
+               }   
+            }
           }
-        }
-      } ~ 
-      pathPrefix("count") {
-        path("fridges") {
-            get {
-              complete {
-                countCache("fridges"){
-                  (crudService ? CrudServiceProtocol.CountFridges).mapTo[String]
-                }     
-              }
-            }
-        } ~ 
-        path("posts") {
-            get {
-              complete {
-                 countCache("posts"){
-                  (crudService ? CrudServiceProtocol.CountPosts).mapTo[String]
-                 }   
-              }
-            }
-        }
-      } 
+      }
+    } 
     
-    def chatRoute = 
-      path("messages" / Rest) { fridgeName =>
+  def chatRoute = 
+    pathPrefix("chat" / Segment) { fridgeName =>
+      path("messages") {
         post {
           parameters("token") { token =>
             entity(as[ChatMessage]) { message =>
               complete {
-                (chatService ? ChatServiceProtocol.PushChat(fridgeName, message, token)).mapTo[ChatMessage]
+                (chatService ? ChatServiceProtocol.SendMessage(fridgeName, message, token)).mapTo[ChatMessage]
+              }
+            }
+          } 
+        } ~
+        get {
+          complete {
+              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
+          }  
+        }
+      } ~
+      path("participants") {
+        post {
+          parameters("token") { token =>
+            entity(as[String]) { participantName =>
+              complete {
+                chatService ! ChatServiceProtocol.AddParticipant(fridgeName, token, participantName)
+                participantName + "joined chat" 
+              }
+            }
+          } 
+        } ~
+        put {
+          parameters("token") { token =>
+            entity(as[String]) { participantName =>
+              complete {
+                chatService ! ChatServiceProtocol.RenameParticipant(fridgeName, token, participantName)
+                participantName + "changed name" 
               }
             }
           }
         } ~
-          get {
-            complete {
-              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[Future[List[ChatMessage]]]
-            }
-          }
-      } 
+        get {
+          complete {
+              (chatService ? ChatServiceProtocol.ParticipantNumber(fridgeName)).mapTo[String]
+          }  
+        }
+      }
+    } 
       
   def streamRoute = 
     pathPrefix("stream") {

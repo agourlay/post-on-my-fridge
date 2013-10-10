@@ -3,7 +3,6 @@ package pomf
 import akka.actor._
 import akka.routing._
 import akka.io.IO
-import akka.actor.actorRef2Scala
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

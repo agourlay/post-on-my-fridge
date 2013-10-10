@@ -18,6 +18,7 @@
 
     <logger name="scala.slick" level="INFO" />
     <logger name="akka" level="INFO" />
+    <logger name="spray.can.server.HttpServerConnection" level="INFO" />
     
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>

@@ -45,7 +45,7 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= {
   val akkaVersion   = "2.2.1"
-  val sprayVersion  = "1.2-20130928"
+  val sprayVersion  = "1.2-20131004"
   Seq(
        "io.spray"           %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"           %   "spray-routing"     % sprayVersion               withSources()
@@ -60,7 +60,7 @@ libraryDependencies ++= {
       ,"org.postgresql"     %   "postgresql"        % "9.2-1003-jdbc4"           withSources()
       ,"ch.qos.logback"     %   "logback-classic"   % "1.0.13"                   withSources()
       ,"junit"              %   "junit"             % "4.11"          % "test"   withSources()
-      ,"org.specs2"         %%  "specs2"            % "2.2.2"         % "test"   withSources()  
+      ,"org.specs2"         %%  "specs2"            % "2.2.3"         % "test"   withSources()  
   )
 }
 
