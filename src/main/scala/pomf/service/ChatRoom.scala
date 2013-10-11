@@ -18,13 +18,13 @@ class ChatRoom extends Actor with ActorLogging {
   context.system.scheduler.scheduleOnce(24 hour,self, ChatRoomProtocol.PurgeChat)
 
   def receive = {
-    case SendMessage(message, token)    => addChatMessage(message, token)
-    case ChatHistory                    => sender ! retrieveChatHistory
-    case PurgeChat                      => messages = Map.empty[Long, ChatMessage]
-    case AddParticipant(token, name)    => participantByToken += (token -> name)
-    case RemoveParticipant(token)       => sender ! removeParticipant(token)
-    case ParticipantNumber              => sender ! participantByToken.size.toString
-    case RenameParticipant(token, name) => participantByToken += (token -> name)
+    case SendMessage(message, token)       => addChatMessage(message, token)
+    case ChatHistory                       => sender ! retrieveChatHistory
+    case PurgeChat                         => messages = Map.empty[Long, ChatMessage]
+    case AddParticipant(token, name)       => participantByToken += (token -> name)
+    case RemoveParticipant(token)          => sender ! removeParticipant(token)
+    case ParticipantNumber                 => sender ! participantByToken.size.toString
+    case RenameParticipant(token, newName) => sender ! renameParticipant(token, newName)
   }
 
   def addChatMessage(message: ChatMessage, token: String) = {
@@ -39,6 +39,12 @@ class ChatRoom extends Actor with ActorLogging {
     val name = participantByToken(token) 
     participantByToken -= token
     name
+  }
+
+  def renameParticipant(token: String, newName : String) : String = {
+    val oldName = participantByToken(token) 
+    participantByToken += (token -> newName)
+    oldName
   }
 }
 

@@ -11,13 +11,13 @@ import pomf.api.JsonSupport._
 class NotificationService extends Actor with ActorLogging {
     
   def receive = {
-    case PostCreated(fridgeName , post, token)       => pushToEventStream(Notification.createPost(fridgeName, post, token))
-    case PostUpdated(fridgeName , post, token)       => pushToEventStream(Notification.updatePost(fridgeName, post, token))
-    case PostDeleted(fridgeName , id, token)         => pushToEventStream(Notification.deletePost(fridgeName, id, token))
-    case MessageSent(fridgeName, message, token)     => pushToEventStream(Notification.sendMessage(fridgeName, message, token))
-    case ParticipantAdded(fridgeName, token, name)   => pushToEventStream(Notification.addParticipant(fridgeName, name, token))
-    case ParticipantRemoved(fridgeName, token, name) => pushToEventStream(Notification.removeParticipant(fridgeName, name, token))
-    case ParticipantRenamed(fridgeName, token, name) => pushToEventStream(Notification.renameParticipant(fridgeName, name, token))
+    case PostCreated(fridgeName , post, token)                   => pushToEventStream(Notification.createPost(fridgeName, post, token))
+    case PostUpdated(fridgeName , post, token)                   => pushToEventStream(Notification.updatePost(fridgeName, post, token))
+    case PostDeleted(fridgeName , id, token)                     => pushToEventStream(Notification.deletePost(fridgeName, id, token))
+    case MessageSent(fridgeName, message, token)                 => pushToEventStream(Notification.sendMessage(fridgeName, message, token))
+    case ParticipantAdded(fridgeName, token, name)               => pushToEventStream(Notification.addParticipant(fridgeName, name, token))
+    case ParticipantRemoved(fridgeName, token, name)             => pushToEventStream(Notification.removeParticipant(fridgeName, name, token))
+    case ParticipantRenamed(fridgeName, token, newName, oldName) => pushToEventStream(Notification.renameParticipant(fridgeName, newName, oldName, token))
   }
 
   def pushToEventStream(n : Notification) = context.system.eventStream.publish(n)
@@ -30,5 +30,5 @@ object NotificationServiceProtocol {
   case class MessageSent(fridgeName: String, message: ChatMessage, token: String)
   case class ParticipantAdded(fridgeName: String, token:String, name:String)
   case class ParticipantRemoved(fridgeName: String, token:String, name: String)
-  case class ParticipantRenamed(fridgeName: String, token:String, name:String)
+  case class ParticipantRenamed(fridgeName: String, token:String, newName:String, oldName : String)
 }

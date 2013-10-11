@@ -25,14 +25,14 @@ object Notification{
   }
 
   def addParticipant(fridgeName : String, name : String, token :String) = {
-    new Notification(fridgeName, "participantAdded", name, Platform.currentTime,token)
+    new Notification(fridgeName, "participantAdded", name + " joined the chat", Platform.currentTime,token)
   }
 
   def removeParticipant(fridgeName : String, name : String, token :String) = {
-    new Notification(fridgeName, "participantRemoved", name, Platform.currentTime,token)
+    new Notification(fridgeName, "participantRemoved", name + " left the chat", Platform.currentTime,token)
   }
 
-  def renameParticipant(fridgeName : String, name : String, token :String) = {
-    new Notification(fridgeName, "participantRenamed", name, Platform.currentTime,token)
+  def renameParticipant(fridgeName : String, newname : String, oldName : String, token :String) = {
+    new Notification(fridgeName, "participantRenamed", oldName + " changed name to " + newname, Platform.currentTime,token)
   }
 }

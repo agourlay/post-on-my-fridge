@@ -19,34 +19,16 @@ App.MessagesController = Ember.ArrayController.extend({
 		this.retrievePreviousMessages();
 	},
 
-	willDestroy : function (){
-		alert("will destroy");
-	},
-
 	messageManagement: function(message) {
 		var messageModel = App.Message.createWithMixins(message);
 		this.pushObject(messageModel);
 	},
 
-	notificationManagement: function(command,name, timestamp) {
+	notificationManagement: function(message, timestamp) {
+		debugger;
 		var messageModel = App.Message.create();
-		if (command === "participantAdded") {
-			messageModel.set("user" ,name);
-		    messageModel.set("message" ,"joined the chat");
-		    messageModel.set("timestamp" ,timestamp);
-		}
-
-		if (command === "participantRemoved") {
-			messageModel.set("user" ,name);
-		    messageModel.set("message" ,"left the chat");
-		    messageModel.set("timestamp" ,timestamp);
-		}
-
-		if (command === "participantRenamed") {
-			messageModel.set("user" ,name);
-		    messageModel.set("message" ,"changed his name");
-		    messageModel.set("timestamp" ,timestamp);
-		}
+		messageModel.set("message" ,message);
+		messageModel.set("timestamp" ,timestamp);
 		messageModel.set("isNotification" ,true);
 		this.pushObject(messageModel);
 	},

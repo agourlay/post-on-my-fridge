@@ -72,7 +72,7 @@ App.Dao = Em.Object.create({
 				messagesController.messageManagement(payload);
 			}
 			if (data.command === "participantAdded" || data.command === "participantRemoved" || data.command === "participantRenamed") {
-				messagesController.notificationManagement(data.command, payload, timestamp);
+				messagesController.notificationManagement(payload, timestamp);
 			}
 		}, false);
 

@@ -21,8 +21,8 @@ App.PanelView = Ember.View.extend({
 		
 		$("#pseudo").focusout( function(){
 			if ($("#pseudo").val() !== store.get('username')){
-				store.set('username', $("#pseudo").val());
-				App.Dao.renameParticipant($("#pseudo").val());
+				store.set('username', $("#pseudo").val() !== "" ? $("#pseudo").val() : "Anonymous");
+				App.Dao.renameParticipant(store.get('username'));
 			}
 		});
 

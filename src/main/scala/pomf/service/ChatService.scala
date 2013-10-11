@@ -71,10 +71,12 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
     }
   }
 
-  def renameParticipant(fridgeName: String, token:String, name:String) = {
+  def renameParticipant(fridgeName: String, token:String, newName:String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    context.actorSelection(chatRoomPath) ! ChatRoomProtocol.RenameParticipant(token, name)
-    notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeName, token, name)
+    val oldName = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.RenameParticipant(token, newName)).mapTo[String]
+    oldName.onSuccess { 
+      case exName : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeName, token, newName, exName)
+    }
   }
 } 
 
