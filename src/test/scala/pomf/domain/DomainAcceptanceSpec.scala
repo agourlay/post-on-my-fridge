@@ -6,6 +6,7 @@ import org.specs2.runner.JUnitRunner
 import pomf.domain.dao.Dao
 import pomf.domain.config.DAL
 import pomf.domain.model.Fridge
+import org.joda.time.DateTime
 
 @RunWith(classOf[JUnitRunner])
 class DomainAcceptanceSpec extends Specification {
@@ -22,5 +23,7 @@ import scala.slick.driver.H2Driver
     Database.forURL("jdbc:h2:mem:testdb", driver = "org.h2.Driver"))
   dao.createDB
 
-  def addFridge = dao.addFridge(Fridge("Demo", "Demo Fridge")) === (Fridge(id = Some(1), name = "Demo", description = "Demo Fridge"))
+  val date = new DateTime()
+
+  def addFridge = dao.addFridge(Fridge("Demo", "Demo Fridge", date, date)) === (Fridge(id = Some(1), name = "Demo", description = "Demo Fridge", creationDate = date, modificationDate = date))
 }
