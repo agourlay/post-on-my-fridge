@@ -1,6 +1,7 @@
 package pomf.domain.model
 
-import java.util.Date
+import com.github.tototoshi.slick.JodaSupport._
+import org.joda.time.DateTime
 import pomf.domain.config.Profile
 import spray.json.DefaultJsonProtocol
 import pomf.util.XssFilter
@@ -8,38 +9,32 @@ import pomf.util.XssFilter
 case class Post(author: String,
     content: String,
     color:String,
-	  date:Date,
+	  date:DateTime,
 	  positionX:Double,
 	  positionY:Double,
-	  dueDate:Option[Date] = None,
+	  dueDate:Option[DateTime] = None,
 	  fridgeId:String,
     id: Option[Long] = None
 ){
   require(!author.isEmpty, "author must not be empty")
   require(!XssFilter.containsScript(author), "author must not contain script tags")
-  require(!content.isEmpty, "content must not be empty")
   require(!XssFilter.containsScript(content), "content must not contain script tags")
   require(!fridgeId.isEmpty, "fridgeId must not be empty")
   require(!XssFilter.containsScript(fridgeId), "fridgeId must not contain script tags")
 }
 
 trait PostComponent { this: Profile =>
-  import profile.simple._
-  
-  implicit val dateMapper = MappedTypeMapper.base[java.util.Date, java.sql.Date] (
-  x => new java.sql.Date(x.getTime),
-  x => new java.util.Date(x.getTime))
-  
+  import profile.simple._  
 
   object Posts extends Table[Post]("POST") {    
     def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
     def author = column[String]("AUTHOR", O.NotNull)
     def content = column[String]("CONTENT", O.NotNull)
     def color = column[String]("COLOR", O.NotNull)
-    def date = column[Date]("DATE", O.NotNull)
+    def date = column[DateTime]("DATE", O.NotNull)
     def positionX = column[Double]("POSITION_X", O.NotNull)
     def positionY = column[Double]("POSITION_Y", O.NotNull)
-    def dueDate = column[Option[Date]]("DUE_DATE")
+    def dueDate = column[Option[DateTime]]("DUE_DATE")
     def fridgeId = column[String]("FRIDGE_ID", O.NotNull)
    
     def * = author ~ content ~ color ~ date ~ positionX ~ positionY ~ dueDate ~ fridgeId ~ id <> (Post.apply _, Post.unapply _)
@@ -73,7 +68,7 @@ trait PostComponent { this: Profile =>
     }
     
     def deleteOutdatedPost(implicit session: Session) = {
-        val now = new Date()
+        val now = new DateTime()
        (for(p <- Posts if p.dueDate < now) yield p).delete 
     }
 

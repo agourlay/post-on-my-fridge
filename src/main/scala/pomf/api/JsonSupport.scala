@@ -8,37 +8,22 @@ import scala.concurrent.duration._
 import spray.json._
 import spray.can.server.Stats
 import pomf.domain.model._
+import org.joda.time.DateTime
+import org.joda.time.format._
+
 
 object CustomJsonProtocol {
-  implicit object DateJsonFormat extends RootJsonFormat[Date] with IsoDateChecker {
-    override def write(obj: Date) = JsString(dateToIsoString(obj))
-    override def read(value: JsValue) = value match {
-      case JsString(x) => parseIsoDateString(x)  match {
-        							  case Some(date) => date
-								      case None => throw new DeserializationException("Expected ISO Date format, got %s" format(x))
-								    }
-      case _ => deserializationError("Not a String? ")
+  implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
+
+    private val parserISO : DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
+
+    override def write(obj: DateTime) = JsString(parserISO.print(obj))
+
+    override def read(json: JsValue) : DateTime = json match {
+      case JsString(s) => parserISO.parseDateTime(s)
+      case _ => throw new DeserializationException("Expected ISO Date format")
     }
   }
-}
-
-trait IsoDateChecker {
-  private val localIsoDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-
-  def dateToIsoString(date: Date) = localIsoDateFormatter.format(date)
-
-  def parseIsoDateString(date: String): Option[Date] =
-    if (date.length != 19){
-      println(date + " " + date.length)
-      None
-    }
-    else try {
-     Some(localIsoDateFormatter.parse(date)) 
-    }catch {
-      case p: ParseException =>
-        println(date + " " + p)
-        None
-    }
 }
 
 object JsonSupport{
@@ -47,8 +32,8 @@ object JsonSupport{
   import CustomJsonProtocol._
   
   implicit val formatPost = jsonFormat9(Post)
-  implicit val formatFridge = jsonFormat3(Fridge)
-  implicit val formatFridgeRest = jsonFormat4(FridgeRest)
+  implicit val formatFridge = jsonFormat5(Fridge)
+  implicit val formatFridgeRest = jsonFormat6(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
   implicit val formatEvent = jsonFormat3(PushedEvent)
   implicit val formatHttpServerStats = new RootJsonFormat[Stats] {

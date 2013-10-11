@@ -33,7 +33,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
 
-  val fridgesCache: Cache[List[FridgeRest]] = LruCache(maxCapacity = 1, timeToLive = 2 minute)
+  val fridgesCache: Cache[List[FridgeRest]] = LruCache(maxCapacity = 1, timeToLive = 1 minute)
 
   def fridgeRoute =
     path("fridges" / Rest) { fridgeName =>
@@ -94,7 +94,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           }
         }
     
-  val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 2 minute)
+  val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 1 minute)
 
   def miscRoute =
     pathPrefix("rss") {

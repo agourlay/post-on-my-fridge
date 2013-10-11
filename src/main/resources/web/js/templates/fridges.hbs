@@ -13,6 +13,7 @@
 					<th class="muted span4">Name</th>
 					<th class="muted span3">Description</th>
 					<th class="muted span2">Post number</th>
+					<th class="muted span3">Creation Date</th>
 					<th class="muted span3">Last update</th>
 					</thead>
 					<tbody>
@@ -21,7 +22,8 @@
 						  <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
 						  <td>{{description}}</td>
 						  <td>{{postNumber}}</td>
-						  <td>NA</td>
+						  <td>{{prettyCreationDate}}</td>
+						  <td>{{relativeLastUpdate}}</td>
 					    </tr>
 					   {{/each}}
 					</tbody>

@@ -110,6 +110,8 @@ App.Dao = Em.Object.create({
         	success: function(fridge) {
 			if (fridge !== null && fridge !== undefined) {
 				model.set('description', fridge.description);
+				model.set('creationDate', fridge.creationDate);
+				model.set('modificationDate', fridge.modificationDate);
 				model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
 				model.set('loaded', true);
 			}
@@ -179,6 +181,8 @@ App.Dao = Em.Object.create({
 							id:fridge.id,
 							name:fridge.name,
 							description:fridge.description,
+							creationDate:fridge.creationDate,
+							modificationDate:fridge.modificationDate,
 							posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
 						});
 						fridgesModel.pushObject(fridge);	
