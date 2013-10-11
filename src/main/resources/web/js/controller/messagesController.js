@@ -29,7 +29,6 @@ App.MessagesController = Ember.ArrayController.extend({
 		messageModel.set("message" ,message);
 		messageModel.set("timestamp" ,timestamp);
 		messageModel.set("isNotification" ,true);
-		debugger;
 		this.pushObject(messageModel);
 	},
 	
