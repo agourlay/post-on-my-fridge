@@ -25,11 +25,11 @@ App.MessagesController = Ember.ArrayController.extend({
 	},
 
 	notificationManagement: function(message, timestamp) {
-		debugger;
 		var messageModel = App.Message.create();
 		messageModel.set("message" ,message);
 		messageModel.set("timestamp" ,timestamp);
 		messageModel.set("isNotification" ,true);
+		debugger;
 		this.pushObject(messageModel);
 	},
 	
@@ -59,7 +59,7 @@ App.MessagesController = Ember.ArrayController.extend({
 			method: "POST",
         	contentType: "application/json",
         	dataType: "text",
-        	data: JSON.stringify(App.Dao.pseudo()),
+        	data: App.Dao.pseudo(),
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Could not join chat");
 			}
@@ -72,7 +72,7 @@ App.MessagesController = Ember.ArrayController.extend({
 			method: "PUT",
         	contentType: "application/json",
         	dataType: "text",
-        	data: JSON.stringify(name),
+        	data: name,
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Could not join chat");
 			}

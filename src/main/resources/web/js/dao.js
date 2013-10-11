@@ -59,8 +59,8 @@ App.Dao = Em.Object.create({
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
-			var payload = $.parseJSON(data.payload);
-			var timestamp = $.parseJSON(data.timestamp);
+			var payload = data.payload;
+			var timestamp = data.timestamp;
 
 			if (data.command === "postUpdated" || data.command === "postCreated" ) {
 				postsController.createOrUpdate(payload);
