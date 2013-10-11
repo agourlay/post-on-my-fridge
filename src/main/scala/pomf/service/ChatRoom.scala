@@ -15,7 +15,7 @@ class ChatRoom extends Actor with ActorLogging {
   var messages = Map.empty[Long, ChatMessage]
   var participantByToken = Map.empty[String, String]
 
-  context.system.scheduler.scheduleOnce(24 hour,self, ChatRoomProtocol.PurgeChat)
+  context.system.scheduler.scheduleOnce(2 hour,self, ChatRoomProtocol.PurgeChat)
 
   def receive = {
     case SendMessage(message, token)       => addChatMessage(message, token)
