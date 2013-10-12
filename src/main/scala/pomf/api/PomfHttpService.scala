@@ -169,7 +169,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
             entity(as[String]) { participantName =>
               complete {
                 chatService ! ChatServiceProtocol.AddParticipant(fridgeName, token, participantName)
-                participantName + "joined chat" 
+                participantName + " joined chat " +  fridgeName
               }
             }
           } 
