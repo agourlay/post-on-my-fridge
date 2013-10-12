@@ -35,7 +35,7 @@ object JsonSupport{
   implicit val formatFridge = jsonFormat5(Fridge)
   implicit val formatFridgeRest = jsonFormat6(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
-  implicit val formatEvent = jsonFormat3(PushedEvent)
+  implicit val formatEvent = jsonFormat4(PushedEvent)
   implicit val formatHttpServerStats = new RootJsonFormat[Stats] {
     def write(obj: Stats): JsValue = JsObject(
       "uptimeInMilli" -> JsNumber(obj.uptime.toMillis),

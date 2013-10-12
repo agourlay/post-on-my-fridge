@@ -188,6 +188,14 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           complete {
               (chatService ? ChatServiceProtocol.ParticipantNumber(fridgeName)).mapTo[String]
           }  
+        } ~
+        delete {
+          parameters("token") { token =>
+            complete {
+              chatService ! ChatServiceProtocol.RemoveParticipant(fridgeName, token)
+              token + " removed from chat " +  fridgeName
+            }
+          }
         }
       }
     } 

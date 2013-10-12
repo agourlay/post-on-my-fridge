@@ -7,9 +7,13 @@ App.Router.map(function() {
 
 App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
-		var fridgeName = params.fridge_id;
-		return App.Dao.initSessionData(fridgeName);
-  	}
+		return App.Dao.initSessionData(params.fridge_id);
+  	},
+	beforeModel: function(transition) {
+	    if (App.Dao.get('fridgeId') != null){
+	    	this.controllerFor('messages').leaveChat(transition.params.fridge_id);
+	    }
+	}
 });
 
 App.FridgesRoute = Ember.Route.extend({

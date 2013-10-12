@@ -8,14 +8,15 @@ App.Dao = Em.Object.create({
 
 	initSessionData : function(fridgeId) {
 		this.set('fridgeId',fridgeId);
-		this.set("userToken",null);
+		if(this.get("userToken") == null){
+			this.retrieveUserToken();
+		}
 		if (this.get("messagesController") != null){
 			this.get("messagesController").reload();
 		}
 		if (this.get("source") != null){
 			this.get("source").close();
 		}
-		this.retrieveUserToken();
 		return this.findFridgeByName(fridgeId);
 	},
 
@@ -92,6 +93,14 @@ App.Dao = Em.Object.create({
 			store.set('username', "Anonymous");
 		}
 		return store.get('username');	
+	},
+
+	leaveChatOnExit : function () {
+		if (this.get('fridgeId') != null) {
+		    this.get("messagesController").leaveChat(this.get('fridgeId')).done(function(){
+			return true;
+			});
+		}
 	},
 
 	renameParticipant : function (newName) {

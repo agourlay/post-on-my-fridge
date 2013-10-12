@@ -13,6 +13,8 @@ import pomf.api.JsonSupport._
 
 class StatStream(ctx: RequestContext) extends StreamingResponse(ctx) {
   
+  override def startText = "Starts streaming statistics...\n"
+
   override def receive = {
 
     case stat : Stats => {

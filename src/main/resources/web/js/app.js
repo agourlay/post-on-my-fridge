@@ -53,6 +53,13 @@ App.ApplicationView = Em.View.extend({
 });
 
 App.ApplicationController = Ember.Controller.extend({
+
+  init: function() {
+    $(window).bind('beforeunload', function(e) {
+      App.Dao.leaveChatOnExit();
+    });
+  },
+
   currentPathChanged: function() {
     var page;
 

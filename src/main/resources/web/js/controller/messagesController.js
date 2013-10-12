@@ -47,7 +47,11 @@ App.MessagesController = Ember.ArrayController.extend({
 		var me = this;
 		$.getJSON("chat/" + App.Dao.get('fridgeId') + "/participants", function(number) {
 			if (number !== null) {
-				//infoMessage(""+number);
+				if (number === 1){
+					me.notificationManagement("You are alone in this chat", moment().format("YYYY-MM-DDTHH:mm:ssZZ"));
+				}else{
+					me.notificationManagement(number + " online participants", moment().format("YYYY-MM-DDTHH:mm:ssZZ"));
+				}
 			}
 		});
 	},
@@ -65,6 +69,19 @@ App.MessagesController = Ember.ArrayController.extend({
 		});
 	},
 
+	leaveChat: function(chatName) {
+		return $.ajax({
+			url: "chat/" + chatName + "/participants?token=" + App.Dao.get("userToken"),
+			method: "DELETE",
+        	contentType: "application/json",
+        	dataType: "text",
+        	data: App.Dao.pseudo(),
+			error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Could not exit chat");
+			}
+		});
+	},
+
 	renameParticipant: function(name) {
 		return $.ajax({
 			url: "chat/" + App.Dao.get('fridgeId') + "/participants?token=" + App.Dao.get("userToken"),
@@ -73,7 +90,7 @@ App.MessagesController = Ember.ArrayController.extend({
         	dataType: "text",
         	data: name,
 			error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Could not join chat");
+				errorMessage("Could not rename participant");
 			}
 		});
 	}

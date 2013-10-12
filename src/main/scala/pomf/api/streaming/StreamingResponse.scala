@@ -21,8 +21,10 @@ class StreamingResponse(ctx: RequestContext) extends Actor with ActorLogging {
 	    binary = false
 	   ))
 
+  def startText = "Starts streaming...\n"
+
   val responseStart = HttpResponse(
- 			entity  = HttpEntity(EventStreamType, "Starts streaming stats...\n"),
+ 			entity  = HttpEntity(EventStreamType, startText),
   		headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
       )
 

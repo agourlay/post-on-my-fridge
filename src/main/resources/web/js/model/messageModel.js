@@ -4,6 +4,6 @@ App.Message = Em.Object.extend({
 	timestamp: null,
 	isNotification: false,
 	date: function (){
-		return moment(new Date(this.get('timestamp'))).format('HH:mm');
+		return moment(this.timestamp, "YYYY-MM-DDTHH:mm:ssZZ").format('HH:mm');
 	}.property()
 });

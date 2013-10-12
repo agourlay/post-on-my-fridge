@@ -57,13 +57,13 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
     participantNumber pipeTo sender
   }
 
-  def addParticipant(fridgeName: String, token:String, name:String) = {
+  def addParticipant(fridgeName: String, token: String, name: String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     context.actorSelection(chatRoomPath) ! ChatRoomProtocol.AddParticipant(token, name)
     notificationService ! NotificationServiceProtocol.ParticipantAdded(fridgeName, token, name)
   }
 
-  def removeParticipant(fridgeName: String, token:String) = {
+  def removeParticipant(fridgeName: String, token: String) = {
     val chatRoomPath = getOrCreateChatRoom(fridgeName)
     val nameQuitter = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.RemoveParticipant(token)).mapTo[String]
     nameQuitter.onSuccess { 
