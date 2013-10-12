@@ -31,8 +31,8 @@ App.PostsController = Ember.ArrayController.extend({
 	},
 
 	createOrUpdate: function(post) {
-		var exists = this.filterProperty('id', post.id).length;
-		if (exists === 0) {
+		var exists = this.findProperty("id", post.id);
+		if (exists == undefined) {
 			this.pushObject(App.Post.createWithMixins(post));
 		} else {
 			this.updateExistingPost(post);
