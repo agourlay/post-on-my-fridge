@@ -7,7 +7,7 @@ App.ChatInputController = Ember.ObjectController.extend({
 		var payload = {};
 		payload.user = pseudo;
 		payload.message = message;
-		payload.timestamp = new Date().getTime();
+		payload.timestamp = moment().format("YYYY-MM-DDTHH:mm:ssZZ");
 		var controller = this;
 		this.postMessage(payload).done(function(){
 			App.Dao.addLocalMessage(payload);

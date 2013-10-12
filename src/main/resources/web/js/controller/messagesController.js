@@ -20,7 +20,11 @@ App.MessagesController = Ember.ArrayController.extend({
 	},
 
 	messageManagement: function(message) {
-		var messageModel = App.Message.createWithMixins(message);
+		var messageModel = App.Message.create();
+		messageModel.set("message" ,message.message);
+		messageModel.set("user" ,message.user);
+		messageModel.set("timestamp" ,message.timestamp);
+		messageModel.set("isNotification" ,false);
 		this.pushObject(messageModel);
 	},
 

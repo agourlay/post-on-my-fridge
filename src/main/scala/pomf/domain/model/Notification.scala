@@ -18,7 +18,7 @@ object Notification{
   }
   
   def deletePost(fridgeName : String, id : Long, token :String) = {
-    new Notification(fridgeName, "postDeleted", JsString(id.toString), new DateTime(), token)
+    new Notification(fridgeName, "postDeleted", JsNumber(id), new DateTime(), token)
   }
   
   def sendMessage(fridgeName : String, message : ChatMessage, token :String)(implicit conv : RootJsonFormat[ChatMessage]) = {

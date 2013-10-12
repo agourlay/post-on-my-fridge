@@ -4,6 +4,7 @@ import akka.actor._
 
 import pomf.domain.model._
 import pomf.service.ChatRoomProtocol._
+import pomf.util.CustomOrdering._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
