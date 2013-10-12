@@ -62,15 +62,14 @@ App.Dao = Em.Object.create({
 			var data = $.parseJSON(e.data);
 			var payload = data.payload;
 			var timestamp = data.timestamp;
-
 			if (data.command === "postUpdated" || data.command === "postCreated" ) {
-				postsController.createOrUpdate($.parseJSON(payload));
+				postsController.createOrUpdate(payload);
 			}
 			if (data.command === "postDeleted") {
-				postsController.deleteById($.parseJSON(payload));
+				postsController.deleteById(payload);
 			}
 			if (data.command === "messageSent") {
-				messagesController.messageManagement($.parseJSON(payload));
+				messagesController.messageManagement(payload);
 			}
 			if (data.command === "participantAdded" || data.command === "participantRemoved" || data.command === "participantRenamed") {
 				messagesController.notificationManagement(payload, timestamp);

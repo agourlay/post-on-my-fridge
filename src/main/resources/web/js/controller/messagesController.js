@@ -74,7 +74,7 @@ App.MessagesController = Ember.ArrayController.extend({
 			url: "chat/" + chatName + "/participants?token=" + App.Dao.get("userToken"),
 			method: "DELETE",
 			async : false,
-			timeout : 2000,
+			timeout : 1000,
         	contentType: "application/json",
         	dataType: "text",
         	data: App.Dao.pseudo(),

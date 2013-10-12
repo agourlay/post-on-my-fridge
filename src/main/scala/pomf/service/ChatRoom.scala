@@ -36,9 +36,9 @@ class ChatRoom extends Actor with ActorLogging {
   }
 
   def removeParticipant(token: String) : String = {
-    val name = participantByToken(token) 
+    val name = participantByToken.get(token)
     participantByToken -= token
-    name
+    name.getOrElse("Unknown")
   }
 
   def renameParticipant(token: String, newName : String) : String = {
