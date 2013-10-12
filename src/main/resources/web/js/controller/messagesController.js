@@ -73,6 +73,8 @@ App.MessagesController = Ember.ArrayController.extend({
 		return $.ajax({
 			url: "chat/" + chatName + "/participants?token=" + App.Dao.get("userToken"),
 			method: "DELETE",
+			async : false,
+			timeout : 2000,
         	contentType: "application/json",
         	dataType: "text",
         	data: App.Dao.pseudo(),

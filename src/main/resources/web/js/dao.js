@@ -97,9 +97,7 @@ App.Dao = Em.Object.create({
 
 	leaveChatOnExit : function () {
 		if (this.get('fridgeId') != null) {
-		    this.get("messagesController").leaveChat(this.get('fridgeId')).done(function(){
-			return true;
-			});
+		    this.get("messagesController").leaveChat(this.get('fridgeId'));
 		}
 	},
 
