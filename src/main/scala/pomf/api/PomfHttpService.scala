@@ -230,13 +230,13 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
     path(""){
         cache(simpleCache) {
             encodeResponse(Gzip){
-                getFromResource("web/index.html")   
+                getFromResource("frontend/web/index.html")   
             }
         }
     } ~
     cache(simpleCache) {
         encodeResponse(Gzip){
-            getFromResourceDirectory("web")
+            getFromResourceDirectory("frontend/web")
         }
     }    
 
