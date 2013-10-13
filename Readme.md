@@ -36,6 +36,7 @@ java -jar pomf-api.jar &
 ```
 I have provided my nginx configuration in the [misc](https://github.com/agourlay/post-on-my-fridge/blob/master/misc/nginx.conf) folder, it assumes that the application runs on 127.0.0.1:8080 
 
+The frontend is embedded into the spray application in the [frontend](https://github.com/agourlay/post-on-my-fridge/blob/master/src/main/resources/frontend) folder. It uses Bower for javascript dependency management.
 
 ## Licence
 
