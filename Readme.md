@@ -8,25 +8,24 @@ You can **[try it](http://fridge.arnaud-gourlay.info)**
 
 This application focuses on realtime interactions and simplicity. 
 
-The backend is written in Scala using Akka actor's model and Spray for the rest/http interface. 
+The backend is written in Scala using [Akka](http://akka.io/) actor's model and [Spray](http://spray.io/) for the rest/http interface. 
 
-The frontend is written in javascript and makes heavy use of Ember.js.
-
+The frontend is a single page web app written in javascript with [Ember.js](http://emberjs.com/).
 
 
 ## Architecture
 
-A single page web app built displays the content of a fridge and subscribes to notifications for the current fridge.
+A single page web app displays the content of a fridge and subscribes to all the notifications occuring on it.
 
-The backend is a non blocking rest API that manages CRUD and pushed notifications. 
-
-When an action such as creating or moving a post is called on a fridge, a notification about the new state is sent via Server Sent Event to all the current fridge´s clients. 
+When an action such as creating or moving a post is called on a fridge, a notification about the new state is pushed via Server Sent Event to all the current fridge´s clients. 
 
 This technique allows near real time collaboration on a fridge.
 
 ## Setup
 
 This is full-stack application, you need SBT to build it and a postgreSQL instance to run it.
+
+The frontend is also embedded into the spray application in the [frontend](https://github.com/agourlay/post-on-my-fridge/blob/master/src/main/resources/frontend) folder. It uses [Bower](http://bower.io/) for javascript dependency management.
 
 The easiest way to deploy the project on a server is to build and run a fatjar.
 
@@ -35,8 +34,6 @@ sbt assembly
 java -jar pomf-api.jar &
 ```
 I have provided my nginx configuration in the [misc](https://github.com/agourlay/post-on-my-fridge/blob/master/misc/nginx.conf) folder, it assumes that the application runs on 127.0.0.1:8080 
-
-The frontend is embedded into the spray application in the [frontend](https://github.com/agourlay/post-on-my-fridge/blob/master/src/main/resources/frontend) folder. It uses Bower for javascript dependency management.
 
 ## Licence
 
