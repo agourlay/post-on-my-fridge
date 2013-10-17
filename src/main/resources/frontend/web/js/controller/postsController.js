@@ -22,21 +22,32 @@ App.PostsController = Ember.ArrayController.extend({
 
 	updateExistingPost: function(postInput) {
 		var post = this.findProperty('id', postInput.id);
-		post.set('content', postInput.content);
-		post.set('color', postInput.color);
-		var newFullPosition = postInput.positionX + ' ' + postInput.positionY;
-		if (post.get('fullPosition') !== newFullPosition){
-			post.set('fullPosition', newFullPosition);
-		}
+		if (exists != undefined) {
+			post.set('content', postInput.content);
+			post.set('color', postInput.color);
+			var newFullPosition = postInput.positionX + ' ' + postInput.positionY;
+			if (post.get('fullPosition') !== newFullPosition){
+				post.set('fullPosition', newFullPosition);
+			}
+		} else {
+			// this post should already exist, let´s synch!
+			this.resyncContent();
+		}		
 	},
 
-	createOrUpdate: function(post) {
+	createPostOnFridge : function(post) {
 		var exists = this.findProperty("id", post.id);
 		if (exists == undefined) {
 			this.pushObject(App.Post.createWithMixins(post));
 		} else {
-			this.updateExistingPost(post);
+			// this post should not already exist, let´s synch!
+			this.resyncContent();
 		}
+	},
+
+	resyncContent : function() {
+		this.clear();
+		this.pushObjects(App.Dao.findFridgeByName(App.Dao.get("fridgeId")));
 	},
 
 	deleteById : function(id) {

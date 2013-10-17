@@ -62,8 +62,11 @@ App.Dao = Em.Object.create({
 			var data = $.parseJSON(e.data);
 			var payload = data.payload;
 			var timestamp = data.timestamp;
-			if (data.command === "postUpdated" || data.command === "postCreated" ) {
-				postsController.createOrUpdate(payload);
+			if (data.command === "postCreated" ) {
+				postsController.createPostOnFridge(payload);
+			}
+			if (data.command === "postUpdated" ) {
+				postsController.updateExistingPost(payload);
 			}
 			if (data.command === "postDeleted") {
 				postsController.deleteById(payload);
