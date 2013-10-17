@@ -44,7 +44,7 @@ resolvers ++= Seq(
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.2.1"
+  val akkaVersion   = "2.2.2"
   val sprayVersion  = "1.2-20131011"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
