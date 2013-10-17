@@ -46,8 +46,7 @@ App.PostsController = Ember.ArrayController.extend({
 	},
 
 	resyncContent : function() {
-		this.clear();
-		this.pushObjects(App.Dao.findFridgeByName(App.Dao.get("fridgeId")));
+		this.transitionToRoute('fridge', App.Dao.get("fridgeId"));
 	},
 
 	deleteById : function(id) {
