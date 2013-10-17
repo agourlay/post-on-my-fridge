@@ -1,7 +1,21 @@
 App.PostsController = Ember.ArrayController.extend({
 
 	init : function(){
-		App.Dao.streamRegistering(this,null);
+		var me = this;
+		App.Dao.set("postsController", this);
+		App.Dao.get("eventBus").onValue(function(evt){
+			var payload = evt.payload;
+			var timestamp = evt.timestamp;
+            if (evt.command === "postCreated" ) {
+				me.createPostOnFridge(payload);
+			}
+			if (evt.command === "postUpdated" ) {
+				me.updateExistingPost(payload);
+			}
+			if (evt.command === "postDeleted") {
+				me.deleteById(payload);
+			}
+        });
 	},
 	
 	createPost: function(postData) {
@@ -22,7 +36,7 @@ App.PostsController = Ember.ArrayController.extend({
 
 	updateExistingPost: function(postInput) {
 		var post = this.findProperty('id', postInput.id);
-		if (exists != undefined) {
+		if (post != undefined) {
 			post.set('content', postInput.content);
 			post.set('color', postInput.color);
 			var newFullPosition = postInput.positionX + ' ' + postInput.positionY;

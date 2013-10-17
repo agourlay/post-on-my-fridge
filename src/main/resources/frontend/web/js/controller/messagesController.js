@@ -2,7 +2,18 @@ App.MessagesController = Ember.ArrayController.extend({
 	content: [],
 		
 	init: function () {
-		App.Dao.streamRegistering(null, this);
+		var me = this; 
+		App.Dao.set("messagesController", this);
+		App.Dao.get("eventBus").onValue(function(evt){
+			var payload = evt.payload;
+			var timestamp = evt.timestamp;
+            if (evt.command === "messageSent") {
+				me.messageManagement(payload);
+			}
+			if (evt.command === "participantAdded" || evt.command === "participantRemoved" || evt.command === "participantRenamed") {
+				me.notificationManagement(payload, timestamp);
+			}
+        });
 		this.initData();
 	},
 

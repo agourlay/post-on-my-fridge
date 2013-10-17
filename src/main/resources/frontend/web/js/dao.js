@@ -5,17 +5,19 @@ App.Dao = Em.Object.create({
 	messagesController : null,
 	postsController : null,
 	userToken: null,
+	eventBus:null,
 
 	initSessionData : function(fridgeId) {
+		var me = this;
 		this.set('fridgeId',fridgeId);
+		this.set('eventBus', new Bacon.Bus())
 		if(this.get("userToken") == null){
-			this.retrieveUserToken();
+				me.retrieveUserToken().done(function(){
+					me.streamManagement();
+			});
 		}
 		if (this.get("messagesController") != null){
 			this.get("messagesController").reload();
-		}
-		if (this.get("source") != null){
-			this.get("source").close();
 		}
 		return this.findFridgeByName(fridgeId);
 	},
@@ -34,27 +36,11 @@ App.Dao = Em.Object.create({
 	},
 
 	addLocalMessage : function (message) {
+		debugger;
 		this.get('messagesController').messageManagement(message);
 	},
 
-	streamRegistering : function(optPostsController, optMessagesController){
-		if (optPostsController != null){
-			this.set("postsController",optPostsController);
-		}
-
-		if (optMessagesController != null){
-			this.set("messagesController",optMessagesController);
-		}
-
-		var postsController = this.get("postsController");
-		var messagesController = this.get("messagesController");
-
-		if (postsController != null && messagesController != null){
-			this.streamManagement(postsController,messagesController); 
-		}
-	},
-
-	streamManagement : function (postsController,messagesController) {
+	streamManagement : function () {
 		var me = this;
 		me.set("source", new EventSource("stream/fridge/" + this.get('fridgeId') +"?token="+ this.get("userToken")));
 		var source = me.get("source");
@@ -62,21 +48,7 @@ App.Dao = Em.Object.create({
 			var data = $.parseJSON(e.data);
 			var payload = data.payload;
 			var timestamp = data.timestamp;
-			if (data.command === "postCreated" ) {
-				postsController.createPostOnFridge(payload);
-			}
-			if (data.command === "postUpdated" ) {
-				postsController.updateExistingPost(payload);
-			}
-			if (data.command === "postDeleted") {
-				postsController.deleteById(payload);
-			}
-			if (data.command === "messageSent") {
-				messagesController.messageManagement(payload);
-			}
-			if (data.command === "participantAdded" || data.command === "participantRemoved" || data.command === "participantRenamed") {
-				messagesController.notificationManagement(payload, timestamp);
-			}
+			me.get("eventBus").push(data);
 		}, false);
 
 		source.addEventListener('open', function(e) {
@@ -134,7 +106,7 @@ App.Dao = Em.Object.create({
 	},
 
 	retrieveUserToken : function() {
-		$.ajax({
+		return $.ajax({
 	        url: "token/",
 	        type: 'GET',
 	        success: function(token) {
@@ -164,17 +136,17 @@ App.Dao = Em.Object.create({
     	});
 
 		var postCountDefer = $.ajax({
-	        	url: "count/posts/",
-	        	type: 'GET',
-	        	success: function(nbpost) {
-					if (nbpost !== null && nbpost !== undefined) {
-						idxModel.set('nbPosts', nbpost);
-					}
-	        	},
-	        	error: function(xhr, ajaxOptions, thrownError) {
-					errorMessage("Error during count posts retrieval");
+        	url: "count/posts/",
+        	type: 'GET',
+        	success: function(nbpost) {
+				if (nbpost !== null && nbpost !== undefined) {
+					idxModel.set('nbPosts', nbpost);
 				}
-    		});
+        	},
+        	error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during count posts retrieval");
+			}
+		});
 
 		return idxModel;
 	},
