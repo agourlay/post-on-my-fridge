@@ -3,7 +3,7 @@ var globalTimestamp = 0;
 
 $(function() {
 
-	var seriesData = [ [], [] ];
+	var seriesData = [ [], [], [] ];
 	seriesData.forEach(function(series) {
 		series.push(  {x: moment().unix(), y: NaN} );
 	});
@@ -17,7 +17,7 @@ $(function() {
 		element: document.getElementById("chart"),
 		width: calculateFitWidth(),
 		height: calculateFitHeight(),
-		renderer: 'line',
+		renderer: 'multi',
 		padding : {
 			top : 0.05,
 			bottom : 0.05
@@ -28,10 +28,18 @@ $(function() {
 			{
 				color: palette.color(),
 				data: seriesData[0],
+				renderer: 'bar',
+				name: 'Firehose throughput / sec'
+			},
+			{
+				color: palette.color(),
+				data: seriesData[1],
+				renderer: 'line',
 				name: 'Opened requests'
 			}, {
 				color: palette.color(),
-				data: seriesData[1],
+				data: seriesData[2],
+				renderer: 'line',
 				name: 'Opened connections'
 			}
 		]
@@ -104,9 +112,6 @@ function listenFirehose(){
 	var source = new EventSource("/stream/firehose");
 	source.addEventListener('message', function(e) {
 		globalCounter = globalCounter + 1;
-		interval = (new Date().getTime() - globalTimestamp) / 1000;
-		var newValue = (globalCounter / interval).toFixed(1);
-		$('#ssespeed').text(newValue);
 	}, false);
     
     source.addEventListener('open', function(e) {
@@ -131,10 +136,14 @@ function listenStats(series){
 		var openConnections = stats.openConnections;
 		var maxOpenConnections = stats.maxOpenConnections;
 		var requestTimeouts = stats.requestTimeouts;
+
+		var interval = (new Date().getTime() - globalTimestamp) / 1000;
+		var sseSpeed = (globalCounter / interval).toFixed(1);
 		
 		var xNow = moment().unix();
-		series[0].push({x: xNow, y:openRequests});
-		series[1].push({x: xNow, y:openConnections});
+		series[0].push({x: xNow, y:Math.round(sseSpeed)});
+		series[1].push({x: xNow, y:openRequests});
+		series[2].push({x: xNow, y:openConnections});
 
 		$('#totalRequests').text(totalRequests);
 		$('#openRequests').text(openRequests);
@@ -144,6 +153,7 @@ function listenStats(series){
 		$('#maxOpenConnections').text(maxOpenConnections);
 		$('#requestTimeouts').text(requestTimeouts);
 		$('#uptime').text(moment.duration(stats.uptimeInMilli).humanize());
+		$('#ssespeed').text(sseSpeed);
 	}, false);
     
     source.addEventListener('open', function(e) {
