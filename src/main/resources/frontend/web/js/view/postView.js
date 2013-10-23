@@ -78,14 +78,14 @@ App.PostView = Em.View.extend(App.Draggable, {
 	initIcons: function() {
 		var view = this;
 		// Trash
-		view.$().find(".icon-trash").click(function() {
+		view.$().find(".trash-post").click(function() {
 			view.$().effect("clip", 300, function(){
 				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
 						view.get('controller').deletePost(view.get('content').get('id'));
 				    });
 		});
 		// Edit
-		view.$().find(".icon-edit").click(function() {
+		view.$().find(".edit-post").click(function() {
 			view.set('readMode',!view.get('readMode'));
 		});
 	},

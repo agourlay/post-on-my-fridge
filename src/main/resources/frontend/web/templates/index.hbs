@@ -20,14 +20,14 @@
 						<form class="form-inline">
 							{{#link-to 'fridge' "demo"}}
 								<button class="btn btn-primary"  type="button" >
-									<i class="icon-white icon-signin"></i> Try the demo
+									<i class="fa fa-sign-in"></i> Try the demo
 								</button>
 							{{/link-to}}
 							&nbsp/&nbsp
 							<div class="input-append">
 	                			{{view Ember.TextField valueBinding="App.IndexView.newFridgeName" placeholder="Create your fridge" class="input-medium"}}
 	            				<button class="btn" {{action "toNewFridge" App.IndexView.newFridgeName}}>
-									<i class="icon-ok-circle"></i> 
+									<i class="fa fa-check-circle-o"></i> 
 									{{App.IndexView.newFrigeName}}
 								</button>
 			    			</div>
