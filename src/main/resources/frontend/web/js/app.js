@@ -5,16 +5,10 @@ window.App = Ember.Application.createWithMixins({
   LOG_VIEW_LOOKUPS: false,
   LOG_TRANSITIONS: true,
   LOG_STACKTRACE_ON_DEPRECATION: true,
-  LOG_VERSION: true,
-
-  init: function() {
-      this._super();
-  }
-
+  LOG_VERSION: true
 });
 
 App.ApplicationView = Em.View.extend({
-  templateName: 'application',
   tagName : 'div',
   elementId: 'app'
 });
