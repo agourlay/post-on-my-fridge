@@ -16,7 +16,7 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "jquery-ui": "~1.10.3",
-    "ember": "~1.0.0-2-g1a160f1",
+    "ember": "~1.1.0",
     "handlebars": "~1.0.0",
     "store.js": "~1.3.14",
     "momentjs": "~2.3.1",
