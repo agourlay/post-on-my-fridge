@@ -115,12 +115,12 @@ function listenFirehose(){
 	}, false);
     
     source.addEventListener('open', function(e) {
-		Alertify.log.success("Listening to firehose stream");
+		//Alertify.log.success("Listening to firehose stream");
 	}, false);
 
 	source.addEventListener('error', function(e) {
 	    if (e.readyState == EventSource.CLOSED) {
-		    Alertify.log.error("Firehose stream error");
+		    //Alertify.log.error("Firehose stream error");
 		}
 	}, false);
 }
@@ -157,12 +157,12 @@ function listenStats(series){
 	}, false);
     
     source.addEventListener('open', function(e) {
-		Alertify.log.success("Listening to stats stream");
+		//Alertify.log.success("Listening to stats stream");
 	}, false);
 
 	source.addEventListener('error', function(e) {
 	    if (e.readyState == EventSource.CLOSED) {
-		    Alertify.log.error("Stats stream error");
+		    //Alertify.log.error("Stats stream error");
 		}
 	}, false);
 }
