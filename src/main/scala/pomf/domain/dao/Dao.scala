@@ -18,11 +18,11 @@ class Dao(name: String, dal: DAL, db: Database) {
   
   val logger: Logger = LoggerFactory.getLogger("dao")
 
-  def createDB = dal.create
+  def createDB() = dal.create
 
-  def dropDB = dal.drop
+  def dropDB() = dal.drop
   
-  def purgeDB = dal.purge
+  def purgeDB() = dal.purge
 
   def addFridge(fridge: Fridge): Fridge = Fridges.insert(fridge)
   
