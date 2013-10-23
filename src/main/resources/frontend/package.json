@@ -1,0 +1,10 @@
+{
+  "name": "pomf-front",
+  "version": "0.0.0",
+  "author": "Arnaud Gourlay <arnaud.gourlay@gmail.com>",
+  "description": "pomf frontend",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-ember-templates": "~0.4.15"
+  }
+}

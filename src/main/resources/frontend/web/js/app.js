@@ -6,48 +6,15 @@ window.App = Ember.Application.createWithMixins({
   LOG_TRANSITIONS: true,
   LOG_STACKTRACE_ON_DEPRECATION: true,
   LOG_VERSION: true,
-     
-  templates: [
-    'application',
-    'index',
-    'footer',
-    'header',
-    'fridges',
-    'fridge',
-    'panel/_header',
-    'panel/_chat',
-    'panel',
-    'message',
-    'trends',
-    'post/_header',
-    'post/_form',
-    'post'
-  ],
-
-  loadTemplates: function() {
-    var app = this,
-        templates = this.get('templates');
-
-    app.deferReadiness();
-
-    var promises = templates.map(function(name) {
-      return Ember.$.get('/js/templates/'+name+'.hbs').then(function(data) {
-        Ember.TEMPLATES[name] = Ember.Handlebars.compile(data);
-      });
-    });
-
-    Ember.RSVP.all(promises).then(function() {
-      app.advanceReadiness();
-    });
-  },
 
   init: function() {
       this._super();
-      this.loadTemplates();
   }
+
 });
 
 App.ApplicationView = Em.View.extend({
+  templateName: 'application',
   tagName : 'div',
   elementId: 'app'
 });

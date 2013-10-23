@@ -83,15 +83,15 @@ function textContainsSupportedMediaUrl(text) {
 }
 
 function successMessage(message){
-	Alertify.log.success(message);
+	//Alertify.log.success(message);
 }
 
 function errorMessage(message){
-	Alertify.log.error(message);
+	//Alertify.log.error(message);
 }
 
 function infoMessage(message){
-	Alertify.log.info(message);
+	//Alertify.log.info(message);
 }
 
 function filterData(data) {
