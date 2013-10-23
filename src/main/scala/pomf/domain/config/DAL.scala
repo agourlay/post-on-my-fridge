@@ -18,9 +18,9 @@ class DAL(override val profile: ExtendedProfile) extends FridgeComponent with Po
   val logger: Logger = LoggerFactory.getLogger("domain")
   logger.info("Model class instantiated")
 
-  def ddls = List(Posts.ddl,Fridges.ddl)
+  def ddls() = List(Posts.ddl,Fridges.ddl)
 
-  def create(implicit session: Session): Unit = {
+  def create()(implicit session: Session): Unit = {
     try {
       ddls.foreach(_.create)
     } catch {
@@ -28,7 +28,7 @@ class DAL(override val profile: ExtendedProfile) extends FridgeComponent with Po
     }
   }
 
-  def drop(implicit session: Session): Unit = {
+  def drop()(implicit session: Session): Unit = {
     try {
       ddls.foreach(_.drop)
     } catch {

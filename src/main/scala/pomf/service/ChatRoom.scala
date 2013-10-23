@@ -48,7 +48,7 @@ class ChatRoom extends Actor with ActorLogging {
     oldName.getOrElse("Unknown name")
   }
 
-  def purgeState = {
+  def purgeState() = {
     messages = Map.empty[Long, ChatMessage]
     participantByToken = Map.empty[String, String]
   }
