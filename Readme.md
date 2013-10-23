@@ -25,7 +25,7 @@ This technique allows near real time collaboration on a fridge.
 
 This is full-stack application, you need SBT to build it and a postgreSQL instance to run it.
 
-The frontend is also embedded into the spray application in the [frontend](https://github.com/agourlay/post-on-my-fridge/blob/master/src/main/resources/frontend) folder. It uses [Bower](http://bower.io/) for javascript dependency management.
+The frontend is also embedded into the spray application in the [frontend](https://github.com/agourlay/post-on-my-fridge/blob/master/src/main/resources/frontend) folder. It uses [Bower](http://bower.io/) and [Grunt](http://gruntjs.com/) for javascript build management.
 
 The easiest way to deploy the project on a server is to build and run a fatjar.
 
