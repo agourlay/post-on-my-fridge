@@ -25,5 +25,5 @@ import scala.slick.driver.H2Driver
 
   val date = new DateTime()
 
-  def addFridge = dao.addFridge(Fridge("Demo", "Demo Fridge", date, date)) === (Fridge(id = Some(1), name = "Demo", description = "Demo Fridge", creationDate = date, modificationDate = date))
+  def addFridge = dao.addFridge(Fridge("Demo", date, date)) === (Fridge(id = Some(1), name = "Demo", creationDate = date, modificationDate = date))
 }
