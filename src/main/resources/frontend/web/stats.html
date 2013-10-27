@@ -10,8 +10,7 @@
 	<!-- CSS -->	
 	<link rel="stylesheet" href="/bower_components/jquery-ui/themes/base/minified/jquery-ui.min.css"/>
 	<link rel="stylesheet" href="/bower_components/rickshaw/rickshaw.min.css"/>
-	<!-- bootstrap min not available in bower -->
-	<link rel="stylesheet" href="/vendor/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="/bower_components/alertify.js/dist/themes/alertify.bootstrap.css"/>
 
@@ -52,19 +51,19 @@
 	    </div>
 	</header>
 	<div id="stats-container">
-		<table id="stats_table">
+		<table id="stats_table" class="table">
 			<tr>
 				<td>Total requests : <span id="totalRequests"></span></td>
 				<td>Max opened requests : <span id="maxOpenRequests"></span></td>
 				<td>Opened requests : <span id="openRequests"></span></td>
-				<td><i class=" icon-warning-sign"></i> Requests timed out : <span id="requestTimeouts"></span></td>
+				<td class="warning"><i class="fa fa-exclamation-triangle"></i> Requests timed out : <span id="requestTimeouts"></span></td>
                 <td rowspan="2"><span id="legend"></span></td>
 			</tr>
 			<tr>
 				<td>Total connections : <span id="totalConnections"></span></td>
 				<td>Max opened connections : <span id="maxOpenConnections"></span></td>
 				<td>Opened connections : <span id="openConnections"></span></td>
-                <td><i class="icon-dashboard"></i> Firehose's throughput : <b><span id="ssespeed">0</span> msg / sec<b></td>
+                <td><i class="fa fa-tachometer"></i> Firehose's throughput : <b><span id="ssespeed">0</span> msg / sec<b></td>
 			</tr>
 		</table>
 		
