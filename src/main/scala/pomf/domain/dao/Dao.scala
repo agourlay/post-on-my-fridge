@@ -30,13 +30,13 @@ class Dao(name: String, dal: DAL, db: Database) {
     val fridgeOpt:Option[Fridge] = Fridges.findByName(fridgeName)
     fridgeOpt match {
       case Some(fridge) => completeFridge(fridge)
-      case _ => FridgeRest(name = fridgeName, description = "", new DateTime(), new DateTime(), posts = List[Post](), id = None)
+      case _ => FridgeRest(name = fridgeName, new DateTime(), new DateTime(), posts = List[Post](), id = None)
     }							 
   }
 
   def getAllFridge(): List[FridgeRest] = Fridges.findAllFridge.map(completeFridge(_))
 
-  def completeFridge(f : Fridge):FridgeRest = FridgeRest(f.name, f.description, f.creationDate, f.modificationDate,f.id, Posts.findPostByFridge(f.name))
+  def completeFridge(f : Fridge):FridgeRest = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id, Posts.findPostByFridge(f.name))
   
   def getPost(id :Long):Option[Post] = Posts.getPost(id)
   
@@ -56,10 +56,6 @@ class Dao(name: String, dal: DAL, db: Database) {
   def updatePost(post :Post):Option[Post] = {
     Fridges.updateModificationDate(post.fridgeId)
     Posts.updatePost(post)
-  }
-
-  def updateDescription(fridgeName : String, description : String) = {
-    Fridges.updateDescription(fridgeName, description)
   }
 
   def deleteOutdatedPost() = Posts.deleteOutdatedPost

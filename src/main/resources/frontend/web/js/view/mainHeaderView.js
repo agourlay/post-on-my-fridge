@@ -1,5 +1,11 @@
 App.MainHeaderView = Em.View.extend({
 	templateName: 'mainHeader',
+	contentBinding: 'controller.content',
+
+	title: function() {
+		return this.get('content') !== undefined ? this.get('content') : "Post On My Fridge";
+	}.property('content'),
+
 	didInsertElement: function() {
 		var view = this;
 		$('#search').typeahead({

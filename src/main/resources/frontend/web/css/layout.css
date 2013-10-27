@@ -13,29 +13,23 @@ a{
 }
 
 #fridge-title{
-	height: 18px;
-	float: left;
-	text-transform: capitalize;
-	font-size: 17px;
-};	
-
-#fridge-description {
-	height: 18px;
-	padding-left: 10px;
-	text-transform: capitalize;
-	font-size: 8px;
-};	
-
-#fridge-description input[type="text"]{
-	height: 14px;
-	width: 190px;
-};			
+    min-width: 100%;
+    color : #3C4044;
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
+    text-transform: capitalize;
+    padding: 9px 3px 9px 3px;}    
 
 #social-box{
+	padding: 10px 3px 10px 3px;
+	text-align: left;
+	height: 30%;
+	width: 100%;}
+
+#participant-box{
 	text-align: left;
 	height: 30%;
 	padding: 3px;
-	width: 100%;}
+	width: 100%;}	
 
 #search-box{
 	text-align: left;
@@ -63,7 +57,7 @@ a{
 	float: right;
 	text-align: center;
 	height: 1200px;
-	top:41px;
+	top: 41px;
 	width: 82%;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
@@ -71,15 +65,18 @@ a{
 #panel {
 	position : fixed;
 	z-index: 80;
+	top:41px;
 	width: 18%;
 	height: 100%;
-	top:41px;
-  	padding-left: 2px;}
+  	padding-left: 2px;
+    box-shadow: 7px 0px 9px -2px #aaa;
+    -moz-box-shadow: 7px 0px 9px -2px #aaa;
+    -webkit-box-shadow: 7px 0px 9px -2px #aaa; }
 
 #panel-header {
 	position : relative;
 	width: 100%;
-	height: 130px;
+	height: 100px;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid #e0e0e0;
 	z-index : 90;}
@@ -112,7 +109,6 @@ a{
 	height: auto !important;
 	height: 100%;
 	margin: 0 auto -40px;
-	/*background-image: url(../../images/p5.png);*/
 }
 
 #push, #footer {
@@ -120,10 +116,16 @@ a{
 	height: 40px;
 }
 
+#main-content {
+	top:41px;
+	position: relative;
+}
+
 #main-header {
 	position: fixed;
-	z-index: 500;
 	background-color: #f8f8f8;
+	z-index: 500;
+	opacity: 0.9;
 	width: 100%;
 	height: 40px;
 	border-bottom: 1px solid #e0e0e0;
@@ -136,7 +138,6 @@ a{
 
 #main-title{
 	width: 30%;
-	height: 40px;
 	font-family: 'Telex',sans-serif;
 	font-weight: bold;
 	line-height: 20px;

@@ -24,13 +24,7 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
     case SearchFridge(term)                  => sender ! searchByNameLike(term)
     case CountFridges                        => sender ! countFridges
     case CountPosts                          => sender ! countPosts
-    case UpdateFridge(fridgeId, description) => sender ! updateFridgeDescription(fridgeId,description)
     case DeleteOutdatedPost                  => deleteOutdatedPost
-  }
-
-  def updateFridgeDescription(fridgeId: String, description : String) : String = {
-    dao.updateDescription(fridgeId, description)
-    fridgeId + " has been updated with description " + description
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -53,7 +47,6 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
     val fridgeRss = <rss version="2.0">
                       <channel>
                         <title>{ fridge.name }</title>
-                        <description>{ fridge.description }</description>
                         <link>{ urlSite }#/{ fridge.name }</link>
                         {
                           for (post <- fridge.posts) yield {
@@ -110,7 +103,6 @@ object CrudServiceProtocol {
   case class DeletePost(postId: Long, token: String)
   case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
-  case class UpdateFridge(fridgeId : String, description : String)
   case object CountFridges
   case object CountPosts  
   case object DeleteOutdatedPost

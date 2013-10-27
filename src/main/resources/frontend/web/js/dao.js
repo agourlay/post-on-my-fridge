@@ -90,7 +90,7 @@ App.Dao = Em.Object.create({
             },
         	success: function(fridge) {
 				if (fridge !== null && fridge !== undefined) {
-					model.set('description', fridge.description);
+					model.set('name', fridge.name);
 					model.set('creationDate', fridge.creationDate);
 					model.set('modificationDate', fridge.modificationDate);
 					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
@@ -161,7 +161,6 @@ App.Dao = Em.Object.create({
 						var fridge = App.Fridge.create({
 							id:fridge.id,
 							name:fridge.name,
-							description:fridge.description,
 							creationDate:fridge.creationDate,
 							modificationDate:fridge.modificationDate,
 							posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
@@ -174,18 +173,6 @@ App.Dao = Em.Object.create({
 				}
     		});
 		return fridgesModel;
-	},
-
-	updateDescription: function(fridgeId, descriptio) {
-		$.ajax({
-			url: "fridges/" + fridgeId,
-			method: "PUT",
-			contentType: "application/json",
-			data: this.get("description"),
-			error: function(xhr, ajaxOptions, thrownError) {
-				errorMessage("Error during fridge description update");
-			}
-		});
 	}
 });
 
