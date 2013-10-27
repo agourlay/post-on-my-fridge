@@ -13,18 +13,18 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
   implicit def executionContext = context.dispatcher
 
   def receive = {
-    case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
-    case AllFridge                  => sender ! getAllFridge()
-    case CreateFridge(fridge)       => sender ! addFridge(fridge)
-    case GetPost(postId)            => sender ! getPost(postId)
-    case DeletePost(postId, token)  => sender ! deletePost(postId, token)
-    case CreatePost(post, token)    => sender ! addPost(post, token)
-    case UpdatePost(post, token)    => sender ! updatePost(post, token)
-    case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
-    case SearchFridge(term)         => sender ! searchByNameLike(term)
-    case CountFridges               => sender ! countFridges
-    case CountPosts                 => sender ! countPosts
-    case DeleteOutdatedPost         => deleteOutdatedPost
+    case FullFridge(fridgeName)              => sender ! getFridgeRest(fridgeName)
+    case AllFridge                           => sender ! getAllFridge()
+    case CreateFridge(fridge)                => sender ! addFridge(fridge)
+    case GetPost(postId)                     => sender ! getPost(postId)
+    case DeletePost(postId, token)           => sender ! deletePost(postId, token)
+    case CreatePost(post, token)             => sender ! addPost(post, token)
+    case UpdatePost(post, token)             => sender ! updatePost(post, token)
+    case FridgeRss(fridgeName)               => sender ! getFridgeRss(fridgeName)
+    case SearchFridge(term)                  => sender ! searchByNameLike(term)
+    case CountFridges                        => sender ! countFridges
+    case CountPosts                          => sender ! countPosts
+    case DeleteOutdatedPost                  => deleteOutdatedPost
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -47,7 +47,6 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
     val fridgeRss = <rss version="2.0">
                       <channel>
                         <title>{ fridge.name }</title>
-                        <description>{ fridge.description }</description>
                         <link>{ urlSite }#/{ fridge.name }</link>
                         {
                           for (post <- fridge.posts) yield {

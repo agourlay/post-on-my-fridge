@@ -20,7 +20,7 @@
     height: 220px;
     z-index:30; }
 
-.post .header{
+.post-header{
 	position: absolute;
 	left:0;
 	top:-35px;

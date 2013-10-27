@@ -86,20 +86,20 @@ App.Dao = Em.Object.create({
         	url: "fridges/" + fridgeId,
         	type: 'GET',
         	beforeSend : function (){
-        			NProgress.start(); 
-            	},
+        		NProgress.start(); 
+            },
         	success: function(fridge) {
-			if (fridge !== null && fridge !== undefined) {
-				model.set('description', fridge.description);
-				model.set('creationDate', fridge.creationDate);
-				model.set('modificationDate', fridge.modificationDate);
-				model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
-				model.set('loaded', true);
-			}
-			NProgress.done();
+				if (fridge !== null && fridge !== undefined) {
+					model.set('name', fridge.name);
+					model.set('creationDate', fridge.creationDate);
+					model.set('modificationDate', fridge.modificationDate);
+					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
+					model.set('loaded', true);
+				}
+				NProgress.done();
         	},
         	error: function(xhr, ajaxOptions, thrownError) {
-			errorMessage("Error during fridge retrieval");
+				errorMessage("Error during fridge retrieval");
 			}
     	});
 		return model;
@@ -161,7 +161,6 @@ App.Dao = Em.Object.create({
 						var fridge = App.Fridge.create({
 							id:fridge.id,
 							name:fridge.name,
-							description:fridge.description,
 							creationDate:fridge.creationDate,
 							modificationDate:fridge.modificationDate,
 							posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })

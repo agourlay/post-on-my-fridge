@@ -2,16 +2,25 @@ App.PanelView = Ember.View.extend({
 	tagName: 'aside',
 	elementId: 'panel',
 	contentBinding: 'controller.content',
+	viewers : 1,
 
 	fridgeName: function() {
-		return this.get('content.id');
-	}.property('content.id'),
+		return this.get('content');
+	}.property('content'),
 
 	rssUrl: function() {
-		var fridgeName = this.get('content.id');
+		var fridgeName = this.get('content');
 		document.title = "Fridge "+ fridgeName;
 		return "/rss/fridge/" + fridgeName;
-	}.property('content.id'),
+	}.property('content'),
+
+	participants : function() {
+		if (this.get("viewers") > 1){
+			return this.get("viewers") + " participants"
+		}else{
+			return this.get("viewers") + " participant"
+		}
+	}.property('viewers'),
 
 	didInsertElement : function() {	
 		var view = this;
@@ -24,15 +33,6 @@ App.PanelView = Ember.View.extend({
 				store.set('username', $("#pseudo").val() !== "" ? $("#pseudo").val() : "Anonymous");
 				App.Dao.renameParticipant(store.get('username'));
 			}
-		});
-
-		$('#search').typeahead({
-		    name: 'fridges',
-		    minLength : 2,
-		    remote: 'search/fridge/?term=%QUERY'
-		})
-		.on('typeahead:selected', function(e,datum) {
-		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));
 		});
 	}
 });

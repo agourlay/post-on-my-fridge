@@ -1,4 +1,5 @@
 {{#if view.content.loaded}}
-	{{render "panel" view.content}}
+	{{render "mainHeader" view.content.name}}
+	{{render "panel" view.content.name}}
     {{render "posts" view.content.posts}} 
 {{/if}}

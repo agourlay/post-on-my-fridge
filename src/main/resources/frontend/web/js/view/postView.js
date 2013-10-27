@@ -15,15 +15,15 @@ App.PostView = Em.View.extend(App.Draggable, {
 	}.property('content.content').cacheable(),
 
 	mouseEnter: function(event) {
-		this.$().find(".header").css({
+		this.$().find(".post-header").css({
 			'display': 'block'
 		}).fadeIn(300);
 	},
 
 	mouseLeave: function(event) {
 		var uiElmt = event.currentTarget;
-		if (!$(uiElmt).hasClass("header")) {
-			this.$().find(".header").fadeOut(300);
+		if (!$(uiElmt).hasClass("post-header")) {
+			this.$().find(".post-header").fadeOut(300);
 		}
 	},
 
@@ -31,7 +31,6 @@ App.PostView = Em.View.extend(App.Draggable, {
 		var view = this;
 		view.colorize();
 		view.setupPosition();
-		view.initIcons();
 		view.$().draggable({
 			revert: 'invalid',
 			containment: "parent",
@@ -75,19 +74,25 @@ App.PostView = Em.View.extend(App.Draggable, {
 		this.$().css("color", getTxtColorFromBg(color));
 	}.observes('content.color'),
 
-	initIcons: function() {
+	voteUp : function() {
+		console.log("vote up");
+	},
+
+	voteDown : function() {
+		console.log("vote down");
+	},
+
+	editMode : function() {
 		var view = this;
-		// Trash
-		view.$().find(".trash-post").click(function() {
-			view.$().effect("clip", 300, function(){
+		view.set('readMode',!view.get('readMode'));
+	},
+
+	trashPost : function () {
+		var view = this;
+		view.$().effect("clip", 300, function(){
 				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
 						view.get('controller').deletePost(view.get('content').get('id'));
 				    });
-		});
-		// Edit
-		view.$().find(".edit-post").click(function() {
-			view.set('readMode',!view.get('readMode'));
-		});
 	},
 
 	save: function(e) {
