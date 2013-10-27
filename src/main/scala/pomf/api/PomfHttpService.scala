@@ -46,6 +46,13 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           else
             (crudService ? CrudServiceProtocol.FullFridge(fridgeName)).mapTo[FridgeRest]
         }
+      } ~
+      put {
+        entity(as[String]) { description =>
+          complete {
+            (crudService ? CrudServiceProtocol.UpdateFridge(fridgeName, description)).mapTo[String]
+          }
+        }
       }
     } ~
     path("fridges") {

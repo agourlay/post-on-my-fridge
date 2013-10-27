@@ -1,12 +1,21 @@
-<div class='header'>
+<div class='post-header'>
 	<div class="btn-toolbar">
 	    <div class="btn-group">
-	    	<a class="btn btn-mini"><i class="fa fa-thumbs-o-up"></i></a>
-	     	<a class="btn btn-mini"><i class="fa fa-thumbs-o-down"></i></a>
-	    </div>
-	    <div class="btn-group">
-	       <a class="btn btn-mini edit-post"><i class="fa fa-edit"></i></a>
-	       <a class="btn btn-mini trash-post"><i class="fa fa-trash-o"></i></a>
+	        <a class="btn btn-mini edit-post" {{action editMode target="view"}}>
+	        	<i class="fa fa-edit"></i>
+	        </a>
+
+	        <a class="btn btn-mini trash-post" {{action trashPost target="view"}}>
+	        	<i class="fa fa-trash-o"></i>
+	        </a>
+
+	        <a class="btn btn-mini" {{action voteUp target="view"}}>
+	    		<i class="fa fa-thumbs-o-up"></i>
+	    	</a>
+
+	     	<a class="btn btn-mini" {{action voteDown target="view"}}>
+	     		<i class="fa fa-thumbs-o-down"></i>
+	     	</a>
 	    </div>
 	</div>
 </div>	

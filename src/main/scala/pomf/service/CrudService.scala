@@ -13,18 +13,24 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
   implicit def executionContext = context.dispatcher
 
   def receive = {
-    case FullFridge(fridgeName)     => sender ! getFridgeRest(fridgeName)
-    case AllFridge                  => sender ! getAllFridge()
-    case CreateFridge(fridge)       => sender ! addFridge(fridge)
-    case GetPost(postId)            => sender ! getPost(postId)
-    case DeletePost(postId, token)  => sender ! deletePost(postId, token)
-    case CreatePost(post, token)    => sender ! addPost(post, token)
-    case UpdatePost(post, token)    => sender ! updatePost(post, token)
-    case FridgeRss(fridgeName)      => sender ! getFridgeRss(fridgeName)
-    case SearchFridge(term)         => sender ! searchByNameLike(term)
-    case CountFridges               => sender ! countFridges
-    case CountPosts                 => sender ! countPosts
-    case DeleteOutdatedPost         => deleteOutdatedPost
+    case FullFridge(fridgeName)              => sender ! getFridgeRest(fridgeName)
+    case AllFridge                           => sender ! getAllFridge()
+    case CreateFridge(fridge)                => sender ! addFridge(fridge)
+    case GetPost(postId)                     => sender ! getPost(postId)
+    case DeletePost(postId, token)           => sender ! deletePost(postId, token)
+    case CreatePost(post, token)             => sender ! addPost(post, token)
+    case UpdatePost(post, token)             => sender ! updatePost(post, token)
+    case FridgeRss(fridgeName)               => sender ! getFridgeRss(fridgeName)
+    case SearchFridge(term)                  => sender ! searchByNameLike(term)
+    case CountFridges                        => sender ! countFridges
+    case CountPosts                          => sender ! countPosts
+    case UpdateFridge(fridgeId, description) => sender ! updateFridgeDescription(fridgeId,description)
+    case DeleteOutdatedPost                  => deleteOutdatedPost
+  }
+
+  def updateFridgeDescription(fridgeId: String, description : String) : String = {
+    dao.updateDescription(fridgeId, description)
+    fridgeId + " has been updated with description " + description
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -104,6 +110,7 @@ object CrudServiceProtocol {
   case class DeletePost(postId: Long, token: String)
   case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
+  case class UpdateFridge(fridgeId : String, description : String)
   case object CountFridges
   case object CountPosts  
   case object DeleteOutdatedPost

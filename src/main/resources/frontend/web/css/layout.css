@@ -3,17 +3,9 @@ height: 100%;
 margin: 0;
 }
 
-header {
-	position : relative;
-	width: 100%;
-	height: 130px;
-	background-color: #f8f8f8;
-	border-bottom: 1px solid #e0e0e0;
-	z-index : 90;}
-
 a{
-	text-decoration:none;
-}	
+	text-decoration:none !important;
+}
 
 #app, #indexView {
 	min-height: 100%;
@@ -21,11 +13,23 @@ a{
 }
 
 #fridge-title{
-	min-width: 100%;
-	color : #3C4044;
-	font-family: Geneva, Tahoma, Verdana, sans-serif;
+	height: 18px;
+	float: left;
 	text-transform: capitalize;
-	padding: 9px 3px 9px 3px;}	
+	font-size: 17px;
+};	
+
+#fridge-description {
+	height: 18px;
+	padding-left: 10px;
+	text-transform: capitalize;
+	font-size: 8px;
+};	
+
+#fridge-description input[type="text"]{
+	height: 14px;
+	width: 190px;
+};			
 
 #social-box{
 	text-align: left;
@@ -59,6 +63,7 @@ a{
 	float: right;
 	text-align: center;
 	height: 1200px;
+	top:41px;
 	width: 82%;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
@@ -68,10 +73,16 @@ a{
 	z-index: 80;
 	width: 18%;
 	height: 100%;
-  	padding-left: 2px;
-  	box-shadow: 7px 0px 9px -2px #aaa;
-	-moz-box-shadow: 7px 0px 9px -2px #aaa;
-	-webkit-box-shadow: 7px 0px 9px -2px #aaa; }
+	top:41px;
+  	padding-left: 2px;}
+
+#panel-header {
+	position : relative;
+	width: 100%;
+	height: 130px;
+	background-color: #f8f8f8;
+	border-bottom: 1px solid #e0e0e0;
+	z-index : 90;}
 	
 #chat-messages {
 	position:relative;
@@ -109,11 +120,45 @@ a{
 	height: 40px;
 }
 
-#header {
+#main-header {
+	position: fixed;
+	z-index: 500;
 	background-color: #f8f8f8;
+	width: 100%;
+	height: 40px;
 	border-bottom: 1px solid #e0e0e0;
-    vertical-align: middle !important;
+    vertical-align: middle;
 }
+
+#main-header a{
+	color: #317eac;
+}
+
+#main-title{
+	width: 30%;
+	height: 40px;
+	font-family: 'Telex',sans-serif;
+	font-weight: bold;
+	line-height: 20px;
+	font-size: 20px;
+	color: #317eac;
+	margin-left: 50px;
+	margin-top: 5px;
+	float: left;
+	text-transform: capitalize; }	
+
+#header-items{
+	float: right;
+	width: 65%;
+	height: 40px;
+	text-align: left;
+	margin-right: 10px;
+}
+
+.header-item{
+	width: 30%;
+	display: inline-block;
+}	
 
 #footer {
     vertical-align: middle !important;

@@ -1,23 +1,4 @@
-<header>
-    <div id="fridge-title">
-	   	{{#link-to 'index'}}
-	    	<img class="index-link" src="/images/fridge-link.png" alt="index"/>
-	    {{/link-to}}
-		<i class="fa fa-angle-right"></i> {{view.fridgeName}}
-		<a {{bindAttr href="view.rssUrl"}} target="_blank" class="rss-link">
-	    	<i class="fa fa-rss-square"></i> 
-	    </a>
-	</div> 
-    <div id="search-box">
-	    <form class="form-inline">
-	    	<div class="input-prepend">
-	  			<span class="add-on">
-	  				<i class="fa fa-search"></i>
-	  			</span>	
-	  			<input type="text" class="input-small" placeholder="Search fridge" id="search"/>
-	  		</div>
-		</form>	
-    </div>
+<div id="panel-header">
 	<div id="social-box">
 		<form class="form-inline">
 			<div class="input-prepend">
@@ -31,4 +12,4 @@
 			</button>
 		</form>					
     </div>
-</header>
+</div>

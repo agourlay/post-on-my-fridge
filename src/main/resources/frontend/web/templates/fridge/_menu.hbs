@@ -1,0 +1,44 @@
+<div id="main-header">
+	<div id="main-title">
+		<div id="fridge-title">
+		    {{#link-to 'index'}}
+	            <img class="index-link" src="/images/fridge-link.png" alt="index"/>
+	        {{/link-to}}
+			<i class="fa fa-angle-right"></i> 
+			{{view.fridgeName}}
+		</div>
+		<div id="fridge-description">
+			{{#if view.readMode}}
+				<i>{{view.content.description}}</i>
+				<a class="btn btn-mini edit-post" {{action editMode target="view"}}>
+					<i class="fa fa-edit"></i>
+				</a>
+			{{else}}
+				{{view App.LazyTextField sourceBinding="view.content.description" placeholder="description" viewName="textFieldDescription"}}
+				<button class="btn btn-small btn-primary" type="button"{{action saveDescription target="view"}}>
+			    	<i class="fa fa-check-circle-o"></i>
+			    	Save
+		        </button>
+			{{/if}}	
+		</div>
+	</div>
+	<div id="header-items">
+		<div class="header-item"> 
+			<div id="search-box">
+			    <form class="form-inline">
+			    	<div class="input-prepend">
+			  			<span class="add-on">
+			  				<i class="fa fa-search"></i>
+			  			</span>	
+			  			<input type="text" class="input-small" placeholder="Search for fridges" id="search"/>
+			  		</div>
+				</form>	
+	    	</div>
+    	</div>
+    	<div class="header-item"> 
+    		<a {{bindAttr href="view.rssUrl"}} target="_blank" class="rss-link">
+    			<i class="fa fa-rss-square"></i> 
+			</a>
+    	</div>
+    </div>	
+</div>	

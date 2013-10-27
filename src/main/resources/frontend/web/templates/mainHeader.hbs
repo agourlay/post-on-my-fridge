@@ -1,0 +1,32 @@
+<div id="main-header">
+	<div id="main-title">
+		{{#link-to 'index'}}
+	    		<img class="index-link" src="/images/fridge-link.png" alt="index"/> 
+	    		Post on my fridge
+		{{/link-to}}
+	</div>
+	<div id="header-items">
+		<div class="header-item">
+			{{#link-to 'fridges'}}
+				<h5><i class="fa fa-road"></i> Explore</h5>
+			{{/link-to}}
+		</div>
+		<div class="header-item">  
+			{{#link-to 'trends'}}
+				<h5><i class="fa fa-rocket"></i>  Trends</h5>
+			{{/link-to}}
+		</div>
+		<div class="header-item"> 
+			<div id="search-box">
+			    <form class="form-inline">
+			    	<div class="input-prepend">
+			  			<span class="add-on" style="height: 17px;">
+			  				<i class="fa fa-search"></i>
+			  			</span>	
+			  			<input type="text" class="input-small" placeholder="Search for fridges" id="search"/>
+			  		</div>
+				</form>	
+	    	</div>
+    	</div>
+	</div>
+</div>			

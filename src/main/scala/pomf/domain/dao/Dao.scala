@@ -58,6 +58,10 @@ class Dao(name: String, dal: DAL, db: Database) {
     Posts.updatePost(post)
   }
 
+  def updateDescription(fridgeName : String, description : String) = {
+    Fridges.updateDescription(fridgeName, description)
+  }
+
   def deleteOutdatedPost() = Posts.deleteOutdatedPost
 
   def countPosts() = Posts.count

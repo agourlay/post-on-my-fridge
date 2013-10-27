@@ -4,6 +4,10 @@
   margin-bottom: 0;
 }
 
+.twitter-typeahead input[type="text"]{
+  height: 17px;
+}
+
 .tt-dropdown-menu {
   min-width: 160px;
   margin-top: 2px;

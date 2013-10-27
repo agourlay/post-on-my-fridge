@@ -5,7 +5,7 @@ import pomf.util.XssFilter
 import com.github.tototoshi.slick.JodaSupport._
 import org.joda.time.DateTime
 
-case class Fridge(name: String, description: String = "", creationDate: DateTime, modificationDate: DateTime, id: Option[Long] = None){
+case class Fridge(name: String, description: String = "default description", creationDate: DateTime, modificationDate: DateTime, id: Option[Long] = None){
   require(!name.isEmpty, "fridge name must not be empty")
   require(!XssFilter.containsScript(name), "name must not contain script tags")
   require(!XssFilter.containsScript(description), "description must not contain script tags")
@@ -53,6 +53,14 @@ trait FridgeComponent { this: Profile =>
     	  fridge <- Fridges if fridge.name like "%"+term+"%"
       } yield (fridge.name)
       query.list
+    }
+
+    def updateDescription(fridgeId : String, description : String) (implicit session: Session) = {
+      val fridgeOpt = findByName(fridgeId)
+      if (fridgeOpt.isDefined) {
+        val fridge = fridgeOpt.get
+        update(Fridge(fridge.name, description, fridge.creationDate, new DateTime(), fridge.id))
+      } 
     }
 
     def count(implicit session: Session) = Query(Fridges).list.length
