@@ -28,7 +28,7 @@ $(function() {
 			{
 				color: palette.color(),
 				data: seriesData[0],
-				renderer: 'bar',
+				renderer: 'area',
 				name: 'Firehose throughput / sec'
 			},
 			{
@@ -168,7 +168,7 @@ function listenStats(series){
 }
 
 function calculateFitWidth() {
-	return $(window).width() - $("#chart").offset().left - 200;
+	return $(window).width() - $("#chart").offset().left - 50;
 }
 
 function calculateFitHeight() {
