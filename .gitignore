@@ -63,3 +63,5 @@ test-output/
 bower_components
 node_modules
 src/main/resources/frontend/web/js/templates.js
+src/main/resources/frontend/web/js/pomf.min.js
+src/main/resources/frontend/web/css/pomf.min.css

@@ -5,6 +5,8 @@
   "description": "pomf frontend",
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-ember-templates": "~0.4.15"
+    "grunt-ember-templates": "~0.4.15",
+    "grunt-contrib-uglify": "~0.2.5",
+    "grunt-contrib-cssmin": "~0.6.2"
   }
 }
