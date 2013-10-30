@@ -45,7 +45,7 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= {
   val akkaVersion   = "2.2.3"
-  val sprayVersion  = "1.2-RC1"
+  val sprayVersion  = "1.2-RC2"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
