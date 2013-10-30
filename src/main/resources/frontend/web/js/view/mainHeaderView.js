@@ -11,7 +11,7 @@ App.MainHeaderView = Em.View.extend({
 		$('#search').typeahead({
 		    name: 'fridges',
 		    minLength : 2,
-		    remote: 'search/fridge/?term=%QUERY'
+		    remote: 'search/fridge?term=%QUERY'
 		})
 		.on('typeahead:selected', function(e,datum) {
 		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));
