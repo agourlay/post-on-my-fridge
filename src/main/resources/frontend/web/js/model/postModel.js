@@ -9,7 +9,7 @@ App.Post = Em.Object.extend({
 	dueDate: null,
 	fridgeId: null,
 	resourceUrl: function(){
-		return "posts/";
+		return "posts";
 	}.property(),
 
 	resourceUrlWithToken: function(){
@@ -34,7 +34,7 @@ App.Post = Em.Object.extend({
 	deletePost: function() {
 		$.ajax({
 			method: 'DELETE',
-			url:  this.get("resourceUrl") + this.id+"?token=" + App.Dao.get("userToken"),
+			url:  this.get("resourceUrl") +"/" + this.id+"?token=" + App.Dao.get("userToken"),
 			dataType: "text",
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during post deletion");

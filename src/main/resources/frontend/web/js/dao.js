@@ -107,7 +107,7 @@ App.Dao = Em.Object.create({
 
 	retrieveUserToken : function() {
 		return $.ajax({
-	        url: "token/",
+	        url: "token",
 	        type: 'GET',
 	        success: function(token) {
 				if (token !== null && token !== undefined) {
@@ -123,7 +123,7 @@ App.Dao = Em.Object.create({
 	getStats : function () {
 		var idxModel = App.Index.create();
 		var fridgeCountDefer = $.ajax({
-	        	url: "count/fridges/",
+	        	url: "count/fridges",
 	        	type: 'GET',
 	        	success: function(nbfridge) {
 					if (nbfridge !== null && nbfridge !== undefined) {
@@ -136,7 +136,7 @@ App.Dao = Em.Object.create({
     	});
 
 		var postCountDefer = $.ajax({
-        	url: "count/posts/",
+        	url: "count/posts",
         	type: 'GET',
         	success: function(nbpost) {
 				if (nbpost !== null && nbpost !== undefined) {
