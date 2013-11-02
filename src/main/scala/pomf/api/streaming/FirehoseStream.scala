@@ -15,7 +15,11 @@ import HttpHeaders._
 
 class FirehoseStream(fridgeTarget:Option[String], userToken:Option[String], ctx: RequestContext) extends StreamingResponse(ctx) {
        
-  override def startText = "Starts streaming firehose...\n"
+  override def startText = "Streaming firehose...\n"
+
+  override def preStart {
+    context.system.eventStream.subscribe(self, classOf[Notification])
+  }
 
   def domainFilter(fridgeName:String, token : String) : Boolean = 
     if (fridgeTarget.isDefined && userToken.isDefined)

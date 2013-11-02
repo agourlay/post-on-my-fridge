@@ -13,7 +13,7 @@ import pomf.api.JsonSupport._
 
 class StatStream(ctx: RequestContext) extends StreamingResponse(ctx) {
   
-  override def startText = "Starts streaming statistics...\n"
+  override def startText = "Streaming statistics...\n"
 
   override def receive = {
 
@@ -21,6 +21,7 @@ class StatStream(ctx: RequestContext) extends StreamingResponse(ctx) {
         val nextChunk = MessageChunk("data: "+ formatHttpServerStats.write(stat) +"\n\n")
         ctx.responder ! nextChunk 
     }
+    
     case _ => super.receive   
     
   }

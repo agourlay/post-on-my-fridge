@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         src : [
           "web/bower_components/jquery/jquery.min.js",
           "web/vendor/js/bootstrap.min.js",
-          //"/bower_components/bootstrap/dist/js/bootstrap.min.js,
+          //"web/bower_components/bootstrap/dist/js/bootstrap.min.js,
           "web/bower_components/handlebars/handlebars.runtime.js",
           "web/bower_components/ember/ember.min.js",
           "web/bower_components/momentjs/min/moment.min.js",

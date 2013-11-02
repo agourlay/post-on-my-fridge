@@ -241,8 +241,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
     }    
 
   def streamFirehose(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
-    val fireHoseActor = context.actorOf(Props(new FirehoseStream(fridgeTarget, userToken, ctx)))
-    context.system.eventStream.subscribe(fireHoseActor, classOf[Notification])
+    context.actorOf(Props(new FirehoseStream(fridgeTarget, userToken, ctx)))
   }
 
   def streamStat (ctx: RequestContext): Unit = {
