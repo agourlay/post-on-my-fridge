@@ -13,25 +13,20 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class FirehoseStream(fridgeTarget:Option[String], userToken:Option[String], ctx: RequestContext) extends StreamingResponse(ctx) {
+class FirehoseStream(responder: ActorRef)(filter: (String, String) => Boolean) extends StreamingResponse(responder) {
        
   override def startText = "Streaming firehose...\n"
 
   override def preStart {
     context.system.eventStream.subscribe(self, classOf[Notification])
   }
-
-  def domainFilter(fridgeName:String, token : String) : Boolean = 
-    if (fridgeTarget.isDefined && userToken.isDefined)
-      fridgeName == fridgeTarget.get && token != userToken.get 
-    else true
   
   override def receive = {
     case Notification(fridgeNameNotif, command, payload, timestamp, token) => {
-      if (domainFilter(fridgeNameNotif,token)){
+      if (filter(fridgeNameNotif,token)){
         val pushedEvent = PushedEvent(fridgeNameNotif, command, payload, timestamp)
         val nextChunk = MessageChunk("data: "+ formatEvent.write(pushedEvent) +"\n\n")
-        ctx.responder ! nextChunk 
+        responder ! nextChunk 
       }
     }
 

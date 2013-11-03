@@ -27,7 +27,7 @@ import reflect.ClassTag
 import JsonSupport._
 
 
-class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService : ActorRef) extends HttpServiceActor with ActorLogging{
+class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService: ActorRef) extends HttpServiceActor with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(10 seconds)
 
@@ -137,9 +137,9 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
       path("posts") {
           get {
             complete {
-               countCache("posts"){
+              countCache("posts"){
                 (crudService ? CrudServiceProtocol.CountPosts).mapTo[String]
-               }   
+              }   
             }
           }
       }
@@ -204,12 +204,12 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
     pathPrefix("stream") {
       get {
         path("fridge" / Rest) { fridgeName =>
-            parameters("token") { token =>
-              streamFirehose(Some(fridgeName),Some(token))
-            }    
+          parameters("token") { token =>
+            streamUser(fridgeName, token)
+          }    
         } ~  
         path("firehose") {
-          streamFirehose() 
+          streamFirehose
         } ~  
         path("stats") {
           streamStat 
@@ -219,36 +219,37 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
   
   def statsRoute = 
     path("stats") {
-        complete {
-          (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
-        }
+      complete {
+        (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
       }
+    }
 
   val simpleCache = routeCache(maxCapacity = 500)
   
   def staticRoute = 
     path(""){
-        cache(simpleCache) {
-            encodeResponse(Gzip){
-                getFromResource("frontend/web/index.html")   
-            }
+      cache(simpleCache) {
+        encodeResponse(Gzip){
+          getFromResource("frontend/web/index.html")   
         }
+      }
     } ~
     cache(simpleCache) {
-        encodeResponse(Gzip){
-            getFromResourceDirectory("frontend/web")
-        }
+      encodeResponse(Gzip){
+        getFromResourceDirectory("frontend/web")
+      }
     }    
 
-  def streamFirehose(fridgeTarget : Option[String] = None, userToken : Option[String] = None)(ctx: RequestContext): Unit = {
-    context.actorOf(Props(new FirehoseStream(fridgeTarget, userToken, ctx)))
+  def streamFirehose(ctx: RequestContext): Unit = {
+    context.actorOf(Props(new FirehoseStream(ctx.responder)((_,_) => true)))
+  }
+
+  def streamUser(fridgeName : String, token : String)(ctx: RequestContext): Unit = {
+    val filter = (fridgeTarget:String, userToken : String) => fridgeName == fridgeTarget && token != userToken
+    context.actorOf(Props(new FirehoseStream(ctx.responder)(filter)))
   }
 
   def streamStat (ctx: RequestContext): Unit = {
-    val statActor = context.actorOf(Props(new StatStream(ctx)))
-    context.system.scheduler.schedule(1.seconds,1.seconds){
-      val stats = (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
-      stats pipeTo statActor
-    }
+    context.actorOf(Props(new StatStream(ctx.responder)))
   }  
 }

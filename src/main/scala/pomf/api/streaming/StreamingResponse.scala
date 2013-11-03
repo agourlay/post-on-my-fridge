@@ -11,7 +11,7 @@ import scala.language.postfixOps
 import pomf.api.JsonSupport._
 
 
-class StreamingResponse(ctx: RequestContext) extends Actor with ActorLogging {
+class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging {
 
   val EventStreamType = register(
 	  MediaType.custom(
@@ -28,7 +28,7 @@ class StreamingResponse(ctx: RequestContext) extends Actor with ActorLogging {
   		headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
       )
 
-  ctx.responder ! ChunkedResponseStart(responseStart) 
+  responder ! ChunkedResponseStart(responseStart) 
   
   def receive = {
      
@@ -38,6 +38,6 @@ class StreamingResponse(ctx: RequestContext) extends Actor with ActorLogging {
     }
      
     case ReceiveTimeout =>
-      ctx.responder ! MessageChunk(":\n") // Comment to keep connection alive  
+      responder ! MessageChunk(":\n") // Comment to keep connection alive  
   }
 }
