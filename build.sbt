@@ -45,7 +45,7 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
 libraryDependencies ++= {
   val akkaVersion   = "2.2.3"
-  val sprayVersion  = "1.2-RC2"
+  val sprayVersion  = "1.2-RC3"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
@@ -59,8 +59,8 @@ libraryDependencies ++= {
       ,"org.joda"               %   "joda-convert"      % "1.5"                      withSources()
       ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "0.4.0"                    withSources()
       ,"com.typesafe.slick"     %%  "slick"             % "1.0.1"                    withSources()
-      ,"com.h2database"         %   "h2"                % "1.3.173"       
-      ,"org.postgresql"         %   "postgresql"        % "9.2-1003-jdbc4"           withSources()
+      ,"com.h2database"         %   "h2"                % "1.3.174"       
+      ,"org.postgresql"         %   "postgresql"        % "9.3-1100-jdbc41"          withSources()
       ,"ch.qos.logback"         %   "logback-classic"   % "1.0.13"                   withSources()
       ,"junit"                  %   "junit"             % "4.11"          % "test"   withSources()
       ,"org.specs2"             %%  "specs2"            % "2.2.3"         % "test"   withSources()  
