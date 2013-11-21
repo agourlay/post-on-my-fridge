@@ -18,4 +18,4 @@ addSbtPlugin("com.orrsella" % "sbt-sound" % "1.0.2")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.1.0") 
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-atmos" % "0.3.1")
+addSbtPlugin("com.typesafe.sbt" % "sbt-atmos" % "0.3.2")
