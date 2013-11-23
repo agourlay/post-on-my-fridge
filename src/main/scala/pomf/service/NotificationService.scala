@@ -11,16 +11,16 @@ import pomf.api.JsonSupport._
 class NotificationService extends Actor with ActorLogging {
     
   def receive = {
-    case PostCreated(fridgeName , post, token)                   => pushToEventStream(Notification.createPost(fridgeName, post, token))
-    case PostUpdated(fridgeName , post, token)                   => pushToEventStream(Notification.updatePost(fridgeName, post, token))
-    case PostDeleted(fridgeName , id, token)                     => pushToEventStream(Notification.deletePost(fridgeName, id, token))
-    case MessageSent(fridgeName, message, token)                 => pushToEventStream(Notification.sendMessage(fridgeName, message, token))
-    case ParticipantAdded(fridgeName, token, name)               => pushToEventStream(Notification.addParticipant(fridgeName, name, token))
-    case ParticipantRemoved(fridgeName, token, name)             => pushToEventStream(Notification.removeParticipant(fridgeName, name, token))
-    case ParticipantRenamed(fridgeName, token, newName, oldName) => pushToEventStream(Notification.renameParticipant(fridgeName, newName, oldName, token))
+    case PostCreated(fridgeName , post, token)                   => toEventStream(Notification.createPost(fridgeName, post, token))
+    case PostUpdated(fridgeName , post, token)                   => toEventStream(Notification.updatePost(fridgeName, post, token))
+    case PostDeleted(fridgeName , id, token)                     => toEventStream(Notification.deletePost(fridgeName, id, token))
+    case MessageSent(fridgeName, message, token)                 => toEventStream(Notification.sendMessage(fridgeName, message, token))
+    case ParticipantAdded(fridgeName, token, name)               => toEventStream(Notification.addParticipant(fridgeName, name, token))
+    case ParticipantRemoved(fridgeName, token, name)             => toEventStream(Notification.removeParticipant(fridgeName, name, token))
+    case ParticipantRenamed(fridgeName, token, newName, oldName) => toEventStream(Notification.renameParticipant(fridgeName, newName, oldName, token))
   }
 
-  def pushToEventStream(n : Notification) = context.system.eventStream.publish(n)
+  def toEventStream(n : Notification) = context.system.eventStream.publish(n)
 }
 
 object NotificationServiceProtocol {
