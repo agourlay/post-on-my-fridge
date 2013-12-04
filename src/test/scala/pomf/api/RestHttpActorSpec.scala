@@ -2,16 +2,12 @@ package pomf.api
 
 
 import org.specs2.Specification
-import org.junit.runner.RunWith
 import spray.testkit.Specs2RouteTest
 import spray.http._
 import spray.http.StatusCodes._
 import java.text.SimpleDateFormat
 import pomf.domain.model._
 
-import org.specs2.runner.JUnitRunner
-
-@RunWith(classOf[JUnitRunner]) // Only required if testing from within Eclipse
 abstract class PomfServiceSpec extends Specification with Specs2RouteTest {
   def actorRefFactory = system
   

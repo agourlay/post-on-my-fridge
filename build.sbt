@@ -41,11 +41,9 @@ resolvers ++= Seq(
   ,"spray nightly"      at "http://nightlies.spray.io/"
 )
 
-testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
-
 libraryDependencies ++= {
   val akkaVersion   = "2.2.3"
-  val sprayVersion  = "1.2-RC4"
+  val sprayVersion  = "1.2.0"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
@@ -62,7 +60,6 @@ libraryDependencies ++= {
       ,"com.h2database"         %   "h2"                % "1.3.174"       
       ,"org.postgresql"         %   "postgresql"        % "9.3-1100-jdbc41"          withSources()
       ,"ch.qos.logback"         %   "logback-classic"   % "1.0.13"                   withSources()
-      ,"junit"                  %   "junit"             % "4.11"          % "test"   withSources()
       ,"org.specs2"             %%  "specs2"            % "2.2.3"         % "test"   withSources()  
   )
 }

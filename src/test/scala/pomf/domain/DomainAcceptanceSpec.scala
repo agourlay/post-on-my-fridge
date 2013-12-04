@@ -1,14 +1,11 @@
 package pomf.domain
 
 import org.specs2._
-import org.junit.runner.RunWith
-import org.specs2.runner.JUnitRunner
 import pomf.domain.dao.Dao
 import pomf.domain.config.DAL
 import pomf.domain.model.Fridge
 import org.joda.time.DateTime
 
-@RunWith(classOf[JUnitRunner])
 class DomainAcceptanceSpec extends Specification {
   def is =
     "Pomf Model should:" ^
