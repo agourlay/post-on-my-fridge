@@ -4,8 +4,6 @@ assemblySettings
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
-atmosSettings
-
 jarName in assembly := "pomf-api.jar"
 
 test in assembly := {}
@@ -42,8 +40,8 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.2.3"
-  val sprayVersion  = "1.2.0"
+  val akkaVersion   = "2.3-M1"
+  val sprayVersion  = "1.3-M1"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
