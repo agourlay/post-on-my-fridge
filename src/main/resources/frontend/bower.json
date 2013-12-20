@@ -24,11 +24,11 @@
     "bootstrap" : "3.0.3",
     "typeahead.js" : "0.9.3",
     "nprogress" : "0.1.2",
-    "rickshaw" : "1.4.5",
+    "rickshaw" : "1.4.6",
     "font-awesome": "4.0.3",
     "alertify.js": "0.4.0rc1",
-    "d3" : "3.3.11",
-    "bacon" : "0.7.0-rc5"
+    "d3" : "3.3.13",
+    "bacon" : "0.7.0"
   },
   "resolutions": {
     "jquery": "2.0.3"
