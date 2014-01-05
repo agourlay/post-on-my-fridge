@@ -21,19 +21,18 @@ class StatStream(responder: ActorRef) extends StreamingResponse(responder) {
   
   override def startText = "Streaming statistics...\n"
 
-  context.system.scheduler.schedule(1.seconds,1.seconds){
-    val stats = (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
-    stats pipeTo self
+  override def preStart {
+    super.preStart
+    context.system.scheduler.schedule(1.seconds,1.seconds){
+      val stats = (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
+      stats pipeTo self
+    }
   }
 
-  override def receive = {
-
+  override def receive = ({
     case stat : Stats => {
         val nextChunk = MessageChunk("data: "+ formatHttpServerStats.write(stat) +"\n\n")
         responder ! nextChunk 
     }
-    
-    case _ => super.receive   
-    
-  }
+  }: Receive) orElse super.receive
 }

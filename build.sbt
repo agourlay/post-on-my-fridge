@@ -14,7 +14,7 @@ name := "pomf-api"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.10.4-RC1"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -58,7 +58,7 @@ libraryDependencies ++= {
       ,"com.h2database"         %   "h2"                % "1.3.174"       
       ,"org.postgresql"         %   "postgresql"        % "9.3-1100-jdbc41"          withSources()
       ,"ch.qos.logback"         %   "logback-classic"   % "1.0.13"                   withSources()
-      ,"org.specs2"             %%  "specs2"            % "2.2.3"         % "test"   withSources()  
+      ,"org.specs2"             %%  "specs2-core"       % "2.3.7"         % "test"   withSources()  
   )
 }
 

@@ -18,10 +18,11 @@ class FirehoseStream(responder: ActorRef)(filter: (String, String) => Boolean) e
   override def startText = "Streaming firehose...\n"
 
   override def preStart {
+    super.preStart
     context.system.eventStream.subscribe(self, classOf[Notification])
   }
   
-  override def receive = {
+  override def receive = ({
     case Notification(fridgeNameNotif, command, payload, timestamp, token) => {
       if (filter(fridgeNameNotif,token)){
         val pushedEvent = PushedEvent(fridgeNameNotif, command, payload, timestamp)
@@ -29,8 +30,5 @@ class FirehoseStream(responder: ActorRef)(filter: (String, String) => Boolean) e
         responder ! nextChunk 
       }
     }
-
-    case _ => super.receive 
-
-  }  
+  }: Receive) orElse super.receive  
 }

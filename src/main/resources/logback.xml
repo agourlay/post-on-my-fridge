@@ -7,12 +7,15 @@
         </encoder>
     </appender>
     
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>pomf-api.log</file>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>pomf.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>pomf.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+        </rollingPolicy>
         <encoder>
             <pattern>%date{ISO8601} %-5level %logger{36} %X{akkaSource} - %msg%n</pattern>
         </encoder>
-    </appender>  
+    </appender> 
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
