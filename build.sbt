@@ -14,7 +14,7 @@ name := "pomf-api"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.10.4-RC1"
+scalaVersion := "2.10.4-RC2"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -36,12 +36,11 @@ resolvers ++= Seq(
   ,"akka repo"          at "http://repo.akka.io/"
   ,"akka snapshots"     at "http://repo.akka.io/snapshots"
   ,"spray repo"         at "http://repo.spray.io/"
-  ,"spray nightly"      at "http://nightlies.spray.io/"
 )
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.3-M2"
-  val sprayVersion  = "1.3-M2"
+  val akkaVersion   = "2.3.0-RC1"
+  val sprayVersion  = "1.3-RC1"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
