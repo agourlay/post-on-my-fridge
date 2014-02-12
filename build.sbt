@@ -23,7 +23,6 @@ scalacOptions := Seq(
   "-encoding","utf8",
   "-Ywarn-dead-code",
   "-language:_",
-  "-target:jvm-1.7",
   "-feature")
 
 resolvers ++= Seq(
@@ -39,7 +38,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.3.0-RC1"
+  val akkaVersion   = "2.3.0-RC2"
   val sprayVersion  = "1.3-RC1"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
@@ -51,13 +50,13 @@ libraryDependencies ++= {
       ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaVersion                withSources()
       ,"com.typesafe.akka"      %%  "akka-testkit"      % akkaVersion     % "test"   withSources()
       ,"joda-time"              %   "joda-time"         % "2.3"                      withSources()
-      ,"org.joda"               %   "joda-convert"      % "1.5"                      withSources()
-      ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "0.4.0"                    withSources()
+      ,"org.joda"               %   "joda-convert"      % "1.6"                      withSources()
+      ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "0.4.1"                    withSources()
       ,"com.typesafe.slick"     %%  "slick"             % "1.0.1"                    withSources()
-      ,"com.h2database"         %   "h2"                % "1.3.174"       
+      ,"com.h2database"         %   "h2"                % "1.3.175"       
       ,"org.postgresql"         %   "postgresql"        % "9.3-1100-jdbc41"          withSources()
-      ,"ch.qos.logback"         %   "logback-classic"   % "1.0.13"                   withSources()
-      ,"org.specs2"             %%  "specs2-core"       % "2.3.7"         % "test"   withSources()  
+      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.1"                    withSources()
+      ,"org.specs2"             %%  "specs2-core"       % "2.3.8"         % "test"   withSources()  
   )
 }
 
