@@ -24,8 +24,7 @@ class StatStream(responder: ActorRef) extends StreamingResponse(responder) {
   override def preStart {
     super.preStart
     context.system.scheduler.schedule(1.seconds,1.seconds){
-      val stats = (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
-      stats pipeTo self
+      context.actorSelection("/user/IO-HTTP/listener-0") ! Http.GetStats
     }
   }
 

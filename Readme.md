@@ -10,14 +10,15 @@ The backend is written in Scala using [Akka](http://akka.io/) actor's model and 
 
 The frontend is a single page web app written in javascript with [Ember.js](http://emberjs.com/).
 
+![Screenshot](./misc/screenshot.png)
 
 ## Architecture
 
 A single page web app displays the content of a fridge and subscribes to all the notifications occuring on it.
 
-When an action such as creating or moving a post is called on a fridge, a notification about the new state is pushed via Server Sent Event to all the current fridge´s clients. 
+When an action, such as creating or moving a post is called on a fridge, a notification enclosing the new state is pushed via Server Sent Event to all the current fridge´s clients. 
 
-This technique allows near real time collaboration on a fridge.
+This architecture allows near real time collaboration on a fridge.
 
 ## Setup
 
