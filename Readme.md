@@ -10,7 +10,7 @@ The backend is written in Scala using [Akka](http://akka.io/) actor's model and 
 
 The frontend is a single page web app written in javascript with [Ember.js](http://emberjs.com/).
 
-![Screenshot](./misc/screenshot.png)
+![alt text](./misc/screenshot.png "Overview")
 
 ## Architecture
 
