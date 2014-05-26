@@ -8,10 +8,16 @@ App.MainHeaderView = Em.View.extend({
 
 	didInsertElement: function() {
 		var view = this;
-		$('#search').typeahead({
+		var fridges = new Bloodhound({
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		  remote: 'search/fridge?term=%QUERY'
+		});
+		fridges.initialize();
+		$('.typeahead').typeahead(null, {
 		    name: 'fridges',
-		    minLength : 2,
-		    remote: 'search/fridge?term=%QUERY'
+		    displayKey: 'name',
+		    source: fridges.ttAdapter()
 		})
 		.on('typeahead:selected', function(e,datum) {
 		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));

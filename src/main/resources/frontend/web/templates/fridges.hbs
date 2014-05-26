@@ -10,19 +10,19 @@
 			<div class="row-fluid">
 				<div class="span10 offset1 well">
 					<table class="table table-hover table-striped table-condensed">
-					<thead>
-						<th class="muted span4">Name</th>
-						<th class="muted span2">Post number</th>
-						<th class="muted span3">Creation Date</th>
-						<th class="muted span3">Last update</th>
+						<thead>
+							<th class="muted span4">Name</th>
+							<th class="muted span2">Post number</th>
+							<th class="muted span3">Creation Date</th>
+							<th class="muted span3">Last update</th>
 						</thead>
 						<tbody>
-						    {{#each fridge in controller itemController="index"}}
+						    {{#each controller}}
 							    <tr>
-								  <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
-								  <td>{{postNumber}}</td>
-								  <td>{{prettyCreationDate}}</td>
-								  <td>{{relativeLastUpdate}}</td>
+								    <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
+								    <td>{{postNumber}}</td>
+								    <td>{{prettyCreationDate}}</td>
+								    <td>{{relativeLastUpdate}}</td>
 							    </tr>
 						    {{/each}}
 						</tbody>

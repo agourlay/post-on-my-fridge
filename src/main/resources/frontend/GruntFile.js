@@ -9,7 +9,7 @@ module.exports = function(grunt) {
           templateFileExtensions: /\.hbs/
         },
         files: {
-          "web/dist/templates.js": ["web/templates/**/*.hbs"]
+          "web/dist/js/templates.js": ["web/templates/**/*.hbs"]
         }
       }
     },
@@ -24,29 +24,30 @@ module.exports = function(grunt) {
           "web/bower_components/momentjs/min/moment.min.js",
           "web/bower_components/store.js/store.min.js",
           "web/bower_components/js-url/url.min.js",
-          "web/bower_components/typeahead.js/dist/typeahead.min.js",
+          "web/bower_components/typeahead.js/dist/typeahead.bundle.min.js",
           "web/bower_components/nprogress/nprogress.js",
           "web/bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
           "web/bower_components/bacon/dist/Bacon.min.js",
           "web/bower_components/alertify.js/dist/alertify.min.js"
         ],
-        dest: 'web/dist/libs.min.js'
+        dest: 'web/dist/js/libs.min.js'
       },
       libcss : {
         src : [
           "web/vendor/css/bootstrap.min.css",
           //"web/bower_components/bootstrap/dist/css/bootstrap.min.css",
           "web/bower_components/nprogress/nprogress.css",
+          "web/bower_components/font-awesome/css/font-awesome.min.css",
           "web/bower_components/alertify.js/dist/themes/alertify.bootstrap.css"
         ],
-        dest : 'web/dist/libs.min.css'
+        dest : 'web/dist/css/libs.min.css'
       }
     },
     uglify: {
       js: {
         files: {
-          'web/dist/pomf.min.js': [
-            "web/dist/templates.js",
+          'web/dist/js/pomf.min.js': [
+            "web/dist/js/templates.js",
             "web/js/tools.js",
             "web/js/app.js",
             "web/js/jquery-ui-ember.js",
@@ -80,13 +81,27 @@ module.exports = function(grunt) {
     cssmin : {
       combine: {
         files: {
-          "web/dist/pomf.min.css" : [
-            "web/css/typeahead-custom.css",
+          "web/dist/css/pomf.min.css" : [
             "web/css/layout.css",
             "web/css/post.css"
             ]
         } 
       }   
+    },
+    copy: {
+      fonts: {
+        src: 'web/bower_components/font-awesome/fonts/*',
+        dest: "web/dist/fonts/",
+        filter: 'isFile',
+        flatten: true,
+        expand: true
+      },
+      maps: {
+        cwd : "web/bower_components/jquery/dist/",
+        src: "jquery.min.map",
+        dest: "web/dist/js/",
+        expand: true
+      }
     },
     watch: {
       files: ["web/css/**","web/js/**","web/templates/**"],
@@ -99,8 +114,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-ember-templates');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s).
-  grunt.registerTask('default', ['emberTemplates','concat','uglify','cssmin' ]);
+  grunt.registerTask('default', ['emberTemplates','concat','uglify','cssmin','copy' ]);
 
 };
