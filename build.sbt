@@ -38,14 +38,14 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.3.0"
+  val akkaVersion   = "2.3.3"
   val sprayVersion  = "1.3.1"
   Seq(
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
       ,"io.spray"               %   "spray-caching"     % sprayVersion               withSources()
       ,"io.spray"               %   "spray-testkit"     % sprayVersion    % "test"   withSources()
-      ,"io.spray"               %%  "spray-json"        % "1.2.5"                    withSources()
+      ,"io.spray"               %%  "spray-json"        % "1.2.6"                    withSources()
       ,"com.typesafe.akka"      %%  "akka-actor"        % akkaVersion                withSources()
       ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaVersion                withSources()
       ,"com.typesafe.akka"      %%  "akka-testkit"      % akkaVersion     % "test"   withSources()
@@ -53,10 +53,10 @@ libraryDependencies ++= {
       ,"org.joda"               %   "joda-convert"      % "1.6"                      withSources()
       ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "0.4.1"                    withSources()
       ,"com.typesafe.slick"     %%  "slick"             % "1.0.1"                    withSources()
-      ,"com.h2database"         %   "h2"                % "1.3.175"       
+      ,"com.h2database"         %   "h2"                % "1.4.178"       
       ,"org.postgresql"         %   "postgresql"        % "9.3-1101-jdbc41"          withSources()
-      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.1"                    withSources()
-      ,"org.specs2"             %%  "specs2-core"       % "2.3.10"        % "test"   withSources()  
+      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"                    withSources()
+      ,"org.specs2"             %%  "specs2-core"       % "2.3.12"        % "test"   withSources()  
   )
 }
 

@@ -17,14 +17,14 @@
 						<th class="muted span3">Last update</th>
 						</thead>
 						<tbody>
-						   {{#each fridge in controller itemController="index"}}
-						    <tr>
-							  <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
-							  <td>{{postNumber}}</td>
-							  <td>{{prettyCreationDate}}</td>
-							  <td>{{relativeLastUpdate}}</td>
-						    </tr>
-						   {{/each}}
+						    {{#each fridge in controller itemController="index"}}
+							    <tr>
+								  <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
+								  <td>{{postNumber}}</td>
+								  <td>{{prettyCreationDate}}</td>
+								  <td>{{relativeLastUpdate}}</td>
+							    </tr>
+						    {{/each}}
 						</tbody>
 					</table>
 				</div>

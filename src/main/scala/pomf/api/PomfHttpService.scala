@@ -223,21 +223,15 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
         (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
       }
     }
-
-  val simpleCache = routeCache(maxCapacity = 500)
   
   def staticRoute = 
-    path(""){
-      cache(simpleCache) {
-        encodeResponse(Gzip){
-          getFromResource("frontend/web/index.html")   
-        }
+    pathSingleSlash{
+      encodeResponse(Gzip){
+        getFromResource("frontend/web/index.html")   
       }
     } ~
-    cache(simpleCache) {
-      encodeResponse(Gzip){
-        getFromResourceDirectory("frontend/web")
-      }
+    encodeResponse(Gzip){
+      getFromResourceDirectory("frontend/web")
     }    
 
   def streamFirehose(ctx: RequestContext): Unit = {
