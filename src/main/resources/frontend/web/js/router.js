@@ -1,7 +1,6 @@
 App.Router.map(function() {
     this.resource('index', { path:'/'}); 
     this.resource('fridges');
-    this.resource('trends');
     this.resource('fridge', { path:'/fridge/:fridge_id' });
 });
 

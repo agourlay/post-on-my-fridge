@@ -8,6 +8,5 @@ trait Configuration {
   val dbUser     = pomfConfig.getString("database.user")
   val dbPassword = pomfConfig.getString("database.password")
   val dbSchema   = pomfConfig.getString("database.schema")
-  val urlSite    = pomfConfig.getString("url")
   val port       = pomfConfig.getInt("port")
 }

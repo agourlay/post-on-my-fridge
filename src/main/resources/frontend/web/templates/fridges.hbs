@@ -1,20 +1,20 @@
 <div id = "wrap">
 	{{render "mainHeader" null}}
 	<div id="main-content">
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span10 offset1 text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 text-center">
 					<h4>List of all fridges</h4> 
 				</div>
 			</div>
-			<div class="row-fluid">
-				<div class="span10 offset1 well">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 well">
 					<table class="table table-hover table-striped table-condensed">
 						<thead>
-							<th class="muted span4">Name</th>
-							<th class="muted span2">Post number</th>
-							<th class="muted span3">Creation Date</th>
-							<th class="muted span3">Last update</th>
+							<th class="col-md-4">Name</th>
+							<th class="col-md-2">Post number</th>
+							<th class="col-md-3">Creation Date</th>
+							<th class="col-md-3">Last update</th>
 						</thead>
 						<tbody>
 						    {{#each controller}}

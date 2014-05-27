@@ -14,10 +14,21 @@ App.MainHeaderView = Em.View.extend({
 		  remote: 'search/fridge?term=%QUERY'
 		});
 		fridges.initialize();
-		$('.typeahead').typeahead(null, {
+		$('.typeahead').typeahead({
+		    hint: true,
+		    highlight: true,
+		    minLength: 2
+		},{
 		    name: 'fridges',
-		    displayKey: 'name',
-		    source: fridges.ttAdapter()
+		    displayKey: 'value',
+		    source: fridges.ttAdapter(),
+		    templates: {
+			    empty: [
+			      '<div class="empty-message">',
+			      'unable to find a fridge matching the current query',
+			      '</div>'
+			    ].join('\n')
+			}
 		})
 		.on('typeahead:selected', function(e,datum) {
 		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));

@@ -57,7 +57,7 @@ a{
 	float: right;
 	text-align: center;
 	height: 1200px;
-	top: 41px;
+	top: 40px;
 	width: 82%;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
@@ -157,7 +157,7 @@ a{
 }
 
 .header-item{
-	width: 30%;
+	width: 28%;
 	display: inline-block;
 }	
 

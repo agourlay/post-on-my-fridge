@@ -1,26 +1,23 @@
 <div id="panel-header"> 
 	<div id="social-box">
 		<form class="form-inline">
-			<div class="input-prepend">
-				<span class="add-on">
+			<div class="input-group">
+				<span class="input-group-addon">
 					<i class="fa fa-user"></i>
 				</span>	
 				<input type="text" placeholder="Username" class="input-small" id="pseudo"/>
 			</div>
-			<button type="button" class="btn btn-primary btn-small" {{action "addDefaultPost"}}>
-				<i class="fa fa-plus-circle"></i> Post
-			</button>
 		</form>					
     </div>
     <div id="participant-box">
-		<div class="input-prepend">
-			<span class="add-on">
+		<div class="input-group">
+			<span class="input-group-addon">
 				<i class="fa fa-eye"></i>
 			</span>	
 			{{input type="text" class="input-small" value=view.participants disabled="true"}}
 		</div>		
-		<a {{bindAttr href="view.rssUrl"}} target="_blank" class="rss-link">
-	    	<i class="fa fa-rss-square"></i> 
-	    </a>			
     </div>
+    <button type="button" class="btn btn-primary btn-sm" {{action "addDefaultPost"}}>
+		<i class="fa fa-plus-circle"></i> Post
+	</button>
 </div>

@@ -8,7 +8,7 @@ import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
 
-class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) extends Actor with ActorLogging { 
+class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with ActorLogging { 
 
   implicit def executionContext = context.dispatcher
 
@@ -20,7 +20,6 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
     case DeletePost(postId, token)           => sender ! deletePost(postId, token)
     case CreatePost(post, token)             => sender ! addPost(post, token)
     case UpdatePost(post, token)             => sender ! updatePost(post, token)
-    case FridgeRss(fridgeName)               => sender ! getFridgeRss(fridgeName)
     case SearchFridge(term)                  => sender ! searchByNameLike(term)
     case CountFridges                        => sender ! countFridges
     case CountPosts                          => sender ! countPosts
@@ -40,29 +39,6 @@ class CrudService(dao : Dao, notificationService : ActorRef, urlSite : String) e
   def getFridgeRest(fridgeName: String): FridgeRest = {
     log.debug("Requesting fridge {}", fridgeName)
     dao.getFridgeRest(fridgeName)
-  }
-
-  def getFridgeRss(fridgeName: String): scala.xml.Elem = {
-    val fridge = dao.getFridgeRest(fridgeName)
-    val fridgeRss = <rss version="2.0">
-                      <channel>
-                        <title>{ fridge.name }</title>
-                        <link>{ urlSite }#/{ fridge.name }</link>
-                        {
-                          for (post <- fridge.posts) yield {
-                            <item>
-                              <title>{ post.fridgeId }</title>
-                              <description>{ post.content }</description>
-                              <link>{ urlSite }#/{ fridge.name }</link>
-                              <guid isPermaLink="false">{ post.id.get }</guid>
-                              <author>{ post.author }</author>
-                              <pubDate>{ post.date }</pubDate>
-                            </item>
-                          }
-                        }
-                      </channel>
-                    </rss>
-    fridgeRss
   }
 
   def getPost(id: Long): Option[Post] = dao.getPost(id)
@@ -101,7 +77,6 @@ object CrudServiceProtocol {
   case class UpdatePost(post: Post, token: String)
   case class CreatePost(post: Post, token: String)
   case class DeletePost(postId: Long, token: String)
-  case class FridgeRss(fridgeName: String)
   case class SearchFridge(term: String)
   case object CountFridges
   case object CountPosts  

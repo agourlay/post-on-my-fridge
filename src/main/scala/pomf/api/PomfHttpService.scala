@@ -97,15 +97,6 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
   val countCache: Cache[String] = LruCache(maxCapacity = 2, timeToLive = 1 minute)
 
   def miscRoute =
-    pathPrefix("rss") {
-      path("fridge" / Rest) { fridgeName =>
-        get {
-          complete {
-            (crudService ? CrudServiceProtocol.FridgeRss(fridgeName)).mapTo[scala.xml.Elem]
-          }
-        }
-      }
-    } ~
     pathPrefix("search") {
       path("fridge") {
         parameters("term") { term =>

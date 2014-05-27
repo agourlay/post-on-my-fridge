@@ -8,12 +8,6 @@ App.PanelView = Ember.View.extend({
 		return this.get('content');
 	}.property('content'),
 
-	rssUrl: function() {
-		var fridgeName = this.get('content');
-		document.title = "Fridge "+ fridgeName;
-		return "/rss/fridge/" + fridgeName;
-	}.property('content'),
-
 	participants : function() {
 		if (this.get("viewers") > 1){
 			return this.get("viewers") + " participants"

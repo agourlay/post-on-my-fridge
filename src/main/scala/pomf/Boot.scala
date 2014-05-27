@@ -50,7 +50,7 @@ object Boot extends App with Configuration{
 
   val notificationService = system.actorOf(Props[NotificationService], "notification-service")
   
-  val crudService = system.actorOf(Props(classOf[CrudService], dbConfig.dao, notificationService, urlSite)
+  val crudService = system.actorOf(Props(classOf[CrudService], dbConfig.dao, notificationService)
                           .withRouter(SmallestMailboxPool(Runtime.getRuntime.availableProcessors)), "crud-service")
 
   val chatService = system.actorOf(Props(classOf[ChatService],notificationService), "chat-service")
