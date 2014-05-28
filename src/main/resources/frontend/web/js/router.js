@@ -8,8 +8,8 @@ App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
 		return App.Dao.initSessionData(params.fridge_id);
   	},
-	beforeModel: function(transition) {
-	    if (App.Dao.get('fridgeId') != null){
+	deactivate: function(transition) {
+	    if (transition != null){
 	    	this.controllerFor('messages').leaveChat(transition.params.fridge_id);
 	    }
 	}
@@ -22,8 +22,8 @@ App.FridgesRoute = Ember.Route.extend({
 });
 
 App.IndexRoute = Ember.Route.extend({
-	model: function() {
-		return App.Dao.getStats();
+	beforeModel: function() {
+    	this.transitionTo('fridges');
   	}
 });
 

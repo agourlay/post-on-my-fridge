@@ -24,7 +24,7 @@ App.MainHeaderView = Em.View.extend({
 		    source: fridges.ttAdapter(),
 		    templates: {
 			    empty: [
-			      '<div class="empty-message">',
+			      '<div>',
 			      'unable to find a fridge matching the current query',
 			      '</div>'
 			    ].join('\n')

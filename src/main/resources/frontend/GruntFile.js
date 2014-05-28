@@ -17,7 +17,6 @@ module.exports = function(grunt) {
       libjs : {
         src : [
           "web/bower_components/jquery/dist/jquery.min.js",
-          "web/vendor/js/bootstrap.min.js",
           "web/bower_components/bootstrap/dist/js/bootstrap.min.js",
           "web/bower_components/handlebars/handlebars.runtime.min.js",
           "web/bower_components/ember/ember.min.js",
@@ -55,12 +54,11 @@ module.exports = function(grunt) {
             "web/js/view/customViews.js",
             "web/js/controller/mainHeaderController.js",
             "web/js/view/mainHeaderView.js",
-            "web/js/model/indexModel.js",
-            "web/js/controller/indexController.js",
-            "web/js/view/indexView.js",
             "web/js/model/fridgeModel.js",
             "web/js/controller/fridgeController.js",
             "web/js/view/fridgeView.js",
+            "web/js/controller/fridgesController.js",
+            "web/js/view/fridgesView.js",
             "web/js/model/postModel.js",
             "web/js/view/postView.js",
             "web/js/controller/postsController.js",
@@ -82,7 +80,8 @@ module.exports = function(grunt) {
         files: {
           "web/dist/css/pomf.min.css" : [
             "web/css/layout.css",
-            "web/css/post.css"
+            "web/css/post.css",
+            "web/css/typeahead.css"
             ]
         } 
       }   

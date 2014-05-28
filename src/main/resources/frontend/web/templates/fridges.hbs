@@ -4,6 +4,16 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-10 col-md-offset-1 text-center">
+					<h4>Create your fridge</h4> 
+						<form class="form">
+							<div class="form-group">
+	                			{{view Ember.TextField valueBinding="App.FridgesView.newFridgeName" placeholder="fridge name" }}
+	            				<button class="btn btn-primary" {{action "toNewFridge" App.FridgesView.newFridgeName}}>
+									<i class="fa fa-check-circle-o"></i> 
+									{{App.IndexView.newFrigeName}}
+								</button>
+			    			</div>
+						</form>		
 					<h4>List of all fridges</h4> 
 				</div>
 			</div>
@@ -29,7 +39,7 @@
 					</table>
 				</div>
 			</div>
-			<div id = "push"></div>
+			<div id ="push"></div>
 		</div>
 	</div>
 </div>

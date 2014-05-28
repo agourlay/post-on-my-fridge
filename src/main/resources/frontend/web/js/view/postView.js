@@ -74,14 +74,6 @@ App.PostView = Em.View.extend(App.Draggable, {
 		this.$().css("color", getTxtColorFromBg(color));
 	}.observes('content.color'),
 
-	voteUp : function() {
-		console.log("vote up");
-	},
-
-	voteDown : function() {
-		console.log("vote down");
-	},
-
 	editMode : function() {
 		var view = this;
 		view.set('readMode',!view.get('readMode'));

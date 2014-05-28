@@ -52,14 +52,20 @@
 	border: dotted;
     resize: none;
     width: 210px;
+    margin-right: auto;
+	margin-left: auto;
     margin-bottom: 7px;
 	border-width: thin;	}
 
 .post input[type="date"]{
+	margin-right: auto;
+	margin-left: auto;
 	height: 18px;
 	width: 140px;}
 
 .post input[type="text"]{
+	margin-right: auto;
+	margin-left: auto;
 	height: 18px;
 	width: 130px;}	
 
