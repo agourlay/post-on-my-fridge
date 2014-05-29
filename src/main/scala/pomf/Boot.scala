@@ -13,7 +13,7 @@ import pomf.service.NotificationService
 import pomf.service.ChatService
 import pomf.service.TokenService
 import pomf.api.PomfHttpService
-import pomf.domain.config._
+import pomf.domain.dao._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps

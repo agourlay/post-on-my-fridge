@@ -1,66 +1,95 @@
 package pomf.domain.dao
 
-import scala.slick.session.Database
+import scala.slick.driver.PostgresDriver.simple._
+
 import org.joda.time.DateTime
-import pomf.domain.config.DAL
-import pomf.domain.model.Fridge
-import pomf.domain.model.FridgeRest
-import pomf.domain.model.Post
+
+import pomf.domain.model._
+
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class Dao(name: String, dal: DAL, db: Database) {
-  // We only need the DB/session imports outside the DAL
-  import dal._
+class Dao(db: Database){
 
-  // Put an implicitSession in scope for database actions
   implicit val implicitSession = db.createSession
   
   val logger: Logger = LoggerFactory.getLogger("dao")
 
-  def createDB() = dal.create
+  val posts = TableQuery[Posts]
+  val fridges = TableQuery[Fridges]
 
-  def dropDB() = dal.drop
-  
-  def purgeDB() = dal.purge
+  val ddls = List(posts.ddl, fridges.ddl)
 
-  def addFridge(fridge: Fridge): Fridge = Fridges.insert(fridge)
+  def addFridge(fridge: Fridge) = {
+    fridges.insert(fridge)
+    fridgeByName(fridge.name).get
+  }  
   
-  def getFridgeRest(fridgeName: String):FridgeRest = {
-    val fridgeOpt:Option[Fridge] = Fridges.findByName(fridgeName)
+  def getFridgeRest(fridgeName: String) : FridgeRest = {
+    val fridgeOpt = fridgeByName(fridgeName)
     fridgeOpt match {
-      case Some(fridge) => completeFridge(fridge)
-      case _ => FridgeRest(name = fridgeName, new DateTime(), new DateTime(), posts = List[Post](), id = None)
+      case Some(f) => completeFridge(f)
+      case None => FridgeRest(name = fridgeName, new DateTime(), new DateTime(), posts = List[Post](), id = None)
     }							 
   }
 
-  def getAllFridge(): List[FridgeRest] = Fridges.findAllFridge.map(completeFridge(_))
+  def fridgeByName(fridgeName: String) : Option[Fridge] = fridges.filter(_.name === fridgeName).firstOption
 
-  def completeFridge(f : Fridge):FridgeRest = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id, Posts.findPostByFridge(f.name))
+  def getAllFridge(): List[FridgeRest] = fridges.list.map(completeFridge(_))
+
+  def completeFridge(f : Fridge) = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id, posts.filter(_.fridgeId === f.name).list)
   
-  def getPost(id :Long):Option[Post] = Posts.getPost(id)
+  def getPost(id :Long):Option[Post] = posts.filter(_.id === id).firstOption
   
-  def searchByNameLike(term:String):List[String] = Fridges.searchByNameLike(term)
+  def searchByNameLike(term:String):List[String] = fridges.filter(_.name like "%"+term+"%").map(_.name).list
   
-  def deletePost(id :Long):Long = {
-    Posts.deletePost(id)
+  def deletePost(postId :Long) = {
+    val deleteQuery = posts.filter(_.id === postId)
+    deleteQuery.delete
   }  
   
   def addPost(post: Post): Post = {
-    Fridges.findByName(post.fridgeId).getOrElse(addFridge(Fridge(name = post.fridgeId, creationDate = new DateTime(), modificationDate = new DateTime()))) 
-    val persistedPost = Posts.insert(post)
-    Fridges.updateModificationDate(post.fridgeId)
-    persistedPost
+    fridgeByName(post.fridgeId).getOrElse(addFridge(Fridge(name = post.fridgeId, creationDate = new DateTime(), modificationDate = new DateTime()))) 
+    val id = posts.insert(post)
+    updateModificationDate(post.fridgeId)
+    post.copy(id = Some(id))
   }
 
   def updatePost(post :Post):Option[Post] = {
-    Fridges.updateModificationDate(post.fridgeId)
-    Posts.updatePost(post)
+    updateModificationDate(post.fridgeId)
+    posts.filter(_.id === post.id).update(post)
+    posts.filter(_.id === post.id).firstOption
   }
 
-  def deleteOutdatedPost() = Posts.deleteOutdatedPost
+  def deleteOutdatedPost() = {
+    val now = new DateTime()
+    //val deleteQuery: Query[Posts,Post] = posts.filter( p => p.dueDate.isDefined && p.dueDate.get.isBefore(now))
+    //deleteQuery.delete 
+  }
 
-  def countPosts() = Posts.count
+  def countPosts() = posts.length
 
-  def countFridges() = Fridges.count
+  def countFridges() = fridges.length
+
+  def updateModificationDate(fridgeName: String) = {
+    fridges.filter(_.name === fridgeName).map(_.modificationDate).update(new DateTime())
+  }
+
+  def createDB() = {
+    try {
+      ddls.foreach(_.create)
+    } catch {
+      case e: Exception => logger.info("Could not create database.... assuming it already exists")
+    }
+  }
+
+  def dropDB() = {
+    try {
+      ddls.foreach(_.drop)
+    } catch {
+      case e: Exception => logger.info("Could not drop database")
+    }
+  }
+
+  def purgeDB() = { dropDB; createDB }
 }
