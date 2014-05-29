@@ -17,13 +17,13 @@ App.PostView = Em.View.extend(App.Draggable, {
 	mouseEnter: function(event) {
 		this.$().find(".post-header").css({
 			'display': 'block'
-		}).fadeIn(300);
+		}).fadeIn(200);
 	},
 
 	mouseLeave: function(event) {
 		var uiElmt = event.currentTarget;
 		if (!$(uiElmt).hasClass("post-header")) {
-			this.$().find(".post-header").fadeOut(300);
+			this.$().find(".post-header").fadeOut(200);
 		}
 	},
 

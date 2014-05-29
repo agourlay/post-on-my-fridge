@@ -23,15 +23,18 @@ App.MainHeaderView = Em.View.extend({
 		    displayKey: 'value',
 		    source: fridges.ttAdapter(),
 		    templates: {
-			    empty: [
+		        empty: [
 			      '<div>',
-			      'unable to find a fridge matching the current query',
+			      'no fridge matching query',
 			      '</div>'
-			    ].join('\n')
+			    ].join('\n'),
+			    suggestion: function(data){
+                return '<p>' + data + '</p>';
+            }
 			}
 		})
-		.on('typeahead:selected', function(e,datum) {
-		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.value));
+		.on('typeahead:selected', function(e,datum,name) {
+		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum));
 		});
 	}
 });

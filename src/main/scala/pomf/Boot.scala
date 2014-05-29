@@ -23,7 +23,6 @@ import spray.can.Http
 object Boot extends App with Configuration{
  
   val log: Logger = LoggerFactory.getLogger("boot")
-  log.info("                       ")
   log.info(" +--------------------+")
   log.info(" |  Fridge starting   |")
   log.info(" |--------------------|")
@@ -41,7 +40,6 @@ object Boot extends App with Configuration{
   log.info(" |                    |")
   log.info(" |                    |")
   log.info(" +--------------------+")
-  log.info("                       ")
 
   implicit val system = ActorSystem(systemName)
   implicit def executionContext = system.dispatcher

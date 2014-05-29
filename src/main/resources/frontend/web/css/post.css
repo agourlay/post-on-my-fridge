@@ -10,16 +10,6 @@
 .post:hover,.newPost:hover {
 	cursor: move; }
 
-.post:hover  {
-    width: 250px;
-    height: 250px;
-    z-index:30; }
-
-.post:hover .content:hover {
-    width: 240px;
-    height: 220px;
-    z-index:30; }
-
 .post-header{
 	position: absolute;
 	left:0;
@@ -51,7 +41,7 @@
 .post textarea{
 	border: dotted;
     resize: none;
-    width: 210px;
+    width: 220px;
     margin-right: auto;
 	margin-left: auto;
     margin-bottom: 7px;
@@ -59,13 +49,13 @@
 
 .post input[type="date"]{
 	margin-right: auto;
-	margin-left: auto;
+	margin-left: 10px;
 	height: 18px;
 	width: 140px;}
 
 .post input[type="text"]{
 	margin-right: auto;
-	margin-left: auto;
+	margin-left: 10px;
 	height: 18px;
 	width: 130px;}	
 
@@ -75,6 +65,4 @@
 
 .post input[type="color"]{
 	float : right;
-	margin-right: 5px;
-	height: 18px;
-	width: 30px;}		
+	margin-right: 5px;}		

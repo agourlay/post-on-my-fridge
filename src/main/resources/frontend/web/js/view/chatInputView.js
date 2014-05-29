@@ -3,6 +3,7 @@ App.ChatInputView = Ember.TextArea.extend({
   maxlength : "200",
   elementId : "chat-input",
   valueBinding: 'controller.content',
+  classNames: ['form-control'],
   placeholder : "Type message...",
 
   insertNewline: function() {

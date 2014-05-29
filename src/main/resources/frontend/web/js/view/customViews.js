@@ -8,13 +8,13 @@ App.LazyColorFieldView = Ember.View.extend(Ember.TextSupport,{
 App.LazyDateFieldView = Ember.View.extend(Ember.TextSupport,{
   attributeBindings: ['value', 'type', 'size', 'name', 'placeholder', 'disabled', 'maxlength'],
   tagName: 'input',
-  classNames: ['form-control'],
+  classNames: ['form-control','input-sm'],
   type: 'date',
   valueBinding: Ember.Binding.oneWay('source')
 });
 
 App.LazyTextField = Ember.TextField.extend({
-  classNames: ['form-control'],
+  classNames: ['form-control', 'input-sm'],
   valueBinding: Ember.Binding.oneWay('source')
 });
 

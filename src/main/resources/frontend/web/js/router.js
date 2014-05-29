@@ -22,7 +22,7 @@ App.FridgesRoute = Ember.Route.extend({
 });
 
 App.IndexRoute = Ember.Route.extend({
-	beforeModel: function() {
+	redirect: function() {
     	this.transitionTo('fridges');
   	}
 });
