@@ -15,6 +15,11 @@
   background-color: #fff;
 }
 
+#search-box .tt-dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .typeahead:focus {
   border: 2px solid #0097cf;
 }

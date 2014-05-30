@@ -10,6 +10,9 @@
 .post:hover,.newPost:hover {
 	cursor: move; }
 
+.post:hover  {
+    z-index:30; }
+
 .post-header{
 	position: absolute;
 	left:0;

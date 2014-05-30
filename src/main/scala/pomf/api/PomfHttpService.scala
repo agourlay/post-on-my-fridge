@@ -3,6 +3,7 @@ package pomf.api
 import pomf.service.CrudServiceProtocol
 import pomf.service.ChatServiceProtocol
 import pomf.service.TokenServiceProtocol
+import pomf.api.exceptions.RestFailureHandling
 import pomf.domain.model._
 import pomf.api.streaming._
 
@@ -27,7 +28,7 @@ import reflect.ClassTag
 import JsonSupport._
 
 
-class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService: ActorRef) extends HttpServiceActor with ActorLogging{
+class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService: ActorRef) extends HttpServiceActor with RestFailureHandling with ActorLogging{
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(10 seconds)
 

@@ -30,6 +30,10 @@ class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging {
 
   override def preStart {
     responder ! ChunkedResponseStart(responseStart) 
+  }
+
+  override def postStop() = {
+    responder ! ChunkedMessageEnd
   }   
   
   def receive = {

@@ -1,16 +1,20 @@
-import AssemblyKeys._
+import com.typesafe.sbt.SbtNativePackager.Universal
 
-assemblySettings
+import com.typesafe.sbt.packager.Keys._
 
-net.virtualvoid.sbt.graph.Plugin.graphSettings
+packageArchetype.java_application
 
-jarName in assembly := "pomf-api.jar"
+incOptions := incOptions.value.withNameHashing(true)
 
-test in assembly := {}
+mappings in Universal += {
+  file("src/main/resources/application.conf") -> "conf/pomf.conf"
+}
+
+scriptClasspath += "../conf/pomf.conf"
 
 organization := "com.agourlay"
 
-name := "pomf-api"
+name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
@@ -44,18 +48,15 @@ libraryDependencies ++= {
        "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
       ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
       ,"io.spray"               %   "spray-caching"     % sprayVersion               withSources()
-      ,"io.spray"               %   "spray-testkit"     % sprayVersion    % "test"   withSources()
       ,"io.spray"               %%  "spray-json"        % "1.2.6"                    withSources()
       ,"com.typesafe.akka"      %%  "akka-actor"        % akkaVersion                withSources()
       ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaVersion                withSources()
-      ,"com.typesafe.akka"      %%  "akka-testkit"      % akkaVersion     % "test"   withSources()
       ,"joda-time"              %   "joda-time"         % "2.3"                      withSources()
       ,"org.joda"               %   "joda-convert"      % "1.6"                      withSources()
       ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "1.1.0"                    withSources()
       ,"com.typesafe.slick"     %%  "slick"             % "2.0.2"                    withSources()
       ,"org.postgresql"         %   "postgresql"        % "9.3-1101-jdbc41"          withSources()
-      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"                    withSources()
-      ,"org.specs2"             %%  "specs2-core"       % "2.3.12"        % "test"   withSources()  
+      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"                    withSources() 
   )
 }
 

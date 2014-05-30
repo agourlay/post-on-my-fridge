@@ -7,9 +7,10 @@ trait DBConfig {
 }
 
 class PostGresDB(user: String, password : String, schema : String) extends DBConfig {
-  val dao = new Dao(Database.forURL("jdbc:postgresql:" + schema,
+  val db = Database.forURL("jdbc:postgresql:" + schema,
                            driver = "org.postgresql.Driver",
                            user = user,
-                           password = password))
+                           password = password)	
+  val dao = new Dao(db)
   dao.createDB
 }

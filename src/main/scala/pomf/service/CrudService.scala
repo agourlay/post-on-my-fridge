@@ -46,10 +46,14 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
-    val fridgeId = getPost(id).get.fridgeId
-    val deleteAck = "post " + dao.deletePost(id) + " deleted"
-    notificationService ! NotificationServiceProtocol.PostDeleted(fridgeId, id, token)
-    deleteAck
+    getPost(id) match {
+      case None => log.warning(s"post $id does not exist"); s"post $id does not exist"
+      case Some(post) => {
+        val deleteAck = "post " + dao.deletePost(id) + " deleted"
+        notificationService ! NotificationServiceProtocol.PostDeleted(post.fridgeId, id, token)
+        deleteAck
+      }
+    }
   }
 
   def deleteOutdatedPost = {

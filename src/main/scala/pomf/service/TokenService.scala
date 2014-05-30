@@ -12,7 +12,7 @@ import pomf.service.TokenServiceProtocol._
 
 class TokenService extends Actor with ActorLogging {
   
-  val random :SecureRandom = new SecureRandom()
+  val random = new SecureRandom()
   
   def receive = {
     case RequestToken => sender ! new BigInteger(130, random).toString(32)
