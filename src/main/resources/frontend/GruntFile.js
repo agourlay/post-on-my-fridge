@@ -24,7 +24,6 @@ module.exports = function(grunt) {
           "web/bower_components/store.js/store.min.js",
           "web/bower_components/js-url/url.min.js",
           "web/bower_components/typeahead.js/dist/typeahead.bundle.min.js",
-          "web/bower_components/nprogress/nprogress.js",
           "web/bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
           "web/bower_components/bacon/dist/Bacon.min.js",
           "web/bower_components/alertify.js/dist/alertify.min.js"
@@ -52,10 +51,8 @@ module.exports = function(grunt) {
             "web/js/dao.js",
             "web/js/router.js",
             "web/js/view/customViews.js",
-            "web/js/controller/mainHeaderController.js",
             "web/js/view/mainHeaderView.js",
             "web/js/model/fridgeModel.js",
-            "web/js/controller/fridgeController.js",
             "web/js/view/fridgeView.js",
             "web/js/controller/fridgesController.js",
             "web/js/view/fridgesView.js",

@@ -1,1 +1,0 @@
-App.MainHeaderController = Ember.ObjectController.extend({});

@@ -2,7 +2,6 @@ App.Fridge = Em.Object.extend({
 	id : null,
 	name : null,
 	posts: [],
-	loaded: false,
 	creationDate: null,
 	modificationDate: null,
 

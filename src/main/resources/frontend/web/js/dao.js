@@ -36,7 +36,6 @@ App.Dao = Em.Object.create({
 	},
 
 	addLocalMessage : function (message) {
-		debugger;
 		this.get('messagesController').messageManagement(message);
 	},
 
@@ -80,29 +79,24 @@ App.Dao = Em.Object.create({
 	},
 
 	findFridgeByName : function(fridgeId) {
-		var model = App.Fridge.create();
-		model.set('id', fridgeId);
-		$.ajax({
+		return $.ajax({
         	url: "fridges/" + fridgeId,
         	type: 'GET',
-        	beforeSend : function (){
-        		NProgress.start(); 
-            },
-        	success: function(fridge) {
-				if (fridge !== null && fridge !== undefined) {
-					model.set('name', fridge.name);
-					model.set('creationDate', fridge.creationDate);
-					model.set('modificationDate', fridge.modificationDate);
-					model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
-					model.set('loaded', true);
-				}
-				NProgress.done();
-        	},
         	error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during fridge retrieval");
 			}
-    	});
-		return model;
+    	}).then(function (fridge) {
+    		var model = App.Fridge.create();
+		    model.set('id', fridgeId);
+            var subsModel = Ember.A([]);
+            if (fridge !== null && fridge !== undefined) {
+				model.set('name', fridge.name);
+				model.set('creationDate', fridge.creationDate);
+				model.set('modificationDate', fridge.modificationDate);
+				model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
+			}
+            return model;
+        });
 	},
 
 	retrieveUserToken : function() {
@@ -152,27 +146,26 @@ App.Dao = Em.Object.create({
 	},
 
 	getFridges : function () {
-		var fridgesModel = Ember.A([]);
-		$.ajax({
+		return $.ajax({
 	        	url: "fridges/",
 	        	type: 'GET',
-	        	success: function(fridges) {
-					$.each( fridges, function(i, fridge){
-						var fridge = App.Fridge.create({
-							id:fridge.id,
-							name:fridge.name,
-							creationDate:fridge.creationDate,
-							modificationDate:fridge.modificationDate,
-							posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
-						});
-						fridgesModel.pushObject(fridge);	
-					});					
-	        	},
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during fridges retrieval");					
 				}
-    		});
-		return fridgesModel;
+    		}).then(function (fridges) {
+            	var fridgesModel = Ember.A([]);
+            	$.each(fridges, function(i, fridge){
+					var fridge = App.Fridge.create({
+						id:fridge.id,
+						name:fridge.name,
+						creationDate:fridge.creationDate,
+						modificationDate:fridge.modificationDate,
+						posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
+					});
+					fridgesModel.pushObject(fridge);	
+				});	
+            	return fridgesModel;
+        	});
 	}
 });
 

@@ -1,6 +1,5 @@
 App.MessagesController = Ember.ArrayController.extend({
-	content: [],
-		
+
 	init: function () {
 		var me = this; 
 		App.Dao.set("messagesController", this);
