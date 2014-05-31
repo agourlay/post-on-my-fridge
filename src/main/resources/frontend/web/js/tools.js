@@ -83,15 +83,15 @@ function textContainsSupportedMediaUrl(text) {
 }
 
 function successMessage(message){
-	//Alertify.log.success(message);
+	noty({text: message, type: 'success', timeout: 2000, layout: 'bottomRight'});
 }
 
 function errorMessage(message){
-	//Alertify.log.error(message);
+	noty({text: message, type: 'error', timeout: 2000, layout: 'bottomRight'});
 }
 
 function infoMessage(message){
-	//Alertify.log.info(message);
+	noty({text: message, type: 'info', timeout: 2000, layout: 'bottomRight'});
 }
 
 function filterData(data) {

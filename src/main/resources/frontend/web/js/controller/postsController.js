@@ -21,8 +21,7 @@ App.PostsController = Ember.ArrayController.extend({
 	createPost: function(postData) {
 		var controller = this;
 		var model = App.Post.createWithMixins(postData);
-		var promiseCreation = model.createPost();
-		promiseCreation.done(function(postCreated){
+		model.createPost().then(function(postCreated){
 			model.set('id',$.parseJSON(postCreated).id);
 			controller.pushObject(model);
 		});

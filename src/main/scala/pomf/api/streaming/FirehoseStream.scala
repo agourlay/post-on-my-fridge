@@ -13,7 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class FirehoseStream(responder: ActorRef)(filter: (String, String) => Boolean) extends StreamingResponse(responder) {
+class FirehoseStream(responder: ActorRef)(filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
        
   override def startText = "Streaming firehose...\n"
 
@@ -23,9 +23,9 @@ class FirehoseStream(responder: ActorRef)(filter: (String, String) => Boolean) e
   }
   
   override def receive = ({
-    case Notification(fridgeNameNotif, command, payload, timestamp, token) => {
-      if (filter(fridgeNameNotif,token)){
-        val pushedEvent = PushedEvent(fridgeNameNotif, command, payload, timestamp)
+    case Notification(fridgeIdNotif, command, payload, timestamp, token) => {
+      if (filter(fridgeIdNotif,token)){
+        val pushedEvent = PushedEvent(fridgeIdNotif, command, payload, timestamp)
         val nextChunk = MessageChunk("data: "+ formatEvent.write(pushedEvent) +"\n\n")
         responder ! nextChunk 
       }

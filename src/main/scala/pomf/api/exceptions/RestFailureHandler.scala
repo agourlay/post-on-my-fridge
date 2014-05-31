@@ -4,6 +4,7 @@ import spray.util.LoggingContext
 import spray.routing._
 import spray.http._
 import HttpHeaders._
+import akka.pattern.AskTimeoutException
 
 trait RestFailureHandling {
   this: HttpService =>
@@ -14,6 +15,13 @@ trait RestFailureHandling {
 	      requestUri { uri =>
 	        log.error("Request to {} could not be handled normally -> IllegalArgumentException", uri)
 	        log.error("IllegalArgumentException : {} ", e)
+	        complete(StatusCodes.InternalServerError, e.getMessage)
+	    }  
+
+	    case e : AskTimeoutException  => 
+	      requestUri { uri =>
+	        log.error("Request to {} could not be handled normally -> AskTimeoutException", uri)
+	        log.error("AskTimeoutException : {} ", e)
 	        complete(StatusCodes.InternalServerError, e.getMessage)
 	    }  
 

@@ -20,10 +20,8 @@
     "js-url": "1.8.6",
     "bootstrap" : "3.1.1",
     "typeahead.js" : "0.10.2",
-    "rickshaw" : "1.5.0",
     "font-awesome": "4.1.0",
-    "alertify.js": "0.3.11",
-    "d3" : "3.4.8",
+    "noty": "2.2.5",
     "bacon" : "0.7.13"
   },
   "resolutions": {

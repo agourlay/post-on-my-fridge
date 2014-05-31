@@ -26,7 +26,7 @@ module.exports = function(grunt) {
           "web/bower_components/typeahead.js/dist/typeahead.bundle.min.js",
           "web/bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
           "web/bower_components/bacon/dist/Bacon.min.js",
-          "web/bower_components/alertify.js/dist/alertify.min.js"
+          "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"
         ],
         dest: 'web/dist/js/libs.min.js'
       },

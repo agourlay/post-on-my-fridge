@@ -30,24 +30,27 @@ import JsonSupport._
 
 class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService: ActorRef) extends HttpServiceActor with RestFailureHandling with ActorLogging{
   implicit def executionContext = context.dispatcher
-  implicit val timeout = akka.util.Timeout(10 seconds)
+  implicit val timeout = akka.util.Timeout(5 seconds)
 
   def receive = runRoute(fridgeRoute ~ postRoute ~ streamRoute ~ chatRoute ~ miscRoute ~ statsRoute ~ staticRoute)
 
   val fridgesCache: Cache[List[FridgeRest]] = LruCache(maxCapacity = 1, timeToLive = 10 seconds)
 
   def fridgeRoute =
-    path("fridges" / Rest) { fridgeName =>
+    path("fridges" / LongNumber) { fridgeId =>
       get {
         complete {
-          if (fridgeName.isEmpty)
-            fridgesCache("fridges"){
-              (crudService ? CrudServiceProtocol.AllFridge).mapTo[List[FridgeRest]]
-            }
-          else
-            (crudService ? CrudServiceProtocol.FullFridge(fridgeName)).mapTo[FridgeRest]
+          (crudService ? CrudServiceProtocol.FullFridge(fridgeId)).mapTo[FridgeRest]
         }
       }
+    } ~
+    path("fridges") {
+      get {
+        complete {
+          fridgesCache("fridges"){
+           (crudService ? CrudServiceProtocol.AllFridge).mapTo[List[FridgeRest]]
+          }
+      } }
     } ~
     path("fridges") {
       post {
@@ -103,7 +106,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
         parameters("term") { term =>
           get {
             complete {
-              (crudService ? CrudServiceProtocol.SearchFridge(term)).mapTo[List[String]]
+              (crudService ? CrudServiceProtocol.SearchFridge(term)).mapTo[List[Fridge]]
             }
           }
         }
@@ -138,20 +141,20 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
     } 
     
   def chatRoute = 
-    pathPrefix("chat" / Segment) { fridgeName =>
+    pathPrefix("chat" / LongNumber) { fridgeId =>
       path("messages") {
         post {
           parameters("token") { token =>
             entity(as[ChatMessage]) { message =>
               complete {
-                (chatService ? ChatServiceProtocol.SendMessage(fridgeName, message, token)).mapTo[ChatMessage]
+                (chatService ? ChatServiceProtocol.SendMessage(fridgeId, message, token)).mapTo[ChatMessage]
               }
             }
           } 
         } ~
         get {
           complete {
-              (chatService ? ChatServiceProtocol.ChatHistory(fridgeName)).mapTo[List[ChatMessage]]
+              (chatService ? ChatServiceProtocol.ChatHistory(fridgeId)).mapTo[List[ChatMessage]]
           }  
         }
       } ~
@@ -160,8 +163,8 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           parameters("token") { token =>
             entity(as[String]) { participantName =>
               complete {
-                chatService ! ChatServiceProtocol.AddParticipant(fridgeName, token, participantName)
-                participantName + " joined chat " +  fridgeName
+                chatService ! ChatServiceProtocol.AddParticipant(fridgeId, token, participantName)
+                participantName + " joined chat " +  fridgeId
               }
             }
           } 
@@ -170,7 +173,7 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
           parameters("token") { token =>
             entity(as[String]) { participantName =>
               complete {
-                chatService ! ChatServiceProtocol.RenameParticipant(fridgeName, token, participantName)
+                chatService ! ChatServiceProtocol.RenameParticipant(fridgeId, token, participantName)
                 participantName + "changed name" 
               }
             }
@@ -178,14 +181,14 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
         } ~
         get {
           complete {
-              (chatService ? ChatServiceProtocol.ParticipantNumber(fridgeName)).mapTo[String]
+              (chatService ? ChatServiceProtocol.ParticipantNumber(fridgeId)).mapTo[String]
           }  
         } ~
         delete {
           parameters("token") { token =>
             complete {
-              chatService ! ChatServiceProtocol.RemoveParticipant(fridgeName, token)
-              token + " removed from chat " +  fridgeName
+              chatService ! ChatServiceProtocol.RemoveParticipant(fridgeId, token)
+              token + " removed from chat " +  fridgeId
             }
           }
         }
@@ -195,24 +198,21 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
   def streamRoute = 
     pathPrefix("stream") {
       get {
-        path("fridge" / Rest) { fridgeName =>
+        path("fridge" / LongNumber) { fridgeId =>
           parameters("token") { token =>
-            streamUser(fridgeName, token)
+            streamUser(fridgeId, token)
           }    
         } ~  
         path("firehose") {
           streamFirehose
-        } ~  
-        path("stats") {
-          streamStat 
-        }        
+        }      
       }
     } 
   
   def statsRoute = 
     path("stats") {
       complete {
-        (context.actorSelection("/user/IO-HTTP/listener-0") ? Http.GetStats).mapTo[Stats]
+        "blah"
       }
     }
   
@@ -230,12 +230,8 @@ class PomfHttpService(crudService: ActorRef, chatService: ActorRef, tokenService
     context.actorOf(Props(new FirehoseStream(ctx.responder)((_,_) => true)))
   }
 
-  def streamUser(fridgeName : String, token : String)(ctx: RequestContext): Unit = {
-    val filter = (fridgeTarget:String, userToken : String) => fridgeName == fridgeTarget && token != userToken
+  def streamUser(fridgeId : Long, token : String)(ctx: RequestContext): Unit = {
+    val filter = (fridgeTarget:Long, userToken : String) => fridgeId == fridgeTarget && token != userToken
     context.actorOf(Props(new FirehoseStream(ctx.responder)(filter)))
   }
-
-  def streamStat (ctx: RequestContext): Unit = {
-    context.actorOf(Props(new StatStream(ctx.responder)))
-  }  
 }

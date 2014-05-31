@@ -17,74 +17,74 @@ class ChatService(notificationService : ActorRef) extends Actor with ActorLoggin
   implicit def executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(10 seconds)
 
-  var chatRooms = Map.empty[String, ActorPath]
+  var chatRooms = Map.empty[Long, ActorRef]
   
   def receive = {
-    case SendMessage(fridgeName, message, token)    => sender ! addChatMessage(fridgeName, message, token)
-    case ChatHistory(fridgeName)                    => retrieveChatHistory(fridgeName, sender)
-    case ParticipantNumber(fridgeName)              => retrieveParticipantNumber(fridgeName, sender)
-    case AddParticipant(fridgeName, token, name)    => addParticipant(fridgeName, token, name)
-    case RemoveParticipant(fridgeName, token)       => removeParticipant(fridgeName, token) 
-    case RenameParticipant(fridgeName, token, name) => renameParticipant(fridgeName, token, name)
+    case SendMessage(fridgeId, message, token)    => sender ! addChatMessage(fridgeId, message, token)
+    case ChatHistory(fridgeId)                    => retrieveChatHistory(fridgeId, sender)
+    case ParticipantNumber(fridgeId)              => retrieveParticipantNumber(fridgeId, sender)
+    case AddParticipant(fridgeId, token, name)    => addParticipant(fridgeId, token, name)
+    case RemoveParticipant(fridgeId, token)       => removeParticipant(fridgeId, token) 
+    case RenameParticipant(fridgeId, token, name) => renameParticipant(fridgeId, token, name)
   }
   
-  def getOrCreateChatRoom(fridgeName: String) : ActorPath = {
-    if (!chatRooms.contains(fridgeName)){
-      val actorchatRoom = context.actorOf(Props[ChatRoom], "chat-room-"+fridgeName)
-      chatRooms += (fridgeName -> actorchatRoom.path)
-      actorchatRoom.path
+  def getOrCreateChatRoom(fridgeId: Long) : ActorRef = {
+    if (!chatRooms.contains(fridgeId)){
+      val actorchatRoom = context.actorOf(Props[ChatRoom], "chat-room-"+fridgeId)
+      chatRooms += (fridgeId -> actorchatRoom)
+      actorchatRoom
     } else {
-      chatRooms(fridgeName)
+      chatRooms(fridgeId)
     }
   }
 
-  def addChatMessage(fridgeName: String, message: ChatMessage, token: String): ChatMessage = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    context.actorSelection(chatRoomPath) ! ChatRoomProtocol.SendMessage(message, token) 
-    notificationService ! NotificationServiceProtocol.MessageSent(fridgeName, message, token)
+  def addChatMessage(fridgeId: Long, message: ChatMessage, token: String): ChatMessage = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    chatRoom ! ChatRoomProtocol.SendMessage(message, token) 
+    notificationService ! NotificationServiceProtocol.MessageSent(fridgeId, message, token)
     message
   }
   
-  def retrieveChatHistory(fridgeName: String, sender : ActorRef) = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    val history = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.ChatHistory).mapTo[List[ChatMessage]]
+  def retrieveChatHistory(fridgeId: Long, sender : ActorRef) = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    val history = (chatRoom ? ChatRoomProtocol.ChatHistory).mapTo[List[ChatMessage]]
     history pipeTo sender
   }
 
-  def retrieveParticipantNumber(fridgeName: String, sender : ActorRef) = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    val participantNumber = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.ParticipantNumber).mapTo[String]
+  def retrieveParticipantNumber(fridgeId: Long, sender : ActorRef) = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    val participantNumber = (chatRoom ? ChatRoomProtocol.ParticipantNumber).mapTo[String]
     participantNumber pipeTo sender
   }
 
-  def addParticipant(fridgeName: String, token: String, name: String) = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    context.actorSelection(chatRoomPath) ! ChatRoomProtocol.AddParticipant(token, name)
-    notificationService ! NotificationServiceProtocol.ParticipantAdded(fridgeName, token, name)
+  def addParticipant(fridgeId: Long, token: String, name: String) = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    chatRoom ! ChatRoomProtocol.AddParticipant(token, name)
+    notificationService ! NotificationServiceProtocol.ParticipantAdded(fridgeId, token, name)
   }
 
-  def removeParticipant(fridgeName: String, token: String) = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    val nameQuitter = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.RemoveParticipant(token)).mapTo[String]
+  def removeParticipant(fridgeId: Long, token: String) = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    val nameQuitter = (chatRoom ? ChatRoomProtocol.RemoveParticipant(token)).mapTo[String]
     nameQuitter.onSuccess { 
-      case name : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRemoved(fridgeName, token, name)
+      case name : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRemoved(fridgeId, token, name)
     }
   }
 
-  def renameParticipant(fridgeName: String, token:String, newName:String) = {
-    val chatRoomPath = getOrCreateChatRoom(fridgeName)
-    val oldName = (context.actorSelection(chatRoomPath) ? ChatRoomProtocol.RenameParticipant(token, newName)).mapTo[String]
+  def renameParticipant(fridgeId: Long, token:String, newName:String) = {
+    val chatRoom = getOrCreateChatRoom(fridgeId)
+    val oldName = (chatRoom ? ChatRoomProtocol.RenameParticipant(token, newName)).mapTo[String]
     oldName.onSuccess { 
-      case exName : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeName, token, newName, exName)
+      case exName : String ⇒ notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeId, token, newName, exName)
     }
   }
 } 
 
 object ChatServiceProtocol {
-  case class SendMessage(fridgeName: String, message: ChatMessage, token: String)
-  case class ChatHistory(fridgeName: String)
-  case class ParticipantNumber(fridgeName: String)
-  case class AddParticipant(fridgeName: String, token:String, name:String)
-  case class RemoveParticipant(fridgeName: String, token:String)
-  case class RenameParticipant(fridgeName: String, token:String, name:String)
+  case class SendMessage(fridgeId: Long, message: ChatMessage, token: String)
+  case class ChatHistory(fridgeId: Long)
+  case class ParticipantNumber(fridgeId: Long)
+  case class AddParticipant(fridgeId: Long, token: String, name: String)
+  case class RemoveParticipant(fridgeId: Long, token: String)
+  case class RenameParticipant(fridgeId: Long, token: String, name: String)
 }

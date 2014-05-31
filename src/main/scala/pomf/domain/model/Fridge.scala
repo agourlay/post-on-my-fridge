@@ -13,9 +13,10 @@ case class Fridge(id: Option[Long] = None, name: String, creationDate: DateTime,
 case class FridgeRest(name: String, creationDate: DateTime, modificationDate: DateTime, id: Option[Long], posts: List[Post])
 
 class Fridges(tag: Tag) extends Table[Fridge](tag, "FRIDGES") {
-  def id = column[Option[Long]]("ID", O.PrimaryKey, O.AutoInc)
+  def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
   def name = column[String]("NAME", O.NotNull)
   def creationDate = column[DateTime]("CREATION_DATE", O.NotNull)
   def modificationDate = column[DateTime]("MODIFICATION_DATE", O.NotNull)
-  def * = (id, name, creationDate, modificationDate) <> (Fridge.tupled, Fridge.unapply)
+  def * = (id.?, name, creationDate, modificationDate) <> (Fridge.tupled, Fridge.unapply)
+  def idx = index("IDX_NAME", name, unique = true)
 }

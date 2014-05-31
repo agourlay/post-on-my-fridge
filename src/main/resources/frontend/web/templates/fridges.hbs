@@ -8,9 +8,8 @@
 						<form class="form">
 							<div class="form-group">
 	                			{{view Ember.TextField valueBinding="App.FridgesView.newFridgeName" placeholder="fridge name" }}
-	            				<button class="btn btn-primary" {{action "toNewFridge" App.FridgesView.newFridgeName}}>
-									<i class="fa fa-check-circle-o"></i> 
-									{{App.IndexView.newFrigeName}}
+	            				<button class="btn btn-primary" {{action "createFridge" App.FridgesView.newFridgeName}}>
+									<i class="fa fa-check-circle-o"></i>
 								</button>
 			    			</div>
 						</form>		
@@ -29,7 +28,7 @@
 						<tbody>
 						    {{#each controller}}
 							    <tr>
-								    <td><b>{{#link-to 'fridge' name}}{{name}}{{/link-to}}</b></td>
+								    <td><b>{{#link-to 'fridge' id}}{{name}}{{/link-to}}</b></td>
 								    <td>{{postNumber}}</td>
 								    <td>{{prettyCreationDate}}</td>
 								    <td>{{relativeLastUpdate}}</td>

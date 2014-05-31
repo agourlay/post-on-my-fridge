@@ -9,7 +9,7 @@ App.MainHeaderView = Em.View.extend({
 	didInsertElement: function() {
 		var view = this;
 		var fridges = new Bloodhound({
-		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		  remote: 'search/fridge?term=%QUERY'
 		});
@@ -20,7 +20,7 @@ App.MainHeaderView = Em.View.extend({
 		    minLength: 2
 		},{
 		    name: 'fridges',
-		    displayKey: 'value',
+		    displayKey: 'name',
 		    source: fridges.ttAdapter(),
 		    templates: {
 		        empty: [
@@ -29,12 +29,12 @@ App.MainHeaderView = Em.View.extend({
 			      '</div>'
 			    ].join('\n'),
 			    suggestion: function(data){
-                return '<p>' + data + '</p>';
-            }
+                return '<p>' + data.name + '</p>';
+            	}
 			}
 		})
-		.on('typeahead:selected', function(e,datum,name) {
-		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum));
+		.on('typeahead:selected', function(e, datum, name) {
+		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.id));
 		});
 	}
 });

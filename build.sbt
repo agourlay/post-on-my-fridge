@@ -42,21 +42,23 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaVersion   = "2.3.3"
-  val sprayVersion  = "1.3.1"
+  val akkaV       = "2.3.3"
+  val sprayV      = "1.3.1"
+  val sprayJsonV  = "1.2.6"
   Seq(
-       "io.spray"               %   "spray-can"         % sprayVersion               withSources() 
-      ,"io.spray"               %   "spray-routing"     % sprayVersion               withSources()
-      ,"io.spray"               %   "spray-caching"     % sprayVersion               withSources()
-      ,"io.spray"               %%  "spray-json"        % "1.2.6"                    withSources()
-      ,"com.typesafe.akka"      %%  "akka-actor"        % akkaVersion                withSources()
-      ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaVersion                withSources()
-      ,"joda-time"              %   "joda-time"         % "2.3"                      withSources()
-      ,"org.joda"               %   "joda-convert"      % "1.6"                      withSources()
-      ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "1.1.0"                    withSources()
-      ,"com.typesafe.slick"     %%  "slick"             % "2.0.2"                    withSources()
-      ,"org.postgresql"         %   "postgresql"        % "9.3-1101-jdbc41"          withSources()
-      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"                    withSources() 
+       "io.spray"               %   "spray-can"         % sprayV     
+      ,"io.spray"               %   "spray-routing"     % sprayV          
+      ,"io.spray"               %   "spray-caching"     % sprayV              
+      ,"io.spray"               %%  "spray-json"        % sprayJsonV                
+      ,"com.typesafe.akka"      %%  "akka-actor"        % akkaV        
+      ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaV          
+      ,"joda-time"              %   "joda-time"         % "2.3"                
+      ,"org.joda"               %   "joda-convert"      % "1.6"                
+      ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "1.1.0"              
+      ,"com.typesafe.slick"     %%  "slick"             % "2.0.2"              
+      ,"org.postgresql"         %   "postgresql"        % "9.3-1101-jdbc41"    
+      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"
+      ,"commons-dbcp"           %   "commons-dbcp"      % "1.4"            
   )
 }
 

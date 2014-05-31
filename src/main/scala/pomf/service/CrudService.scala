@@ -13,17 +13,17 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   implicit def executionContext = context.dispatcher
 
   def receive = {
-    case FullFridge(fridgeName)              => sender ! getFridgeRest(fridgeName)
-    case AllFridge                           => sender ! getAllFridge()
-    case CreateFridge(fridge)                => sender ! addFridge(fridge)
-    case GetPost(postId)                     => sender ! getPost(postId)
-    case DeletePost(postId, token)           => sender ! deletePost(postId, token)
-    case CreatePost(post, token)             => sender ! addPost(post, token)
-    case UpdatePost(post, token)             => sender ! updatePost(post, token)
-    case SearchFridge(term)                  => sender ! searchByNameLike(term)
-    case CountFridges                        => sender ! countFridges
-    case CountPosts                          => sender ! countPosts
-    case DeleteOutdatedPost                  => deleteOutdatedPost
+    case FullFridge(fridgeId)      => sender ! getFridgeRest(fridgeId)
+    case AllFridge                 => sender ! getAllFridge()
+    case CreateFridge(fridge)      => sender ! addFridge(fridge)
+    case GetPost(postId)           => sender ! getPost(postId)
+    case DeletePost(postId, token) => sender ! deletePost(postId, token)
+    case CreatePost(post, token)   => sender ! addPost(post, token)
+    case UpdatePost(post, token)   => sender ! updatePost(post, token)
+    case SearchFridge(term)        => sender ! searchByNameLike(term)
+    case CountFridges              => sender ! countFridges
+    case CountPosts                => sender ! countPosts
+    case DeleteOutdatedPost        => deleteOutdatedPost
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -32,18 +32,18 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
   def addPost(post: Post, token: String): Post = {
     val persistedPost = dao.addPost(post)
-    notificationService ! NotificationServiceProtocol.PostCreated(post.fridgeId, persistedPost, token)
+    notificationService ! NotificationServiceProtocol.PostCreated(persistedPost, token)
     persistedPost
   }
 
-  def getFridgeRest(fridgeName: String): FridgeRest = {
+  def getFridgeRest(fridgeName: Long): FridgeRest = {
     log.debug("Requesting fridge {}", fridgeName)
     dao.getFridgeRest(fridgeName)
   }
 
   def getPost(id: Long): Option[Post] = dao.getPost(id)
 
-  def searchByNameLike(term: String): List[String] = dao.searchByNameLike(term)
+  def searchByNameLike(term: String) = dao.searchByNameLike(term)
 
   def deletePost(id: Long, token: String): String = {
     getPost(id) match {
@@ -63,7 +63,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
   def updatePost(post: Post, token: String): Post = {
     val postUpdated = dao.updatePost(post).orNull
-    notificationService ! NotificationServiceProtocol.PostUpdated(post.fridgeId, post, token)
+    notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
     postUpdated
   }
 
@@ -74,7 +74,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 }
 
 object CrudServiceProtocol {
-  case class FullFridge(fridgeName : String)
+  case class FullFridge(fridgeId : Long)
   case object AllFridge
   case class CreateFridge(fridge : Fridge) 
   case class GetPost(postId : Long)

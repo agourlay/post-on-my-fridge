@@ -9,17 +9,19 @@ App.Dao = Em.Object.create({
 
 	initSessionData : function(fridgeId) {
 		var me = this;
-		this.set('fridgeId',fridgeId);
-		this.set('eventBus', new Bacon.Bus())
-		if(this.get("userToken") == null){
-				me.retrieveUserToken().done(function(){
-					me.streamManagement();
-			});
-		}
-		if (this.get("messagesController") != null){
-			this.get("messagesController").reload();
-		}
-		return this.findFridgeByName(fridgeId);
+		return me.findFridgeById(fridgeId).then(function (fridge) {
+    		me.set('fridgeId',fridge.id);
+			me.set('eventBus', new Bacon.Bus())
+			if(me.get("userToken") == null){
+				me.retrieveUserToken().then(function(token){
+					me.streamManagement(fridge.id, token);
+				});
+			}
+			if (me.get("messagesController") != undefined){
+				me.get("messagesController").reload();
+			}
+			return fridge;
+        });
 	},
 
 	addDefaultPost : function (){
@@ -35,13 +37,13 @@ App.Dao = Em.Object.create({
 		this.get('postsController').createPost(newPostData);
 	},
 
-	addLocalMessage : function (message) {
+	addLocalMessage : function (fridgeId, message) {
 		this.get('messagesController').messageManagement(message);
 	},
 
-	streamManagement : function () {
+	streamManagement : function (fridgeId, token) {
 		var me = this;
-		me.set("source", new EventSource("stream/fridge/" + this.get('fridgeId') +"?token="+ this.get("userToken")));
+		me.set("source", new EventSource("stream/fridge/" + fridgeId +"?token="+ token));
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
 			var data = $.parseJSON(e.data);
@@ -78,7 +80,7 @@ App.Dao = Em.Object.create({
 		this.get("messagesController").renameParticipant(newName);
 	},
 
-	findFridgeByName : function(fridgeId) {
+	findFridgeById : function(fridgeId) {
 		return $.ajax({
         	url: "fridges/" + fridgeId,
         	type: 'GET',
@@ -91,6 +93,7 @@ App.Dao = Em.Object.create({
             var subsModel = Ember.A([]);
             if (fridge !== null && fridge !== undefined) {
 				model.set('name', fridge.name);
+				model.set('id', fridge.id);
 				model.set('creationDate', fridge.creationDate);
 				model.set('modificationDate', fridge.modificationDate);
 				model.set('posts', fridge.posts.map(function(post){ return App.Post.createWithMixins(post); }));
@@ -100,32 +103,31 @@ App.Dao = Em.Object.create({
 	},
 
 	retrieveUserToken : function() {
+		var me = this;
 		return $.ajax({
 	        url: "token",
 	        type: 'GET',
-	        success: function(token) {
-				if (token !== null && token !== undefined) {
-					App.Dao.set('userToken',token);
-				}
-	        },
 	        error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during token retrieval");
 			}
+    	}).then(function (token){
+    		me.set('userToken',token);
+    		return token;
     	});
 	},
 
 	getStats : function () {
 		var idxModel = App.Index.create();
 		var fridgeCountDefer = $.ajax({
-	        	url: "count/fridges",
-	        	type: 'GET',
-	        	success: function(nbfridge) {
-					if (nbfridge !== null && nbfridge !== undefined) {
-						idxModel.set('nbFridges', nbfridge);
-					}
-	        	},
-	        	error: function(xhr, ajaxOptions, thrownError) {
-					errorMessage("Error during count fridges retrieval");
+	        url: "count/fridges",
+	        type: 'GET',
+	        success: function(nbfridge) {
+				if (nbfridge !== null && nbfridge !== undefined) {
+					idxModel.set('nbFridges', nbfridge);
+				}
+	        },
+	        error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during count fridges retrieval");
 			}
     	});
 
@@ -145,9 +147,26 @@ App.Dao = Em.Object.create({
 		return idxModel;
 	},
 
+	createFridge: function(name) {
+		var model = App.Fridge.create({
+			name: name,
+			creationDate:moment().format("YYYY-MM-DDTHH:mm:ssZZ"),
+			modificationDate:moment().format("YYYY-MM-DDTHH:mm:ssZZ")
+		});
+		return $.ajax({
+			url: "fridges",
+			method: "POST",
+        	contentType: "application/json",
+        	data: JSON.stringify(model),
+			error: function(xhr, ajaxOptions, thrownError) {
+				errorMessage("Error during fridge creation");
+			}
+		});
+	},
+
 	getFridges : function () {
 		return $.ajax({
-	        	url: "fridges/",
+	        	url: "fridges",
 	        	type: 'GET',
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during fridges retrieval");					
@@ -168,4 +187,3 @@ App.Dao = Em.Object.create({
         	});
 	}
 });
-

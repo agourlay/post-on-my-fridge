@@ -2,6 +2,7 @@ App.Router.map(function() {
     this.resource('index', { path:'/'}); 
     this.resource('fridges');
     this.resource('fridge', { path:'/fridge/:fridge_id' });
+    this.resource('stats');
 });
 
 App.FridgeRoute = Ember.Route.extend({
@@ -24,6 +25,12 @@ App.FridgesRoute = Ember.Route.extend({
 App.IndexRoute = Ember.Route.extend({
 	redirect: function() {
     	this.transitionTo('fridges');
+  	}
+});
+
+App.StatsRoute = Ember.Route.extend({
+	model: function() {
+    	return null;
   	}
 });
 

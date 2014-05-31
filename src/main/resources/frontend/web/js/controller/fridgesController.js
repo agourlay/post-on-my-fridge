@@ -1,5 +1,8 @@
 App.FridgesController = Ember.ArrayController.extend({
-	toNewFridge : function(name){
-		this.transitionToRoute('fridge', App.Dao.initSessionData(name));	
+	createFridge : function(name){
+		var me = this;
+		App.Dao.createFridge(name).then(function (fridge) {
+			me.transitionToRoute('fridge', App.Dao.initSessionData(fridge.id));	
+		});	
 	}
 });
