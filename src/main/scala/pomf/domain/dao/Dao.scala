@@ -73,10 +73,15 @@ class Dao(db: Database){
     }
   }
 
-  def updatePost(post :Post):Option[Post] = db withDynTransaction {
-    updateModificationDate(post.fridgeId)
-    postById(post.id.get).update(post)
-    postById(post.id.get).firstOption
+  def updatePost(post :Post) : Post = db withDynTransaction {
+    postById(post.id.get).firstOption match {
+      case None => throw new IllegalArgumentException("post does not exist")
+      case Some(p) => {
+        updateModificationDate(post.fridgeId)
+        postById(p.id.get).update(post)
+        postById(p.id.get).first
+      }
+    }
   }
 
   def deleteOutdatedPost() = db withDynTransaction {

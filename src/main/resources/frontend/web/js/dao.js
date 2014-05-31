@@ -37,7 +37,7 @@ App.Dao = Em.Object.create({
 		this.get('postsController').createPost(newPostData);
 	},
 
-	addLocalMessage : function (fridgeId, message) {
+	addLocalMessage : function (message) {
 		this.get('messagesController').messageManagement(message);
 	},
 

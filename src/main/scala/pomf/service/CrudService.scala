@@ -62,7 +62,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   }  
 
   def updatePost(post: Post, token: String): Post = {
-    val postUpdated = dao.updatePost(post).orNull
+    val postUpdated = dao.updatePost(post)
     notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
     postUpdated
   }
