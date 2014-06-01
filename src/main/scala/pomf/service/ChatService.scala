@@ -6,7 +6,7 @@ import akka.pattern._
 import pomf.service.ChatServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
 import pomf.domain.model._
-import pomf.api.JsonSupport._
+import pomf.api.endpoint.JsonSupport._
 
 import scala.concurrent.duration._
 import scala.concurrent._

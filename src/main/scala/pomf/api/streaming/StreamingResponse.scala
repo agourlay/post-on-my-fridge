@@ -6,25 +6,16 @@ import spray.http._
 import spray.http.MediaTypes._
 import HttpHeaders._
 import spray.can.Http
-import spray.can.server.Stats
 import scala.language.postfixOps
-import pomf.api.JsonSupport._
-
+import pomf.api.endpoint.JsonSupport._
+import pomf.api.endpoint.CustomMediaType
 
 class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging {
-
-  lazy val EventStreamType = register(
-	  MediaType.custom(
-	    mainType = "text",
-	    subType = "event-stream",
-	    compressible = false,
-	    binary = false
-	   ))
 
   def startText = "Starts streaming...\n"
 
   lazy val responseStart = HttpResponse(
- 			entity  = HttpEntity(EventStreamType, startText),
+ 			entity  = HttpEntity(CustomMediaType.EventStreamType, startText),
   		headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
       )
 

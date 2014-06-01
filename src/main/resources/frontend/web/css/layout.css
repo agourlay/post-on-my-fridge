@@ -93,12 +93,12 @@ a{text-decoration:none !important;}
 #wrap {
 	min-height: 100%;
 	height: auto !important;
-	height: 100%;
 	margin: 0 auto -30px;
 }
 
 #push, #footer {
 	display: block;
+	margin-top: 10px;
 	height: 40px;
 }
 

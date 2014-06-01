@@ -3,7 +3,7 @@ package pomf.domain.model
 import scala.compat.Platform
 import org.joda.time.DateTime
 import spray.json._
-import pomf.api.JsonSupport._
+import pomf.api.endpoint.JsonSupport._
 
 case class Notification(fridgeId : Long, command :String, payload : JsValue, date : DateTime, token : String ) 
 

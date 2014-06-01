@@ -2,7 +2,7 @@ package pomf.api.streaming
 
 import akka.actor._
 
-import pomf.api.JsonSupport._
+import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model._
 
 import scala.language.postfixOps

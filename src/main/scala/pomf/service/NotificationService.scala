@@ -5,8 +5,7 @@ import akka.actor.ActorLogging
 
 import pomf.domain.model._
 import pomf.service.NotificationServiceProtocol._
-import pomf.api.JsonSupport._
-
+import pomf.api.endpoint.JsonSupport._
 
 class NotificationService extends Actor with ActorLogging {
     

@@ -42,23 +42,34 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaV       = "2.3.3"
-  val sprayV      = "1.3.1"
-  val sprayJsonV  = "1.2.6"
+  val akkaV         = "2.3.3"
+  val sprayV        = "1.3.1"
+  val sprayJsonV    = "1.2.6"
+  val scalaMetricsV = "3.2.0_a2.3"
+  val metricsV      = "3.0.2"
+  val jodaTimeV     = "2.3"
+  val jodaConvertV  = "1.6"
+  val slickV        = "2.0.2" 
+  val slickJodaV    = "1.1.0"
+  val postgresqlV   = "9.3-1101-jdbc41"
+  val logbackV      = "1.1.2"
+  val dbcpV         = "1.4"
   Seq(
-       "io.spray"               %   "spray-can"         % sprayV     
-      ,"io.spray"               %   "spray-routing"     % sprayV          
-      ,"io.spray"               %   "spray-caching"     % sprayV              
-      ,"io.spray"               %%  "spray-json"        % sprayJsonV                
-      ,"com.typesafe.akka"      %%  "akka-actor"        % akkaV        
-      ,"com.typesafe.akka"      %%  "akka-slf4j"        % akkaV          
-      ,"joda-time"              %   "joda-time"         % "2.3"                
-      ,"org.joda"               %   "joda-convert"      % "1.6"                
-      ,"com.github.tototoshi"   %%  "slick-joda-mapper" % "1.1.0"              
-      ,"com.typesafe.slick"     %%  "slick"             % "2.0.2"              
-      ,"org.postgresql"         %   "postgresql"        % "9.3-1101-jdbc41"    
-      ,"ch.qos.logback"         %   "logback-classic"   % "1.1.2"
-      ,"commons-dbcp"           %   "commons-dbcp"      % "1.4"            
+       "io.spray"             %   "spray-can"         % sprayV     
+      ,"io.spray"             %   "spray-routing"     % sprayV          
+      ,"io.spray"             %   "spray-caching"     % sprayV              
+      ,"io.spray"             %%  "spray-json"        % sprayJsonV                
+      ,"com.typesafe.akka"    %%  "akka-actor"        % akkaV        
+      ,"com.typesafe.akka"    %%  "akka-slf4j"        % akkaV          
+      ,"joda-time"            %   "joda-time"         % jodaTimeV                
+      ,"org.joda"             %   "joda-convert"      % jodaConvertV                
+      ,"com.github.tototoshi" %%  "slick-joda-mapper" % slickJodaV             
+      ,"com.typesafe.slick"   %%  "slick"             % slickV             
+      ,"org.postgresql"       %   "postgresql"        % postgresqlV    
+      ,"ch.qos.logback"       %   "logback-classic"   % logbackV
+      ,"commons-dbcp"         %   "commons-dbcp"      % dbcpV
+      ,"nl.grons"             %%  "metrics-scala"     % scalaMetricsV        
+      ,"com.codahale.metrics" %   "metrics-graphite"  % metricsV                      
   )
 }
 

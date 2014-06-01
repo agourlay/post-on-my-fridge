@@ -17,7 +17,7 @@ App.MainHeaderView = Em.View.extend({
 		$('.typeahead').typeahead({
 		    hint: true,
 		    highlight: true,
-		    minLength: 2
+		    minLength: 3
 		},{
 		    name: 'fridges',
 		    displayKey: 'name',

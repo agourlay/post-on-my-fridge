@@ -12,6 +12,7 @@ import pomf.service.ChatService
 import pomf.service.TokenService
 import pomf.domain.dao._
 import pomf.configuration._
+import pomf.metrics.MetricsReporter
 
 trait CoreActors {
   this: Core =>
@@ -31,6 +32,8 @@ trait CoreActors {
   val chatService = system.actorOf(Props(classOf[ChatService],notificationService), "chat-service")
   
   val tokenService = system.actorOf(Props[TokenService], "token-service")
+
+  val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
 
   // schedule delete outdated post every 24 hours
   system.scheduler.schedule(24 hour, 24 hour, crudService, CrudServiceProtocol.DeleteOutdatedPost)

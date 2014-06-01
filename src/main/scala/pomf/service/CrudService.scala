@@ -2,7 +2,7 @@ package pomf.service
 
 import akka.actor._
 
-import pomf.api.JsonSupport._
+import pomf.api.endpoint.JsonSupport._
 import pomf.domain.dao.Dao
 import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._

@@ -17,6 +17,13 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
     val DbPassword = config.getString("pomf.database.password")
     val DbSchema = config.getString("pomf.database.schema")
   }
+
+  object Graphite {
+    val Enable = config.getBoolean("pomf.graphite.enable")
+    val Host = config.getString("pomf.graphite.host")
+    val Port = config.getInt("pomf.graphite.port")
+    val Prefix = config.getString("pomf.graphite.prefix")
+  }
 }
 
 object Settings extends ExtensionId[Settings] with ExtensionIdProvider {
