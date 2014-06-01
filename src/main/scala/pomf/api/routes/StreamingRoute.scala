@@ -25,11 +25,11 @@ class StreamingRoute(implicit context: ActorContext) extends Directives {
 
 
   def streamFirehose(ctx: RequestContext): Unit = {
-    context.actorOf(Props(new FirehoseStream(ctx.responder)((_,_) => true)))
+    context.actorOf(Props(new ActivityStream(ctx.responder)((_,_) => true)))
   }
 
   def streamUser(fridgeId : Long, token : String)(ctx: RequestContext): Unit = {
     val filter = (fridgeTarget:Long, userToken : String) => fridgeId == fridgeTarget && token != userToken
-    context.actorOf(Props(new FirehoseStream(ctx.responder)(filter)))
+    context.actorOf(Props(new ActivityStream(ctx.responder)(filter)))
   }         
 }

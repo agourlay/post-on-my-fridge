@@ -43,7 +43,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
   def getPost(id: Long): Option[Post] = dao.getPost(id)
 
-  def searchByNameLike(term: String) = dao.searchByNameLike(term)
+  def searchByNameLike(term: String) = SearchResult(term, dao.searchByNameLike(term))
 
   def deletePost(id: Long, token: String): String = {
     getPost(id) match {
@@ -67,9 +67,9 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     postUpdated
   }
 
-  def countFridges = "" + dao.countFridges
+  def countFridges = Count(dao.countFridges)
 
-  def countPosts = "" + dao.countPosts
+  def countPosts = Count(dao.countPosts)
 
 }
 
@@ -83,6 +83,8 @@ object CrudServiceProtocol {
   case class DeletePost(postId: Long, token: String)
   case class SearchFridge(term: String)
   case object CountFridges
-  case object CountPosts  
+  case object CountPosts 
+  case class Count(nb : Int)
   case object DeleteOutdatedPost
+  case class SearchResult(term : String, result : List[Fridge])
 }

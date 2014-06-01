@@ -54,6 +54,8 @@ module.exports = function(grunt) {
             "web/js/view/mainHeaderView.js",
             "web/js/model/fridgeModel.js",
             "web/js/view/fridgeView.js",
+            "web/js/model/metricsModel.js",
+            "web/js/view/metricsView.js",
             "web/js/controller/fridgesController.js",
             "web/js/view/fridgesView.js",
             "web/js/model/postModel.js",

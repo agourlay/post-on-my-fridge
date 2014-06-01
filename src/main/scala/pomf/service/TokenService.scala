@@ -15,10 +15,11 @@ class TokenService extends Actor with ActorLogging {
   val random = new SecureRandom()
   
   def receive = {
-    case RequestToken => sender ! new BigInteger(130, random).toString(32)
+    case RequestToken => sender ! NewToken(new BigInteger(130, random).toString(32))
   }
 }
 
 object TokenServiceProtocol{
   case object RequestToken
+  case class NewToken(token : String)
 }

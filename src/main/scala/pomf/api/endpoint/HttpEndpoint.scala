@@ -23,13 +23,14 @@ trait HttpEndpoint extends HttpService with RestFailureHandling {
     val crudService = coreActors.crudService
     val chatService = coreActors.chatService
     val tokenService = coreActors.tokenService
+    val metricsReporter = coreActors.metricsReporter
 
     val chat = new ChatRoute(chatService).route
     val files = new FilesRoute().route 
     val fridge = new FridgeRoute(crudService).route    
     val post = new PostRoute(crudService).route    
     val search = new SearchRoute(crudService).route   
-    val stats = new StatsRoute(crudService).route
+    val stats = new StatsRoute(crudService, metricsReporter).route
     val streaming = new StreamingRoute().route     
     val token = new TokenRoute(tokenService).route             
 

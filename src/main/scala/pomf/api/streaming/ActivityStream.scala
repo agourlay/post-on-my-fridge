@@ -13,9 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class FirehoseStream(responder: ActorRef)(filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
-       
-  override def startText = "Streaming firehose...\n"
+class ActivityStream(responder: ActorRef)(filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
 
   override def preStart {
     super.preStart

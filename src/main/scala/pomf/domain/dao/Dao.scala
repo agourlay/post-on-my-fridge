@@ -91,11 +91,11 @@ class Dao(db: Database){
   }
 
   def countPosts() = db withDynTransaction {
-    posts.length
+    posts.length.run
   }  
 
   def countFridges() = db withDynTransaction {
-    fridges.length
+    fridges.length.run
   }  
 
   def updateModificationDate(fridgeId: Long) = {

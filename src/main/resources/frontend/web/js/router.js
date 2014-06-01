@@ -2,7 +2,7 @@ App.Router.map(function() {
     this.resource('index', { path:'/'}); 
     this.resource('fridges');
     this.resource('fridge', { path:'/fridge/:fridge_id' });
-    this.resource('stats');
+    this.resource('metrics');
 });
 
 App.FridgeRoute = Ember.Route.extend({
@@ -28,9 +28,9 @@ App.IndexRoute = Ember.Route.extend({
   	}
 });
 
-App.StatsRoute = Ember.Route.extend({
+App.MetricsRoute = Ember.Route.extend({
 	model: function() {
-    	return null;
+    	return App.Dao.metrics();
   	}
 });
 

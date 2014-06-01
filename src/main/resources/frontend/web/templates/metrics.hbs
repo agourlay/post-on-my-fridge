@@ -1,0 +1,115 @@
+<div id = "wrap">
+	{{render "mainHeader" null}}
+	<div id="main-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1 text-center">
+					<h4>Timers metrics</h4>
+				</div>
+			</div>
+			<div class="row">		
+				<div class="col-md-12 well">
+					<table class="table table-hover table-striped table-condensed">
+					<thead>
+					    <tr>
+					    	<th>name</th>
+					        <th>count</th>
+					        <th>max</th>
+					        <th>min</th>
+					        <th>mean</th>
+					        <th>stdDev</th>
+					        <th>50p</th>
+					        <th>75p</th>
+					        <th>95p</th>
+					        <th>98p</th>
+					        <th>99p</th>
+					        <th>99.9p</th>
+					        <th>15m</th>
+					        <th>5m</th>
+					        <th>1m</th>
+					        <th>mean</th>
+					    </tr>
+					</thead>
+					<tbody>
+						{{#each view.content.timers}}
+							<tr>
+								<td class="left">{{name}}</td>
+								<td>{{count}}</td>
+								<td>{{toFixed max 2}} ms</td>
+								<td>{{toFixed min 2}} ms</td>
+								<td>{{toFixed mean 2}} ms</td>
+								<td>{{toFixed stdDev 2}} ms</td>
+								<td>{{toFixed 50p 2}} ms</td>
+								<td>{{toFixed 75p 2}} ms</td>
+								<td>{{toFixed 95p 2}} ms</td>
+								<td>{{toFixed 98p 2}} ms</td>
+								<td>{{toFixed 99p 2}} ms</td>
+								<td>{{toFixed 999p 2}} ms</td>
+								<td>{{toFixed fifteenMinuteRate 2}} / sec</td>
+								<td>{{toFixed fiveMinuteRate 2}} / sec</td>
+							    <td>{{toFixed oneMinuteRate 2}} / sec</td>
+								<td>{{toFixed meanRate 2}} / sec</td>
+							</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>	
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 text-center">
+				<h4>Meters metrics</h4>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 well">
+				<table class="table table-hover table-striped table-condensed">
+				<thead>
+				    <tr>
+				    	<th>name</th>
+				        <th>count</th>
+				        <th>15m</th>
+				        <th>5m</th>
+				        <th>mean</th>
+				        <th>1m</th>
+				    </tr>
+				</thead>
+				<tbody>
+					{{#each view.content.meters}}
+						<tr>
+							<td class="left">{{name}}</td>
+							<td>{{count}}</td>
+							<td>{{toFixed fifteenMinuteRate 2}} / sec</td>
+							<td>{{toFixed fiveMinuteRate 2}} / sec</td>
+							<td>{{toFixed meanRate 2}} / sec</td>
+							<td>{{toFixed oneMinuteRate 2}} / sec</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>	
+		<div class="col-md-10 col-md-offset-1 text-center">
+			<h4>Counters metrics</h4>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4 well">
+				<table class="table table-hover table-striped table-condensed">
+				<thead>
+				    <tr>
+				    	<th>name</th>
+				        <th>count</th>
+				    </tr>
+				</thead>
+				<tbody>
+					{{#each view.content.counters}}
+						<tr>
+							<td class="left">{{name}}</td>
+							<td>{{count}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+		<div id ="push"></div>
+		</div>
+	</div>
+</div>
+{{partial "footer"}}	

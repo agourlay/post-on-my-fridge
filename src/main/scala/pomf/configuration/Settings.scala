@@ -12,6 +12,8 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
     val Port = config.getInt("pomf.port")
   }
 
+  val Timeout = FiniteDuration(config.getDuration("pomf.timeout", TimeUnit.MILLISECONDS), TimeUnit.MILLISECONDS)
+
   object Database {
     val DbUser = config.getString("pomf.database.user")
     val DbPassword = config.getString("pomf.database.password")

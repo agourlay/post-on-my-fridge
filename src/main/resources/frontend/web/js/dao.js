@@ -185,5 +185,53 @@ App.Dao = Em.Object.create({
 				});	
             	return fridgesModel;
         	});
-	}
+	}, 
+
+	metrics : function()  {
+        var dao = this;
+        return $.ajax({
+            url: "stats",
+            type: 'GET',
+            error: function(xhr, ajaxOptions, thrownError) {
+                console.log("Error during current system stat retrieval");                                        
+            }
+        }).then(function (json) {
+            var system = App.Metrics.create();
+            var meters = dao.buildMetric(json, 5);
+            var timers = dao.buildMetric(json, 15);
+            var counters = dao.buildMetric(json, 1);
+            system.set('meters', meters);
+            system.set('timers', timers);
+            system.set('counters', counters);
+            return system;
+        });
+    },
+
+    buildMetric : function (json, keyNb) {
+        var filtered = this.filterByFieldNumber(json, keyNb);
+        var metrics = [];
+        jQuery.each(filtered, function(i, val) {
+            var newMetric = new Object();
+            if( keyNb == 15) { newMetric = App.Timer.create(val.value); }  
+            if( keyNb == 5) { newMetric = App.Meter.create(val.value); }
+            if( keyNb == 1) { newMetric = App.Counter.create(val.value); }  
+            newMetric.name = val.name.replace("pomf.domain.", "")
+                                     .replace("pomf.api.", "");
+            metrics.push(newMetric);
+        });
+        return metrics.sort(function(a, b){return (a.name < b.name)?-1:1});
+    },
+
+    filterByFieldNumber : function (jsonObj, n) {
+        var filtered = [];
+        jQuery.each(jsonObj, function(i, val) {
+            if(Object.keys(val).length == n) {
+                var container = new Object();
+                container.name = i;
+                container.value = val;
+                filtered.push(container);
+            }
+        });
+        return filtered;
+    }
 });

@@ -1,0 +1,32 @@
+package pomf.api.request
+
+import akka.actor._
+
+import spray.routing._
+import spray.json._
+import spray.httpx.SprayJsonSupport._
+
+import DefaultJsonProtocol._
+
+import pomf.api.endpoint.JsonSupport._
+import pomf.service.CrudServiceProtocol._
+import pomf.service.CrudServiceProtocol
+
+class SearchFridge(term :String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+
+  crudService ! CrudServiceProtocol.SearchFridge(term)
+
+  override def receive = waitingSearch orElse handleTimeout
+
+  def waitingSearch : Receive = {
+    case SearchResult(t, r) => {
+      ctx.complete(r)
+      requestOver()
+    }  
+  }
+}
+
+object SearchFridge {
+   def props(term :String, ctx : RequestContext, crudService: ActorRef) 
+     = Props(classOf[SearchFridge], term, ctx, crudService)
+}
