@@ -15,6 +15,7 @@ import DefaultJsonProtocol._
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
 import pomf.service.CrudServiceProtocol
+import pomf.api.request._
 
 
 class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
@@ -44,17 +45,13 @@ class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends 
         }
       } ~
       path("posts" / LongNumber) { postId =>
-        get {
-          complete {
-            (crudService ? CrudServiceProtocol.GetPost(postId)).mapTo[Option[Post]]
-          }
+        get { ctx =>
+          context.actorOf(GetPost.props(postId, ctx, crudService))
         } ~
-          delete {
-            parameters("token") { token =>
-              complete {
-                (crudService ? CrudServiceProtocol.DeletePost(postId, token)).mapTo[String]
-              }
-            }
+        delete { 
+          parameters("token") { token =>
+            ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
           }
-        }    
+        }
+      }    
 }

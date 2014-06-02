@@ -2,6 +2,8 @@ package pomf.service
 
 import akka.actor._
 
+import scala.util.Failure
+
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.dao.Dao
 import pomf.domain.model._
@@ -41,17 +43,20 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     dao.getFridgeRest(fridgeName)
   }
 
-  def getPost(id: Long): Option[Post] = dao.getPost(id)
+  def getPost(id: Long) = dao.getPost(id) match {
+      case None => Failure(new PostNotFoundException(id))
+      case Some(post) => post
+    }
 
   def searchByNameLike(term: String) = SearchResult(term, dao.searchByNameLike(term))
 
-  def deletePost(id: Long, token: String): String = {
-    getPost(id) match {
-      case None => log.warning(s"post $id does not exist"); s"post $id does not exist"
+  def deletePost(id: Long, token: String) = {
+    dao.getPost(id) match {
+      case None => Failure(new PostNotFoundException(id))
       case Some(post) => {
         val deleteAck = "post " + dao.deletePost(id) + " deleted"
         notificationService ! NotificationServiceProtocol.PostDeleted(post.fridgeId, id, token)
-        deleteAck
+        OperationSuccess(deleteAck)
       }
     }
   }
@@ -82,6 +87,7 @@ object CrudServiceProtocol {
   case class CreatePost(post: Post, token: String)
   case class DeletePost(postId: Long, token: String)
   case class SearchFridge(term: String)
+  case class OperationSuccess(result: String)
   case object CountFridges
   case object CountPosts 
   case class Count(nb : Int)

@@ -4,13 +4,22 @@ import spray.util.LoggingContext
 import spray.routing._
 import spray.http._
 import HttpHeaders._
+
 import akka.pattern.AskTimeoutException
+
+import pomf.service._
 
 trait RestFailureHandling {
   this: HttpService =>
 
 	implicit def omnibusExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
   	
+		case e : PostNotFoundException  =>
+    	requestUri { uri =>
+        log.warning("Request to {} could not be handled normally -> post does not exist", uri)
+    	  complete(StatusCodes.NotFound, s"Topic ${e.postId} not found : please check post id correctness\n")
+    	}
+
 	    case e : IllegalArgumentException  => 
 	      requestUri { uri =>
 	        log.error("Request to {} could not be handled normally -> IllegalArgumentException", uri)
