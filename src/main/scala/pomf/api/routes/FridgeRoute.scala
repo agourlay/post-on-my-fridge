@@ -41,7 +41,7 @@ class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extend
       get {
         complete {
           fridgesCache("fridges"){
-           (crudService ? CrudServiceProtocol.AllFridge).mapTo[List[FridgeRest]]
+            (crudService ? CrudServiceProtocol.AllFridge).mapTo[List[FridgeRest]]
           }
       } }
     } ~

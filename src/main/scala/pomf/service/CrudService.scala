@@ -32,11 +32,15 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
   def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
 
-  def addPost(post: Post, token: String): Post = {
-    val persistedPost = dao.addPost(post)
-    notificationService ! NotificationServiceProtocol.PostCreated(persistedPost, token)
-    persistedPost
-  }
+  def addPost(post: Post, token: String) = {
+    dao.addPost(post) match {
+      case None => Failure(new FridgeNotFoundException(post.fridgeId))
+      case Some(persistedPost) => {
+        notificationService ! NotificationServiceProtocol.PostCreated(persistedPost, token)
+        persistedPost
+      }
+    }
+  }  
 
   def getFridgeRest(fridgeName: Long): FridgeRest = {
     log.debug("Requesting fridge {}", fridgeName)
@@ -66,10 +70,14 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     dao.deleteOutdatedPost
   }  
 
-  def updatePost(post: Post, token: String): Post = {
-    val postUpdated = dao.updatePost(post)
-    notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
-    postUpdated
+  def updatePost(post: Post, token: String) = {
+    dao.updatePost(post) match {
+      case None => Failure(new PostNotFoundException(post.id.get))
+      case Some(postUpdated) => {
+        notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
+        postUpdated
+      }
+    }
   }
 
   def countFridges = Count(dao.countFridges)

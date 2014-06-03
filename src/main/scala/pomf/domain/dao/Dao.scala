@@ -47,7 +47,7 @@ class Dao(db: Database){
     fridges.list.map(completeFridge(_))
   }  
 
-  def completeFridge(f : Fridge) = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id, postByFridgeId(f.id.get).list)
+  def completeFridge(f : Fridge) = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id.get , postByFridgeId(f.id.get).list)
   
   def getPost(id :Long):Option[Post] = db withDynTransaction {
     postById(id).firstOption
@@ -62,24 +62,24 @@ class Dao(db: Database){
     deleteQuery.delete
   }  
   
-  def addPost(post: Post): Post = db withDynTransaction {
+  def addPost(post: Post): Option[Post] = db withDynTransaction {
     fridgeById(post.fridgeId).firstOption match {
       case Some(f) => {
-        val id = posts.insert(post)
+        val id = (posts returning posts.map(_.id)) += post
         updateModificationDate(f.id.get)
-        post.copy(id = Some(id))
+        Some(post.copy(id = Some(id)))
       }
-      case None => throw new IllegalArgumentException("fridge does not exist")
+      case None => None
     }
   }
 
-  def updatePost(post :Post) : Post = db withDynTransaction {
+  def updatePost(post :Post) : Option[Post] = db withDynTransaction {
     postById(post.id.get).firstOption match {
-      case None => throw new IllegalArgumentException("post does not exist")
+      case None => None
       case Some(p) => {
         updateModificationDate(post.fridgeId)
         postById(p.id.get).update(post)
-        postById(p.id.get).first
+        postById(p.id.get).firstOption
       }
     }
   }

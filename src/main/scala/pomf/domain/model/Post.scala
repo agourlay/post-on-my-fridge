@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import pomf.util.XssFilter
 import scala.slick.driver.PostgresDriver.simple._
 
-case class Post(id: Option[Long] = None,
+case class Post(id: Option[Long],
     author: String,
     content: String,
     color:String,

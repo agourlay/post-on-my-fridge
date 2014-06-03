@@ -16,8 +16,6 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
 import pomf.service.ChatServiceProtocol
 
-
-
 class ChatRoute(chatService : ActorRef)(implicit context: ActorContext) extends Directives {
 
   implicit val timeout = akka.util.Timeout(5 seconds)

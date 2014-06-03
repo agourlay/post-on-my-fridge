@@ -2,7 +2,6 @@ package pomf.api.route
 
 import akka.actor._
 
-import spray.httpx.encoding._
 import spray.routing._
 
 import pomf.api.streaming._
@@ -14,11 +13,11 @@ class StreamingRoute(implicit context: ActorContext) extends Directives {
        get {
 	      path("fridge" / LongNumber) { fridgeId =>
 	        parameters("token") { token =>
-	            streamUser(fridgeId, token)
+	          streamUser(fridgeId, token)
 	        }    
         } ~  
         path("firehose") {
-          	streamFirehose
+          streamFirehose
         }      
       }
     }
