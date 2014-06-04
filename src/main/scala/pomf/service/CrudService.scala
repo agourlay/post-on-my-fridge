@@ -2,7 +2,7 @@ package pomf.service
 
 import akka.actor._
 
-import scala.util.Failure
+import scala.util._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.dao.Dao
@@ -17,7 +17,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   def receive = {
     case FullFridge(fridgeId)      => sender ! getFridgeRest(fridgeId)
     case AllFridge                 => sender ! getAllFridge()
-    case CreateFridge(fridge)      => sender ! addFridge(fridge)
+    case CreateFridge(fridge)      => sender ! createFridge(fridge)
     case GetPost(postId)           => sender ! getPost(postId)
     case DeletePost(postId, token) => sender ! deletePost(postId, token)
     case CreatePost(post, token)   => sender ! addPost(post, token)
@@ -29,7 +29,12 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
 
-  def addFridge(fridge: Fridge): Fridge = dao.addFridge(fridge)
+  def createFridge(fridge: Fridge) = {
+    dao.createFridge(fridge.name) match {
+      case Success(id) => dao.getFridgeById(id)
+      case Failure(ex) => Failure(new FridgeAlreadyExistsException(fridge.name))
+    }
+  }  
 
   def addPost(post: Post, token: String) = {
     dao.addPost(post) match {
@@ -47,9 +52,9 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   }
 
   def getPost(id: Long) = dao.getPost(id) match {
-      case None => Failure(new PostNotFoundException(id))
-      case Some(post) => post
-    }
+    case None => Failure(new PostNotFoundException(id))
+    case Some(post) => post
+  }
 
   def searchByNameLike(term: String) = SearchResult(term, dao.searchByNameLike(term))
 

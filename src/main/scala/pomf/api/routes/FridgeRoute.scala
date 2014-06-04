@@ -19,8 +19,8 @@ import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.{Fridge, FridgeRest}
+import pomf.api.request._
 import pomf.service.CrudServiceProtocol
-
 
 class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
 
@@ -48,9 +48,7 @@ class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extend
     path("fridges") {
       post {
         entity(as[Fridge]) { fridge =>
-          complete {
-            (crudService ? CrudServiceProtocol.CreateFridge(fridge)).mapTo[Fridge]
-          }
+          ctx => context.actorOf(CreateFridge.props(fridge, ctx, crudService))
         }
       }
     }   

@@ -2,6 +2,7 @@ package pomf.domain.dao
 
 import scala.slick.driver.PostgresDriver.simple._
 import Database.dynamicSession
+import scala.util.Try
 
 import org.joda.time.DateTime
 
@@ -26,14 +27,13 @@ class Dao(db: Database){
   val postById = posts.findBy(_.id)
   val postByFridgeId = posts.findBy(_.fridgeId)
 
-  def addFridge(fridge: Fridge) = db withDynTransaction {
-    fridges.insert(fridge)
-    fridgeByName(fridge.name).firstOption.get
+  def getFridgeById(id : Long) = db withDynTransaction {
+    fridgeById(id).firstOption.get
   }
 
-  def createFridge(name : String) = db withDynTransaction {
+  def createFridge(name : String): Try[Long] = db withDynTransaction {
     val fridge = Fridge(None , name, new DateTime(), new DateTime())
-    addFridge(fridge)
+    Try((fridges returning fridges.map(_.id)) += fridge)
   }  
   
   def getFridgeRest(fridgeId: Long) : FridgeRest = db withDynTransaction {
