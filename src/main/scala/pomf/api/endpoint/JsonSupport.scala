@@ -30,7 +30,7 @@ object CustomJsonProtocol {
 object JsonSupport{
   import CustomJsonProtocol._
   
-  implicit val formatPost = jsonFormat9(Post)
+  implicit val formatPost = jsonFormat8(Post)
   implicit val formatFridge = jsonFormat4(Fridge)
   implicit val formatFridgeRest = jsonFormat5(FridgeRest)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)

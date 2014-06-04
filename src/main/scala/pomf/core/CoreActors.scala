@@ -34,8 +34,4 @@ trait CoreActors {
   val tokenService = system.actorOf(Props[TokenService], "token-service")
 
   val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
-
-  // schedule delete outdated post every 24 hours
-  system.scheduler.schedule(24 hour, 24 hour, crudService, CrudServiceProtocol.DeleteOutdatedPost)
-      
 }

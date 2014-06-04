@@ -6,7 +6,6 @@ App.Post = Em.Object.extend({
 	date: null,
 	positionX: null,
 	positionY: null,
-	dueDate: null,
 	fridgeId: null,
 	resourceUrl: function(){
 		return "posts";
@@ -53,7 +52,7 @@ App.Post = Em.Object.extend({
 				errorMessage("Error during post update");
 			}
 		});
-	}.observes('content','color','author','dueDate'),
+	}.observes('content','color','author'),
 
 	createPost: function() {
 		return $.ajax({

@@ -84,12 +84,6 @@ class Dao(db: Database){
     }
   }
 
-  def deleteOutdatedPost() = db withDynTransaction {
-    val now = new DateTime()
-    //val deleteQuery: Query[Posts,Post] = posts.filter( p => p.dueDate.isDefined && p.dueDate.get.isBefore(now))
-    //deleteQuery.delete 
-  }
-
   def countPosts() = db withDynTransaction {
     posts.length.run
   }  

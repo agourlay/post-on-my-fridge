@@ -32,7 +32,6 @@ App.Dao = Em.Object.create({
 		newPostData.positionX = getRandomPostInitX();
 		newPostData.positionY = getRandomPostInitY();
 		newPostData.fridgeId = App.Dao.get('fridgeId');
-		newPostData.dueDate = "";
 		newPostValidation(newPostData);
 		this.get('postsController').createPost(newPostData);
 	},

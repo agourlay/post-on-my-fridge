@@ -25,7 +25,6 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     case SearchFridge(term)        => sender ! searchByNameLike(term)
     case CountFridges              => sender ! countFridges
     case CountPosts                => sender ! countPosts
-    case DeleteOutdatedPost        => deleteOutdatedPost
   }
 
   def getAllFridge(): List[FridgeRest] = dao.getAllFridge
@@ -65,11 +64,6 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     }
   }
 
-  def deleteOutdatedPost = {
-    log.info("Deleting outdated post")
-    dao.deleteOutdatedPost
-  }  
-
   def updatePost(post: Post, token: String) = {
     dao.updatePost(post) match {
       case None => Failure(new PostNotFoundException(post.id.get))
@@ -99,6 +93,5 @@ object CrudServiceProtocol {
   case object CountFridges
   case object CountPosts 
   case class Count(nb : Int)
-  case object DeleteOutdatedPost
   case class SearchResult(term : String, result : List[Fridge])
 }

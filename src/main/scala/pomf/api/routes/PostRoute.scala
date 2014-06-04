@@ -27,16 +27,16 @@ class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends 
             ctx => context.actorOf(UpdatePost.props(post, token, ctx, crudService))
           }
         }
+      }
+    } ~
+    path("posts" / LongNumber) { postId =>
+      get { ctx =>
+        context.actorOf(GetPost.props(postId, ctx, crudService))
       } ~
-      path("posts" / LongNumber) { postId =>
-        get { ctx =>
-          context.actorOf(GetPost.props(postId, ctx, crudService))
-        } ~
-        delete { 
-          parameters("token") { token =>
-            ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
-          }
+      delete { 
+        parameters("token") { token =>
+          ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
         }
-      } 
+      }
     }     
 }
