@@ -35,7 +35,7 @@ class ChatRoute(chatService : ActorRef)(implicit context: ActorContext) extends 
         } ~
         get {
           complete {
-              (chatService ? ChatServiceProtocol.ChatHistory(fridgeId)).mapTo[List[ChatMessage]]
+            (chatService ? ChatServiceProtocol.ChatHistory(fridgeId)).mapTo[List[ChatMessage]]
           }  
         }
       } ~

@@ -10,9 +10,7 @@ import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
 
-class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with ActorLogging { 
-
-  implicit def executionContext = context.dispatcher
+class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with ActorLogging {
 
   def receive = {
     case FullFridge(fridgeId)      => sender ! getFridgeRest(fridgeId)
@@ -27,7 +25,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     case CountPosts                => sender ! countPosts
   }
 
-  def getAllFridge(): List[FridgeRest] = dao.getAllFridge
+  def getAllFridge() = FullFridges(dao.getAllFridge())
 
   def createFridge(fridge: Fridge) = {
     dao.createFridge(fridge.name) match {
@@ -46,9 +44,11 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     }
   }  
 
-  def getFridgeRest(fridgeName: Long): FridgeRest = {
-    log.debug("Requesting fridge {}", fridgeName)
-    dao.getFridgeRest(fridgeName)
+  def getFridgeRest(fridgeId: Long) = {
+    dao.getFridgeRest(fridgeId) match {
+      case None => Failure(new FridgeNotFoundException(fridgeId))
+      case Some(fullFridge) => fullFridge
+    }
   }
 
   def getPost(id: Long) = dao.getPost(id) match {
@@ -98,5 +98,6 @@ object CrudServiceProtocol {
   case object CountFridges
   case object CountPosts 
   case class Count(nb : Int)
+  case class FullFridges(fridges : List[FridgeRest])
   case class SearchResult(term : String, result : List[Fridge])
 }

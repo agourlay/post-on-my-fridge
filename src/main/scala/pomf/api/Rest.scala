@@ -12,7 +12,6 @@ trait Rest {
   this: CoreActors with Core =>
 
   val rootService = system.actorOf(HttpEndpointActor.props(this), "http-service")
-
 }
 
 trait Web {

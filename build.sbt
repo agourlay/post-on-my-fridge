@@ -56,8 +56,7 @@ libraryDependencies ++= {
   val dbcpV         = "1.4"
   Seq(
        "io.spray"             %   "spray-can"         % sprayV     
-      ,"io.spray"             %   "spray-routing"     % sprayV          
-      ,"io.spray"             %   "spray-caching"     % sprayV              
+      ,"io.spray"             %   "spray-routing"     % sprayV             
       ,"io.spray"             %%  "spray-json"        % sprayJsonV                
       ,"com.typesafe.akka"    %%  "akka-actor"        % akkaV        
       ,"com.typesafe.akka"    %%  "akka-slf4j"        % akkaV          

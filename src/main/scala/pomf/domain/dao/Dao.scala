@@ -36,10 +36,10 @@ class Dao(db: Database){
     Try((fridges returning fridges.map(_.id)) += fridge)
   }  
   
-  def getFridgeRest(fridgeId: Long) : FridgeRest = db withDynTransaction {
+  def getFridgeRest(fridgeId: Long) : Option[FridgeRest] = db withDynTransaction {
     fridgeById(fridgeId).firstOption match {
-      case Some(f) => completeFridge(f)
-      case None => throw new IllegalArgumentException("fridge does not exist")
+      case Some(f) => Some(completeFridge(f))
+      case None => None
     }							 
   }
 
@@ -93,7 +93,7 @@ class Dao(db: Database){
   }  
 
   def updateModificationDate(fridgeId: Long) = {
-      fridges.filter(_.id === fridgeId).map(_.modificationDate).update(new DateTime())
+    fridges.filter(_.id === fridgeId).map(_.modificationDate).update(new DateTime())
   }
 
   def createDB() = db withDynTransaction {
