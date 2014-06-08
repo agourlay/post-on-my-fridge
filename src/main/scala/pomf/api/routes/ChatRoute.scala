@@ -1,10 +1,6 @@
 package pomf.api.route
 
 import akka.actor._
-import akka.pattern._
-
-import scala.concurrent.duration._
-import scala.concurrent.Future
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -14,12 +10,10 @@ import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
-import pomf.service.ChatServiceProtocol
+import pomf.service.ChatRepoProtocol
+import pomf.api.request._
 
-class ChatRoute(chatService : ActorRef)(implicit context: ActorContext) extends Directives {
-
-  implicit val timeout = akka.util.Timeout(5 seconds)
-  implicit def executionContext = context.dispatcher
+class ChatRoute(chatRepo : ActorRef)(implicit context: ActorContext) extends Directives {
   
   val route = 
     pathPrefix("chat" / LongNumber) { fridgeId =>
@@ -27,52 +21,37 @@ class ChatRoute(chatService : ActorRef)(implicit context: ActorContext) extends 
         post {
           parameters("token") { token =>
             entity(as[ChatMessage]) { message =>
-              complete {
-                (chatService ? ChatServiceProtocol.SendMessage(fridgeId, message, token)).mapTo[ChatMessage]
-              }
+              ctx => context.actorOf(SendChatMessage.props(fridgeId, message, token, chatRepo, ctx))
             }
           } 
         } ~
         get {
-          complete {
-            (chatService ? ChatServiceProtocol.ChatHistory(fridgeId)).mapTo[List[ChatMessage]]
-          }  
+          ctx => context.actorOf(ChatHistory.props(fridgeId, chatRepo, ctx)) 
         }
       } ~
       path("participants") {
         post {
           parameters("token") { token =>
             entity(as[String]) { participantName =>
-              complete {
-                chatService ! ChatServiceProtocol.AddParticipant(fridgeId, token, participantName)
-                participantName + " joined chat " +  fridgeId
-              }
+              ctx => context.actorOf(AddChatParticipant.props(fridgeId, token, participantName, chatRepo, ctx))
             }
           } 
         } ~
         put {
           parameters("token") { token =>
-            entity(as[String]) { participantName =>
-              complete {
-                chatService ! ChatServiceProtocol.RenameParticipant(fridgeId, token, participantName)
-                participantName + "changed name" 
-              }
+            entity(as[String]) { newName =>
+              ctx => context.actorOf(RenameChatParticipant.props(fridgeId, token, newName, chatRepo, ctx))
             }
           }
         } ~
         get {
-          complete {
-              (chatService ? ChatServiceProtocol.ParticipantNumber(fridgeId)).mapTo[String]
-          }  
+          ctx => context.actorOf(ChatRoomParticipantNumber.props(fridgeId, chatRepo, ctx))
         } ~
         delete {
           parameters("token") { token =>
-            complete {
-              chatService ! ChatServiceProtocol.RemoveParticipant(fridgeId, token)
-              token + " removed from chat " +  fridgeId
-            }
+            ctx => context.actorOf(RemoveChatParticipant.props(fridgeId, token, chatRepo, ctx))
           }
         }
       }
-    }        
+    }            
 }

@@ -9,7 +9,7 @@ import spray.can.Http
 import pomf.metrics.Instrumented
 import pomf.api.endpoint.CustomMediaType
 
-class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging  with Instrumented {
+abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging with Instrumented {
 
   val timerCtx = metrics.timer("timer").timerContext()
 
@@ -35,4 +35,4 @@ class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging  wi
     }
     case ReceiveTimeout => responder ! MessageChunk(":\n") // Comment to keep connection alive  
   }
-}  
+} 

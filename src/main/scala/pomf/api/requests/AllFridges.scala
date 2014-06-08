@@ -10,7 +10,6 @@ import spray.json._
 import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
-import pomf.domain.model.FridgeRest
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
@@ -21,7 +20,7 @@ class AllFridges(ctx: RequestContext, crudService: ActorRef) extends RestRequest
   override def receive = waitingFridges orElse handleTimeout
 
   def waitingFridges : Receive = {
-    case FullFridges(f)  => {
+    case LightFridges(f)  => {
       ctx.complete(f)
       requestOver()
     }  
@@ -34,5 +33,5 @@ class AllFridges(ctx: RequestContext, crudService: ActorRef) extends RestRequest
 
 object AllFridges {
    def props(ctx: RequestContext, crudService: ActorRef) 
-     = Props(classOf[AllFridges], ctx, crudService)
+     = Props(classOf[AllFridges], ctx, crudService).withDispatcher("requests-dispatcher")
 }

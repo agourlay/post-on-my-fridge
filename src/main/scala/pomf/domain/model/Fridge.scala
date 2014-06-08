@@ -10,7 +10,9 @@ case class Fridge(id: Option[Long] = None, name: String, creationDate: DateTime,
   require(!XssFilter.containsScript(name), "name must not contain script tags")
 }
 
-case class FridgeRest(name: String, creationDate: DateTime, modificationDate: DateTime, id : Long, posts: List[Post])
+case class FridgeLight(name: String, creationDate: DateTime, modificationDate: DateTime, id : Long, postNumber: Int, posts: List[Post] = List())
+
+case class FridgeFull(name: String, creationDate: DateTime, modificationDate: DateTime, id : Long,  postNumber: Int, posts: List[Post])
 
 class Fridges(tag: Tag) extends Table[Fridge](tag, "FRIDGES") {
   def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)

@@ -8,7 +8,7 @@ import spray.routing._
 import spray.json._
 
 import pomf.api.endpoint.JsonSupport._
-import pomf.domain.model.FridgeRest
+import pomf.domain.model.FridgeFull
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
@@ -19,7 +19,7 @@ class FullFridge(fridgeId : Long, ctx: RequestContext, crudService: ActorRef) ex
   override def receive = waitingFridge orElse handleTimeout
 
   def waitingFridge : Receive = {
-    case f : FridgeRest  => {
+    case f : FridgeFull  => {
       ctx.complete(f)
       requestOver()
     }  
@@ -32,5 +32,5 @@ class FullFridge(fridgeId : Long, ctx: RequestContext, crudService: ActorRef) ex
 
 object FullFridge {
    def props(fridgeId: Long, ctx: RequestContext, crudService: ActorRef) 
-     = Props(classOf[FullFridge], fridgeId, ctx, crudService)
+     = Props(classOf[FullFridge], fridgeId, ctx, crudService).withDispatcher("requests-dispatcher")
 }

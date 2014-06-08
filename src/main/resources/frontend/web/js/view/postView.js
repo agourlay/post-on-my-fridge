@@ -91,8 +91,7 @@ App.PostView = Em.View.extend(App.Draggable, {
     	this.get('content').setProperties({
     		color: this.get('textFieldColor.value'), 
     		author: this.get('textFieldAuthor.value'), 
-    		content: this.get('textFieldContent.value'), 
-    		dueDate: this.get('textFieldDueDate.value')
+    		content: this.get('textFieldContent.value')
     	});
     	this.set('readMode',!this.get('readMode'));
   	},

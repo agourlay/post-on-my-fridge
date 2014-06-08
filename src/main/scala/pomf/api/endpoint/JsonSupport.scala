@@ -10,8 +10,7 @@ import DefaultJsonProtocol._
 import org.joda.time.DateTime
 import org.joda.time.format._
 
-import pomf.domain.model.{Post, Fridge, FridgeRest, ChatMessage, PushedEvent}
-
+import pomf.domain.model._
 
 object CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
@@ -32,7 +31,8 @@ object JsonSupport{
   
   implicit val formatPost = jsonFormat8(Post)
   implicit val formatFridge = jsonFormat4(Fridge)
-  implicit val formatFridgeRest = jsonFormat5(FridgeRest)
+  implicit val formatFridgeLight = jsonFormat6(FridgeLight)
+  implicit val formatFridgeFull = jsonFormat6(FridgeFull)
   implicit val formatChatMessage = jsonFormat3(ChatMessage)
   implicit val formatEvent = jsonFormat4(PushedEvent)
 }

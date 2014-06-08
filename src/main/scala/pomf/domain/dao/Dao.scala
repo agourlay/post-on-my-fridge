@@ -22,12 +22,11 @@ class Dao(db: Database){
 
   val fridgeByName = fridges.findBy(_.name)
   val fridgeById = fridges.findBy(_.id)
-  def fridgeByPostId(postId : Long) = fridgeById(postById(postId).first.fridgeId)
 
   val postById = posts.findBy(_.id)
   val postByFridgeId = posts.findBy(_.fridgeId)
 
-  def getFridgeById(id : Long) = db withDynTransaction {
+  def getFridgeById(id : Long) = db withDynSession {
     fridgeById(id).firstOption.get
   }
 
@@ -36,24 +35,32 @@ class Dao(db: Database){
     Try((fridges returning fridges.map(_.id)) += fridge)
   }  
   
-  def getFridgeRest(fridgeId: Long) : Option[FridgeRest] = db withDynTransaction {
+  def getFridgeFull(fridgeId: Long) : Option[FridgeFull] = db withDynSession {
     fridgeById(fridgeId).firstOption match {
-      case Some(f) => Some(completeFridge(f))
+      case Some(f) => Some(buildFull(f))
       case None => None
     }							 
   }
 
-  def getAllFridge(): List[FridgeRest] = db withDynTransaction{
-    fridges.list.map(completeFridge(_))
+  def getAllFridge(): List[FridgeLight] = db withDynSession{
+    fridges.list.map(buildLight(_))
   }  
 
-  def completeFridge(f : Fridge) = FridgeRest(f.name, f.creationDate, f.modificationDate,f.id.get , postByFridgeId(f.id.get).list)
-  
-  def getPost(id :Long):Option[Post] = db withDynTransaction {
+  def buildFull(f : Fridge) = {
+    val posts = postByFridgeId(f.id.get).list
+    FridgeFull(f.name, f.creationDate, f.modificationDate,f.id.get , posts.size, posts )
+  }
+
+  def buildLight(f : Fridge) = {
+    val postsNumber = postByFridgeId(f.id.get).list.size
+    FridgeLight(f.name, f.creationDate, f.modificationDate,f.id.get , postsNumber)
+  }  
+    
+  def getPost(id :Long):Option[Post] = db withDynSession {
     postById(id).firstOption
   }  
   
-  def searchByNameLike(term:String) = db withDynTransaction {
+  def searchByNameLike(term:String) = db withDynSession {
     fridges.filter(_.name like "%"+term+"%").list
   }  
   
@@ -84,11 +91,11 @@ class Dao(db: Database){
     }
   }
 
-  def countPosts() = db withDynTransaction {
+  def countPosts() = db withDynSession {
     posts.length.run
   }  
 
-  def countFridges() = db withDynTransaction {
+  def countFridges() = db withDynSession {
     fridges.length.run
   }  
 

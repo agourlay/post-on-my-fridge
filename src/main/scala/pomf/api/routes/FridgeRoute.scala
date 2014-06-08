@@ -7,7 +7,6 @@ import spray.httpx.encoding._
 import spray.httpx.SprayJsonSupport._
 
 import pomf.api.endpoint.JsonSupport._
-import pomf.domain.model.Fridge
 import pomf.api.request._
 
 class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
@@ -25,8 +24,8 @@ class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extend
     } ~
     path("fridges") {
       post {
-        entity(as[Fridge]) { fridge =>
-          ctx => context.actorOf(CreateFridge.props(fridge, ctx, crudService))
+        entity(as[String]) { fridgeName =>
+          ctx => context.actorOf(CreateFridge.props(fridgeName, ctx, crudService))
         }
       }
     }   

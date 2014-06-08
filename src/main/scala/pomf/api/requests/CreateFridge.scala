@@ -12,9 +12,9 @@ import pomf.domain.model.Fridge
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class CreateFridge(fridge: Fridge, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class CreateFridge(fridgeName: String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
-  crudService ! CrudServiceProtocol.CreateFridge(fridge)
+  crudService ! CrudServiceProtocol.CreateFridge(fridgeName)
 
   override def receive = waitingCreate orElse handleTimeout
 
@@ -31,6 +31,6 @@ class CreateFridge(fridge: Fridge, ctx : RequestContext, crudService: ActorRef) 
 }
 
 object CreateFridge {
-   def props(fridge: Fridge, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[CreateFridge], fridge, ctx, crudService)
+   def props(fridgeName: String, ctx : RequestContext, crudService: ActorRef) 
+     = Props(classOf[CreateFridge], fridgeName, ctx, crudService).withDispatcher("requests-dispatcher")
 }

@@ -27,7 +27,7 @@ App.Dao = Em.Object.create({
 	addDefaultPost : function (){
 		var newPostData = {};
 		newPostData.author = App.Dao.pseudo();
-		newPostData.content = "?";
+		newPostData.content = "new post";
 		newPostData.color = randomColor();
 		newPostData.positionX = getRandomPostInitX();
 		newPostData.positionY = getRandomPostInitY();
@@ -147,16 +147,11 @@ App.Dao = Em.Object.create({
 	},
 
 	createFridge: function(name) {
-		var model = App.Fridge.create({
-			name: name,
-			creationDate:moment().format("YYYY-MM-DDTHH:mm:ssZZ"),
-			modificationDate:moment().format("YYYY-MM-DDTHH:mm:ssZZ")
-		});
 		return $.ajax({
 			url: "fridges",
 			method: "POST",
         	contentType: "application/json",
-        	data: JSON.stringify(model),
+        	data: name,
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during fridge creation");
 			}
@@ -178,6 +173,7 @@ App.Dao = Em.Object.create({
 						name:fridge.name,
 						creationDate:fridge.creationDate,
 						modificationDate:fridge.modificationDate,
+						postNumber:fridge.postNumber,
 						posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
 					});
 					fridgesModel.pushObject(fridge);	
@@ -215,6 +211,7 @@ App.Dao = Em.Object.create({
             if( keyNb == 5) { newMetric = App.Meter.create(val.value); }
             if( keyNb == 1) { newMetric = App.Counter.create(val.value); }  
             newMetric.name = val.name.replace("pomf.domain.", "")
+                                     .replace("pomf.service.", "")
                                      .replace("pomf.api.", "");
             metrics.push(newMetric);
         });

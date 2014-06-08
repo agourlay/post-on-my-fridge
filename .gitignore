@@ -63,3 +63,5 @@ test-output/
 bower_components
 node_modules
 src/main/resources/frontend/web/dist
+*.log.gz
+*.sublime-project

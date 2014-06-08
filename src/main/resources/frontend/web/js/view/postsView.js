@@ -5,8 +5,7 @@ App.PostsView = Ember.CollectionView.extend({
 	contentBinding: 'controller.content',
 	
 	didInsertElement : function() {
-		var view = this;
-		view.$().droppable({accept: ".post"});
+		this.$().droppable({accept: ".post"});
 		konami();
 	}
 });

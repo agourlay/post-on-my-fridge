@@ -26,5 +26,5 @@ class GenerateToken(ctx : RequestContext, tokenService: ActorRef) extends RestRe
 
 object GenerateToken {
    def props(ctx : RequestContext, tokenService: ActorRef) 
-     = Props(classOf[GenerateToken], ctx, tokenService)
+     = Props(classOf[GenerateToken], ctx, tokenService).withDispatcher("requests-dispatcher")
 }

@@ -1,13 +1,12 @@
 package pomf.service
 
-import akka.actor.Actor
-import akka.actor.ActorLogging
+import akka.actor._
 
 import pomf.domain.model._
 import pomf.service.NotificationServiceProtocol._
 import pomf.api.endpoint.JsonSupport._
 
-class NotificationService extends Actor with ActorLogging {
+class NotificationService extends Actor {
     
   def receive = {
     case PostCreated(post, token)                              => toEventStream(Notification.createPost(post, token))
@@ -23,11 +22,15 @@ class NotificationService extends Actor with ActorLogging {
 }
 
 object NotificationServiceProtocol {
-  case class PostCreated(post : Post, token :String)
-  case class PostUpdated(post : Post, token :String)
-  case class PostDeleted(fridgeId : Long, id : Long, token :String)
+  case class PostCreated(post: Post, token: String)
+  case class PostUpdated(post: Post, token: String)
+  case class PostDeleted(fridgeId: Long, id: Long, token: String)
   case class MessageSent(fridgeId: Long, message: ChatMessage, token: String)
-  case class ParticipantAdded(fridgeId: Long, token:String, name:String)
-  case class ParticipantRemoved(fridgeId: Long, token:String, name: String)
-  case class ParticipantRenamed(fridgeId: Long, token:String, newName:String, oldName : String)
+  case class ParticipantAdded(fridgeId: Long, token:String, name: String)
+  case class ParticipantRemoved(fridgeId: Long, token: String, name: String)
+  case class ParticipantRenamed(fridgeId: Long, token: String, newName: String, oldName: String)
+}
+
+object NotificationService {
+   def props() = Props(classOf[NotificationService]).withDispatcher("service-dispatcher")
 }

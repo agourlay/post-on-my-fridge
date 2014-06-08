@@ -21,11 +21,11 @@ trait HttpEndpoint extends HttpService with RestFailureHandling {
  
   def routes(coreActors : CoreActors ) (implicit context: ActorContext) = {
     val crudService = coreActors.crudService
-    val chatService = coreActors.chatService
+    val chatRepo = coreActors.chatRepo
     val tokenService = coreActors.tokenService
     val metricsReporter = coreActors.metricsReporter
 
-    val chat = new ChatRoute(chatService).route
+    val chat = new ChatRoute(chatRepo).route
     val files = new FilesRoute().route 
     val fridge = new FridgeRoute(crudService).route    
     val post = new PostRoute(crudService).route    

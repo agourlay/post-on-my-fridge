@@ -6,13 +6,13 @@ import spray.routing._
 
 import pomf.metrics.Instrumented
 import pomf.configuration._
-import pomf.api.exceptions.RestRequestTimeoutException
+import pomf.api.exceptions.RequestTimeoutException
 import pomf.api.request.RestRequestProtocol._
 
-abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging with Instrumented {
+abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented {
 
-  implicit def system = context.system
-  implicit def executionContext = context.dispatcher
+  val system = context.system
+  implicit val executionContext = context.dispatcher
   implicit val timeout = akka.util.Timeout(Settings(system).Timeout)
 
   val timeoutScheduler = system.scheduler.scheduleOnce(timeout.duration, self, RestRequestProtocol.RequestTimeout)
@@ -23,8 +23,7 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging
 
   def handleTimeout : Receive = {
     case RequestTimeout => {
-      ctx.complete(new RestRequestTimeoutException())
-      metrics.meter("timeout").mark()
+      ctx.complete(new RequestTimeoutException())
       requestOver()
     }  
   }

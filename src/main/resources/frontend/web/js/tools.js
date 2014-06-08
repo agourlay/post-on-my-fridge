@@ -99,7 +99,6 @@ function filterData(data) {
 
 function getRandomPostInitX() {
     return getRandomArbitary (0.3, 0.5);
-     
 }
 
 function getRandomPostInitY() {

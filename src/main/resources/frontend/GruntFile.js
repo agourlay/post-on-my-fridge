@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  // Project configuration.
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     emberTemplates: {
@@ -115,5 +115,4 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['emberTemplates','concat','uglify','cssmin','copy' ]);
-
 };

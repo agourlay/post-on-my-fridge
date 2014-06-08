@@ -31,5 +31,5 @@ class DeletePost(postId: Long, token: String, ctx : RequestContext, crudService:
 
 object DeletePost {
    def props(postId: Long, token: String, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[DeletePost], postId, token, ctx, crudService)
+     = Props(classOf[DeletePost], postId, token, ctx, crudService).withDispatcher("requests-dispatcher")
 }

@@ -27,5 +27,5 @@ class AllMetrics(ctx : RequestContext, metricsRepo: ActorRef) extends RestReques
 
 object AllMetrics {
    def props(ctx : RequestContext, metricsRepo: ActorRef) 
-     = Props(classOf[AllMetrics], ctx, metricsRepo)
+     = Props(classOf[AllMetrics], ctx, metricsRepo).withDispatcher("requests-dispatcher")
 }

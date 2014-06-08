@@ -1,19 +1,16 @@
 App.Fridge = Em.Object.extend({
 	id : null,
 	name : null,
+	postNumber: null,
 	posts: [],
 	creationDate: null,
 	modificationDate: null,
 
-	postNumber: function(){
-		return this.posts.length ;
-	}.property("loaded"),
-
 	prettyCreationDate: function(){
 		return moment(this.creationDate, "YYYY-MM-DDTHH:mm:ssZZ").format("dddd, MMMM Do YYYY");
-	}.property("loaded","creationDate"),
+	}.property("creationDate"),
 
 	relativeLastUpdate: function(){
 		return moment(this.modificationDate, "YYYY-MM-DDTHH:mm:ssZZ").fromNow();
-	}.property("loaded","modificationDate"),
+	}.property("modificationDate")
 });

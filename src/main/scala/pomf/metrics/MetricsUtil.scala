@@ -12,6 +12,10 @@ object MetricsUtil {
 			val timer = new Timer(java.asInstanceOf[com.codahale.metrics.Timer])
 			return formatTimer.write(timer)
 		}
+		if (java.isInstanceOf[com.codahale.metrics.Gauge[Int]]) {
+			val gauge = new Gauge(java.asInstanceOf[com.codahale.metrics.Gauge[Int]])
+			return formatGauge.write(gauge)
+		}
 		if (java.isInstanceOf[com.codahale.metrics.Meter]) {
 			val meter = new Meter(java.asInstanceOf[com.codahale.metrics.Meter])
 			return formatMeter.write(meter)
@@ -32,6 +36,14 @@ object MetricsJson {
 	    )
 	    // we don't need to deserialize the TopicPath
 	    def read(json: JsValue): Counter = ???
+    } 
+
+    implicit val formatGauge = new RootJsonFormat[Gauge[Int]] {
+	    def write(obj: Gauge[Int]) = JsObject(
+	      "count" -> JsNumber(obj.value)
+	    )
+	    // we don't need to deserialize the TopicPath
+	    def read(json: JsValue): Gauge[Int] = ???
     } 
 
 	implicit val formatMeter = new RootJsonFormat[Meter] {

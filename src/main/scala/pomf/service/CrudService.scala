@@ -6,14 +6,18 @@ import scala.util._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.dao.Dao
+import pomf.metrics.Instrumented
 import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
 
-class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with ActorLogging {
+class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with Instrumented {
+
+  val postsNumber = metrics.gauge("posts")(dao.countPosts)
+  val fridgesNumber = metrics.gauge("fridges")(dao.countFridges)
 
   def receive = {
-    case FullFridge(fridgeId)      => sender ! getFridgeRest(fridgeId)
+    case FullFridge(fridgeId)      => sender ! getFridgeFull(fridgeId)
     case AllFridge                 => sender ! getAllFridge()
     case CreateFridge(fridge)      => sender ! createFridge(fridge)
     case GetPost(postId)           => sender ! getPost(postId)
@@ -25,12 +29,12 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     case CountPosts                => sender ! countPosts
   }
 
-  def getAllFridge() = FullFridges(dao.getAllFridge())
+  def getAllFridge() = LightFridges(dao.getAllFridge())
 
-  def createFridge(fridge: Fridge) = {
-    dao.createFridge(fridge.name) match {
+  def createFridge(fridgeName: String) = {
+    dao.createFridge(fridgeName) match {
       case Success(id) => dao.getFridgeById(id)
-      case Failure(ex) => Failure(new FridgeAlreadyExistsException(fridge.name))
+      case Failure(ex) => Failure(new FridgeAlreadyExistsException(fridgeName))
     }
   }  
 
@@ -44,8 +48,8 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     }
   }  
 
-  def getFridgeRest(fridgeId: Long) = {
-    dao.getFridgeRest(fridgeId) match {
+  def getFridgeFull(fridgeId: Long) = {
+    dao.getFridgeFull(fridgeId) match {
       case None => Failure(new FridgeNotFoundException(fridgeId))
       case Some(fullFridge) => fullFridge
     }
@@ -88,7 +92,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 object CrudServiceProtocol {
   case class FullFridge(fridgeId : Long)
   case object AllFridge
-  case class CreateFridge(fridge : Fridge) 
+  case class CreateFridge(fridgeName : String) 
   case class GetPost(postId : Long)
   case class UpdatePost(post: Post, token: String)
   case class CreatePost(post: Post, token: String)
@@ -98,6 +102,11 @@ object CrudServiceProtocol {
   case object CountFridges
   case object CountPosts 
   case class Count(nb : Int)
-  case class FullFridges(fridges : List[FridgeRest])
+  case class LightFridges(fridges : List[FridgeLight])
   case class SearchResult(term : String, result : List[Fridge])
+}
+
+object CrudService {
+   def props(dao : Dao, notificationService : ActorRef) 
+     = Props(classOf[CrudService], dao, notificationService).withDispatcher("service-dispatcher")
 }

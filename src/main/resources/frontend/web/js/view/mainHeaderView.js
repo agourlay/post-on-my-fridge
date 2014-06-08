@@ -17,15 +17,15 @@ App.MainHeaderView = Em.View.extend({
 		$('.typeahead').typeahead({
 		    hint: true,
 		    highlight: true,
-		    minLength: 3
+		    minLength: 2
 		},{
 		    name: 'fridges',
 		    displayKey: 'name',
 		    source: fridges.ttAdapter(),
 		    templates: {
 		        empty: [
-			      '<div>',
-			      'no fridge matching query',
+			      '<div class="tt-suggestion">',
+			      'no fridge matching',
 			      '</div>'
 			    ].join('\n'),
 			    suggestion: function(data){

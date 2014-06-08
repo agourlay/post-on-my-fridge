@@ -8,7 +8,7 @@ import scala.language.postfixOps
 import pomf.service.CrudService
 import pomf.service.CrudServiceProtocol
 import pomf.service.NotificationService
-import pomf.service.ChatService
+import pomf.service.ChatRepository
 import pomf.service.TokenService
 import pomf.domain.dao._
 import pomf.configuration._
@@ -17,21 +17,19 @@ import pomf.metrics.MetricsReporter
 trait CoreActors {
   this: Core =>
 
-  implicit def executionContext = system.dispatcher
-
   val dbUser = Settings(system).Database.DbUser
   val dbPassword = Settings(system).Database.DbPassword
   val dbSchema = Settings(system).Database.DbSchema
 
   val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
 
-  val notificationService = system.actorOf(Props[NotificationService], "notification-service")
+  val notificationService = system.actorOf(NotificationService.props, "notification-service")
   
-  val crudService = system.actorOf(Props(classOf[CrudService], dbConfig.dao, notificationService), "crud-service")
+  val crudService = system.actorOf(CrudService.props(dbConfig.dao, notificationService), "crud-service")
 
-  val chatService = system.actorOf(Props(classOf[ChatService],notificationService), "chat-service")
+  val chatRepo = system.actorOf(ChatRepository.props(notificationService), "chat-repository")
   
-  val tokenService = system.actorOf(Props[TokenService], "token-service")
+  val tokenService = system.actorOf(TokenService.props, "token-service")
 
   val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
 }

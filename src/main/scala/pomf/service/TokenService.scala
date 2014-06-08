@@ -1,8 +1,6 @@
 package pomf.service
 
-import akka.actor.Actor
-import akka.actor.actorRef2Scala
-import akka.actor.ActorLogging
+import akka.actor._
 
 import java.security.SecureRandom
 import java.math.BigInteger
@@ -10,7 +8,7 @@ import java.math.BigInteger
 import pomf.service.TokenServiceProtocol._
 
 
-class TokenService extends Actor with ActorLogging {
+class TokenService extends Actor {
   
   val random = new SecureRandom()
   
@@ -22,4 +20,8 @@ class TokenService extends Actor with ActorLogging {
 object TokenServiceProtocol{
   case object RequestToken
   case class NewToken(token : String)
+}
+
+object TokenService {
+   def props() = Props(classOf[TokenService]).withDispatcher("service-dispatcher")
 }

@@ -13,7 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class ActivityStream(responder: ActorRef)(filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
+class ActivityStream(responder: ActorRef, filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
 
   override def preStart {
     super.preStart
@@ -30,3 +30,8 @@ class ActivityStream(responder: ActorRef)(filter: (Long, String) => Boolean) ext
     }
   }: Receive) orElse super.receive  
 }
+
+object ActivityStream {
+   def props(responder: ActorRef, filter: (Long, String) => Boolean) 
+     = Props(classOf[ActivityStream], responder, filter).withDispatcher("requests-dispatcher")
+} 

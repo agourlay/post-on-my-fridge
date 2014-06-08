@@ -9,7 +9,7 @@ import pomf.util.CustomOrdering._
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class ChatRoom extends Actor with ActorLogging {
+class ChatRoom(fridgeId : Long, notificationService: ActorRef) extends Actor {
 
   implicit def executionContext = context.dispatcher
 
@@ -22,30 +22,40 @@ class ChatRoom extends Actor with ActorLogging {
     case SendMessage(message, token)       => addChatMessage(message, token)
     case ChatHistory                       => sender ! retrieveChatHistory
     case PurgeChat                         => purgeState
-    case AddParticipant(token, name)       => participantByToken += (token -> name)
+    case AddParticipant(token, name)       => addParticipant(token, name)
     case RemoveParticipant(token)          => sender ! removeParticipant(token)
-    case ParticipantNumber                 => sender ! participantByToken.size.toString
+    case ParticipantNumber                 => sender ! ParticipantNumberRoom(participantByToken.size)
     case RenameParticipant(token, newName) => sender ! renameParticipant(token, newName)
   }
 
+  def addParticipant(token:String, name:String) {
+    notificationService ! NotificationServiceProtocol.ParticipantAdded(fridgeId, token, name)
+    participantByToken += (token -> name)
+  }
+      
   def addChatMessage(message: ChatMessage, token: String) = {
     messages += (System.currentTimeMillis -> message)
+    notificationService ! NotificationServiceProtocol.MessageSent(fridgeId, message, token)
   }
   
-  def retrieveChatHistory : List[ChatMessage] = {
-    messages.values.toList.sortBy(_.timestamp)
+  def retrieveChatHistory = {
+    ChatHistoryContent(messages.values.toList.sortBy(_.timestamp))
   }
 
   def removeParticipant(token: String) : String = {
     val name = participantByToken.get(token)
     participantByToken -= token
-    name.getOrElse("Unknown name")
+    val nameQuitter = name.getOrElse("Unknown name")
+    notificationService ! NotificationServiceProtocol.ParticipantRemoved(fridgeId, token, nameQuitter)
+    nameQuitter
   }
 
   def renameParticipant(token: String, newName : String) : String = {
     val oldName = participantByToken.get(token) 
     participantByToken += (token -> newName)
-    oldName.getOrElse("Unknown name")
+    val formerName = oldName.getOrElse("Unknown name")
+    notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeId, token, newName, formerName)
+    formerName
   }
 
   def purgeState() = {
@@ -61,5 +71,12 @@ object ChatRoomProtocol {
   case class RenameParticipant(token:String, name:String) 
   case object PurgeChat
   case object ChatHistory
+  case class ChatHistoryContent(messages : List[ChatMessage])
   case object ParticipantNumber
+  case class ParticipantNumberRoom(counter : Int)
+}
+
+object ChatRoom {
+  def props(fridgeId : Long, notificationService: ActorRef) 
+     = Props(classOf[ChatRoom], fridgeId, notificationService).withDispatcher("chat-room-dispatcher")
 }

@@ -32,5 +32,5 @@ class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: 
 
 object UpdatePost {
    def props(post: Post, token: String, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[UpdatePost], post, token, ctx, crudService)
+     = Props(classOf[UpdatePost], post, token, ctx, crudService).withDispatcher("requests-dispatcher")
 }
