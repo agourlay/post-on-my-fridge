@@ -1,11 +1,12 @@
 package pomf.api.request
 
 import akka.actor._
-import scala.util.Failure
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.json._
+
+import java.util.UUID
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
@@ -22,11 +23,7 @@ class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: 
     case p : Post  => {
       ctx.complete(p)
       requestOver()
-    }  
-    case Failure(e) =>{
-      ctx.complete(e)
-      requestOver()
-    }  
+    }
   }
 }
 

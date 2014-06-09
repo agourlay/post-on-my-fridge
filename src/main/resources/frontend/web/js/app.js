@@ -22,6 +22,7 @@ App.ApplicationController = Ember.Controller.extend({
   },
 
   currentPathChanged: function() {
+    window.scrollTo(0, 0);
     var page;
 
     // Track the page in Google Analytics

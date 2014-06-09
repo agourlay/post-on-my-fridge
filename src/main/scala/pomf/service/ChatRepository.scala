@@ -3,18 +3,19 @@ package pomf.service
 import akka.actor._
 
 import pomf.service.ChatRepoProtocol._
+import java.util.UUID
 
 class ChatRepository(notificationService : ActorRef) extends Actor {
 
-  var chatRooms = Map.empty[Long, ActorRef]
+  var chatRooms = Map.empty[UUID, ActorRef]
   
   def receive = {
     case GetChatRoom(fridgeId) => sender ! getChatRoom(fridgeId)
   }
   
-  def getChatRoom(fridgeId: Long) = ChatRoomRef(fridgeId, Some(getOrCreateChatRoom(fridgeId)))
+  def getChatRoom(fridgeId: UUID) = ChatRoomRef(fridgeId, Some(getOrCreateChatRoom(fridgeId)))
 
-  def getOrCreateChatRoom(fridgeId: Long) : ActorRef = {
+  def getOrCreateChatRoom(fridgeId: UUID) : ActorRef = {
     if (!chatRooms.contains(fridgeId)){
       val actorchatRoom = context.actorOf(ChatRoom.props(fridgeId, notificationService), "chat-room-"+fridgeId)
       chatRooms += (fridgeId -> actorchatRoom)
@@ -26,8 +27,8 @@ class ChatRepository(notificationService : ActorRef) extends Actor {
 } 
 
 object ChatRepoProtocol {
-  case class GetChatRoom(fridgeId: Long)
-  case class ChatRoomRef(fridgeId: Long, roomRef : Option[ActorRef])
+  case class GetChatRoom(fridgeId: UUID)
+  case class ChatRoomRef(fridgeId: UUID, roomRef : Option[ActorRef])
 }
 
 object ChatRepository {

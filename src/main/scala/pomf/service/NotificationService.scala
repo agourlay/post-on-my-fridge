@@ -5,6 +5,7 @@ import akka.actor._
 import pomf.domain.model._
 import pomf.service.NotificationServiceProtocol._
 import pomf.api.endpoint.JsonSupport._
+import java.util.UUID
 
 class NotificationService extends Actor {
     
@@ -24,11 +25,11 @@ class NotificationService extends Actor {
 object NotificationServiceProtocol {
   case class PostCreated(post: Post, token: String)
   case class PostUpdated(post: Post, token: String)
-  case class PostDeleted(fridgeId: Long, id: Long, token: String)
-  case class MessageSent(fridgeId: Long, message: ChatMessage, token: String)
-  case class ParticipantAdded(fridgeId: Long, token:String, name: String)
-  case class ParticipantRemoved(fridgeId: Long, token: String, name: String)
-  case class ParticipantRenamed(fridgeId: Long, token: String, newName: String, oldName: String)
+  case class PostDeleted(fridgeId: UUID, id: UUID, token: String)
+  case class MessageSent(fridgeId: UUID, message: ChatMessage, token: String)
+  case class ParticipantAdded(fridgeId: UUID, token:String, name: String)
+  case class ParticipantRemoved(fridgeId: UUID, token: String, name: String)
+  case class ParticipantRenamed(fridgeId: UUID, token: String, newName: String, oldName: String)
 }
 
 object NotificationService {

@@ -1,18 +1,19 @@
 package pomf.api.request
 
 import akka.actor._
-import scala.util.Failure
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.json._
+
+import java.util.UUID
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class GetPost(postId: Long, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class GetPost(postId: UUID, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.GetPost(postId)
 
@@ -23,14 +24,10 @@ class GetPost(postId: Long, ctx : RequestContext, crudService: ActorRef) extends
       ctx.complete(p)
       requestOver()
     }  
-    case Failure(e) =>{
-      ctx.complete(e)
-      requestOver()
-    }  
   }
 }
 
 object GetPost {
-   def props(postId: Long, ctx : RequestContext, crudService: ActorRef) 
+   def props(postId: UUID, ctx : RequestContext, crudService: ActorRef) 
      = Props(classOf[GetPost], postId, ctx, crudService).withDispatcher("requests-dispatcher")
 }

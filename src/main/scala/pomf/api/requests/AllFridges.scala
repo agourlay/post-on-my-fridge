@@ -1,7 +1,8 @@
 package pomf.api.request
 
 import akka.actor._
-import scala.util.Failure
+
+import java.util.UUID
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -23,11 +24,7 @@ class AllFridges(ctx: RequestContext, crudService: ActorRef) extends RestRequest
     case LightFridges(f)  => {
       ctx.complete(f)
       requestOver()
-    }  
-    case Failure(e) =>{
-      ctx.complete(e)
-      requestOver()
-    }  
+    } 
   }
 }
 

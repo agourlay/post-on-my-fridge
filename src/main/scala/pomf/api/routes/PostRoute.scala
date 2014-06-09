@@ -28,7 +28,7 @@ class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends 
         }
       }
     } ~
-    path("posts" / LongNumber) { postId =>
+    path("posts" / JavaUUID) { postId =>
       get { ctx =>
         context.actorOf(GetPost.props(postId, ctx, crudService))
       } ~

@@ -3,6 +3,7 @@ package pomf.api.endpoint
 import java.util.Date
 import java.text.SimpleDateFormat
 import java.text.ParseException
+import java.util.UUID
 
 import spray.json._
 import DefaultJsonProtocol._
@@ -24,6 +25,16 @@ object CustomJsonProtocol {
       case _ => throw new DeserializationException("Expected ISO Date format")
     }
   }
+
+  implicit object UUIDFormat extends RootJsonFormat[UUID] {
+
+    def write(obj: UUID): JsValue = JsString(obj.toString())
+
+    def read(json: JsValue): UUID = json match {
+      case JsString(x) => UUID.fromString(x)
+      case _ => deserializationError("Expected UUID as JsString")
+    }
+  }  
 }
 
 object JsonSupport{

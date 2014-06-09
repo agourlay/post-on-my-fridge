@@ -6,13 +6,15 @@ import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.json._
 
+import java.util.UUID
+
 import pomf.service.ChatRoomNotFoundException
 import pomf.service.ChatRoomProtocol
 import pomf.service.ChatRoomProtocol._
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class RemoveChatParticipant(fridgeId: Long, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
@@ -22,7 +24,7 @@ class RemoveChatParticipant(fridgeId: Long, token: String, chatRepo: ActorRef, c
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
   }
 
-  def handleChatRoomRef(id: Long, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.RemoveParticipant(token)
       ctx.complete(token + " removed from chat " +  fridgeId)
@@ -36,6 +38,6 @@ class RemoveChatParticipant(fridgeId: Long, token: String, chatRepo: ActorRef, c
 }
 
 object RemoveChatParticipant {
-   def props(fridgeId: Long, token: String, chatRepo: ActorRef, ctx : RequestContext) 
+   def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext) 
      = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

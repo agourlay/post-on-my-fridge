@@ -6,6 +6,8 @@ import spray.httpx.SprayJsonSupport._
 import spray.routing._
 import spray.json._
 
+import java.util.UUID
+
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
 import pomf.service.ChatRoomNotFoundException
@@ -13,7 +15,7 @@ import pomf.service.ChatRoomProtocol
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class SendChatMessage(fridgeId: Long, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
@@ -23,7 +25,7 @@ class SendChatMessage(fridgeId: Long, message: ChatMessage, token: String, chatR
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
   }
 
-  def handleChatRoomRef(id: Long, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.SendMessage(message, token) 
       ctx.complete(message)
@@ -37,6 +39,6 @@ class SendChatMessage(fridgeId: Long, message: ChatMessage, token: String, chatR
 }
 
 object SendChatMessage {
-   def props(fridgeId: Long, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext) 
+   def props(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext) 
      = Props(classOf[SendChatMessage], fridgeId, message, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

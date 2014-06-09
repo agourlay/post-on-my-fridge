@@ -8,8 +8,9 @@ import pomf.util.CustomOrdering._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
+import java.util.UUID
 
-class ChatRoom(fridgeId : Long, notificationService: ActorRef) extends Actor {
+class ChatRoom(fridgeId : UUID, notificationService: ActorRef) extends Actor {
 
   implicit def executionContext = context.dispatcher
 
@@ -77,6 +78,6 @@ object ChatRoomProtocol {
 }
 
 object ChatRoom {
-  def props(fridgeId : Long, notificationService: ActorRef) 
+  def props(fridgeId : UUID, notificationService: ActorRef) 
      = Props(classOf[ChatRoom], fridgeId, notificationService).withDispatcher("chat-room-dispatcher")
 }

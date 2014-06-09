@@ -4,8 +4,11 @@ import akka.actor._
 
 import spray.routing._
 import spray.json._
+import spray.httpx.SprayJsonSupport._
 
 import DefaultJsonProtocol._
+
+import pomf.api.endpoint.CustomJsonProtocol._
 
 import pomf.service.TokenServiceProtocol._
 import pomf.service.TokenServiceProtocol

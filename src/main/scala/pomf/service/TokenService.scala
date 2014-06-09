@@ -1,25 +1,21 @@
 package pomf.service
 
 import akka.actor._
-
-import java.security.SecureRandom
-import java.math.BigInteger
+import java.util.UUID
 
 import pomf.service.TokenServiceProtocol._
 
 
 class TokenService extends Actor {
   
-  val random = new SecureRandom()
-  
   def receive = {
-    case RequestToken => sender ! NewToken(new BigInteger(130, random).toString(32))
+    case RequestToken => sender ! NewToken(UUID.randomUUID())
   }
 }
 
 object TokenServiceProtocol{
   case object RequestToken
-  case class NewToken(token : String)
+  case class NewToken(token : UUID)
 }
 
 object TokenService {

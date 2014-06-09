@@ -5,7 +5,7 @@ import akka.actor._
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model._
 
-import scala.language.postfixOps
+import java.util.UUID
 
 import spray.routing._
 import spray.http._
@@ -13,7 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class ActivityStream(responder: ActorRef, filter: (Long, String) => Boolean) extends StreamingResponse(responder) {
+class ActivityStream(responder: ActorRef, filter: (UUID, String) => Boolean) extends StreamingResponse(responder) {
 
   override def preStart {
     super.preStart
@@ -32,6 +32,6 @@ class ActivityStream(responder: ActorRef, filter: (Long, String) => Boolean) ext
 }
 
 object ActivityStream {
-   def props(responder: ActorRef, filter: (Long, String) => Boolean) 
+   def props(responder: ActorRef, filter: (UUID, String) => Boolean) 
      = Props(classOf[ActivityStream], responder, filter).withDispatcher("requests-dispatcher")
 } 

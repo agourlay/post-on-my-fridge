@@ -1,6 +1,9 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.actor.SupervisorStrategy.Stop
+
+import scala.util.Failure
 
 import spray.routing._
 
@@ -25,7 +28,15 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented
     case RequestTimeout => {
       ctx.complete(new RequestTimeoutException())
       requestOver()
-    }  
+    }
+    case Failure(e) => {
+      ctx.complete(e)
+      requestOver()
+    }
+    case e : Exception => {
+      ctx.complete(e)
+      requestOver()
+    }   
   }
 
   def requestOver() = {
@@ -35,7 +46,16 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented
 
   override def postStop() = {
     timeoutScheduler.cancel()
-  }  
+  }
+
+  override val supervisorStrategy =
+    OneForOneStrategy() {
+      case e => {
+        ctx.complete(e)
+        timerCtx.stop()
+        Stop
+      }
+    }  
 }
 
 object RestRequestProtocol {

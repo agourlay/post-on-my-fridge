@@ -1,9 +1,11 @@
 package pomf.service
 
-class PostNotFoundException(val postId : Long) extends Exception(s"Post $postId does not exist")
+import java.util.UUID
 
-class FridgeNotFoundException(val fridgeId : Long) extends Exception(s"Fridge $fridgeId does not exist")
+class PostNotFoundException(val postId : UUID) extends Exception(s"Post $postId does not exist")
+
+class FridgeNotFoundException(val fridgeId : UUID) extends Exception(s"Fridge $fridgeId does not exist")
 
 class FridgeAlreadyExistsException(val fridgeName : String) extends Exception(s"Fridge $fridgeName already exists")
 
-class ChatRoomNotFoundException(val fridgeId : Long) extends Exception(s"ChatRoom $fridgeId does not exist")
+class ChatRoomNotFoundException(val fridgeId : UUID) extends Exception(s"ChatRoom $fridgeId does not exist")

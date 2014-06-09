@@ -16,7 +16,7 @@ import pomf.api.request._
 class ChatRoute(chatRepo : ActorRef)(implicit context: ActorContext) extends Directives {
   
   val route = 
-    pathPrefix("chat" / LongNumber) { fridgeId =>
+    pathPrefix("chat" / JavaUUID) { fridgeId =>
       path("messages") {
         post {
           parameters("token") { token =>

@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import scala.util.Failure
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -22,11 +21,7 @@ class CreatePost(post: Post, token : String, ctx : RequestContext, crudService: 
     case p : Post  => {
       ctx.complete(p)
       requestOver()
-    }  
-    case Failure(e) =>{
-      ctx.complete(e)
-      requestOver()
-    }  
+    } 
   }
 }
 

@@ -8,6 +8,8 @@ import spray.json._
 
 import DefaultJsonProtocol._
 
+import java.util.UUID
+
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
 import pomf.service.ChatRoomNotFoundException
@@ -16,7 +18,7 @@ import pomf.service.ChatRoomProtocol._
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class ChatHistory(fridgeId: Long, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
@@ -33,7 +35,7 @@ class ChatHistory(fridgeId: Long, chatRepo: ActorRef, ctx : RequestContext) exte
     }
   }
 
-  def handleChatRoomRef(id: Long, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.ChatHistory 
       context.become(waitingHistory orElse handleTimeout)
@@ -46,6 +48,6 @@ class ChatHistory(fridgeId: Long, chatRepo: ActorRef, ctx : RequestContext) exte
 }
 
 object ChatHistory {
-   def props(fridgeId: Long, chatRepo: ActorRef, ctx : RequestContext) 
+   def props(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext) 
      = Props(classOf[ChatHistory], fridgeId, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

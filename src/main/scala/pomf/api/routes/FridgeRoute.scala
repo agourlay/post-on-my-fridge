@@ -12,7 +12,7 @@ import pomf.api.request._
 class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
 
   val route = 
-    path("fridges" / LongNumber) { fridgeId =>
+    path("fridges" / JavaUUID) { fridgeId =>
       get {
         ctx => context.actorOf(FullFridge.props(fridgeId, ctx, crudService))
       }

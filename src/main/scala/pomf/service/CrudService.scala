@@ -10,6 +10,7 @@ import pomf.metrics.Instrumented
 import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
+import java.util.UUID
 
 class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with Instrumented {
 
@@ -34,7 +35,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   def createFridge(fridgeName: String) = {
     dao.createFridge(fridgeName) match {
       case Success(id) => dao.getFridgeById(id)
-      case Failure(ex) => Failure(new FridgeAlreadyExistsException(fridgeName))
+      case Failure(ex) => Failure(ex)
     }
   }  
 
@@ -48,21 +49,21 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     }
   }  
 
-  def getFridgeFull(fridgeId: Long) = {
+  def getFridgeFull(fridgeId: UUID) = {
     dao.getFridgeFull(fridgeId) match {
       case None => Failure(new FridgeNotFoundException(fridgeId))
       case Some(fullFridge) => fullFridge
     }
   }
 
-  def getPost(id: Long) = dao.getPost(id) match {
+  def getPost(id: UUID) = dao.getPost(id) match {
     case None => Failure(new PostNotFoundException(id))
     case Some(post) => post
   }
 
   def searchByNameLike(term: String) = SearchResult(term, dao.searchByNameLike(term))
 
-  def deletePost(id: Long, token: String) = {
+  def deletePost(id: UUID, token: String) = {
     dao.getPost(id) match {
       case None => Failure(new PostNotFoundException(id))
       case Some(post) => {
@@ -90,13 +91,13 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 }
 
 object CrudServiceProtocol {
-  case class FullFridge(fridgeId : Long)
+  case class FullFridge(fridgeId : UUID)
   case object AllFridge
   case class CreateFridge(fridgeName : String) 
-  case class GetPost(postId : Long)
+  case class GetPost(postId : UUID)
   case class UpdatePost(post: Post, token: String)
   case class CreatePost(post: Post, token: String)
-  case class DeletePost(postId: Long, token: String)
+  case class DeletePost(postId: UUID, token: String)
   case class SearchFridge(term: String)
   case class OperationSuccess(result: String)
   case object CountFridges

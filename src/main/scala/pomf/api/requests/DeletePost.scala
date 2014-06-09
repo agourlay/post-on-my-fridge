@@ -8,10 +8,12 @@ import spray.json._
 
 import DefaultJsonProtocol._
 
+import java.util.UUID
+
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class DeletePost(postId: Long, token: String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class DeletePost(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.DeletePost(postId, token)
 
@@ -22,14 +24,10 @@ class DeletePost(postId: Long, token: String, ctx : RequestContext, crudService:
       ctx.complete(msg)
       requestOver()
     }  
-    case Failure(e) =>{
-      ctx.complete(e)
-      requestOver()
-    }  
   }
 }
 
 object DeletePost {
-   def props(postId: Long, token: String, ctx : RequestContext, crudService: ActorRef) 
+   def props(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef) 
      = Props(classOf[DeletePost], postId, token, ctx, crudService).withDispatcher("requests-dispatcher")
 }
