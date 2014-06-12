@@ -20,8 +20,10 @@ trait CoreActors {
   val dbUser = Settings(system).Database.DbUser
   val dbPassword = Settings(system).Database.DbPassword
   val dbSchema = Settings(system).Database.DbSchema
+  val dbHost = Settings(system).Database.DbHost
+  val dbPort = Settings(system).Database.DbPort
 
-  val dbConfig = new PostGresDB(dbUser,dbPassword,dbSchema)
+  val dbConfig = new PostGresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort)
 
   val notificationService = system.actorOf(NotificationService.props, "notification-service")
   

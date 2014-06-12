@@ -10,16 +10,15 @@ trait DBConfig {
   def dao: Dao
 }
 
-class PostGresDB(user: String, password : String, schema : String) extends DBConfig {
+class PostGresDB(user: String, password : String, schema : String, host : String, port : String) extends DBConfig {
   val log = LoggerFactory.getLogger("db")
   log.info(s"Using database schema $schema with user $user")
-
-  val url = "jdbc:postgresql://localhost:5432/" + schema
-  val driver = "org.postgresql.Driver"
+  
+  val url = "jdbc:postgresql://"+ host + ":" + port + "/" + schema
 
   val databasePool = {
     val ds = new BasicDataSource
-    ds.setDriverClassName(driver)
+    ds.setDriverClassName("org.postgresql.Driver")
     ds.setUrl(url)
     ds.setMaxIdle(10);
     ds.setInitialSize(10);

@@ -18,6 +18,8 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
     val DbUser = config.getString("pomf.database.user")
     val DbPassword = config.getString("pomf.database.password")
     val DbSchema = config.getString("pomf.database.schema")
+    val DbHost = config.getString("pomf.database.host")
+    val DbPort = config.getString("pomf.database.port")
   }
 
   object Graphite {
