@@ -27,13 +27,9 @@ class AddChatParticipant(fridgeId: UUID, token: String, participantName: String,
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.AddParticipant(token, participantName)
-      ctx.complete(participantName + " joined chat " +  fridgeId)
-      requestOver()
+      requestOver(participantName + " joined chat " +  fridgeId)
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

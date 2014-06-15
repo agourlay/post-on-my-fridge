@@ -28,13 +28,9 @@ class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatR
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.SendMessage(message, token) 
-      ctx.complete(message)
-      requestOver()
+      requestOver(message)
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

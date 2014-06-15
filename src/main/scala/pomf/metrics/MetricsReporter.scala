@@ -40,7 +40,7 @@ class MetricsReporter extends Actor with ActorLogging with Instrumented {
                                            .build(graphite)
 
     graphiteReporter.start(1, TimeUnit.MINUTES)
-  } 
+  }
 
 	def receive = {
     case All       => sender ! metricsByName(MetricsReporter.allMetrics)

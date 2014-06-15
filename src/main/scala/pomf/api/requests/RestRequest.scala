@@ -6,7 +6,12 @@ import akka.actor.SupervisorStrategy.Stop
 import scala.util.Failure
 
 import spray.routing._
+import spray.httpx.SprayJsonSupport._
+import spray.httpx.marshalling._
+import spray.json._
+import DefaultJsonProtocol._
 
+import pomf.api.endpoint.JsonSupport._
 import pomf.metrics.Instrumented
 import pomf.configuration._
 import pomf.api.exceptions.RequestTimeoutException
@@ -26,20 +31,18 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented
 
   def handleTimeout : Receive = {
     case RequestTimeout => {
-      ctx.complete(new RequestTimeoutException())
-      requestOver()
+      requestOver(new RequestTimeoutException())
     }
     case Failure(e) => {
-      ctx.complete(e)
-      requestOver()
+      requestOver(e)
     }
     case e : Exception => {
-      ctx.complete(e)
-      requestOver()
+      requestOver(e)
     }   
   }
 
-  def requestOver() = {
+  def requestOver[T](payload: T)(implicit marshaller: ToResponseMarshaller[T]) = {
+    ctx.complete(payload)
     timerCtx.stop()
     self ! PoisonPill
   }

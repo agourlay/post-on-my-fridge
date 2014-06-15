@@ -29,10 +29,7 @@ class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext) exte
   }
 
   def waitingHistory : Receive = {
-    case ChatHistoryContent(messages) => {
-      ctx.complete(messages)
-      requestOver()
-    }
+    case ChatHistoryContent(messages) => requestOver(messages)
   }
 
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
@@ -40,10 +37,7 @@ class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext) exte
       ref ! ChatRoomProtocol.ChatHistory 
       context.become(waitingHistory orElse handleTimeout)
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

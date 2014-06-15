@@ -20,10 +20,7 @@ class DeletePost(postId: UUID, token: String, ctx : RequestContext, crudService:
   override def receive = waitingDelete orElse handleTimeout
 
   def waitingDelete : Receive = {
-    case OperationSuccess(msg)  => {
-      ctx.complete(msg)
-      requestOver()
-    }  
+    case OperationSuccess(msg) => requestOver(msg)
   }
 }
 

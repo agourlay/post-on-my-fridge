@@ -17,10 +17,7 @@ class CountFridges(ctx : RequestContext, crudService: ActorRef) extends RestRequ
   override def receive = waitingCount orElse handleTimeout
 
   def waitingCount : Receive = {
-    case Count(nb) => {
-      ctx.complete(nb.toString)
-      requestOver()
-    }  
+    case Count(nb) => requestOver(nb.toString)
   }
 }
 

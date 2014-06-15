@@ -20,10 +20,7 @@ class GenerateToken(ctx : RequestContext, tokenService: ActorRef) extends RestRe
   override def receive = waitingToken orElse handleTimeout
 
   def waitingToken : Receive = {
-    case NewToken(token) => {
-      ctx.complete(token)
-      requestOver()
-    }  
+    case NewToken(token) => requestOver(token)
   }
 }
 

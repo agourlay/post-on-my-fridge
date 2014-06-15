@@ -20,10 +20,7 @@ class FullFridge(fridgeId : UUID, ctx: RequestContext, crudService: ActorRef) ex
   override def receive = waitingFridge orElse handleTimeout
 
   def waitingFridge : Receive = {
-    case f : FridgeFull  => {
-      ctx.complete(f)
-      requestOver()
-    }
+    case f : FridgeFull  => requestOver(f)
   }
 }
 

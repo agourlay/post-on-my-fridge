@@ -20,10 +20,7 @@ class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: 
   override def receive = waitingUpdate orElse handleTimeout
 
   def waitingUpdate : Receive = {
-    case p : Post  => {
-      ctx.complete(p)
-      requestOver()
-    }
+    case p : Post => requestOver(p)
   }
 }
 

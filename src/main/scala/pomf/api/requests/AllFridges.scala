@@ -21,10 +21,7 @@ class AllFridges(ctx: RequestContext, crudService: ActorRef) extends RestRequest
   override def receive = waitingFridges orElse handleTimeout
 
   def waitingFridges : Receive = {
-    case LightFridges(f)  => {
-      ctx.complete(f)
-      requestOver()
-    } 
+    case LightFridges(f)  => requestOver(f)
   }
 }
 

@@ -27,13 +27,9 @@ class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, c
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.RemoveParticipant(token)
-      ctx.complete(token + " removed from chat " +  fridgeId)
-      requestOver()
+      requestOver(token + " removed from chat " +  fridgeId)
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None      => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

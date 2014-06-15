@@ -54,7 +54,7 @@ class ChatRoom(fridgeId : UUID, notificationService: ActorRef) extends Actor {
   def renameParticipant(token: String, newName : String) : String = {
     val oldName = participantByToken.get(token) 
     participantByToken += (token -> newName)
-    val formerName = oldName.getOrElse("Unknown name")
+    val formerName = oldName.getOrElse("Anonymous")
     notificationService ! NotificationServiceProtocol.ParticipantRenamed(fridgeId, token, newName, formerName)
     formerName
   }

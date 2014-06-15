@@ -68,7 +68,7 @@ libraryDependencies ++= {
       ,"ch.qos.logback"       %   "logback-classic"   % logbackV
       ,"commons-dbcp"         %   "commons-dbcp"      % dbcpV
       ,"nl.grons"             %%  "metrics-scala"     % scalaMetricsV        
-      ,"com.codahale.metrics" %   "metrics-graphite"  % metricsV                      
+      ,"com.codahale.metrics" %   "metrics-graphite"  % metricsV                  
   )
 }
 

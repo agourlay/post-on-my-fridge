@@ -27,13 +27,9 @@ class RenameChatParticipant(fridgeId: UUID, token: String, newName: String, chat
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.RenameParticipant(token, newName)
-      ctx.complete(newName + "changed name")
-      requestOver()
+      requestOver(newName + "changed name")
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None      => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

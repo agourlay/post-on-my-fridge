@@ -15,7 +15,7 @@ trait Rest {
 }
 
 trait Web {
-  this: Rest with CoreActors with Core =>
+  this: Rest with Core =>
 
   val httpPort = Settings(system).Http.Port
 

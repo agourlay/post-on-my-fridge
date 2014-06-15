@@ -25,10 +25,7 @@ class ChatRoomParticipantNumber(fridgeId: UUID, chatRepo: ActorRef, ctx : Reques
   }
 
   def waitingCounter : Receive = {
-    case ParticipantNumberRoom(nb) => {
-      ctx.complete(nb.toString)
-      requestOver()
-    }
+    case ParticipantNumberRoom(nb) => requestOver(nb.toString)
   }
 
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
@@ -36,10 +33,7 @@ class ChatRoomParticipantNumber(fridgeId: UUID, chatRepo: ActorRef, ctx : Reques
       ref ! ChatRoomProtocol.ParticipantNumber
       context.become(waitingCounter orElse handleTimeout)
     }
-    case None      => {
-      ctx.complete(new ChatRoomNotFoundException(id))
-      requestOver()
-    }  
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

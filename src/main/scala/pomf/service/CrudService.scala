@@ -35,7 +35,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   def createFridge(fridgeName: String) = {
     dao.createFridge(fridgeName) match {
       case Success(id) => dao.getFridgeById(id)
-      case Failure(ex) => Failure(ex)
+      case Failure(ex) => new FridgeAlreadyExistsException(fridgeName)
     }
   }  
 

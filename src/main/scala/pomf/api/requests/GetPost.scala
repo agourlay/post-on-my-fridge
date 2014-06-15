@@ -20,10 +20,7 @@ class GetPost(postId: UUID, ctx : RequestContext, crudService: ActorRef) extends
   override def receive = waitingDelete orElse handleTimeout
 
   def waitingDelete : Receive = {
-    case p : Post  => {
-      ctx.complete(p)
-      requestOver()
-    }  
+    case p : Post => requestOver(p)
   }
 }
 

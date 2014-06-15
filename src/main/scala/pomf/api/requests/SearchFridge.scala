@@ -19,10 +19,7 @@ class SearchFridge(term :String, ctx : RequestContext, crudService: ActorRef) ex
   override def receive = waitingSearch orElse handleTimeout
 
   def waitingSearch : Receive = {
-    case SearchResult(t, r) => {
-      ctx.complete(r)
-      requestOver()
-    }  
+    case SearchResult(t, r) => requestOver(r)
   }
 }
 
