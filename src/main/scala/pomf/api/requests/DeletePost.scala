@@ -1,6 +1,7 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.pattern._
 
 import scala.util.Failure
 import spray.routing._
@@ -13,7 +14,7 @@ import java.util.UUID
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class DeletePost(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class DeletePost(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.DeletePost(postId, token)
 
@@ -25,6 +26,6 @@ class DeletePost(postId: UUID, token: String, ctx : RequestContext, crudService:
 }
 
 object DeletePost {
-   def props(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[DeletePost], postId, token, ctx, crudService).withDispatcher("requests-dispatcher")
+   def props(postId: UUID, token: String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) 
+     = Props(classOf[DeletePost], postId, token, ctx, crudService, breaker).withDispatcher("requests-dispatcher")
 }

@@ -1,7 +1,11 @@
 package pomf.domain.dao
 
+import pomf.metrics.Instrumented
+
 import scala.slick.driver.PostgresDriver.simple._
+
 import Database.dynamicSession
+import scala.slick.lifted
 import scala.util.Try
 import java.util.UUID
 
@@ -12,7 +16,7 @@ import pomf.domain.model._
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-class Dao(db: Database){
+class Dao(db: Database) extends Instrumented {
   
   val log = LoggerFactory.getLogger("dao")
 
@@ -20,10 +24,20 @@ class Dao(db: Database){
   val fridges = TableQuery[Fridges]
 
   val fridgeByName = fridges.findBy(_.name)
+
   val fridgeById = fridges.findBy(_.id)
 
   val postById = posts.findBy(_.id)
+    
   val postByFridgeId = posts.findBy(_.fridgeId)
+
+  def countPostForFrigde(id: Column[UUID]) = metrics.timer("countPost").time {
+    val query = for {
+      p <- posts
+      if (p.fridgeId === id)
+    } yield 1
+    query.length.run
+  }
 
   def getFridgeById(id : UUID) = db withDynSession {
     fridgeById(id).firstOption.get
@@ -41,8 +55,11 @@ class Dao(db: Database){
     }							 
   }
 
-  def getAllFridge(): List[FridgeLight] = db withDynSession{
-    fridges.list.map(buildLight(_))
+  def getAllFridge(pageNumber : Int, pageSize : Int): List[FridgeLight] = db withDynSession{
+    fridges.sortBy(_.modificationDate.desc)
+           .list
+           .drop(pageNumber - 1 * pageSize).take(pageSize)
+           .map(buildLight(_))
   }  
 
   def buildFull(f : Fridge) = {
@@ -51,7 +68,7 @@ class Dao(db: Database){
   }
 
   def buildLight(f : Fridge) = {
-    val postsNumber = postByFridgeId(f.id.get).list.size
+    val postsNumber = countPostForFrigde(f.id.get)
     FridgeLight(f.name, f.creationDate, f.modificationDate,f.id.get , postsNumber)
   }  
     
@@ -60,7 +77,7 @@ class Dao(db: Database){
   }  
   
   def searchByNameLike(term:String) = db withDynSession {
-    fridges.filter(_.name like "%"+term+"%").list
+    fridges.filter(_.name like "%"+term+"%").take(100).list
   }  
   
   def deletePost(postId :UUID) =  db withDynTransaction {

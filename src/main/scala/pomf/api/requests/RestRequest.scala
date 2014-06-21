@@ -1,9 +1,11 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.pattern._
 import akka.actor.SupervisorStrategy.Stop
 
-import scala.util.Failure
+import scala.util._
+import scala.concurrent.Future
 
 import spray.routing._
 import spray.httpx.SprayJsonSupport._
@@ -15,40 +17,36 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.metrics.Instrumented
 import pomf.configuration._
 import pomf.api.exceptions.RequestTimeoutException
-import pomf.api.request.RestRequestProtocol._
 
-abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented {
+abstract class RestRequest(ctx : RequestContext)(implicit breaker: CircuitBreaker) extends Actor with ActorLogging with Instrumented {
 
   val system = context.system
   implicit val executionContext = context.dispatcher
-  implicit val timeout = akka.util.Timeout(Settings(system).Timeout)
+  val timeout = akka.util.Timeout(Settings(system).Timeout)
 
-  val timeoutScheduler = system.scheduler.scheduleOnce(timeout.duration, self, RestRequestProtocol.RequestTimeout)
-  
+  context.setReceiveTimeout(timeout.duration)
+
   val timerCtx = metrics.timer("timer").timerContext()
   
   override def receive : Receive = handleTimeout
 
   def handleTimeout : Receive = {
-    case RequestTimeout => {
-      requestOver(new RequestTimeoutException())
-    }
-    case Failure(e) => {
-      requestOver(e)
-    }
-    case e : Exception => {
-      requestOver(e)
-    }   
+    case ReceiveTimeout => requestOver(new RequestTimeoutException())
+    case Failure(e)     => requestOver(e)
+    case e : Exception  => requestOver(e)
   }
 
   def requestOver[T](payload: T)(implicit marshaller: ToResponseMarshaller[T]) = {
-    ctx.complete(payload)
+    ctx.complete{
+      breaker.withCircuitBreaker { 
+        payload match {
+          case e: Exception => Future.failed(e)
+          case _ => Future.successful(payload)
+        }
+      }
+    }
     timerCtx.stop()
     self ! PoisonPill
-  }
-
-  override def postStop() = {
-    timeoutScheduler.cancel()
   }
 
   override val supervisorStrategy =
@@ -59,8 +57,4 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with Instrumented
         Stop
       }
     }  
-}
-
-object RestRequestProtocol {
-  case object RequestTimeout
 }

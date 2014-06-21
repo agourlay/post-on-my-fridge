@@ -1,6 +1,7 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.pattern._
 
 import spray.routing._
 import spray.json._
@@ -13,7 +14,7 @@ import pomf.api.endpoint.CustomJsonProtocol._
 import pomf.service.TokenServiceProtocol._
 import pomf.service.TokenServiceProtocol
 
-class GenerateToken(ctx : RequestContext, tokenService: ActorRef) extends RestRequest(ctx) {
+class GenerateToken(ctx : RequestContext, tokenService: ActorRef) (implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
 
   tokenService !  TokenServiceProtocol.RequestToken
 
@@ -25,6 +26,6 @@ class GenerateToken(ctx : RequestContext, tokenService: ActorRef) extends RestRe
 }
 
 object GenerateToken {
-   def props(ctx : RequestContext, tokenService: ActorRef) 
-     = Props(classOf[GenerateToken], ctx, tokenService).withDispatcher("requests-dispatcher")
+   def props(ctx : RequestContext, tokenService: ActorRef)(implicit breaker: CircuitBreaker) 
+     = Props(classOf[GenerateToken], ctx, tokenService, breaker).withDispatcher("requests-dispatcher")
 }

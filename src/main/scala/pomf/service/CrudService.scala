@@ -18,19 +18,19 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
   val fridgesNumber = metrics.gauge("fridges")(dao.countFridges)
 
   def receive = {
-    case FullFridge(fridgeId)      => sender ! getFridgeFull(fridgeId)
-    case AllFridge                 => sender ! getAllFridge()
-    case CreateFridge(fridge)      => sender ! createFridge(fridge)
-    case GetPost(postId)           => sender ! getPost(postId)
-    case DeletePost(postId, token) => sender ! deletePost(postId, token)
-    case CreatePost(post, token)   => sender ! addPost(post, token)
-    case UpdatePost(post, token)   => sender ! updatePost(post, token)
-    case SearchFridge(term)        => sender ! searchByNameLike(term)
-    case CountFridges              => sender ! countFridges
-    case CountPosts                => sender ! countPosts
+    case FullFridge(fridgeId)            => sender ! getFridgeFull(fridgeId)
+    case AllFridge(pageNumber, pageSize) => sender ! getAllFridge(pageNumber, pageSize)
+    case CreateFridge(fridge)            => sender ! createFridge(fridge)
+    case GetPost(postId)                 => sender ! getPost(postId)
+    case DeletePost(postId, token)       => sender ! deletePost(postId, token)
+    case CreatePost(post, token)         => sender ! addPost(post, token)
+    case UpdatePost(post, token)         => sender ! updatePost(post, token)
+    case SearchFridge(term)              => sender ! searchByNameLike(term)
+    case CountFridges                    => sender ! countFridges
+    case CountPosts                      => sender ! countPosts
   }
 
-  def getAllFridge() = LightFridges(dao.getAllFridge())
+  def getAllFridge(pageNumber : Int, pageSize : Int) = LightFridges(dao.getAllFridge(pageNumber, pageSize))
 
   def createFridge(fridgeName: String) = {
     dao.createFridge(fridgeName) match {
@@ -92,7 +92,7 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 
 object CrudServiceProtocol {
   case class FullFridge(fridgeId : UUID)
-  case object AllFridge
+  case class AllFridge(pageNumber : Int, pageSize : Int)
   case class CreateFridge(fridgeName : String) 
   case class GetPost(postId : UUID)
   case class UpdatePost(post: Post, token: String)

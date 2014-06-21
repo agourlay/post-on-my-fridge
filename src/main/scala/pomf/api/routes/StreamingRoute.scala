@@ -1,12 +1,13 @@
 package pomf.api.route
 
 import akka.actor._
+
 import java.util.UUID
 import spray.routing._
 
 import pomf.api.streaming._
 
-class StreamingRoute(implicit context: ActorContext) extends Directives {
+class StreamingRoute(implicit context: ActorContext) extends RouteWithBreaker {
 
   val route = 
     pathPrefix("stream") {

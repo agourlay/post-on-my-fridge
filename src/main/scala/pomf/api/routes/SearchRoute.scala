@@ -6,7 +6,7 @@ import spray.routing._
 
 import pomf.api.request.SearchFridge
 
-class SearchRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
+class SearchRoute(crudService : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker {
   
   val route = 
     pathPrefix("search") {

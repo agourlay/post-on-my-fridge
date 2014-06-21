@@ -6,9 +6,9 @@
 				<div class="col-md-10 col-md-offset-1 text-center">
 					<h4>Create your fridge</h4> 
 						<form class="form">
-							<div class="form-group">
-	                			{{view Ember.TextField valueBinding="App.FridgesView.newFridgeName" placeholder="fridge name" }}
-	            				<button class="btn btn-primary" {{action "createFridge" App.FridgesView.newFridgeName}}>
+							<div class="form-inline">
+	                			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
+	            				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
 									<i class="fa fa-check-circle-o"></i>
 								</button>
 			    			</div>
@@ -36,6 +36,14 @@
 						    {{/each}}
 						</tbody>
 					</table>
+				</div>
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<ul class="pager">
+						  <li class="disabled"><a href="#">Previous</a></li>
+						  <li><a href="#">Next</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div id ="push"></div>

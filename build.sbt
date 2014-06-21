@@ -18,7 +18,7 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.1"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -43,20 +43,20 @@ resolvers ++= Seq(
 
 libraryDependencies ++= {
   val akkaV         = "2.3.3"
-  val sprayV        = "1.3.1"
+  val sprayV        = "1.3.1-20140423"
   val sprayJsonV    = "1.2.6"
   val scalaMetricsV = "3.2.0_a2.3"
   val metricsV      = "3.0.2"
   val jodaTimeV     = "2.3"
   val jodaConvertV  = "1.6"
-  val slickV        = "2.0.2" 
-  val slickJodaV    = "1.1.0"
+  val slickV        = "2.1.0-M2" 
+  val slickJodaV    = "1.2.0-SNAPSHOT"
   val postgresqlV   = "9.3-1101-jdbc41"
   val logbackV      = "1.1.2"
   val dbcpV         = "1.4"
   Seq(
-       "io.spray"             %   "spray-can"         % sprayV     
-      ,"io.spray"             %   "spray-routing"     % sprayV             
+       "io.spray"             %%  "spray-can"         % sprayV     
+      ,"io.spray"             %%  "spray-routing"     % sprayV             
       ,"io.spray"             %%  "spray-json"        % sprayJsonV                
       ,"com.typesafe.akka"    %%  "akka-actor"        % akkaV        
       ,"com.typesafe.akka"    %%  "akka-slf4j"        % akkaV          

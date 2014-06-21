@@ -1,7 +1,9 @@
 <form class="form">
 	{{view App.LazyTextArea sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
-	{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
-	{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}
+	<div class="form-inline">
+		{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}
+		{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
+	</div>
 	<button class="btn btn-sm btn-primary" type="button" {{action save target="view"}}>
 		<i class="fa fa-check-circle-o"></i>
 		Save

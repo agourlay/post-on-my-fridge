@@ -1,6 +1,7 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.pattern._
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -13,7 +14,7 @@ import pomf.domain.model.Post
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.UpdatePost(post, token)
 
@@ -25,6 +26,6 @@ class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: 
 }
 
 object UpdatePost {
-   def props(post: Post, token: String, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[UpdatePost], post, token, ctx, crudService).withDispatcher("requests-dispatcher")
+   def props(post: Post, token: String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) 
+     = Props(classOf[UpdatePost], post, token, ctx, crudService, breaker).withDispatcher("requests-dispatcher")
 }

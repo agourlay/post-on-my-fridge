@@ -14,7 +14,7 @@ import spray.can.Http
 
 object Boot extends App with Configuration with BootedCore with CoreActors with Rest with Web {
  
-  val log: Logger = LoggerFactory.getLogger("boot")
+  val log = LoggerFactory.getLogger("boot")
   log.info(" +--------------------+")
   log.info(" |  Fridge starting   |")
   log.info(" |--------------------|")

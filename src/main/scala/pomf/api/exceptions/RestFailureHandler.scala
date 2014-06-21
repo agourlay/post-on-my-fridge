@@ -1,16 +1,17 @@
 package pomf.api.exceptions 
 
+import akka.pattern.CircuitBreakerOpenException
+import akka.pattern.AskTimeoutException
+
 import spray.util.LoggingContext
 import spray.routing._
 import spray.http._
 import HttpHeaders._
 
-import akka.pattern.AskTimeoutException
-
 import pomf.service._
 import pomf.metrics.Instrumented
 
-trait RestFailureHandling extends Instrumented {
+trait RestFailureHandler extends Instrumented {
     this: HttpService =>
 
     val postNotFound = metrics.meter("postNotFoundException")
@@ -19,11 +20,19 @@ trait RestFailureHandling extends Instrumented {
     val fridgeAlreadyExists = metrics.meter("fridgeAlreadyExistsException")
     val illegalArgument = metrics.meter("illegalArgumentException")
     val askTimeout = metrics.meter("askTimeoutException")
-    val requestTimeout = metrics.meter("requestTiemoutException")
+    val requestTimeout = metrics.meter("requestTimeoutException")
+    val circuitBreaker = metrics.meter("circuitBreakerException")
     val otherException = metrics.meter("otherException")
 
 	implicit def omnibusExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
   	
+	    case e : CircuitBreakerOpenException  =>
+	      requestUri { uri =>
+	      	circuitBreaker.mark()
+	        log.error("Request to {} could not be handled normally -> CircuitBreakerOpenException", uri)
+	        complete(StatusCodes.InternalServerError, "Pomf is currently under high load and cannot process your request, retry later \n")
+	      } 
+
 		case e : PostNotFoundException  =>
 	    	requestUri { uri =>
 	    		postNotFound.mark()

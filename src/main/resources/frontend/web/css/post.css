@@ -48,18 +48,12 @@
     margin-right: auto;
 	margin-left: auto;
     margin-bottom: 7px;
-	border-width: thin;	}
-
-.post input[type="text"]{
-	margin-right: auto;
-	margin-left: 10px;
-	height: 18px;
-	width: 130px;}	
-
-.post button{
-	margin-right: 5px;
-	float:right;}				
+	border-width: thin;	}			
 
 .post input[type="color"]{
-	float : right;
-	margin-right: 5px;}		
+	height: 25px;
+	margin-left: 10px;}
+
+.post button{
+	margin: 5px;
+	float:right;}				

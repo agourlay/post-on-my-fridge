@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 
 import pomf.api.route._
-import pomf.api.exceptions.RestFailureHandling
+import pomf.api.exceptions.RestFailureHandler
 import pomf.core.CoreActors
 import pomf.metrics.MetricsReporter
 
@@ -17,7 +17,7 @@ class HttpEndpointActor(coreActors : CoreActors) extends HttpEndpoint with Actor
   def receive = runRoute(routes(coreActors))
 }
 
-trait HttpEndpoint extends HttpService with RestFailureHandling {
+trait HttpEndpoint extends HttpService with RestFailureHandler {
  
   def routes(coreActors : CoreActors ) (implicit context: ActorContext) = {
     val crudService = coreActors.crudService

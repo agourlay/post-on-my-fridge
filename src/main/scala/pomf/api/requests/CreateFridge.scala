@@ -1,6 +1,7 @@
 package pomf.api.request
 
 import akka.actor._
+import akka.pattern._
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -11,7 +12,7 @@ import pomf.domain.model.Fridge
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class CreateFridge(fridgeName: String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class CreateFridge(fridgeName: String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.CreateFridge(fridgeName)
 
@@ -23,6 +24,6 @@ class CreateFridge(fridgeName: String, ctx : RequestContext, crudService: ActorR
 }
 
 object CreateFridge {
-   def props(fridgeName: String, ctx : RequestContext, crudService: ActorRef) 
-     = Props(classOf[CreateFridge], fridgeName, ctx, crudService).withDispatcher("requests-dispatcher")
+   def props(fridgeName: String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) 
+     = Props(classOf[CreateFridge], fridgeName, ctx, crudService, breaker).withDispatcher("requests-dispatcher")
 }

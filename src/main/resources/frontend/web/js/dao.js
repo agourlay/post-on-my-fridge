@@ -158,10 +158,11 @@ App.Dao = Em.Object.create({
 		});
 	},
 
-	getFridges : function () {
+	getFridges : function (page) {
 		return $.ajax({
 	        	url: "fridges",
 	        	type: 'GET',
+	        	data:{pageNumber:page}, 
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during fridges retrieval");					
 				}

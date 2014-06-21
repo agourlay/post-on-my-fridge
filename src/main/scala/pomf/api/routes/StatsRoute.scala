@@ -6,7 +6,7 @@ import spray.routing._
 
 import pomf.api.request.{AllMetrics, CountFridges, CountPosts}
 
-class StatsRoute(crudService : ActorRef, metricsRepo : ActorRef)(implicit context: ActorContext) extends Directives {
+class StatsRoute(crudService : ActorRef, metricsRepo : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker {
 
   val route = 
     path("stats") {

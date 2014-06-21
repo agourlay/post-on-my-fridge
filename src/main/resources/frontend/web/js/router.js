@@ -18,7 +18,7 @@ App.FridgeRoute = Ember.Route.extend({
 
 App.FridgesRoute = Ember.Route.extend({
 	model: function() {
-		return App.Dao.getFridges();
+		return App.Dao.getFridges(1);
   	}
 });
 
