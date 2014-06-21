@@ -57,8 +57,8 @@ class Dao(db: Database) extends Instrumented {
 
   def getAllFridge(pageNumber : Int, pageSize : Int): List[FridgeLight] = db withDynSession{
     fridges.sortBy(_.modificationDate.desc)
+           .drop((pageNumber - 1) * pageSize).take(pageSize)
            .list
-           .drop(pageNumber - 1 * pageSize).take(pageSize)
            .map(buildLight(_))
   }  
 

@@ -21,7 +21,7 @@
     "typeahead.js" : "0.10.2",
     "font-awesome": "4.1.0",
     "noty": "2.2.5",
-    "bacon" : "0.7.14"
+    "bacon" : "0.7.15"
   },
   "resolutions": {
     "jquery": "2.1.1"
