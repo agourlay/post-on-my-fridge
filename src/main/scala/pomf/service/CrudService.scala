@@ -14,9 +14,6 @@ import java.util.UUID
 
 class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with Instrumented {
 
-  val postsNumber = metrics.gauge("posts")(dao.countPosts)
-  val fridgesNumber = metrics.gauge("fridges")(dao.countFridges)
-
   def receive = {
     case FullFridge(fridgeId)            => sender ! getFridgeFull(fridgeId)
     case AllFridge(pageNumber, pageSize) => sender ! getAllFridge(pageNumber, pageSize)

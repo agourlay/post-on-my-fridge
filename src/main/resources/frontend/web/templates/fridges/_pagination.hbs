@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<ul class="pager">
+		    {{#if view.previousDisabled}}
+		    	<li class="disabled">
+		    		<a {{action previousPage}}><i class="fa fa-angle-left"></i> Previous</a>
+		    	</li>
+		    {{else}}
+				<li>
+					<a {{action previousPage}}><i class="fa fa-angle-left"></i> Previous</a>
+				</li>
+			{{/if}}
+				<li>
+					{{view.controller.page}}
+				</li>	
+			{{#if view.nextDisabled}}
+		    	<li class="disabled">
+		    		<a {{action nextPage}}>Next <i class="fa fa-angle-right"></i></a>
+		    	</li>
+		    {{else}}
+				<li>
+					<a {{action nextPage}}>Next <i class="fa fa-angle-right"></i></a>
+				</li>
+			{{/if}}
+		</ul>
+	</div>
+</div>

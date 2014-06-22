@@ -1,9 +1,9 @@
 <div id = "wrap">
-	{{render "mainHeader" null}}
+	{{render "mainHeader"}}
 	<div id="main-content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-10 col-md-offset-1 text-center">
+				<div class="col-md-8 col-md-offset-2 text-center">
 					<h4>Create your fridge</h4> 
 						<form class="form">
 							<div class="form-inline">
@@ -12,8 +12,10 @@
 									<i class="fa fa-check-circle-o"></i>
 								</button>
 			    			</div>
-						</form>		
+						</form>
+					<hr>			
 					<h4>List of all fridges</h4> 
+					{{partial "fridges/pagination"}}
 				</div>
 			</div>
 			<div class="row">
@@ -37,14 +39,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<ul class="pager">
-						  <li><a {{action previousPage}}>Previous</a></li>
-						  <li><a {{action nextPage}}>Next</a></li>
-						</ul>
-					</div>
-				</div>
+				{{partial "fridges/pagination"}}
 			</div>
 			<div id ="push"></div>
 		</div>

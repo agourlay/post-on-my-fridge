@@ -13,24 +13,25 @@ App.FridgesController = Ember.ArrayController.extend({
 
  		nextPage : function() {
  			var currentPage = parseInt(this.get("page"));
-			var me = this;
-			App.Dao.getFridges(currentPage + 1).then(function (fridges) {
-				me.get("content").clear();
-			    me.get("content").pushObjects(fridges);
-			    me.set("page", currentPage + 1);
-			});
+ 			if (this.get('content').length == App.Dao.get("pageSize")){
+ 				this.loadFridgesPage(currentPage + 1);
+ 			}
 		},
 
 		previousPage : function() {
 			var currentPage = parseInt(this.get("page"));
 			if (currentPage != 1){
-				var me = this;
-				App.Dao.getFridges(currentPage - 1).then(function (fridges) {
-					me.get("content").clear();
-			    	me.get("content").pushObjects(fridges);
-			    	me.set("page", currentPage - 1);
-				});
+				this.loadFridgesPage(currentPage - 1);
 			}
 		}
+ 	},
+
+ 	loadFridgesPage: function (page) {
+ 		var me = this;
+		App.Dao.getFridges(page).then(function (fridges) {
+			me.get("content").clear();
+		  	me.get("content").pushObjects(fridges);
+		   	me.set("page", page);
+		});
  	}
 });

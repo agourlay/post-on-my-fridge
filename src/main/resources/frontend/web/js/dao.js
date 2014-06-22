@@ -1,11 +1,11 @@
 App.Dao = Em.Object.create({
-
-	fridgeId : null,
-	source : null,
-	messagesController : null,
-	postsController : null,
+	fridgeId: null,
+	source: null,
+	messagesController: null,
+	postsController: null,
 	userToken: null,
-	eventBus:null,
+	eventBus: null,
+	pageSize: 50,
 
 	initSessionData : function(fridgeId) {
 		var me = this;
@@ -158,11 +158,13 @@ App.Dao = Em.Object.create({
 		});
 	},
 
+
 	getFridges : function (page) {
+		var me = this;
 		return $.ajax({
 	        	url: "fridges",
 	        	type: 'GET',
-	        	data:{pageNumber:page}, 
+	        	data:{pageNumber:page, pageSize:me.pageSize}, 
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during fridges retrieval");					
 				}

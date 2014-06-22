@@ -33,4 +33,3 @@ App.MetricsRoute = Ember.Route.extend({
     	return App.Dao.metrics();
   	}
 });
-

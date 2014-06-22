@@ -1,6 +1,7 @@
 package pomf.core
 
 import akka.actor._
+import akka.routing.RoundRobinPool
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -25,9 +26,11 @@ trait CoreActors {
 
   val dbConfig = new PostGresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort)
 
-  val notificationService = system.actorOf(NotificationService.props, "notification-service")
+  val notificationService = system.actorOf(RoundRobinPool(5).props(NotificationService.props)
+                                           , "notification-service")
   
-  val crudService = system.actorOf(CrudService.props(dbConfig.dao, notificationService), "crud-service")
+  val crudService = system.actorOf(RoundRobinPool(5).props(CrudService.props(dbConfig.dao, notificationService))
+                                   , "crud-service")
 
   val chatRepo = system.actorOf(ChatRepository.props(notificationService), "chat-repository")
   

@@ -20,6 +20,9 @@ class Dao(db: Database) extends Instrumented {
   
   val log = LoggerFactory.getLogger("dao")
 
+  val postsNumber = metrics.gauge("posts")(countPosts)
+  val fridgesNumber = metrics.gauge("fridges")(countFridges)
+
   val posts = TableQuery[Posts]
   val fridges = TableQuery[Fridges]
 
