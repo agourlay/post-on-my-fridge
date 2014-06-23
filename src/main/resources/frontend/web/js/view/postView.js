@@ -14,6 +14,10 @@ App.PostView = Em.View.extend(App.Draggable, {
 		return this.generateContent();
 	}.property('content.content').cacheable(),
 
+	doubleClick: function(event) {
+		this.editMode();	
+	},
+
 	mouseEnter: function(event) {
 		this.$().find(".post-header").css({
 			'display': 'block'

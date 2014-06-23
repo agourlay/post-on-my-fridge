@@ -5,7 +5,7 @@ App.Dao = Em.Object.create({
 	postsController: null,
 	userToken: null,
 	eventBus: null,
-	pageSize: 50,
+	pageSize: 30,
 
 	initSessionData : function(fridgeId) {
 		var me = this;

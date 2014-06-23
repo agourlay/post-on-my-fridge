@@ -14,7 +14,7 @@ import com.codahale.metrics.graphite._
 
 import nl.grons.metrics.scala._
 
-import pomf.configuration._
+import pomf.configuration.Settings
 import pomf.metrics.MetricsReporterProtocol._
 
 class MetricsReporter extends Actor with ActorLogging with Instrumented {

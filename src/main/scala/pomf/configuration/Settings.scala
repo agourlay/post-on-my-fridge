@@ -13,6 +13,7 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
   }
 
   val Timeout = FiniteDuration(config.getDuration("pomf.timeout", TimeUnit.MILLISECONDS), TimeUnit.MILLISECONDS)
+  val Parallelism = config.getInt("pomf.parallelism")
 
   object Database {
     val DbUser = config.getString("pomf.database.user")

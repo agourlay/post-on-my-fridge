@@ -1,6 +1,5 @@
 package pomf.domain.dao
 
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import scala.slick.driver.PostgresDriver.simple._
@@ -11,8 +10,9 @@ trait DBConfig {
 }
 
 class PostGresDB(user: String, password : String, schema : String, host : String, port : String) extends DBConfig {
-  val log = LoggerFactory.getLogger("db")
-  log.info(s"Using database schema $schema with user $user")
+  val log = LoggerFactory.getLogger("domain.dbConfig")
+
+  log.info(s"Connecting to db $host:$port on schema $schema with user $user")
   
   val url = "jdbc:postgresql://"+ host + ":" + port + "/" + schema
 

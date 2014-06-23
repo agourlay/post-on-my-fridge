@@ -1,24 +1,23 @@
 package pomf.domain.dao
 
-import pomf.metrics.Instrumented
+import org.slf4j.LoggerFactory
 
 import scala.slick.driver.PostgresDriver.simple._
-
-import Database.dynamicSession
 import scala.slick.lifted
 import scala.util.Try
+
+import Database.dynamicSession
+
 import java.util.UUID
 
 import org.joda.time.DateTime
 
+import pomf.metrics.Instrumented
 import pomf.domain.model._
-
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 class Dao(db: Database) extends Instrumented {
   
-  val log = LoggerFactory.getLogger("dao")
+  val log = LoggerFactory.getLogger("domain.dao")
 
   val postsNumber = metrics.gauge("posts")(countPosts)
   val fridgesNumber = metrics.gauge("fridges")(countFridges)

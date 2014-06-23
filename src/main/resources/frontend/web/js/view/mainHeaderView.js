@@ -34,6 +34,7 @@ App.MainHeaderView = Em.View.extend({
 			}
 		})
 		.on('typeahead:selected', function(e, datum, name) {
+			App.Dao.leaveChatOnExit();
 		    view.get('controller').transitionToRoute('fridge', App.Dao.initSessionData(datum.id));
 		});
 	}
