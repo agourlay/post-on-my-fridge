@@ -16,7 +16,7 @@ class CreateFridge(fridgeName: String, ctx : RequestContext, crudService: ActorR
 
   crudService ! CrudServiceProtocol.CreateFridge(fridgeName)
 
-  override def receive = waitingCreate orElse handleTimeout
+  override def receive = super.receive orElse waitingCreate
 
   def waitingCreate : Receive = {
     case f : Fridge  => requestOver(f)

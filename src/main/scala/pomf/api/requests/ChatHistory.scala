@@ -23,7 +23,7 @@ class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext)(impl
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
-  override def receive = waitingLookup orElse handleTimeout
+  override def receive = super.receive orElse waitingLookup
 
   def waitingLookup : Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
@@ -36,7 +36,7 @@ class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx : RequestContext)(impl
   def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.ChatHistory 
-      context.become(waitingHistory orElse handleTimeout)
+      context.become(super.receive orElse waitingHistory)
     }
     case None => requestOver(new ChatRoomNotFoundException(id))
   }

@@ -18,7 +18,7 @@ class GenerateToken(ctx : RequestContext, tokenService: ActorRef) (implicit brea
 
   tokenService !  TokenServiceProtocol.RequestToken
 
-  override def receive = waitingToken orElse handleTimeout
+  override def receive = super.receive orElse waitingToken
 
   def waitingToken : Receive = {
     case NewToken(token) => requestOver(token)

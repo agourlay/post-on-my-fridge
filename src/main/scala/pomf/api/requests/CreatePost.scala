@@ -16,7 +16,7 @@ class CreatePost(post: Post, token : String, ctx : RequestContext, crudService: 
 
   crudService ! CrudServiceProtocol.CreatePost(post, token)
 
-  override def receive = waitingCreate orElse handleTimeout
+  override def receive = super.receive orElse waitingCreate
 
   def waitingCreate : Receive = {
     case p : Post  => requestOver(p)

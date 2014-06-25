@@ -18,7 +18,7 @@ class UpdatePost(post: Post, token : String, ctx : RequestContext, crudService: 
 
   crudService ! CrudServiceProtocol.UpdatePost(post, token)
 
-  override def receive = waitingUpdate orElse handleTimeout
+  override def receive = super.receive orElse waitingUpdate
 
   def waitingUpdate : Receive = {
     case p : Post => requestOver(p)

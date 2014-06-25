@@ -45,7 +45,7 @@ class ChatRoute(chatRepo : ActorRef)(implicit context: ActorContext) extends Rou
           }
         } ~
         get {
-          ctx => context.actorOf(ChatRoomParticipantNumber.props(fridgeId, chatRepo, ctx))
+          ctx => context.actorOf(ChatParticipantNumber.props(fridgeId, chatRepo, ctx))
         } ~
         delete {
           parameters("token") { token =>

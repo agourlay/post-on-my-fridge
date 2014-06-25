@@ -18,7 +18,7 @@ class FullFridge(fridgeId : UUID, ctx: RequestContext, crudService: ActorRef)(im
 
   crudService ! CrudServiceProtocol.FullFridge(fridgeId)
 
-  override def receive = waitingFridge orElse handleTimeout
+  override def receive = super.receive orElse waitingFridge
 
   def waitingFridge : Receive = {
     case f : FridgeFull  => requestOver(f)

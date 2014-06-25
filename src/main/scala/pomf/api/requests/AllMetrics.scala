@@ -15,7 +15,7 @@ import pomf.metrics.MetricsReporterProtocol
 class AllMetrics(ctx : RequestContext, metricsRepo: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
   metricsRepo ! MetricsReporterProtocol.All
 
-  override def receive = waitingMetrics orElse handleTimeout
+  override def receive = super.receive orElse waitingMetrics
 
   def waitingMetrics : Receive = {
     case MetricsReport(metrics) => requestOver(metrics)

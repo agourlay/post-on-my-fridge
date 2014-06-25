@@ -18,7 +18,7 @@ class GetPost(postId: UUID, ctx : RequestContext, crudService: ActorRef) (implic
 
   crudService ! CrudServiceProtocol.GetPost(postId)
 
-  override def receive = waitingDelete orElse handleTimeout
+  override def receive = super.receive orElse waitingDelete
 
   def waitingDelete : Receive = {
     case p : Post => requestOver(p)

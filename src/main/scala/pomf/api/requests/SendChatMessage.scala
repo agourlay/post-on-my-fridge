@@ -20,7 +20,7 @@ class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatR
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
-  override def receive = waitingLookup orElse handleTimeout
+  override def receive = super.receive orElse waitingLookup
 
   def waitingLookup : Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)

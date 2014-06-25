@@ -6,7 +6,7 @@ Just sticky notes shared in real time on virtual fridges.
 
 This application focuses on realtime interactions and simplicity. 
 
-The backend is written in Scala using [Akka](http://akka.io/) actor's model and [Spray](http://spray.io/) for the rest/http interface. 
+The backend is written in Scala using [Akka](http://akka.io/) and [Spray](http://spray.io/). 
 
 The frontend is a single page web app written with [Ember.js](http://emberjs.com/).
 

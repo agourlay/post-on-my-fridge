@@ -13,11 +13,11 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class SearchFridge(term :String, ctx : RequestContext, crudService: ActorRef) (implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) (implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.SearchFridge(term)
 
-  override def receive = waitingSearch orElse handleTimeout
+  override def receive = super.receive orElse waitingSearch
 
   def waitingSearch : Receive = {
     case SearchResult(t, r) => requestOver(r)

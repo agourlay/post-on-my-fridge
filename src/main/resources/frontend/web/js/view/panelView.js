@@ -4,10 +4,6 @@ App.PanelView = Ember.View.extend({
 	contentBinding: 'controller.content',
 	viewers : 1,
 
-	fridgeName: function() {
-		return this.get('content');
-	}.property('content'),
-
 	participants : function() {
 		if (this.get("viewers") > 1){
 			return this.get("viewers") + " participants"

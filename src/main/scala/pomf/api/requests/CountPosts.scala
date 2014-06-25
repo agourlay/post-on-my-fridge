@@ -15,8 +15,8 @@ class CountPosts(ctx : RequestContext, crudService: ActorRef)(implicit breaker: 
 
   crudService ! CrudServiceProtocol.CountPosts
 
-  override def receive = waitingCount orElse handleTimeout
-
+  override def receive = super.receive orElse waitingCount
+  
   def waitingCount : Receive = {
     case Count(nb) => requestOver(nb.toString)
   }

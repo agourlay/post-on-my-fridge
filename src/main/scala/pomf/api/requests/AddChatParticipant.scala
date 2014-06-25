@@ -19,7 +19,7 @@ class AddChatParticipant(fridgeId: UUID, token: String, participantName: String,
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
-  override def receive = waitingLookup orElse handleTimeout
+  override def receive = super.receive orElse waitingLookup
 
   def waitingLookup : Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)

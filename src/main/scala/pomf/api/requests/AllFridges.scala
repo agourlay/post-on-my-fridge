@@ -19,7 +19,7 @@ class AllFridges(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudServ
 
   crudService ! CrudServiceProtocol.AllFridge(pageNumber, pageSize)
 
-  override def receive = waitingFridges orElse handleTimeout
+  override def receive = super.receive orElse waitingFridges
 
   def waitingFridges : Receive = {
     case LightFridges(f)  => requestOver(f)
