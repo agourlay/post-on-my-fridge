@@ -1,23 +1,30 @@
 <div id = "wrap">
-	{{render "mainHeader" null}}
+	{{render "mainHeader"}}
 	<div id="main-content">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<h4>Create your fridge</h4> 
-						<form class="form">
-							<div class="form-inline">
-	                			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
-	            				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
-									<i class="fa fa-check-circle-o"></i>
-								</button>
-			    			</div>
-						</form>
-					<hr>			
-					<h4>List of all fridges</h4> 
-					{{partial "fridges/pagination"}}
+					<form class="form">
+						<div class="form-inline">
+                			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
+            				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
+								<i class="fa fa-check-circle-o"></i>
+							</button>
+		    			</div>
+					</form>
+					<hr>		
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<h4>Search for a fridge</h4> 	
+					<input class="typeahead" type="text" placeholder="Search for fridges"/>
+					<hr>
+					<h4>List of all fridges</h4> 	
+				</div>
+			</div>
+			{{partial "fridges/pagination"}}
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 well">
 					<table class="table table-hover table-striped table-condensed">
@@ -39,8 +46,8 @@
 						</tbody>
 					</table>
 				</div>
-				{{partial "fridges/pagination"}}
 			</div>
+			{{partial "fridges/pagination"}}
 			<div id ="push"></div>
 		</div>
 	</div>

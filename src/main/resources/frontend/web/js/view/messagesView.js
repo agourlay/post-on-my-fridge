@@ -13,6 +13,6 @@ App.MessagesView = Ember.CollectionView.extend({
 	},
 
 	fitSize : function() {
-		this.$().height($(window).height() - 222);
+		this.$().height($(window).height() - 208);
 	}
 });

@@ -8,29 +8,18 @@ a{text-decoration:none !important;}
 	min-height: 100%;
 	height: 100%;}
 
-#fridge-title{
-    min-width: 100%;
-    color : #3C4044;
-    font-family: Geneva, Tahoma, Verdana, sans-serif;
-    text-transform: capitalize;
-    padding: 9px 3px 9px 3px;}
-
 .panel-box {
-	padding-top: 10px;
+	padding-top: 8px;
 	margin-right: auto;
 	margin-left: auto;
 	width: 90%;}
 
-#search-box{
-	float: right;
-	text-align: left;
-	padding-top: 5px;
-	padding-right: 30px;}
-
 .index-link{
 	border:none;
 	height:28px;
-	cursor: pointer;}	
+	cursor: pointer;
+	padding-top: 2px;
+	padding-bottom: 2px;}	
 
 #fridge {
 	position:relative;
@@ -41,8 +30,6 @@ a{text-decoration:none !important;}
 	position:relative;
 	float: right;
 	text-align: center;
-	height: 1200px;
-	top: 40px;
 	width: 82%;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
@@ -50,7 +37,6 @@ a{text-decoration:none !important;}
 #panel {
 	position : fixed;
 	z-index: 80;
-	top: 40px;
 	width: 18%;
   	padding-left: 2px;
     box-shadow: 7px 0px 9px -2px #aaa;
@@ -87,43 +73,38 @@ a{text-decoration:none !important;}
 #wrap {
 	min-height: 100%;
 	height: auto !important;
-	margin: 0 auto -30px;}
+	margin: 0 auto -20px;}
 
 #push, #footer {
 	display: block;
 	margin-top: 20px;
 	height: 40px;}
 
-#main-content {
-	top: 40px;
-	position: relative;}
+#main-content {}
 
 #main-header {
-	position: fixed;
 	background-color: #f8f8f8;
-	z-index: 500;
-	opacity: 0.9;
 	width: 100%;
-	height: 40px;
-	border-bottom: 1px solid #e0e0e0;
-    vertical-align: middle;}
+	border-bottom: 1px solid #e0e0e0;}
 
 #main-header a{
 	color: #317eac;}
 
 #main-title{
-	width: 30%;
-	font-family: 'Telex',sans-serif;
-	font-weight: bold;
-	font-size: 18px;
+	font-size: 20px;
 	color: #317eac;
 	margin-left: 30px;
-	margin-top: 5px;
-	float: left;
-	text-transform: capitalize; }	
+	word-wrap : break-word;}
 
 #footer {
+	width: 100%;
+	padding-top: 10px;
+	border-top: 1px solid #e0e0e0;
     vertical-align: middle !important;}
+
+.pager li a {
+	cursor: pointer;
+}    
 
 .barrel_roll {
     -webkit-transition: -webkit-transform 4s ease;

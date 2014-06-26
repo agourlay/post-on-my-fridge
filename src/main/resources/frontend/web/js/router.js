@@ -9,11 +9,11 @@ App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
 		return App.Dao.initSessionData(params.fridge_id);
   	},
-	deactivate: function(transition) {
-	    if (transition != null){
-	    	this.controllerFor('messages').leaveChat(transition.params.fridge_id);
+  	actions: {
+	    willTransition: function(transition) {
+	     	App.Dao.leaveChatOnExit();
 	    }
-	}
+	}  
 });
 
 App.FridgesRoute = Ember.Route.extend({

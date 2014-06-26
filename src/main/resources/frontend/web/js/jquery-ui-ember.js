@@ -19,8 +19,6 @@ App.Base = Ember.Mixin.create({
     // Save off the instance of the jQuery UI widget as the `ui` property
     // on this SproutCore view.
     this.set('ui', ui);
-
-
   },
 
   // When SproutCore tears down the view's DOM element, it will call

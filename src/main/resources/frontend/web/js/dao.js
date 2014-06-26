@@ -52,7 +52,7 @@ App.Dao = Em.Object.create({
 		}, false);
 
 		source.addEventListener('open', function(e) {
-			console.log("SSE opened!")
+			console.log("data stream on fridge "+ fridgeId +" opened!")
 		}, false);
 
 		source.addEventListener('error', function(e) {
