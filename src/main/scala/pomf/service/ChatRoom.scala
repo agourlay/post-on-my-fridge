@@ -39,14 +39,12 @@ class ChatRoom(fridgeId : UUID, notificationService: ActorRef) extends Actor {
     notificationService ! NotificationServiceProtocol.MessageSent(fridgeId, message, token)
   }
   
-  def retrieveChatHistory = {
-    ChatHistoryContent(messages.values.toList.sortBy(_.timestamp))
-  }
+  def retrieveChatHistory = ChatHistoryContent(messages.values.toList.sortBy(_.timestamp))
 
   def removeParticipant(token: String) : String = {
     val name = participantByToken.get(token)
     participantByToken -= token
-    val nameQuitter = name.getOrElse("Unknown name")
+    val nameQuitter = name.getOrElse("Anonymous")
     notificationService ! NotificationServiceProtocol.ParticipantRemoved(fridgeId, token, nameQuitter)
     nameQuitter
   }

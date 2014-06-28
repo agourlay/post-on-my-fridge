@@ -39,9 +39,9 @@ trait CoreActors {
   val crudService = system.actorOf(RoundRobinPool(routerSize).props(CrudService.props(dbConfig.dao, notificationService))
                                    , "crud-service")
 
+  val tokenService = system.actorOf(RoundRobinPool(routerSize).props(TokenService.props), "token-service")
+
   val chatRepo = system.actorOf(ChatRepository.props(notificationService), "chat-repository")
-  
-  val tokenService = system.actorOf(TokenService.props, "token-service")
 
   val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
 }

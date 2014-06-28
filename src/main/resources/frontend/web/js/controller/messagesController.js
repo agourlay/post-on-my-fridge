@@ -6,10 +6,11 @@ App.MessagesController = Ember.ArrayController.extend({
 		App.Dao.get("eventBus").onValue(function(evt){
 			var payload = evt.payload;
 			var timestamp = evt.timestamp;
-            if (evt.command === "messageSent") {
+			var cmd = evt.command
+            if (cmd === "messageSent") {
 				me.messageManagement(payload);
 			}
-			if (evt.command === "participantAdded" || evt.command === "participantRemoved" || evt.command === "participantRenamed") {
+			if (cmd === "participantAdded" || cmd === "participantRemoved" || cmd === "participantRenamed") {
 				me.notificationManagement(payload, timestamp);
 			}
         });
@@ -23,10 +24,10 @@ App.MessagesController = Ember.ArrayController.extend({
 
 	initData : function() {
 		var me = this;
-		this.joinChat().done(function(){
+		me.joinChat().done(function(){
+			me.retrievePreviousMessages();
 			me.retrieveParticipantNumber();
 		});
-		this.retrievePreviousMessages();
 	},
 
 	messageManagement: function(message) {

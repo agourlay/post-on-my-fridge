@@ -23,16 +23,15 @@ App.PanelView = Ember.View.extend({
 			if (number !== null) {
 				view.set("viewers", number);
 			}
+			App.Dao.get("eventBus").onValue(function(evt){     
+				if (evt.command === "participantAdded") {
+					view.incrementProperty("viewers");
+				}
+				if (evt.command === "participantRemoved") {
+					view.decrementProperty("viewers");
+				}
+	        });
 		});
-
-		App.Dao.get("eventBus").onValue(function(evt){     
-			if (evt.command === "participantAdded") {
-				view.set("viewers", view.get("viewers") + 1 );
-			}
-			if (evt.command === "participantRemoved") {
-				view.set("viewers", view.get("viewers") - 1 );
-			}
-        });
 
 		if(typeof store.get('username') !== "undefined"){
 			$("#pseudo").val(store.get('username'));

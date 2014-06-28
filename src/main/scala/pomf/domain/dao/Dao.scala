@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 
 import scala.slick.driver.PostgresDriver.simple._
 import scala.slick.lifted
-import scala.util.Try
+import scala.util._
 
 import Database.dynamicSession
 
@@ -14,6 +14,7 @@ import org.joda.time.DateTime
 
 import pomf.metrics.Instrumented
 import pomf.domain.model._
+import pomf.service.FridgeAlreadyExistsException
 
 class Dao(db: Database) extends Instrumented {
   
@@ -46,8 +47,13 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def createFridge(name : String): Try[UUID] = db withDynTransaction {
-    val fridge = Fridge(Some(UUID.randomUUID()) , name, new DateTime(), new DateTime())
-    Try((fridges returning fridges.map(_.id)) += fridge)
+    fridgeByName(name).firstOption match {
+      case Some(f) => Failure(new FridgeAlreadyExistsException(f.id.get))
+      case None => {
+        val fridge = Fridge(Some(UUID.randomUUID()) , name, new DateTime(), new DateTime())
+        Try((fridges returning fridges.map(_.id)) += fridge)
+      }
+    }
   }  
   
   def getFridgeFull(fridgeId: UUID) : Option[FridgeFull] = db withDynSession {
@@ -83,8 +89,14 @@ class Dao(db: Database) extends Instrumented {
   }  
   
   def deletePost(postId :UUID) =  db withDynTransaction {
-    val deleteQuery = postById(postId)
-    deleteQuery.delete
+    val postQuery = postById(postId)
+    postQuery.firstOption match {
+      case Some(p) => {
+        postQuery.delete
+        updateModificationDate(p.fridgeId)
+      }
+      case None => None
+    } 
   }  
   
   def addPost(post: Post): Option[Post] = db withDynTransaction {

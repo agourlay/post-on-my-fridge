@@ -152,6 +152,11 @@ App.Dao = Em.Object.create({
 			method: "POST",
         	contentType: "application/json",
         	data: name,
+        	statusCode: {
+			    409: function() {
+			      errorMessage("fridge "+ name + " already exists");
+			    }
+			},    
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Error during fridge creation");
 			}

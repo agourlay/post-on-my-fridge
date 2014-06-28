@@ -24,7 +24,7 @@ trait RestFailureHandler extends Instrumented {
     val circuitBreaker = metrics.meter("circuitBreakerException")
     val otherException = metrics.meter("otherException")
 
-	implicit def omnibusExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
+	implicit def pomfExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
   	
 	    case e : CircuitBreakerOpenException  =>
 	      requestUri { uri =>
@@ -57,8 +57,8 @@ trait RestFailureHandler extends Instrumented {
 	    case e : FridgeAlreadyExistsException =>
 	        requestUri { uri => 
 	        	fridgeAlreadyExists.mark()
-	        	log.warning("Request to {} could not be handled normally -> fridge {} already exists", uri, e.fridgeName)
-	        	complete(StatusCodes.Accepted, Location(uri):: Nil, s"Fridge ${e.fridgeName} already exist \n")
+	        	log.warning("Request to {} could not be handled normally -> fridge {} already exists", uri, e.fridgeId)
+	        	complete(StatusCodes.Conflict, s"Fridge ${e.fridgeId} already exist \n")
 	        }    
 
 		case e : RequestTimeoutException  =>
