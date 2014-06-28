@@ -24,8 +24,14 @@ module.exports = function(grunt) {
           "web/bower_components/store.js/store.min.js",
           "web/bower_components/js-url/url.min.js",
           "web/bower_components/typeahead.js/dist/typeahead.bundle.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
           "web/bower_components/bacon/dist/Bacon.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.core.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.widget.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.mouse.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.draggable.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.droppable.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-clip.min.js",
           "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"
         ],
         dest: 'web/dist/js/libs.min.js'
