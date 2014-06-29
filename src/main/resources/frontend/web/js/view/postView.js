@@ -62,6 +62,9 @@ App.PostView = Em.View.extend(App.Draggable, {
 				view.get('content').updatePost()
 			}
 		});
+		$(window).resize(function() {
+  			view.updatePhysicalPosition();
+		});
 	},
 
 	setupPosition: function() {
