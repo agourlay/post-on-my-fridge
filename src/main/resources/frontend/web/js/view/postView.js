@@ -18,6 +18,23 @@ App.PostView = Em.View.extend(App.Draggable, {
 		this.editMode();	
 	},
 
+	tapOptions: {
+	    numberOfTaps: 2,
+	    delayBetweenTaps: 300
+	},
+
+  	tapEnd: function () {
+    	this.editMode();
+  	},
+
+  	touchStart: function(event) {
+	   event.preventDefault();
+	},
+
+	touchHoldEnd: function (recognizer, event) {
+	    this.trashPost();
+	},
+
 	mouseEnter: function(event) {
 		this.$().find(".post-header").css({
 			'display': 'block'
