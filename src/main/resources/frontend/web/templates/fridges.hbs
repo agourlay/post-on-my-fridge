@@ -1,55 +1,53 @@
 <div id = "wrap">
 	{{render "mainHeader"}}
-	<div id="main-content">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<h4>Create your fridge</h4> 
-					<form class="form">
-						<div class="form-inline">
-                			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
-            				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
-								<i class="fa fa-check-circle-o"></i>
-							</button>
-		    			</div>
-					</form>
-					<hr>		
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<h4>Create your fridge</h4> 
+				<form class="form">
+					<div class="form-inline">
+            			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
+        				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
+							<i class="fa fa-check-circle-o"></i>
+						</button>
+	    			</div>
+				</form>
+				<hr>		
 			</div>
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<h4>Search for a fridge</h4> 	
-					<input class="typeahead" type="text" placeholder="Search for fridges"/>
-					<hr>
-					<h4>List of all fridges</h4> 	
-				</div>
-			</div>
-			{{partial "fridges/pagination"}}
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 well">
-					<table class="table table-hover table-striped table-condensed">
-						<thead>
-							<th>Name</th>
-							<th>Post number</th>
-							<th>Creation Date</th>
-							<th>Last update</th>
-						</thead>
-						<tbody>
-						    {{#each controller}}
-							    <tr>
-								    <td><b>{{#link-to 'fridge' id}}{{name}}{{/link-to}}</b></td>
-								    <td>{{postNumber}}</td>
-								    <td>{{prettyCreationDate}}</td>
-								    <td>{{relativeLastUpdate}}</td>
-							    </tr>
-						    {{/each}}
-						</tbody>
-					</table>
-				</div>
-			</div>
-			{{partial "fridges/pagination"}}
-			<div id ="push"></div>
 		</div>
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 text-center">
+				<h4>Search for a fridge</h4> 	
+				<input class="typeahead" type="text" placeholder="Search for fridges"/>
+				<hr>
+				<h4>List of all fridges</h4> 	
+			</div>
+		</div>
+		{{partial "fridges/pagination"}}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 well">
+				<table class="table table-hover table-striped table-condensed">
+					<thead>
+						<th>Name</th>
+						<th>Post number</th>
+						<th>Creation Date</th>
+						<th>Last update</th>
+					</thead>
+					<tbody>
+					    {{#each controller}}
+						    <tr>
+							    <td><b>{{#link-to 'fridge' id}}{{name}}{{/link-to}}</b></td>
+							    <td>{{postNumber}}</td>
+							    <td>{{prettyCreationDate}}</td>
+							    <td>{{relativeLastUpdate}}</td>
+						    </tr>
+					    {{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{{partial "fridges/pagination"}}
+		<div id ="push"></div>
 	</div>
 </div>
 {{partial "footer"}}

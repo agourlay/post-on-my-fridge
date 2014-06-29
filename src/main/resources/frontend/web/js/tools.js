@@ -5,21 +5,21 @@ function newPostValidation(newPostData) {
 
 function generateYoutubeFrame(videoUrl) {
 	var videoId = url('?v',videoUrl);
-	return "<iframe class='youtube-player' type='text/html' width='225' height='210' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1' frameborder='0'></iframe>";
+	return "<iframe class='youtube-player' type='text/html' width='215' height='200' src='http://www.youtube.com/embed/" + videoId + "?wmode=opaque&modestbranding=1&autohide=1' frameborder='0'></iframe>";
 }
 
 function generateVimeoFrame(videoUrl) {
 	var videoId = url('1',videoUrl);
-	return "<iframe src='http://player.vimeo.com/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
+	return "<iframe src='http://player.vimeo.com/video/" + videoId + "' width='215' height='200' frameborder='0'></iframe>";
 }
 
 function generateDailyMotionLink(videoUrl) {
 	var videoId = (url('2',videoUrl)).split('_')[0];
-	return "<iframe src='http://www.dailymotion.com/embed/video/" + videoId + "' width='225' height='210' frameborder='0'></iframe>";
+	return "<iframe src='http://www.dailymotion.com/embed/video/" + videoId + "' width='215' height='200' frameborder='0'></iframe>";
 }
 
 function generatePictureLink(url) {
-	return "</br><a href=" + url + " target= blank ><img  class='post_picture' src=" + url + " /></a>";
+	return "<a href=" + url + " target= blank ><img  class='post_picture' src=" + url + " /></a>";
 }
 
 function generateHrefLink(url) {
@@ -57,7 +57,7 @@ function isPictureUrl(content) {
 
 function isMediaUrlSupported(urlContent){
 	if (isPictureUrl(urlContent)) {
-			return true;
+		return true;
 	}
 	switch (url('domain', urlContent)) {
 		case "youtube.com":

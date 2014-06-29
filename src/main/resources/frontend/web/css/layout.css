@@ -28,16 +28,14 @@ a{text-decoration:none !important;}
 	
 #fridge-content {
 	position:relative;
-	float: right;
-	text-align: center;
-	width: 82%;
+	margin-left: 230px;
 	background-image: url(../../images/p5.png);
 	min-height: 100%;}
 
 #panel {
 	position : fixed;
 	z-index: 80;
-	width: 18%;
+	width: 228px;
   	padding-left: 2px;
     box-shadow: 7px 0px 9px -2px #aaa;
     -moz-box-shadow: 7px 0px 9px -2px #aaa;
@@ -80,11 +78,8 @@ a{text-decoration:none !important;}
 	margin-top: 20px;
 	height: 40px;}
 
-#main-content {}
-
 #main-header {
 	background-color: #f8f8f8;
-	width: 100%;
 	border-bottom: 1px solid #e0e0e0;}
 
 #main-header a{

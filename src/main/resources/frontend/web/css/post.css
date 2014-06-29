@@ -1,8 +1,9 @@
 .post {
-	box-shadow: 5px 5px 4px #aaa;
-	width:240px;
-	height:240px;
+	box-shadow: 4px 4px 3px #aaa;
+	width:230px;
+	height:230px;
 	padding-top: 5px;
+	text-align: center;
 	position: absolute;
 	z-index: 10;
 	font-size: small; }
@@ -23,28 +24,21 @@
 	cursor:pointer; }
 
 .post .content{
-	position: relative;
-	font-weight: bold;
-	padding: 3px;
-	margin:auto;
-    width: 230px;
-    height: 210px;
-    word-wrap : break-word;
-    vertical-align: middle;}
+    height: 200px;
+    word-wrap : break-word;}
 	
 .post .footer{
-	position: relative;
 	font-style:italic;
-	margin: auto;}
+	padding-top: 4px;}
 	
 .post_picture {
-	height : 90%;
-	width: 90%;	}
+	height : 99%;
+	width: 95%;	}
 
 .post textarea{
 	border: dotted;
     resize: none;
-    width: 220px;
+    width: 210px;
     margin-right: auto;
 	margin-left: auto;
     margin-bottom: 7px;

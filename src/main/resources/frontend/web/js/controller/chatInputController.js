@@ -3,15 +3,17 @@ App.ChatInputController = Ember.ObjectController.extend({
 	sendChatMessage: function() {
 		var message = this.get('content');
 		this.set("content","");
-		var pseudo = App.Dao.pseudo();
-		var payload = {};
-		payload.user = pseudo;
-		payload.message = message;
-		payload.timestamp = moment().format("YYYY-MM-DDTHH:mm:ssZZ");
-		var controller = this;
-		this.postMessage(payload).done(function(){
-			App.Dao.addLocalMessage(payload);
-		});
+		if (message.trim()){
+			var pseudo = App.Dao.pseudo();
+			var payload = {};
+			payload.user = pseudo;
+			payload.message = message;
+			payload.timestamp = moment().format("YYYY-MM-DDTHH:mm:ssZZ");
+			var controller = this;
+			this.postMessage(payload).done(function(){
+				App.Dao.addLocalMessage(payload);
+			});
+		}
 	},
 
 	postMessage : function(payload) {

@@ -65,7 +65,7 @@ App.MessagesController = Ember.ArrayController.extend({
 				if (number === 1){
 					me.notificationManagement("You are alone in this chat", moment().format("YYYY-MM-DDTHH:mm:ssZZ"));
 				}else{
-					me.notificationManagement(number + " online participants", moment().format("YYYY-MM-DDTHH:mm:ssZZ"));
+					me.notificationManagement(number + " participants online", moment().format("YYYY-MM-DDTHH:mm:ssZZ"));
 				}
 			}
 		});
