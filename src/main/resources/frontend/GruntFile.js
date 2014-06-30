@@ -32,7 +32,8 @@ module.exports = function(grunt) {
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.droppable.min.js",
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect.min.js",
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-clip.min.js",
-          "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js"
+          "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js",
+          "web/bower_components/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js"
         ],
         dest: 'web/dist/js/libs.min.js'
       },
@@ -53,7 +54,6 @@ module.exports = function(grunt) {
             "web/dist/js/templates.js",
             "web/js/tools.js",
             "web/js/app.js",
-            "web/js/integration-magic/jquery.ui.touch-punch.min.js",
             "web/js/integration-magic/jquery.ui.ember.js",
             "web/js/integration-magic/ember-touch.min.js",
             "web/js/dao.js",
