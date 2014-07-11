@@ -163,13 +163,11 @@ App.Dao = Em.Object.create({
 		});
 	},
 
-
-	getFridges : function (page) {
-		var me = this;
+	getFridges : function (pageNb) {
 		return $.ajax({
 	        	url: "fridges",
 	        	type: 'GET',
-	        	data:{pageNumber:page, pageSize:me.pageSize}, 
+	        	data:{pageNumber:pageNb, pageSize:this.pageSize}, 
 	        	error: function(xhr, ajaxOptions, thrownError) {
 					errorMessage("Error during fridges retrieval");					
 				}
@@ -185,7 +183,7 @@ App.Dao = Em.Object.create({
 						posts: fridge.posts.map(function(post){ return App.Post.createWithMixins(post); })
 					});
 					fridgesModel.pushObject(fridge);	
-				});	
+				});
             	return fridgesModel;
         	});
 	}, 
