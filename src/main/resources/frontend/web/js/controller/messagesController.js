@@ -15,6 +15,7 @@ App.MessagesController = Ember.ArrayController.extend({
 			}
         });
 		this.initData();
+		return this._super();
 	},
 
 	reload : function (){

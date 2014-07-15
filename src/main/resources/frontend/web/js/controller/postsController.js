@@ -16,6 +16,7 @@ App.PostsController = Ember.ArrayController.extend({
 				me.deleteById(payload);
 			}
         });
+        return this._super();
 	},
 	
 	createPost: function(postData) {

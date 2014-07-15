@@ -34,7 +34,7 @@ class Dao(db: Database) extends Instrumented {
     
   val postByFridgeId = posts.findBy(_.fridgeId)
 
-  def countPostForFrigde(id: Column[UUID]) = metrics.timer("countPost").time {
+  def countPostForFridge(id: Column[UUID]) = metrics.timer("countPost").time {
     val query = for {
       p <- posts
       if (p.fridgeId === id)
@@ -76,7 +76,7 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def buildLight(f : Fridge) = {
-    val postsNumber = countPostForFrigde(f.id.get)
+    val postsNumber = countPostForFridge(f.id.get)
     FridgeLight(f.name, f.creationDate, f.modificationDate,f.id.get , postsNumber)
   }  
     

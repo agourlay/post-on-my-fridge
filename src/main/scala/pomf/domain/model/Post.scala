@@ -29,7 +29,8 @@ class Posts (tag: Tag) extends Table[Post](tag, "POSTS"){
   def positionX = column[Double]("POSITION_X", O.NotNull)
   def positionY = column[Double]("POSITION_Y", O.NotNull)
   def fridgeId = column[UUID]("FRIDGE_ID", O.NotNull)
-  def fridge = foreignKey("FRIDGE_FK",  fridgeId, fridges)(_.id) 
+  def fridge = foreignKey("FRIDGE_FK",  fridgeId, fridges)(_.id)
+  def fridge_idx = index("IDX_FRIDGE_ID", fridgeId)
   def * = (id.?, author, content, color, date, positionX, positionY, fridgeId) <> (Post.tupled, Post.unapply)
 
   val fridges = TableQuery[Fridges]

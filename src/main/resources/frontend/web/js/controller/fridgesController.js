@@ -3,8 +3,6 @@ App.FridgesController = Ember.ArrayController.extend({
 	sortAscending: false,
 	page: 1,
 
-	init: function () {	},	
-
  	actions: {  
  		createFridge : function(name){
 			var me = this;
