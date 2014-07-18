@@ -1,7 +1,6 @@
-App.PostView = Em.View.extend(App.Draggable, {
+App.PostView = Em.View.extend({
 	tagName: 'article',
 	classNames: ['post'],
-	uiType: 'draggable',
 	templateName: 'post',
     readMode : true,
 

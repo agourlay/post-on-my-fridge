@@ -1,5 +1,3 @@
-window.ENV = { ENABLE_ALL_FEATURES: true };
-
 window.App = Ember.Application.createWithMixins({
   LOG_STACKTRACE_ON_DEPRECATION: true
 });

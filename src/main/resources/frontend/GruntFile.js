@@ -55,7 +55,6 @@ module.exports = function(grunt) {
             "web/dist/js/templates.js",
             "web/js/tools.js",
             "web/js/app.js",
-            "web/js/integration-magic/jquery.ui.ember.js",
             "web/js/dao.js",
             "web/js/router.js",
             "web/js/view/customViews.js",

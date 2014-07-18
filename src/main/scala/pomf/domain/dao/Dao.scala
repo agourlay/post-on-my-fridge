@@ -22,6 +22,10 @@ class Dao(db: Database) extends Instrumented {
 
   val postsNumber = metrics.gauge("posts")(countPosts)
   val fridgesNumber = metrics.gauge("fridges")(countFridges)
+  
+  // TODO new metrics : averagePostByFridge and maxPostNumber
+  //val averagePostNumber = metrics.gauge("averagePostsPerFridge")(averagePostsPerFridge)
+  //val maxPostNumber = metrics.gauge("maxPosts")(maxPostsNumber)
 
   val posts = TableQuery[Posts]
   val fridges = TableQuery[Fridges]
@@ -128,7 +132,7 @@ class Dao(db: Database) extends Instrumented {
 
   def countFridges() = db withDynSession {
     fridges.length.run
-  }  
+  }   
 
   def updateModificationDate(fridgeId: UUID) = {
     fridges.filter(_.id === fridgeId).map(_.modificationDate).update(new DateTime())
