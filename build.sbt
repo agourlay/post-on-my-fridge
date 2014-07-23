@@ -18,7 +18,7 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.2"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -49,9 +49,9 @@ libraryDependencies ++= {
   val metricsV      = "3.0.2"
   val jodaTimeV     = "2.3"
   val jodaConvertV  = "1.6"
-  val slickV        = "2.1.0-RC1" 
+  val slickV        = "2.1.0-RC2" 
   val slickJodaV    = "1.2.0-SNAPSHOT"
-  val postgresqlV   = "9.3-1101-jdbc41"
+  val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
   val dbcpV         = "1.4"
   Seq(
