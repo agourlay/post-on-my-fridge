@@ -25,19 +25,15 @@ App.Dao = Em.Object.create({
 	},
 
 	addDefaultPost : function (){
-		var newPostData = {};
-		newPostData.author = App.Dao.pseudo();
-		newPostData.content = "new post";
-		newPostData.color = randomColor();
-		newPostData.positionX = getRandomPostInitX();
-		newPostData.positionY = getRandomPostInitY();
-		newPostData.fridgeId = App.Dao.get('fridgeId');
-		newPostValidation(newPostData);
-		this.get('postsController').createPost(newPostData);
-	},
-
-	addLocalMessage : function (message) {
-		this.get('messagesController').messageManagement(message);
+	    var newPostData = {};
+	    newPostData.author = App.Dao.pseudo();
+	    newPostData.content = "new post";
+	    newPostData.color = randomColor();
+	    newPostData.positionX = getRandomPostInitX();
+	    newPostData.positionY = getRandomPostInitY();
+	    newPostData.fridgeId = App.Dao.get('fridgeId');
+	    newPostValidation(newPostData);
+	    this.get('postsController').createPost(newPostData);
 	},
 
 	streamManagement : function (fridgeId, token) {

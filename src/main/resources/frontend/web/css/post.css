@@ -8,6 +8,13 @@
 	z-index: 10;
 	font-size: small; }
 
+.post:active {
+    -ms-transform: rotate(5deg); /* IE 9 */
+    -webkit-transform: rotate(5deg); /* Chrome, Safari, Opera */
+    transform: rotate(5deg);
+    transform: translate3d(0,0,0);
+}	
+
 .post:hover,.newPost:hover {
 	cursor: move; }
 

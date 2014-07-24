@@ -1,18 +1,18 @@
 App.Router.map(function() {
-    this.resource('index', { path:'/'}); 
-    this.resource('fridges');
-    this.resource('fridge', { path:'/fridge/:fridge_id' });
-    this.resource('metrics');
+  this.resource('index', { path:'/'}); 
+  this.resource('fridges');
+  this.resource('fridge', { path:'/fridge/:fridge_id' });
+  this.resource('metrics');
 });
 
 App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
 		return App.Dao.initSessionData(params.fridge_id);
-  	},
-  	actions: {
-	    willTransition: function(transition) {
-	     	App.Dao.leaveChatOnExit();
-	    }
+  },
+  actions: {
+	  willTransition: function(transition) {
+	   	App.Dao.leaveChatOnExit();
+	  }
 	}  
 });
 
@@ -24,12 +24,12 @@ App.FridgesRoute = Ember.Route.extend({
 
 App.IndexRoute = Ember.Route.extend({
 	redirect: function() {
-    	this.transitionTo('fridges');
-  	}
+   	this.transitionTo('fridges');
+  }
 });
 
 App.MetricsRoute = Ember.Route.extend({
 	model: function() {
-    	return App.Dao.metrics();
-  	}
+   	return App.Dao.metrics();
+  }
 });

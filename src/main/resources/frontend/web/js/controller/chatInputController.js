@@ -1,5 +1,6 @@
 App.ChatInputController = Ember.ObjectController.extend({
-
+	needs: "messages",
+	
 	sendChatMessage: function() {
 		var message = this.get('content');
 		this.set("content","");
@@ -11,7 +12,7 @@ App.ChatInputController = Ember.ObjectController.extend({
 			payload.timestamp = moment().format("YYYY-MM-DDTHH:mm:ssZZ");
 			var controller = this;
 			this.postMessage(payload).done(function(){
-				App.Dao.addLocalMessage(payload);
+				controller.get("controllers.messages").messageManagement(payload);
 			});
 		}
 	},
