@@ -24,8 +24,9 @@ trait CoreActors {
   val dbSchema = Settings(system).Database.DbSchema
   val dbHost = Settings(system).Database.DbHost
   val dbPort = Settings(system).Database.DbPort
+  val purge = Settings(system).Database.Purge
 
-  val dbConfig = new PostGresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort)
+  val dbConfig = new PostGresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort, purge)
 
   val parallelism = Settings(system).Parallelism
   val coreNum = Runtime.getRuntime().availableProcessors()

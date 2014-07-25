@@ -3,6 +3,7 @@ package pomf.api.endpoint
 import akka.actor._
 
 import spray.routing._
+import spray.httpx.encoding._
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -34,7 +35,9 @@ trait HttpEndpoint extends HttpService with RestFailureHandler {
     val streaming = new StreamingRoute().route     
     val token = new TokenRoute(tokenService).route             
 
-    chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token 
+    encodeResponse(Gzip){
+      chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token 
+    }  
   } 
 }
 

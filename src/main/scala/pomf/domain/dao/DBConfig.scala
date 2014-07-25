@@ -9,7 +9,7 @@ trait DBConfig {
   def dao: Dao
 }
 
-class PostGresDB(user: String, password : String, schema : String, host : String, port : String) extends DBConfig {
+class PostGresDB(user: String, password : String, schema : String, host : String, port : String, purge : Boolean) extends DBConfig {
   val log = LoggerFactory.getLogger("domain.dbConfig")
 
   log.info(s"Connecting to db $host:$port on schema $schema with user $user")
@@ -29,5 +29,5 @@ class PostGresDB(user: String, password : String, schema : String, host : String
   }
 
   val dao = new Dao(databasePool)
-  dao.createDB
+  if (purge) dao.purgeDB else dao.createDB
 }

@@ -111,6 +111,12 @@ module.exports = function(grunt) {
         flatten: true,
         dest: "web/dist/images/",
         expand: true
+      },
+      favicon: {
+        src: "web/favicon.ico",
+        flatten: true,
+        dest: "web/dist/",
+        expand: true
       }
     },
     watch: {

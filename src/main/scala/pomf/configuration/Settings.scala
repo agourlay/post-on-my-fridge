@@ -21,6 +21,7 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
     val DbSchema = config.getString("pomf.database.schema")
     val DbHost = config.getString("pomf.database.host")
     val DbPort = config.getString("pomf.database.port")
+    val Purge = config.getBoolean("pomf.database.purge")
   }
 
   object Graphite {
