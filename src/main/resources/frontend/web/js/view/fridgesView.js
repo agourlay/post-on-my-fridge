@@ -13,6 +13,7 @@ App.FridgesView = Em.View.extend({
 
 	didInsertElement: function() {
 		var view = this;
+		document.title = "All fridges | Post on my fridge";
 		var fridges = new Bloodhound({
 		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,

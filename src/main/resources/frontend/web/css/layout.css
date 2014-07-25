@@ -29,7 +29,7 @@ a{text-decoration:none !important;}
 #fridge-content {
 	position:relative;
 	margin-left: 230px;
-	background-image: url(../../images/p5.png);
+	background-image: url(../images/p5.png);
 	min-height: 100%;}
 
 #panel {

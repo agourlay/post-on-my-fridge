@@ -10,10 +10,10 @@ class FilesRoute(implicit context: ActorContext) extends Directives {
   val route = 
     pathSingleSlash{
       encodeResponse(Gzip){
-        getFromResource("frontend/web/index.html")   
+        getFromResource("frontend/web/dist/index.html")   
       }
     } ~
     encodeResponse(Gzip){
-      getFromResourceDirectory("frontend/web")
+      getFromResourceDirectory("frontend/web/dist")
     }        
 }

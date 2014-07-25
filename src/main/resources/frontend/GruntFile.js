@@ -105,11 +105,28 @@ module.exports = function(grunt) {
         src: "jquery.min.map",
         dest: "web/dist/js/",
         expand: true
+      },
+      images: {
+        src: "web/images/*",
+        flatten: true,
+        dest: "web/dist/images/",
+        expand: true
       }
     },
     watch: {
       files: ["web/css/**","web/js/**","web/templates/**"],
       tasks: ['default']
+    },
+    htmlmin: {                                     
+      dist: {                                      
+        options: {                                 
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {                                   
+          'web/dist/index.html': 'web/index.html'
+        }
+      }
     }
   });
 
@@ -119,7 +136,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-ember-templates');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
   // Default task(s).
-  grunt.registerTask('default', ['emberTemplates','concat','uglify','cssmin','copy' ]);
+  grunt.registerTask('default', ['emberTemplates','concat','uglify','cssmin','copy','htmlmin' ]);
 };
