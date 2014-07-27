@@ -48,17 +48,14 @@ App.PostView = Em.View.extend({
 		$(window).resize(function() {
   			view.updatePhysicalPosition();
 		});
-
-		// FIXME hammerjs and jquery-ui do not play nice together
-		// impossible to move a post anymore with the following code
 		
-		//var mc = new Hammer(this.get('element'));
-		//mc.on("doubletap", function(ev) {
-		//    view.doubleClick();
-		//});
-		//mc.on("press", function(ev) {
-		//    view.trashPost();
-		//});
+		var mc = new Hammer(this.get('element'));
+		mc.on("doubletap", function(ev) {
+		    view.doubleClick();
+		});
+		mc.on("press", function(ev) {
+		    view.trashPost();
+		});
 	},
 
 	setupPosition: function() {
