@@ -17,12 +17,12 @@ class ChatRoom(fridgeId : UUID, notificationService: ActorRef) extends Actor {
   var messages = Map.empty[Long, ChatMessage]
   var participantByToken = Map.empty[String, String]
 
-  context.system.scheduler.scheduleOnce(2 hour,self, ChatRoomProtocol.PurgeChat)
+  context.system.scheduler.schedule(2 hour, 2 hour, self, ChatRoomProtocol.PurgeChat)
 
   def receive = {
     case SendMessage(message, token)       => addChatMessage(message, token)
     case ChatHistory                       => sender ! retrieveChatHistory
-    case PurgeChat                         => purgeState
+    case PurgeChat                         => purgeState()
     case AddParticipant(token, name)       => addParticipant(token, name)
     case RemoveParticipant(token)          => sender ! removeParticipant(token)
     case ParticipantNumber                 => sender ! ParticipantNumberRoom(participantByToken.size)

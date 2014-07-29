@@ -89,7 +89,9 @@ class Dao(db: Database) extends Instrumented {
   }  
   
   def searchByNameLike(term:String) = db withDynSession {
-    fridges.filter(_.name like "%"+term+"%").take(100).list
+    fridges.filter(_.name.toLowerCase like "%"+term.toLowerCase +"%")
+           .take(100)
+           .list
   }  
   
   def deletePost(postId :UUID) =  db withDynTransaction {
