@@ -3,6 +3,7 @@ App.PanelView = Ember.View.extend({
 	elementId: 'panel',
 	contentBinding: 'controller.content',
 	viewers : 1,
+	opened : true,
 
 	fridgeName: function() {
  		return this.get('content');
@@ -16,9 +17,23 @@ App.PanelView = Ember.View.extend({
 		}
 	}.property('viewers'),
 
+	toggleMode : function() {
+		var view = this;
+		var togglePanel = $('#togglePanel');
+		if (view.get('opened')){
+			view.$().hide("slide", { direction: "left" }, 300);
+			togglePanel.animate({'marginLeft' : "-=220px"});
+		} else {
+			view.$().show("slide", { direction: "left" }, 300);
+			togglePanel.animate({'marginLeft' : "+=220px"});
+		}
+		view.set('opened',!view.get('opened'));
+	},	
+
 	didInsertElement : function() {	
 		var view = this;
-
+		$('#togglePanel').css({ top: $(window).height() / 2 });
+		$('#togglePanel').click(function() { view.toggleMode() });
 		$.getJSON("chat/" + App.Dao.get('fridgeId') + "/participants", function(number) {
 			if (number !== null) {
 				view.set("viewers", number);

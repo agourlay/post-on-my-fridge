@@ -23,14 +23,14 @@ App.Dao = Em.Object.create({
 			return fridge;
         });
 	},
-
-	addDefaultPost : function (){
+	
+	addPostAtCoordinate : function (x, y){
 	    var newPostData = {};
 	    newPostData.author = App.Dao.pseudo();
 	    newPostData.content = "new post";
 	    newPostData.color = randomColor();
-	    newPostData.positionX = getRandomPostInitX();
-	    newPostData.positionY = getRandomPostInitY();
+	    newPostData.positionX = x;
+	    newPostData.positionY = y;
 	    newPostData.fridgeId = App.Dao.get('fridgeId');
 	    newPostValidation(newPostData);
 	    this.get('postsController').createPost(newPostData);

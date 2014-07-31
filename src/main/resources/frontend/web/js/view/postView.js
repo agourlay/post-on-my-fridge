@@ -16,7 +16,8 @@ App.PostView = Em.View.extend({
 	}.property('content.content').cacheable(),
 
 	doubleClick: function(event) {
-		this.editMode();	
+		this.editMode();
+		event.stopPropagation();	
 	},
 
 	dragStart: function(event) {

@@ -8,7 +8,9 @@ App.FridgeView = Em.View.extend({
 	},
 
 	doubleClick: function(event) {
-		//App.Dao.addDefaultPost();
-		//event.stopPropagation();	
+		var fridge = $('#fridge-content');
+		var x = (event.clientX - 100) / fridge.width();
+		var y = (event.clientY - 100) / fridge.height();
+		App.Dao.addPostAtCoordinate(x, y);
 	}	
 });

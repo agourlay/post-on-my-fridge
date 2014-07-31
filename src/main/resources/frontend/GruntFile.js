@@ -32,6 +32,7 @@ module.exports = function(grunt) {
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.droppable.min.js",
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect.min.js",
           "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-clip.min.js",
+          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-slide.min.js",
           "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js",
           "web/bower_components/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js",
           "web/bower_components/hammerjs/hammer.min.js"
@@ -59,6 +60,7 @@ module.exports = function(grunt) {
             "web/js/view/customViews.js",
             "web/js/view/mainHeaderView.js",
             "web/js/model/fridgeModel.js",
+            "web/js/controller/fridgeController.js",
             "web/js/view/fridgeView.js",
             "web/js/model/metricsModel.js",
             "web/js/view/metricsView.js",
