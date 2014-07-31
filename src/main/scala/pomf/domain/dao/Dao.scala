@@ -38,7 +38,7 @@ class Dao(db: Database) extends Instrumented {
     
   val postByFridgeId = posts.findBy(_.fridgeId)
 
-  def countPostForFridge(id: Column[UUID]) = metrics.timer("countPost").time {
+  def countPostForFridge(id: Column[UUID]) = metrics.timer("countPostTimer").time {
     val query = for {
       p <- posts
       if (p.fridgeId === id)

@@ -2,6 +2,8 @@ App.PostView = Em.View.extend({
 	tagName: 'article',
 	classNames: ['post'],
 	templateName: 'post',
+	classNameBindings: ['isDragged:rotate-5'],
+    isDragged : false,
     readMode : true,
 
 	relativeDate: function() {
@@ -15,6 +17,10 @@ App.PostView = Em.View.extend({
 
 	doubleClick: function(event) {
 		this.editMode();	
+	},
+
+	dragStart: function(event) {
+		this.set("isDragged", true);
 	},
 
 	mouseEnter: function(event) {
@@ -41,7 +47,8 @@ App.PostView = Em.View.extend({
 				var fridge = $('#fridge-content'),
 				    fullPosition = view.$().offset().left / fridge.width() + ' ' + view.$().offset().top / fridge.height();
 				view.get('content').set('fullPosition', fullPosition);
-				view.get('content').updatePost()
+				view.get('content').updatePost();
+				view.set("isDragged", false);
 			}
 		});
 
@@ -50,6 +57,7 @@ App.PostView = Em.View.extend({
 		});
 		
 		var mc = new Hammer(this.get('element'));
+		mc.get('press').set({ time: 1500 });
 		mc.on("doubletap", function(ev) {
 		    view.doubleClick();
 		});

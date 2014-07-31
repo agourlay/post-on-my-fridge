@@ -26,7 +26,7 @@ abstract class RestRequest(ctx : RequestContext)(implicit breaker: CircuitBreake
 
   context.setReceiveTimeout(timeout.duration)
 
-  val timerCtx = metrics.timer("timer").timerContext()
+  val timerCtx = metrics.timer("requestTimer").timerContext()
   
   def receive = {
     case ReceiveTimeout => requestOver(new RequestTimeoutException())

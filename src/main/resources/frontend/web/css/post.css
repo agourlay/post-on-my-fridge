@@ -50,4 +50,11 @@
 
 .post button{
 	margin: 5px;
-	float:right;}				
+	float:right;}	
+
+.rotate-5 {
+    -ms-transform: rotate(5deg); /* IE 9 */
+    -webkit-transform: rotate(5deg); /* Chrome, Safari, Opera */
+    transform: rotate(5deg);
+    transform: translate3d(0,0,0);
+}			

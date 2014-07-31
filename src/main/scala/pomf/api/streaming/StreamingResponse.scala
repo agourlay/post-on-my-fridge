@@ -11,7 +11,7 @@ import pomf.api.endpoint.CustomMediaType
 
 abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging with Instrumented {
 
-  val timerCtx = metrics.timer("timer").timerContext()
+  val timerCtx = metrics.timer("requestTimer").timerContext()
 
   lazy val responseStart = HttpResponse(
     entity  = HttpEntity(CustomMediaType.EventStreamType, "streaming updates..."),

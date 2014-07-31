@@ -16,9 +16,9 @@ class RouteWithBreaker(implicit context: ActorContext) extends Directives with I
 	val system = context.system
 	val timeout = akka.util.Timeout(Settings(system).Timeout)
 
-	val openCbMeter = metrics.meter("circuit-breaker.open")
-    val closeCbMeter = metrics.meter("circuit-breaker.close")
-    val halfCbMeter = metrics.meter("circuit-breaker.half")
+	val openCbMeter = metrics.meter("cb-open")
+    val closeCbMeter = metrics.meter("cb-close")
+    val halfCbMeter = metrics.meter("cb-half")
 
 	implicit val executionContext = context.dispatcher
 	implicit val breaker = new CircuitBreaker(system.scheduler,

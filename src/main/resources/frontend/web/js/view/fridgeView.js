@@ -5,5 +5,10 @@ App.FridgeView = Em.View.extend({
 
 	didInsertElement: function() {
 		document.title = this.get('content.name') + " | Post on my fridge";
+	},
+
+	doubleClick: function(event) {
+		//App.Dao.addDefaultPost();
+		//event.stopPropagation();	
 	}	
 });
