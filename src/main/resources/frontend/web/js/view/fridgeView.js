@@ -12,5 +12,6 @@ App.FridgeView = Em.View.extend({
 		var x = (event.clientX - 100) / fridge.width();
 		var y = (event.clientY - 100) / fridge.height();
 		App.Dao.addPostAtCoordinate(x, y);
+		event.stopPropagation();
 	}	
 });

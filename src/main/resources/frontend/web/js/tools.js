@@ -97,18 +97,6 @@ function filterData(data) {
 	return data;
 }
 
-function getRandomPostInitX() {
-    return getRandomArbitary (0.3, 0.5);
-}
-
-function getRandomPostInitY() {
-    return getRandomArbitary (0.1,  0.25);
-}
-
-function getRandomArbitary (min, max) {
-    return Math.random() * (max - min) + min;
-}
-
 function randomColor() {
     return '#'+Math.floor(Math.random()*16777215).toString(16);
 }

@@ -12,7 +12,7 @@ App.PanelView = Ember.View.extend({
 	participants : function() {
 		if (this.get("viewers") > 1){
 			return this.get("viewers") + " participants"
-		}else{
+		} else {
 			return this.get("viewers") + " participant"
 		}
 	}.property('viewers'),
@@ -32,8 +32,8 @@ App.PanelView = Ember.View.extend({
 
 	didInsertElement : function() {	
 		var view = this;
-		$('#togglePanel').css({ top: $(window).height() / 2 });
-		$('#togglePanel').click(function() { view.toggleMode() });
+		$('#togglePanel').css({ top: $(window).height() / 2 })
+		                 .click(function() { view.toggleMode() });
 		$.getJSON("chat/" + App.Dao.get('fridgeId') + "/participants", function(number) {
 			if (number !== null) {
 				view.set("viewers", number);

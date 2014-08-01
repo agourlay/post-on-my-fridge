@@ -35,6 +35,7 @@ a{text-decoration:none !important;}
 #fridge-content {
 	position:relative;
 	background-image: url(../images/p5.png);
+	cursor: crosshair;
 	min-height: 100%;}
 
 #panel {
