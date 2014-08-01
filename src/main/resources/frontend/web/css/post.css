@@ -53,8 +53,9 @@
 	float:right;}	
 
 .rotate-5 {
-    -ms-transform: rotate(5deg); /* IE 9 */
-    -webkit-transform: rotate(5deg); /* Chrome, Safari, Opera */
+    -ms-transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    -moz-transform:rotate(5deg);
     transform: rotate(5deg);
     transform: translate3d(0,0,0);
 }			
