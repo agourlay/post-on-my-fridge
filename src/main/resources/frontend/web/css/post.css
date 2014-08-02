@@ -55,7 +55,4 @@
 .rotate-5 {
     -ms-transform: rotate(5deg);
     -webkit-transform: rotate(5deg);
-    -moz-transform:rotate(5deg);
-    transform: rotate(5deg);
-    transform: translate3d(0,0,0);
-}			
+    transform: rotate(5deg);}			

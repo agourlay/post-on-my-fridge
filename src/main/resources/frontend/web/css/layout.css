@@ -17,6 +17,7 @@ a{text-decoration:none !important;}
 #togglePanel {
 	position: fixed;
 	left:213px;
+	top:5px;
 	z-index: 500;
 	display:block; }	
 
@@ -36,6 +37,7 @@ a{text-decoration:none !important;}
 	position:relative;
 	background-image: url(../images/p5.png);
 	cursor: crosshair;
+	padding: 20px;
 	min-height: 100%;}
 
 #panel {
@@ -78,15 +80,16 @@ a{text-decoration:none !important;}
 #wrap {
 	min-height: 100%;
 	height: auto !important;
-	margin: 0 auto -20px;}
+	margin: 0 auto -40px;}
 
-#push, #footer {
+#push {
 	display: block;
 	margin-top: 20px;
 	height: 40px;}
 
 #main-header {
 	background-color: #f8f8f8;
+	margin-bottom: 30px;
 	border-bottom: 1px solid #e0e0e0;}
 
 #main-header a{
@@ -99,7 +102,7 @@ a{text-decoration:none !important;}
 	word-wrap : break-word;}
 
 #footer {
-	width: 100%;
+	height: 40px;
 	padding-top: 10px;
 	border-top: 1px solid #e0e0e0;
     vertical-align: middle !important;}

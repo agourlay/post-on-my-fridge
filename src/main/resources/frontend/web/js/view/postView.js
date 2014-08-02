@@ -99,16 +99,16 @@ App.PostView = Em.View.extend({
 	}.observes('content.color'),
 
 	editMode : function() {
-		var view = this;
-		view.set('readMode',!view.get('readMode'));
+		this.set('readMode',!this.get('readMode'));
 	},
 
 	trashPost : function () {
 		var view = this;
-		view.$().effect("clip", 300, function(){
-				    	infoMessage("Post from " + view.get('content').get('author') + " deleted");
-						view.get('controller').deletePost(view.get('content').get('id'));
-				    });
+		view.$().effect("highlight")
+		        .effect("clip", 300, function(){
+				    infoMessage("Post from " + view.get('content').get('author') + " deleted");
+					view.get('controller').deletePost(view.get('content').get('id'));
+				});
 	},
 
 	save: function(e) {

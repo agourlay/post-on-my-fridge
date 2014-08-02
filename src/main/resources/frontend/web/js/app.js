@@ -18,13 +18,12 @@ App.ApplicationController = Ember.Controller.extend({
     window.scrollTo(0, 0);
     var page;
 
-    // Track the page in Google Analytics
     if (!Ember.isNone(_gaq)) {
       page = window.location.hash.length > 0 ?
              window.location.hash.substring(1) :
              window.location.pathname;
       _gaq.push(['_trackPageview', page]);
-      _gaq.push(['_setAccount', 'UA-25345034-1']);
+      _gaq.push(['_setAccount', 'UA-53313643-1']);
       _gaq.push(['_setSiteSpeedSampleRate', 100]);
     }
   }.observes('currentPath')
