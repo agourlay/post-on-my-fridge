@@ -6,9 +6,13 @@ App.FridgesController = Ember.ArrayController.extend({
  	actions: {  
  		createFridge : function(name){
 			var me = this;
-			App.Dao.createFridge(name).then(function (fridge) {
-				me.transitionToRoute('fridge', App.Dao.initSessionData(fridge.id));	
-			});	
+			if (!name){
+				infoMessage("fridge name is empty");
+			} else {
+				App.Dao.createFridge(name).then(function (fridge) {
+					me.transitionToRoute('fridge', App.Dao.initSessionData(fridge.id));	
+				});
+			}	
 		},
 
  		nextPage : function() {

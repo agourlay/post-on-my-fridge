@@ -4,8 +4,13 @@
 		{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}
 		{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
 	</div>
-	<button class="btn btn-primary btn-xs" type="button" {{action save target="view"}}>
-		<i class="fa fa-check-circle-o"></i>
-		Save
-	</button>
+	<div class="form-inline">
+		<button class="btn  btn-danger btn-xs" type="button" {{action trashPost bubbles=false target="view"}}>
+			<i class="fa fa-trash-o"></i>
+		</button>
+		<button class="btn btn-primary btn-xs" type="button" {{action save bubbles=false target="view"}}>
+			<i class="fa fa-check-circle-o"></i>
+			Save
+		</button>
+	</div>
 </form>

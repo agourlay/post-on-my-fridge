@@ -31,9 +31,16 @@ App.PanelView = Ember.View.extend({
 		view.set('opened',!view.get('opened'));
 	},	
 
+	click: function(event) {
+		event.stopPropagation();
+	},
+
 	didInsertElement : function() {	
 		var view = this;
-		$('#togglePanel').click(function() { view.toggleMode() });
+		$('#togglePanel').click(function(event) {
+		 	view.toggleMode();
+		 	event.stopPropagation();
+	    });
 		$.getJSON("chat/" + App.Dao.get('fridgeId') + "/participants", function(number) {
 			if (number !== null) {
 				view.set("viewers", number);

@@ -16,9 +16,13 @@ App.PostView = Em.View.extend({
 	}.property('content.content').cacheable(),
 
 	doubleClick: function(event) {
-		this.editMode();
-		event.stopPropagation();	
+		this.toggleEditMode();
+		event.stopPropagation();
 	},
+
+	click: function(event) {
+		event.stopPropagation();
+	},	
 
 	dragStart: function(event) {
 		this.set("isDragged", true);
@@ -58,12 +62,9 @@ App.PostView = Em.View.extend({
 		});
 		
 		var mc = new Hammer(this.get('element'));
-		mc.get('press').set({ time: 1500 });
 		mc.on("doubletap", function(ev) {
-		    view.doubleClick();
-		});
-		mc.on("press", function(ev) {
-		    view.trashPost();
+		    view.toggleEditMode();
+		    ev.stopPropagation();
 		});
 	},
 
@@ -98,7 +99,7 @@ App.PostView = Em.View.extend({
 		this.$().css("color", getTxtColorFromBg(color));
 	}.observes('content.color'),
 
-	editMode : function() {
+	toggleEditMode : function() {
 		this.set('readMode',!this.get('readMode'));
 	},
 
@@ -117,7 +118,7 @@ App.PostView = Em.View.extend({
     		author: this.get('textFieldAuthor.value'), 
     		content: this.get('textFieldContent.value')
     	});
-    	this.set('readMode',!this.get('readMode'));
+    	this.toggleEditMode();
   	},
 
 	generateContent: function() {
