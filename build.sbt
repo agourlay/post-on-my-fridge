@@ -31,7 +31,6 @@ scalacOptions := Seq(
 
 resolvers ++= Seq(
    "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases/"
-  ,"sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
   ,"typesafe release"   at "http://repo.typesafe.com/typesafe/releases/"
   ,"typesafe repo"      at "http://repo.typesafe.com/typesafe/repo/"
   ,"maven central"      at "http://repo1.maven.org/maven2/"
@@ -46,9 +45,9 @@ libraryDependencies ++= {
   val scalaMetricsV = "3.2.0_a2.3"
   val metricsV      = "3.0.2"
   val jodaTimeV     = "2.4"
-  val jodaConvertV  = "1.6"
-  val slickV        = "2.1.0-RC3" 
-  val slickJodaV    = "1.2.0-SNAPSHOT"
+  val jodaConvertV  = "1.7"
+  val slickV        = "2.1.0" 
+  val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
   val dbcpV         = "1.4"

@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -15,7 +14,7 @@ import pomf.service.ChatRoomProtocol._
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext) (implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
@@ -35,6 +34,6 @@ class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, c
 }
 
 object RemoveChatParticipant {
-   def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext)(implicit breaker: CircuitBreaker) 
-     = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx, breaker).withDispatcher("requests-dispatcher")
+   def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext)
+     = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 
 import java.util.UUID
 
@@ -15,7 +14,7 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class AllFridges(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class AllFridges(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.AllFridge(pageNumber, pageSize)
 
@@ -27,6 +26,6 @@ class AllFridges(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudServ
 }
 
 object AllFridges {
-   def props(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) 
-     = Props(classOf[AllFridges], pageNumber, pageSize, ctx, crudService, breaker).withDispatcher("requests-dispatcher")
+   def props(pageNumber : Int, pageSize : Int, ctx: RequestContext, crudService: ActorRef)
+     = Props(classOf[AllFridges], pageNumber, pageSize, ctx, crudService).withDispatcher("requests-dispatcher")
 }

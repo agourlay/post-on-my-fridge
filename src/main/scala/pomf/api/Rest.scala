@@ -5,13 +5,13 @@ import akka.actor._
 import spray.can.Http
 
 import pomf.configuration._
-import pomf.api.endpoint.HttpEndpointActor
+import pomf.api.endpoint.ApiEndpoint
 import pomf.core.{CoreActors, Core}
 
 trait Rest {
   this: CoreActors with Core =>
 
-  val rootService = system.actorOf(HttpEndpointActor.props(this), "http-service")
+  val rootService = system.actorOf(ApiEndpoint.props(this), "http-service")
 }
 
 trait Web {

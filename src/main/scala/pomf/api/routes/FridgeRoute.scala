@@ -9,7 +9,7 @@ import spray.httpx.SprayJsonSupport._
 import pomf.api.endpoint.JsonSupport._
 import pomf.api.request._
 
-class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker {
+class FridgeRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
 
   val route = 
     path("fridges" / JavaUUID) { fridgeId =>

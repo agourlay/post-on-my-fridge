@@ -9,7 +9,7 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
 import pomf.api.request._
 
-class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker{
+class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives{
   
   val route = 
     path("posts") {

@@ -10,7 +10,7 @@ import spray.routing._
 
 import pomf.api.request.GenerateToken
 
-class TokenRoute(tokenService : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker{	
+class TokenRoute(tokenService : ActorRef)(implicit context: ActorContext) extends Directives{	
 
   val route = 
     path("token") {

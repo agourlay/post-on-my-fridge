@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -12,7 +11,7 @@ import DefaultJsonProtocol._
 import pomf.metrics.MetricsReporterProtocol._
 import pomf.metrics.MetricsReporterProtocol
 
-class AllMetrics(ctx : RequestContext, metricsRepo: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class AllMetrics(ctx : RequestContext, metricsRepo: ActorRef) extends RestRequest(ctx) {
   metricsRepo ! MetricsReporterProtocol.All
 
   override def receive = super.receive orElse waitingMetrics
@@ -23,6 +22,6 @@ class AllMetrics(ctx : RequestContext, metricsRepo: ActorRef)(implicit breaker: 
 }
 
 object AllMetrics {
-   def props(ctx : RequestContext, metricsRepo: ActorRef)(implicit breaker: CircuitBreaker) 
-     = Props(classOf[AllMetrics], ctx, metricsRepo, breaker).withDispatcher("requests-dispatcher")
+   def props(ctx : RequestContext, metricsRepo: ActorRef)
+     = Props(classOf[AllMetrics], ctx, metricsRepo).withDispatcher("requests-dispatcher")
 }

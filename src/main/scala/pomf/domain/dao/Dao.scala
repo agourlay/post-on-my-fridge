@@ -18,14 +18,10 @@ import pomf.service.FridgeAlreadyExistsException
 
 class Dao(db: Database) extends Instrumented {
   
-  val log = LoggerFactory.getLogger("domain.dao")
+  metrics.gauge("posts")(countPosts)
+  metrics.gauge("fridges")(countFridges)
 
-  val postsNumber = metrics.gauge("posts")(countPosts)
-  val fridgesNumber = metrics.gauge("fridges")(countFridges)
-  
-  // TODO new metrics : averagePostByFridge and maxPostNumber
-  //val averagePostNumber = metrics.gauge("averagePostsPerFridge")(averagePostsPerFridge)
-  //val maxPostNumber = metrics.gauge("maxPosts")(maxPostsNumber)
+  val log = LoggerFactory.getLogger("domain.dao")
 
   val posts = TableQuery[Posts]
   val fridges = TableQuery[Fridges]
@@ -38,7 +34,7 @@ class Dao(db: Database) extends Instrumented {
     
   val postByFridgeId = posts.findBy(_.fridgeId)
 
-  def countPostForFridge(id: Column[UUID]) = metrics.timer("countPostTimer").time {
+  def countPostForFridge(id: Column[UUID]) = {
     val query = for {
       p <- posts
       if (p.fridgeId === id)
@@ -72,7 +68,7 @@ class Dao(db: Database) extends Instrumented {
            .drop((pageNumber - 1) * pageSize).take(pageSize)
            .list
            .map(buildLight(_))
-  }  
+  }
 
   def buildFull(f : Fridge) = {
     val posts = postByFridgeId(f.id.get).list
@@ -80,8 +76,7 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def buildLight(f : Fridge) = {
-    val postsNumber = countPostForFridge(f.id.get)
-    FridgeLight(f.name, f.creationDate, f.modificationDate,f.id.get , postsNumber)
+    FridgeLight(f.name, f.creationDate, f.modificationDate,f.id.get , countPostForFridge(f.id.get))
   }  
     
   def getPost(id :UUID):Option[Post] = db withDynSession {
@@ -134,7 +129,7 @@ class Dao(db: Database) extends Instrumented {
 
   def countFridges() = db withDynSession {
     fridges.length.run
-  }   
+  }
 
   def updateModificationDate(fridgeId: UUID) = {
     fridges.filter(_.id === fridgeId).map(_.modificationDate).update(new DateTime())

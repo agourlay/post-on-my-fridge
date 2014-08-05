@@ -9,12 +9,11 @@ trait DBConfig {
   def dao: Dao
 }
 
-class PostGresDB(user: String, password : String, schema : String, host : String, port : String, purge : Boolean) extends DBConfig {
+class PostgresDB(user: String, password : String, schema : String, host : String, port : String, purge : Boolean) extends DBConfig {
   val log = LoggerFactory.getLogger("domain.dbConfig")
-
-  log.info(s"Connecting to db $host:$port on schema $schema with user $user")
   
-  val url = "jdbc:postgresql://"+ host + ":" + port + "/" + schema
+  val url = s"jdbc:postgresql://$host:$port/$schema"
+  log.info(s"Connecting to db $url with user $user")
 
   val databasePool = {
     val ds = new BasicDataSource

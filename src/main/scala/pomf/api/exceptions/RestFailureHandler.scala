@@ -1,7 +1,4 @@
-package pomf.api.exceptions 
-
-import akka.pattern.CircuitBreakerOpenException
-import akka.pattern.AskTimeoutException
+package pomf.api.exceptions
 
 import spray.util.LoggingContext
 import spray.routing._
@@ -14,24 +11,15 @@ import pomf.metrics.Instrumented
 trait RestFailureHandler extends Instrumented {
     this: HttpService =>
 
-    val postNotFound = metrics.meter("postNotFoundException")
-    val fridgeNotFound = metrics.meter("fridgeNotFoundException")
-    val chatRoomNotFound = metrics.meter("chatRoomNotFoundException")
-    val fridgeAlreadyExists = metrics.meter("fridgeAlreadyExistsException")
-    val illegalArgument = metrics.meter("illegalArgumentException")
-    val askTimeout = metrics.meter("askTimeoutException")
-    val requestTimeout = metrics.meter("requestTimeoutException")
-    val circuitBreaker = metrics.meter("circuitBreakerException")
-    val otherException = metrics.meter("otherException")
+    val postNotFound = metrics.meter("PostNotFoundException")
+    val fridgeNotFound = metrics.meter("FridgeNotFoundException")
+    val chatRoomNotFound = metrics.meter("ChatRoomNotFoundException")
+    val fridgeAlreadyExists = metrics.meter("FridgeAlreadyExistsException")
+    val illegalArgument = metrics.meter("IllegalArgumentException")
+    val requestTimeout = metrics.meter("RequestTimeoutException")
+    val otherException = metrics.meter("OtherException")
 
 	implicit def pomfExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
-  	
-	    case e : CircuitBreakerOpenException  =>
-	      requestUri { uri =>
-	      	circuitBreaker.mark()
-	        log.error("Request to {} could not be handled normally -> CircuitBreakerOpenException", uri)
-	        complete(StatusCodes.InternalServerError, "Pomf is currently under high load and cannot process your request, retry later \n")
-	      } 
 
 		case e : PostNotFoundException  =>
 	    	requestUri { uri =>
@@ -75,15 +63,7 @@ trait RestFailureHandler extends Instrumented {
 		        log.error("Request to {} could not be handled normally -> IllegalArgumentException", uri)
 		        log.error("IllegalArgumentException : {} ", e)
 		        complete(StatusCodes.InternalServerError, e.getMessage)
-	    	}  
-
-	    case e : AskTimeoutException  => 
-	      	requestUri { uri =>
-	      		askTimeout.mark()
-		        log.error("Request to {} could not be handled normally -> AskTimeoutException", uri)
-		        log.error("AskTimeoutException : {} ", e)
-		        complete(StatusCodes.InternalServerError, e.getMessage)
-	    	}  
+	    	} 
 
 	  	case e : Exception  =>
 	    	requestUri { uri =>

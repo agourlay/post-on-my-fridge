@@ -13,7 +13,7 @@ import pomf.api.exceptions.RestFailureHandler
 import pomf.core.CoreActors
 import pomf.metrics.MetricsReporter
 
-class HttpEndpointActor(coreActors : CoreActors) extends HttpEndpoint with Actor {
+class ApiEndpoint(coreActors : CoreActors) extends HttpEndpoint with Actor {
   implicit def actorRefFactory = context    
   def receive = runRoute(routes(coreActors))
 }
@@ -41,6 +41,6 @@ trait HttpEndpoint extends HttpService with RestFailureHandler {
   } 
 }
 
-object HttpEndpointActor {
-  def props(coreActors : CoreActors) = Props(classOf[HttpEndpointActor], coreActors)
+object ApiEndpoint {
+  def props(coreActors : CoreActors) = Props(classOf[ApiEndpoint], coreActors)
 }

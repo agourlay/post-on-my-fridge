@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 import akka.actor.SupervisorStrategy.Stop
 
 import scala.util._
@@ -11,6 +10,9 @@ import spray.routing._
 import spray.httpx.SprayJsonSupport._
 import spray.httpx.marshalling._
 import spray.json._
+import spray.http._
+import spray.http.StatusCode
+import spray.httpx.marshalling._
 import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
@@ -18,7 +20,7 @@ import pomf.metrics.Instrumented
 import pomf.configuration._
 import pomf.api.exceptions.RequestTimeoutException
 
-abstract class RestRequest(ctx : RequestContext)(implicit breaker: CircuitBreaker) extends Actor with ActorLogging with Instrumented {
+abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging with Instrumented {
 
   val system = context.system
   implicit val executionContext = context.dispatcher
@@ -26,7 +28,7 @@ abstract class RestRequest(ctx : RequestContext)(implicit breaker: CircuitBreake
 
   context.setReceiveTimeout(timeout.duration)
 
-  val timerCtx = metrics.timer("requestTimer").timerContext()
+  val timerCtx = metrics.timer("request").timerContext()
   
   def receive = {
     case ReceiveTimeout => requestOver(new RequestTimeoutException())
@@ -34,17 +36,24 @@ abstract class RestRequest(ctx : RequestContext)(implicit breaker: CircuitBreake
     case e : Exception  => requestOver(e)
   }
 
-  def requestOver[T](payload: T)(implicit marshaller: ToResponseMarshaller[T]) = {
-    ctx.complete{
-      breaker.withCircuitBreaker { 
-        payload match {
-          case e: Exception => Future.failed(e)
-          case _ => Future.successful(payload)
-        }
-      }
-    }
+  private def closeThings() {
     timerCtx.stop()
     self ! PoisonPill
+  }
+
+  def requestOver[T](payload: T)(implicit marshaller: ToResponseMarshaller[T]) = {
+    ctx.complete(payload)
+    closeThings()
+  }
+
+  def requestOver[T](status: StatusCode, payload: T)(implicit marshaller: ToResponseMarshaller[(StatusCode, T)]) = {
+    ctx.complete(status, payload)
+    closeThings()
+  }
+
+  def requestOver[T](status: StatusCode, headers: Seq[HttpHeader], payload: T)(implicit marshaller: ToResponseMarshaller[(StatusCode, Seq[HttpHeader], T)]) = {
+    ctx.complete(status, headers, payload)
+    closeThings
   }
 
   override val supervisorStrategy =

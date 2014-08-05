@@ -10,7 +10,7 @@ import pomf.service.CrudServiceProtocol
 import pomf.service.NotificationService
 import pomf.service.ChatRepository
 import pomf.service.TokenService
-import pomf.domain.dao.PostGresDB
+import pomf.domain.dao.PostgresDB
 import pomf.configuration.Settings
 import pomf.metrics.MetricsReporter
 
@@ -26,7 +26,7 @@ trait CoreActors {
   val dbPort = Settings(system).Database.DbPort
   val purge = Settings(system).Database.Purge
 
-  val dbConfig = new PostGresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort, purge)
+  val dbConfig = new PostgresDB(dbUser, dbPassword, dbSchema, dbHost, dbPort, purge)
 
   val parallelism = Settings(system).Parallelism
   val coreNum = Runtime.getRuntime().availableProcessors()

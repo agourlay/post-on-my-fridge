@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 
 import spray.routing._
 import spray.json._
@@ -11,7 +10,7 @@ import DefaultJsonProtocol._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class CountFridges(ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class CountFridges(ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.CountFridges
 
@@ -23,6 +22,6 @@ class CountFridges(ctx : RequestContext, crudService: ActorRef)(implicit breaker
 }
 
 object CountFridges {
-   def props(ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker)
-     = Props(classOf[CountFridges], ctx, crudService, breaker).withDispatcher("requests-dispatcher")
+   def props(ctx : RequestContext, crudService: ActorRef)
+     = Props(classOf[CountFridges], ctx, crudService).withDispatcher("requests-dispatcher")
 }

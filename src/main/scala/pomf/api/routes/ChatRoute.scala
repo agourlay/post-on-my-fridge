@@ -13,7 +13,7 @@ import pomf.domain.model.ChatMessage
 import pomf.service.ChatRepoProtocol
 import pomf.api.request._
 
-class ChatRoute(chatRepo : ActorRef)(implicit context: ActorContext) extends RouteWithBreaker{
+class ChatRoute(chatRepo : ActorRef)(implicit context: ActorContext) extends Directives{
   
   val route = 
     pathPrefix("chat" / JavaUUID) { fridgeId =>

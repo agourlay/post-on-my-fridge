@@ -7,7 +7,7 @@ import spray.routing._
 
 import pomf.api.streaming._
 
-class StreamingRoute(implicit context: ActorContext) extends RouteWithBreaker {
+class StreamingRoute(implicit context: ActorContext) extends Directives {
 
   val route = 
     pathPrefix("stream") {
@@ -24,11 +24,11 @@ class StreamingRoute(implicit context: ActorContext) extends RouteWithBreaker {
     }
 
   def streamFirehose(ctx: RequestContext): Unit = {
-    context.actorOf(ActivityStream.props(ctx.responder, (_,_) => true))
+    context.actorOf(FridgeUpdates.props(ctx.responder, (_,_) => true))
   }
 
   def streamUser(fridgeId : UUID, token : String)(ctx: RequestContext): Unit = {
     val filter = (fridgeTarget: UUID, userToken : String) => fridgeId == fridgeTarget && token != userToken
-    context.actorOf(ActivityStream.props(ctx.responder, filter))
+    context.actorOf(FridgeUpdates.props(ctx.responder, filter))
   }         
 }

@@ -1,7 +1,6 @@
 package pomf.api.request
 
 import akka.actor._
-import akka.pattern._
 
 import spray.routing._
 import spray.json._
@@ -13,7 +12,7 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) (implicit breaker: CircuitBreaker) extends RestRequest(ctx) {
+class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.SearchFridge(term)
 
@@ -25,6 +24,6 @@ class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) (im
 }
 
 object SearchFridge {
-   def props(term :String, ctx : RequestContext, crudService: ActorRef)(implicit breaker: CircuitBreaker) 
-     = Props(classOf[SearchFridge], term, ctx, crudService, breaker).withDispatcher("requests-dispatcher")
+   def props(term :String, ctx : RequestContext, crudService: ActorRef)
+     = Props(classOf[SearchFridge], term, ctx, crudService).withDispatcher("requests-dispatcher")
 }
