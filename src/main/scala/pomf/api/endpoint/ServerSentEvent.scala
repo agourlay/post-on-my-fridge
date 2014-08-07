@@ -2,8 +2,10 @@ package pomf.api.endpoint
 
 import spray.http._
 import spray.http.MediaTypes._
+import spray.routing._
+import Directives._
 
-object CustomMediaType {
+object ServerSentEvent {
     val EventStreamType = register(
 	    MediaType.custom(
 	    	mainType = "text",
@@ -12,4 +14,5 @@ object CustomMediaType {
 	    	binary = false
 	    )
 	)
+	def lastEventId = optionalHeaderValueByName("Last-Event-ID") | parameter("lastEventId"?)
 }
