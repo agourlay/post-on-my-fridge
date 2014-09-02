@@ -15,6 +15,31 @@ App.PostView = Em.View.extend({
 		return this.generateContent();
 	}.property('content.content').cacheable(),
 
+	actions: {  
+		toggleEditMode : function() {
+			this.set('readMode',!this.get('readMode'));
+		},
+		
+		trashPost : function () {
+			var view = this;
+			view.$() 
+			    .effect("highlight")
+			    .effect("clip", 300, function(){
+				    infoMessage("Post from " + view.get('content').get('author') + " deleted");
+					view.get('controller').deletePost(view.get('content').get('id'));
+				});
+		},
+
+		save: function(e) {
+	    	this.get('content').setProperties({
+	    		color: this.get('textFieldColor.value'), 
+	    		author: this.get('textFieldAuthor.value'), 
+	    		content: this.get('textFieldContent.value')
+	    	});
+	    	this.send('toggleEditMode');
+	  	},
+	},
+
 	doubleClick: function(event) {
 		this.toggleEditMode();
 		event.stopPropagation();
@@ -63,7 +88,7 @@ App.PostView = Em.View.extend({
 		
 		var mc = new Hammer(this.get('element'));
 		mc.on("doubletap", function(ev) {
-		    view.toggleEditMode();
+		    view.send('toggleEditMode');
 		    ev.stopPropagation();
 		});
 	},
@@ -98,28 +123,6 @@ App.PostView = Em.View.extend({
 		this.$().css("background-color", color);
 		this.$().css("color", getTxtColorFromBg(color));
 	}.observes('content.color'),
-
-	toggleEditMode : function() {
-		this.set('readMode',!this.get('readMode'));
-	},
-
-	trashPost : function () {
-		var view = this;
-		view.$().effect("highlight")
-		        .effect("clip", 300, function(){
-				    infoMessage("Post from " + view.get('content').get('author') + " deleted");
-					view.get('controller').deletePost(view.get('content').get('id'));
-				});
-	},
-
-	save: function(e) {
-    	this.get('content').setProperties({
-    		color: this.get('textFieldColor.value'), 
-    		author: this.get('textFieldAuthor.value'), 
-    		content: this.get('textFieldContent.value')
-    	});
-    	this.toggleEditMode();
-  	},
 
 	generateContent: function() {
 		var content = jQuery.trim(this.get('content').get('content'));

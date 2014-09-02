@@ -25,15 +25,7 @@ module.exports = function(grunt) {
           "web/bower_components/js-url/url.min.js",
           "web/bower_components/typeahead.js/dist/typeahead.bundle.min.js",
           "web/bower_components/bacon/dist/Bacon.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.core.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.widget.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.mouse.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.draggable.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.droppable.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-clip.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-slide.min.js",
-          "web/bower_components/jquery-ui/ui/minified/jquery.ui.effect-highlight.min.js",
+          "web/bower_components/jquery-ui/jquery-ui.min.js",
           "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js",
           "web/bower_components/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js",
           "web/bower_components/hammerjs/hammer.min.js"
@@ -58,27 +50,9 @@ module.exports = function(grunt) {
             "web/js/app.js",
             "web/js/dao.js",
             "web/js/router.js",
-            "web/js/view/customViews.js",
-            "web/js/view/mainHeaderView.js",
-            "web/js/model/fridgeModel.js",
-            "web/js/controller/fridgeController.js",
-            "web/js/view/fridgeView.js",
-            "web/js/model/metricsModel.js",
-            "web/js/view/metricsView.js",
-            "web/js/controller/fridgesController.js",
-            "web/js/view/fridgesView.js",
-            "web/js/model/postModel.js",
-            "web/js/view/postView.js",
-            "web/js/controller/postsController.js",
-            "web/js/view/postsView.js",
-            "web/js/model/messageModel.js",
-            "web/js/view/messageView.js",
-            "web/js/view/messagesView.js",
-            "web/js/controller/messagesController.js",
-            "web/js/view/chatInputView.js",
-            "web/js/controller/chatInputController.js",
-            "web/js/view/panelView.js",
-            "web/js/controller/panelController.js",
+            "web/js/view/*",
+            "web/js/model/*",
+            "web/js/controller/*",
           ]
         }
       }
@@ -102,9 +76,15 @@ module.exports = function(grunt) {
         flatten: true,
         expand: true
       },
-      maps: {
+      mapsJq: {
         cwd : "web/bower_components/jquery/dist/",
         src: "jquery.min.map",
+        dest: "web/dist/js/",
+        expand: true
+      },
+      mapsHam: {
+        cwd : "web/bower_components/hammerjs/",
+        src: "hammer.min.map",
         dest: "web/dist/js/",
         expand: true
       },

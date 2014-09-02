@@ -1,14 +1,14 @@
 <form class="form">
-	{{view App.LazyTextArea sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
+	{{view "lazyTextArea" sourceBinding="view.content.content" placeholder="Content" rows="7" viewName="textFieldContent"}}
 	<div class="form-inline">
-		{{view App.LazyTextField sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}
-		{{view App.LazyColorFieldView sourceBinding="view.content.color" viewName="textFieldColor"}}
+		{{view "lazyTextField" sourceBinding="view.content.author" placeholder="Anonymous" viewName="textFieldAuthor"}}
+		{{view "lazyColorField" sourceBinding="view.content.color" viewName="textFieldColor"}}
 	</div>
 	<div class="form-inline">
-		<button class="btn  btn-danger btn-xs" type="button" {{action trashPost bubbles=false target="view"}}>
+		<button class="btn  btn-danger btn-xs" type="button" {{action 'trashPost' bubbles=false target="view"}}>
 			<i class="fa fa-trash-o"></i>
 		</button>
-		<button class="btn btn-primary btn-xs" type="button" {{action save bubbles=false target="view"}}>
+		<button class="btn btn-primary btn-xs" type="button" {{action 'save' bubbles=false target="view"}}>
 			<i class="fa fa-check-circle-o"></i>
 			Save
 		</button>

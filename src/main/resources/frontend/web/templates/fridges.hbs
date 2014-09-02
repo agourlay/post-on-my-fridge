@@ -6,7 +6,7 @@
 				<h4>Create your fridge</h4> 
 				<form class="form">
 					<div class="form-inline">
-            			{{view App.LazyTextField valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
+            			{{view "lazyTextField" valueBinding="App.FridgesView.newName" placeholder="fridge name" }}
         				<button class="btn btn-primary btn-sm" {{action "createFridge" App.FridgesView.newName}}>
 							<i class="fa fa-check-circle-o"></i>
 						</button>

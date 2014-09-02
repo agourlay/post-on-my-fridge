@@ -44,6 +44,9 @@
     margin-bottom: 7px;
 	border-width: thin;	}			
 
+.post input[type="text"]{
+	width: 150px;}
+
 .post input[type="color"]{
 	height: 25px;
 	margin-left: 10px;}

@@ -5,12 +5,12 @@ App.LazyColorFieldView = Ember.View.extend(Ember.TextSupport,{
   valueBinding: Ember.Binding.oneWay('source')
 });
 
-App.LazyTextField = Ember.TextField.extend({
+App.LazyTextFieldView = Ember.TextField.extend({
   classNames: ['form-control', 'input-sm'],
   valueBinding: Ember.Binding.oneWay('source')
 });
 
-App.LazyTextArea = Ember.TextArea.extend({
+App.LazyTextAreaView = Ember.TextArea.extend({
   classNames: ['form-control'],
   valueBinding: Ember.Binding.oneWay('source')
 });

@@ -4,8 +4,6 @@ import com.typesafe.sbt.packager.Keys._
 
 packageArchetype.java_application
 
-incOptions := incOptions.value.withNameHashing(true)
-
 mappings in Universal += {
   file("src/main/resources/application.conf") -> "conf/pomf.conf"
 }
@@ -39,10 +37,10 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= {
-  val akkaV         = "2.3.4"
+  val akkaV         = "2.3.5"
   val sprayV        = "1.3.1"
   val sprayJsonV    = "1.2.6"
-  val scalaMetricsV = "3.2.0_a2.3"
+  val scalaMetricsV = "3.2.1_a2.3"
   val metricsV      = "3.0.2"
   val jodaTimeV     = "2.4"
   val jodaConvertV  = "1.7"

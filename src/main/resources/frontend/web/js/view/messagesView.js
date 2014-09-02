@@ -1,7 +1,7 @@
 App.MessagesView = Ember.CollectionView.extend({
 	tagName: 'div',
 	elementId: 'chat-messages',
-	itemViewClass: 'App.MessageView',
+	itemViewClass: 'message',
 	contentBinding: 'controller.content',
 	
 	didInsertElement: function() {
