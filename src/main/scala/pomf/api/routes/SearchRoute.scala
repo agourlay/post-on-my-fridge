@@ -6,9 +6,9 @@ import spray.routing._
 
 import pomf.api.request.SearchFridge
 
-class SearchRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives {
-  
-  val route = 
+class SearchRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+
+  val route =
     pathPrefix("search") {
       path("fridge") {
         parameters("term") { term =>
@@ -17,5 +17,5 @@ class SearchRoute(crudService : ActorRef)(implicit context: ActorContext) extend
           }
         }
       }
-    }       
+    }
 }

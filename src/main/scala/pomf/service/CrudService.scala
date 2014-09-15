@@ -12,7 +12,7 @@ import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
 import java.util.UUID
 
-class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with Instrumented {
+class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with Instrumented {
 
   def receive = {
     case FullFridge(fridgeId)            => sender ! getFridgeFull(fridgeId)
@@ -27,14 +27,14 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
     case CountPosts                      => sender ! countPosts
   }
 
-  def getAllFridge(pageNumber : Int, pageSize : Int) = LightFridges(dao.getAllFridge(pageNumber, pageSize))
+  def getAllFridge(pageNumber: Int, pageSize: Int) = LightFridges(dao.getAllFridge(pageNumber, pageSize))
 
   def createFridge(fridgeName: String) = {
     dao.createFridge(fridgeName) match {
       case Success(id) => dao.getFridgeById(id)
       case Failure(ex) => Failure(ex)
     }
-  }  
+  }
 
   def addPost(post: Post, token: String) = {
     dao.addPost(post) match {
@@ -44,17 +44,17 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
         persistedPost
       }
     }
-  }  
+  }
 
   def getFridgeFull(fridgeId: UUID) = {
     dao.getFridgeFull(fridgeId) match {
-      case None => Failure(new FridgeNotFoundException(fridgeId))
+      case None             => Failure(new FridgeNotFoundException(fridgeId))
       case Some(fullFridge) => fullFridge
     }
   }
 
   def getPost(id: UUID) = dao.getPost(id) match {
-    case None => Failure(new PostNotFoundException(id))
+    case None       => Failure(new PostNotFoundException(id))
     case Some(post) => post
   }
 
@@ -88,23 +88,22 @@ class CrudService(dao : Dao, notificationService : ActorRef) extends Actor with 
 }
 
 object CrudServiceProtocol {
-  case class FullFridge(fridgeId : UUID)
-  case class AllFridge(pageNumber : Int, pageSize : Int)
-  case class CreateFridge(fridgeName : String) 
-  case class GetPost(postId : UUID)
+  case class FullFridge(fridgeId: UUID)
+  case class AllFridge(pageNumber: Int, pageSize: Int)
+  case class CreateFridge(fridgeName: String)
+  case class GetPost(postId: UUID)
   case class UpdatePost(post: Post, token: String)
   case class CreatePost(post: Post, token: String)
   case class DeletePost(postId: UUID, token: String)
   case class SearchFridge(term: String)
   case class OperationSuccess(result: String)
   case object CountFridges
-  case object CountPosts 
-  case class Count(nb : Int)
-  case class LightFridges(fridges : List[FridgeLight])
-  case class SearchResult(term : String, result : List[Fridge])
+  case object CountPosts
+  case class Count(nb: Int)
+  case class LightFridges(fridges: List[FridgeLight])
+  case class SearchResult(term: String, result: List[Fridge])
 }
 
 object CrudService {
-   def props(dao : Dao, notificationService : ActorRef) 
-     = Props(classOf[CrudService], dao, notificationService).withDispatcher("service-dispatcher")
+  def props(dao: Dao, notificationService: ActorRef) = Props(classOf[CrudService], dao, notificationService).withDispatcher("service-dispatcher")
 }

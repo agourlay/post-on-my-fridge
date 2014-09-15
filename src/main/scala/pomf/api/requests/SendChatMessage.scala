@@ -15,19 +15,19 @@ import pomf.service.ChatRoomProtocol
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx: RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
   override def receive = super.receive orElse waitingLookup
 
-  def waitingLookup : Receive = {
+  def waitingLookup: Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
   }
 
-  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
     case Some(ref) => {
-      ref ! ChatRoomProtocol.SendMessage(message, token) 
+      ref ! ChatRoomProtocol.SendMessage(message, token)
       requestOver(message)
     }
     case None => requestOver(new ChatRoomNotFoundException(id))
@@ -35,6 +35,5 @@ class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatR
 }
 
 object SendChatMessage {
-   def props(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx : RequestContext)
-     = Props(classOf[SendChatMessage], fridgeId, message, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[SendChatMessage], fridgeId, message, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

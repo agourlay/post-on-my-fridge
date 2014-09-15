@@ -14,26 +14,25 @@ import pomf.service.ChatRoomProtocol._
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx: RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
   override def receive = super.receive orElse waitingLookup
 
-  def waitingLookup : Receive = {
+  def waitingLookup: Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
   }
 
-  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.RemoveParticipant(token)
-      requestOver(token + " removed from chat " +  fridgeId)
+      requestOver(token + " removed from chat " + fridgeId)
     }
-    case None      => requestOver(new ChatRoomNotFoundException(id))
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object RemoveChatParticipant {
-   def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx : RequestContext)
-     = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

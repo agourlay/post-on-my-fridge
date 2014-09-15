@@ -16,13 +16,13 @@ import pomf.domain.model._
 object CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
 
-    private val parserISO : DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
+    private val parserISO: DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
 
     override def write(obj: DateTime) = JsString(parserISO.print(obj))
 
-    override def read(json: JsValue) : DateTime = json match {
+    override def read(json: JsValue): DateTime = json match {
       case JsString(s) => parserISO.parseDateTime(s)
-      case _ => throw new DeserializationException("Expected ISO Date format")
+      case _           => throw new DeserializationException("Expected ISO Date format")
     }
   }
 
@@ -32,14 +32,14 @@ object CustomJsonProtocol {
 
     def read(json: JsValue): UUID = json match {
       case JsString(x) => UUID.fromString(x)
-      case _ => deserializationError("Expected UUID as JsString")
+      case _           => deserializationError("Expected UUID as JsString")
     }
-  }  
+  }
 }
 
-object JsonSupport{
+object JsonSupport {
   import CustomJsonProtocol._
-  
+
   implicit val formatPost = jsonFormat8(Post)
   implicit val formatFridge = jsonFormat4(Fridge)
   implicit val formatFridgeLight = jsonFormat6(FridgeLight)

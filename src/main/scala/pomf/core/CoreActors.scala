@@ -34,11 +34,9 @@ trait CoreActors {
 
   logger.info(s"Service router size -> coreNumber ($coreNum) * parallelism ($parallelism) = $routerSize")
 
-  val notificationService = system.actorOf(RoundRobinPool(routerSize).props(NotificationService.props)
-                                           , "notification-service")
-  
-  val crudService = system.actorOf(RoundRobinPool(routerSize).props(CrudService.props(dbConfig.dao, notificationService))
-                                   , "crud-service")
+  val notificationService = system.actorOf(RoundRobinPool(routerSize).props(NotificationService.props), "notification-service")
+
+  val crudService = system.actorOf(RoundRobinPool(routerSize).props(CrudService.props(dbConfig.dao, notificationService)), "crud-service")
 
   val tokenService = system.actorOf(RoundRobinPool(routerSize).props(TokenService.props), "token-service")
 

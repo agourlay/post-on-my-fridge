@@ -9,9 +9,9 @@ trait DBConfig {
   def dao: Dao
 }
 
-class PostgresDB(user: String, password : String, schema : String, host : String, port : String, purge : Boolean) extends DBConfig {
+class PostgresDB(user: String, password: String, schema: String, host: String, port: String, purge: Boolean) extends DBConfig {
   val log = LoggerFactory.getLogger("domain.dbConfig")
-  
+
   val url = s"jdbc:postgresql://$host:$port/$schema"
   log.info(s"Connecting to db $url with user $user")
 
@@ -23,7 +23,7 @@ class PostgresDB(user: String, password : String, schema : String, host : String
     ds.setInitialSize(10);
     ds.setMaxActive(100)
     ds.setUsername(user);
-    ds.setPassword(password );
+    ds.setPassword(password);
     Database.forDataSource(ds)
   }
 

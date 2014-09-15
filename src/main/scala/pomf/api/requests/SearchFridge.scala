@@ -18,12 +18,11 @@ class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) ext
 
   override def receive = super.receive orElse waitingSearch
 
-  def waitingSearch : Receive = {
+  def waitingSearch: Receive = {
     case SearchResult(t, r) => requestOver(r)
   }
 }
 
 object SearchFridge {
-   def props(term :String, ctx : RequestContext, crudService: ActorRef)
-     = Props(classOf[SearchFridge], term, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(term: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[SearchFridge], term, ctx, crudService).withDispatcher("requests-dispatcher")
 }

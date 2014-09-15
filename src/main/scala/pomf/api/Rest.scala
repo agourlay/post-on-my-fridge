@@ -6,7 +6,7 @@ import spray.can.Http
 
 import pomf.configuration._
 import pomf.api.endpoint.ApiEndpoint
-import pomf.core.{CoreActors, Core}
+import pomf.core.{ CoreActors, Core }
 
 trait Rest {
   this: CoreActors with Core =>

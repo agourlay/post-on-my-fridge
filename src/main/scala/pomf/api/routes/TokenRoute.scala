@@ -10,12 +10,12 @@ import spray.routing._
 
 import pomf.api.request.GenerateToken
 
-class TokenRoute(tokenService : ActorRef)(implicit context: ActorContext) extends Directives{	
+class TokenRoute(tokenService: ActorRef)(implicit context: ActorContext) extends Directives {
 
-  val route = 
+  val route =
     path("token") {
       get { ctx =>
         context.actorOf(GenerateToken.props(ctx, tokenService))
       }
-    }        
+    }
 }

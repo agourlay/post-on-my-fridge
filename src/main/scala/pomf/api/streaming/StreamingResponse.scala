@@ -14,7 +14,7 @@ abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLo
   val timerCtx = metrics.timer("streaming").timerContext()
 
   lazy val responseStart = HttpResponse(
-    entity  = HttpEntity(ServerSentEvent.EventStreamType, "streaming updates..."),
+    entity = HttpEntity(ServerSentEvent.EventStreamType, "streaming updates..."),
     headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
   )
 
@@ -27,12 +27,12 @@ abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLo
     responder ! ChunkedMessageEnd
     timerCtx.stop()
   }
-  
-  def receive = {   
+
+  def receive = {
     case ev: Http.ConnectionClosed => {
       log.debug("Stopping response streaming due to {}", ev)
       self ! PoisonPill
     }
     case ReceiveTimeout => responder ! MessageChunk(":\n") // Comment to keep connection alive  
   }
-} 
+}

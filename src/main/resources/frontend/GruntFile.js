@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             "web/js/router.js",
             "web/js/view/*",
             "web/js/model/*",
-            "web/js/controller/*",
+            "web/js/controller/*"
           ]
         }
       }

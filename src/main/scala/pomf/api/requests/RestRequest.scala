@@ -20,7 +20,7 @@ import pomf.metrics.Instrumented
 import pomf.configuration._
 import pomf.api.exceptions.RequestTimeoutException
 
-abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging with Instrumented {
+abstract class RestRequest(ctx: RequestContext) extends Actor with ActorLogging with Instrumented {
 
   val system = context.system
   implicit val executionContext = context.dispatcher
@@ -29,11 +29,11 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging
   context.setReceiveTimeout(timeout.duration)
 
   val timerCtx = metrics.timer("request").timerContext()
-  
+
   def receive = {
     case ReceiveTimeout => requestOver(new RequestTimeoutException())
     case Failure(e)     => requestOver(e)
-    case e : Exception  => requestOver(e)
+    case e: Exception   => requestOver(e)
   }
 
   private def closeThings() {
@@ -63,5 +63,5 @@ abstract class RestRequest(ctx : RequestContext) extends Actor with ActorLogging
         timerCtx.stop()
         Stop
       }
-    }  
+    }
 }

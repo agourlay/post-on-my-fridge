@@ -11,18 +11,17 @@ import pomf.domain.model.Post
 import pomf.service.CrudServiceProtocol._
 import pomf.service.CrudServiceProtocol
 
-class CreatePost(post: Post, token : String, ctx : RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
+class CreatePost(post: Post, token: String, ctx: RequestContext, crudService: ActorRef) extends RestRequest(ctx) {
 
   crudService ! CrudServiceProtocol.CreatePost(post, token)
 
   override def receive = super.receive orElse waitingCreate
 
-  def waitingCreate : Receive = {
-    case p : Post  => requestOver(p)
+  def waitingCreate: Receive = {
+    case p: Post => requestOver(p)
   }
 }
 
 object CreatePost {
-   def props(post: Post, token: String, ctx : RequestContext, crudService: ActorRef)
-     = Props(classOf[CreatePost], post, token, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(post: Post, token: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[CreatePost], post, token, ctx, crudService).withDispatcher("requests-dispatcher")
 }

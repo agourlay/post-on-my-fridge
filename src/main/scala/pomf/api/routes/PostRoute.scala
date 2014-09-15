@@ -9,9 +9,9 @@ import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
 import pomf.api.request._
 
-class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends Directives{
-  
-  val route = 
+class PostRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+
+  val route =
     path("posts") {
       post {
         parameters("token") { token =>
@@ -20,22 +20,22 @@ class PostRoute(crudService : ActorRef)(implicit context: ActorContext) extends 
           }
         }
       } ~
-      put {
-        parameters("token") { token =>
-          entity(as[Post]) { post =>
-            ctx => context.actorOf(UpdatePost.props(post, token, ctx, crudService))
+        put {
+          parameters("token") { token =>
+            entity(as[Post]) { post =>
+              ctx => context.actorOf(UpdatePost.props(post, token, ctx, crudService))
+            }
           }
         }
-      }
     } ~
-    path("posts" / JavaUUID) { postId =>
-      get { ctx =>
-        context.actorOf(GetPost.props(postId, ctx, crudService))
-      } ~
-      delete { 
-        parameters("token") { token =>
-          ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
-        }
+      path("posts" / JavaUUID) { postId =>
+        get { ctx =>
+          context.actorOf(GetPost.props(postId, ctx, crudService))
+        } ~
+          delete {
+            parameters("token") { token =>
+              ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
+            }
+          }
       }
-    }     
 }

@@ -6,13 +6,13 @@ import spray.routing._
 import Directives._
 
 object ServerSentEvent {
-    val EventStreamType = register(
-	    MediaType.custom(
-	    	mainType = "text",
-	    	subType = "event-stream",
-	    	compressible = true,
-	    	binary = false
-	    )
-	)
-	def lastEventId = optionalHeaderValueByName("Last-Event-ID") | parameter("lastEventId"?)
+  val EventStreamType = register(
+    MediaType.custom(
+      mainType = "text",
+      subType = "event-stream",
+      compressible = true,
+      binary = false
+    )
+  )
+  def lastEventId = optionalHeaderValueByName("Last-Event-ID") | parameter("lastEventId"?)
 }

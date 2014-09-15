@@ -14,26 +14,25 @@ import pomf.service.ChatRoomProtocol._
 import pomf.service.ChatRepoProtocol
 import pomf.service.ChatRepoProtocol._
 
-class RenameChatParticipant(fridgeId: UUID, token: String, newName: String, chatRepo: ActorRef, ctx : RequestContext) extends RestRequest(ctx) {
+class RenameChatParticipant(fridgeId: UUID, token: String, newName: String, chatRepo: ActorRef, ctx: RequestContext) extends RestRequest(ctx) {
 
   chatRepo ! ChatRepoProtocol.GetChatRoom(fridgeId)
 
   override def receive = super.receive orElse waitingLookup
 
-  def waitingLookup : Receive = {
+  def waitingLookup: Receive = {
     case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
   }
 
-  def handleChatRoomRef(id: UUID, optRef : Option[ActorRef]) = optRef match {
+  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
     case Some(ref) => {
       ref ! ChatRoomProtocol.RenameParticipant(token, newName)
       requestOver(newName + "changed name")
     }
-    case None      => requestOver(new ChatRoomNotFoundException(id))
+    case None => requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object RenameChatParticipant {
-   def props(fridgeId: UUID, token: String, newtName: String, chatRepo: ActorRef, ctx : RequestContext)
-     = Props(classOf[RenameChatParticipant], fridgeId, token, newtName, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, token: String, newtName: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RenameChatParticipant], fridgeId, token, newtName, chatRepo, ctx).withDispatcher("requests-dispatcher")
 }

@@ -4,26 +4,26 @@ import akka.actor._
 
 import spray.routing._
 
-import pomf.api.request.{AllMetrics, CountFridges, CountPosts}
+import pomf.api.request.{ AllMetrics, CountFridges, CountPosts }
 
-class StatsRoute(crudService : ActorRef, metricsRepo : ActorRef)(implicit context: ActorContext) extends Directives {
+class StatsRoute(crudService: ActorRef, metricsRepo: ActorRef)(implicit context: ActorContext) extends Directives {
 
-  val route = 
+  val route =
     path("stats") {
       get { ctx =>
         context.actorOf(AllMetrics.props(ctx, metricsRepo))
       }
-    } ~ 
-    pathPrefix("count") {
-      path("fridges") {
-        get { ctx =>
-          context.actorOf(CountFridges.props(ctx, crudService))
-        }
-      } ~ 
-      path("posts") {
-        get { ctx =>
-          context.actorOf(CountPosts.props(ctx, crudService))
-        }
+    } ~
+      pathPrefix("count") {
+        path("fridges") {
+          get { ctx =>
+            context.actorOf(CountFridges.props(ctx, crudService))
+          }
+        } ~
+          path("posts") {
+            get { ctx =>
+              context.actorOf(CountPosts.props(ctx, crudService))
+            }
+          }
       }
-    }        
 }
