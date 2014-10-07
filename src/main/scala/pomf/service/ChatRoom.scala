@@ -1,6 +1,6 @@
 package pomf.service
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import pomf.domain.model._
 import pomf.service.ChatRoomProtocol._
@@ -20,13 +20,13 @@ class ChatRoom(fridgeId: UUID, notificationService: ActorRef) extends Actor {
   context.system.scheduler.schedule(2 hour, 2 hour, self, ChatRoomProtocol.PurgeChat)
 
   def receive = {
-    case SendMessage(message, token)       => addChatMessage(message, token)
-    case ChatHistory                       => sender ! retrieveChatHistory
-    case PurgeChat                         => purgeState()
-    case AddParticipant(token, name)       => addParticipant(token, name)
-    case RemoveParticipant(token)          => sender ! removeParticipant(token)
-    case ParticipantNumber                 => sender ! ParticipantNumberRoom(participantByToken.size)
-    case RenameParticipant(token, newName) => sender ! renameParticipant(token, newName)
+    case SendMessage(message, token)       ⇒ addChatMessage(message, token)
+    case ChatHistory                       ⇒ sender ! retrieveChatHistory
+    case PurgeChat                         ⇒ purgeState()
+    case AddParticipant(token, name)       ⇒ addParticipant(token, name)
+    case RemoveParticipant(token)          ⇒ sender ! removeParticipant(token)
+    case ParticipantNumber                 ⇒ sender ! ParticipantNumberRoom(participantByToken.size)
+    case RenameParticipant(token, newName) ⇒ sender ! renameParticipant(token, newName)
   }
 
   def addParticipant(token: String, name: String) {

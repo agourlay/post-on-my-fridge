@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props, ActorContext }
 
 import spray.routing._
 
@@ -11,8 +11,8 @@ class SearchRoute(crudService: ActorRef)(implicit context: ActorContext) extends
   val route =
     pathPrefix("search") {
       path("fridge") {
-        parameters("term") { term =>
-          get { ctx =>
+        parameters("term") { term ⇒
+          get { ctx ⇒
             context.actorOf(SearchFridge.props(term, ctx, crudService))
           }
         }

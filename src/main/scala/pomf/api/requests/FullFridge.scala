@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -20,7 +20,7 @@ class FullFridge(fridgeId: UUID, ctx: RequestContext, crudService: ActorRef) ext
   override def receive = super.receive orElse waitingFridge
 
   def waitingFridge: Receive = {
-    case f: FridgeFull => requestOver(f)
+    case f: FridgeFull ⇒ requestOver(f)
   }
 }
 

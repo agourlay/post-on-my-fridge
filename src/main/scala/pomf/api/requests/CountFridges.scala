@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.routing._
 import spray.json._
@@ -17,7 +17,7 @@ class CountFridges(ctx: RequestContext, crudService: ActorRef) extends RestReque
   override def receive = super.receive orElse waitingCount
 
   def waitingCount: Receive = {
-    case Count(nb) => requestOver(nb.toString)
+    case Count(nb) ⇒ requestOver(nb.toString)
   }
 }
 

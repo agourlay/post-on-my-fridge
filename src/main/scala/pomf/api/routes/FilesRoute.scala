@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
+import akka.actor.ActorContext
 
 import spray.routing._
 import spray.http.HttpHeaders._

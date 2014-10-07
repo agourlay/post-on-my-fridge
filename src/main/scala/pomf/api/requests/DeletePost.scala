@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import scala.util.Failure
 import spray.routing._
@@ -20,7 +20,7 @@ class DeletePost(postId: UUID, token: String, ctx: RequestContext, crudService: 
   override def receive = super.receive orElse waitingDelete
 
   def waitingDelete: Receive = {
-    case OperationSuccess(msg) => requestOver(msg)
+    case OperationSuccess(msg) ⇒ requestOver(msg)
   }
 }
 

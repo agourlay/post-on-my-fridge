@@ -9,6 +9,12 @@ App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
 		return App.Dao.initSessionData(params.fridge_id);
   },
+
+  setupController: function(controller, model) {
+    controller.set('model', model);
+    this.controllerFor('messages').reload();
+  },
+
   actions: {
 	  willTransition: function(transition) {
 	   	App.Dao.leaveChatOnExit();

@@ -1,7 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
-import akka.pattern._
+import akka.actor.{ Actor, ActorRef, Props, ActorContext }
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -14,7 +13,7 @@ class TokenRoute(tokenService: ActorRef)(implicit context: ActorContext) extends
 
   val route =
     path("token") {
-      get { ctx =>
+      get { ctx ⇒
         context.actorOf(GenerateToken.props(ctx, tokenService))
       }
     }

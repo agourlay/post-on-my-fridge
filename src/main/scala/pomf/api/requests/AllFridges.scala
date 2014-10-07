@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import java.util.UUID
 
@@ -21,7 +21,7 @@ class AllFridges(pageNumber: Int, pageSize: Int, ctx: RequestContext, crudServic
   override def receive = super.receive orElse waitingFridges
 
   def waitingFridges: Receive = {
-    case LightFridges(f) => requestOver(f)
+    case LightFridges(f) ⇒ requestOver(f)
   }
 }
 

@@ -1,13 +1,13 @@
 package pomf.service
 
-import akka.actor._
+import akka.actor.{ Actor, Props }
 import java.util.UUID
 
 import pomf.service.TokenServiceProtocol._
 
 class TokenService extends Actor {
   def receive = {
-    case RequestToken => sender ! NewToken(UUID.randomUUID())
+    case RequestToken ⇒ sender ! NewToken(UUID.randomUUID())
   }
 }
 

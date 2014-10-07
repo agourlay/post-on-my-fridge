@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props, ActorContext }
 
 import spray.routing._
 
@@ -10,18 +10,18 @@ class StatsRoute(crudService: ActorRef, metricsRepo: ActorRef)(implicit context:
 
   val route =
     path("stats") {
-      get { ctx =>
+      get { ctx ⇒
         context.actorOf(AllMetrics.props(ctx, metricsRepo))
       }
     } ~
       pathPrefix("count") {
         path("fridges") {
-          get { ctx =>
+          get { ctx ⇒
             context.actorOf(CountFridges.props(ctx, crudService))
           }
         } ~
           path("posts") {
-            get { ctx =>
+            get { ctx ⇒
               context.actorOf(CountPosts.props(ctx, crudService))
             }
           }

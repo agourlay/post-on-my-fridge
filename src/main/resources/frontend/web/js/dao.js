@@ -17,9 +17,6 @@ App.Dao = Em.Object.create({
 					me.streamManagement(fridge.id, token);
 				});
 			}
-			if (me.get("messagesController") != undefined){
-				me.get("messagesController").reload();
-			}
 			return fridge;
         });
 	},

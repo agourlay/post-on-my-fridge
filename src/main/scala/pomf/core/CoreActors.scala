@@ -15,7 +15,7 @@ import pomf.configuration.Settings
 import pomf.metrics.MetricsReporter
 
 trait CoreActors {
-  this: Core =>
+  this: Core ⇒
 
   val logger = LoggerFactory.getLogger("core.coreActors")
 

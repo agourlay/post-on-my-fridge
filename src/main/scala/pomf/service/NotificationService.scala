@@ -1,6 +1,6 @@
 package pomf.service
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import pomf.domain.model._
 import pomf.service.NotificationServiceProtocol._
@@ -10,13 +10,13 @@ import java.util.UUID
 class NotificationService extends Actor {
 
   def receive = {
-    case PostCreated(post, token)                              => toEventStream(Notification.createPost(post, token))
-    case PostUpdated(post, token)                              => toEventStream(Notification.updatePost(post, token))
-    case PostDeleted(fridgeId, postId, token)                  => toEventStream(Notification.deletePost(fridgeId, postId, token))
-    case MessageSent(fridgeId, message, token)                 => toEventStream(Notification.sendMessage(fridgeId, message, token))
-    case ParticipantAdded(fridgeId, token, name)               => toEventStream(Notification.addParticipant(fridgeId, name, token))
-    case ParticipantRemoved(fridgeId, token, name)             => toEventStream(Notification.removeParticipant(fridgeId, name, token))
-    case ParticipantRenamed(fridgeId, token, newName, oldName) => toEventStream(Notification.renameParticipant(fridgeId, newName, oldName, token))
+    case PostCreated(post, token)                              ⇒ toEventStream(Notification.createPost(post, token))
+    case PostUpdated(post, token)                              ⇒ toEventStream(Notification.updatePost(post, token))
+    case PostDeleted(fridgeId, postId, token)                  ⇒ toEventStream(Notification.deletePost(fridgeId, postId, token))
+    case MessageSent(fridgeId, message, token)                 ⇒ toEventStream(Notification.sendMessage(fridgeId, message, token))
+    case ParticipantAdded(fridgeId, token, name)               ⇒ toEventStream(Notification.addParticipant(fridgeId, name, token))
+    case ParticipantRemoved(fridgeId, token, name)             ⇒ toEventStream(Notification.removeParticipant(fridgeId, name, token))
+    case ParticipantRenamed(fridgeId, token, newName, oldName) ⇒ toEventStream(Notification.renameParticipant(fridgeId, newName, oldName, token))
   }
 
   def toEventStream(n: Notification) = context.system.eventStream.publish(n)

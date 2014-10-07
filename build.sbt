@@ -31,13 +31,17 @@ scalacOptions := Seq(
   "-feature"
 )
 
+scapegoatConsoleOutput := false
+
 scalariformSettings
 
 ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(AlignSingleLineCaseStatements, true)
   .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
+  .setPreference(AlignParameters, true)
   .setPreference(DoubleIndentClassDeclaration, true)
   .setPreference(PreserveDanglingCloseParenthesis, true)
+  .setPreference(RewriteArrowSymbols, true)
 
 resolvers ++= Seq(
    "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases/"
@@ -54,7 +58,7 @@ libraryDependencies ++= {
   val sprayJsonV    = "1.2.6"
   val scalaMetricsV = "3.3.0_a2.3"
   val metricsV      = "3.1.0"
-  val jodaTimeV     = "2.4"
+  val jodaTimeV     = "2.5"
   val jodaConvertV  = "1.7"
   val slickV        = "2.1.0" 
   val slickJodaV    = "1.2.0"

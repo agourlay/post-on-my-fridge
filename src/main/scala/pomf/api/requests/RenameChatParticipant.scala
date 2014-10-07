@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -21,15 +21,15 @@ class RenameChatParticipant(fridgeId: UUID, token: String, newName: String, chat
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
+    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
   }
 
   def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) => {
+    case Some(ref) ⇒ {
       ref ! ChatRoomProtocol.RenameParticipant(token, newName)
       requestOver(newName + "changed name")
     }
-    case None => requestOver(new ChatRoomNotFoundException(id))
+    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

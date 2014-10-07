@@ -85,8 +85,8 @@ App.PostView = Em.View.extend({
 		$(window).resize(function() {
   			view.updatePhysicalPosition();
 		});
-		
-		var mc = new Hammer(this.get('element'));
+
+	    var mc = new Hammer(this.get('element'));
 		mc.on("doubletap", function(ev) {
 		    view.send('toggleEditMode');
 		    ev.stopPropagation();

@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props, ActorContext }
 
 import spray.routing._
 import spray.httpx.SprayJsonSupport._
@@ -14,27 +14,27 @@ class PostRoute(crudService: ActorRef)(implicit context: ActorContext) extends D
   val route =
     path("posts") {
       post {
-        parameters("token") { token =>
-          entity(as[Post]) { post =>
-            ctx => context.actorOf(CreatePost.props(post, token, ctx, crudService))
+        parameters("token") { token ⇒
+          entity(as[Post]) { post ⇒
+            ctx ⇒ context.actorOf(CreatePost.props(post, token, ctx, crudService))
           }
         }
       } ~
         put {
-          parameters("token") { token =>
-            entity(as[Post]) { post =>
-              ctx => context.actorOf(UpdatePost.props(post, token, ctx, crudService))
+          parameters("token") { token ⇒
+            entity(as[Post]) { post ⇒
+              ctx ⇒ context.actorOf(UpdatePost.props(post, token, ctx, crudService))
             }
           }
         }
     } ~
-      path("posts" / JavaUUID) { postId =>
-        get { ctx =>
+      path("posts" / JavaUUID) { postId ⇒
+        get { ctx ⇒
           context.actorOf(GetPost.props(postId, ctx, crudService))
         } ~
           delete {
-            parameters("token") { token =>
-              ctx => context.actorOf(DeletePost.props(postId, token, ctx, crudService))
+            parameters("token") { token ⇒
+              ctx ⇒ context.actorOf(DeletePost.props(postId, token, ctx, crudService))
             }
           }
       }

@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -18,7 +18,7 @@ class CreatePost(post: Post, token: String, ctx: RequestContext, crudService: Ac
   override def receive = super.receive orElse waitingCreate
 
   def waitingCreate: Receive = {
-    case p: Post => requestOver(p)
+    case p: Post ⇒ requestOver(p)
   }
 }
 

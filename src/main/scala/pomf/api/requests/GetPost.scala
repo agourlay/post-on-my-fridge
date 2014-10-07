@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -20,7 +20,7 @@ class GetPost(postId: UUID, ctx: RequestContext, crudService: ActorRef) extends 
   override def receive = super.receive orElse waitingDelete
 
   def waitingDelete: Receive = {
-    case p: Post => requestOver(p)
+    case p: Post ⇒ requestOver(p)
   }
 }
 

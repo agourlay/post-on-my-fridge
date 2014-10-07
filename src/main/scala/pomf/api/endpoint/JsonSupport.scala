@@ -11,7 +11,7 @@ import DefaultJsonProtocol._
 import org.joda.time.DateTime
 import org.joda.time.format._
 
-import pomf.domain.model._
+import pomf.domain.model.{ Post, Fridge, FridgeLight, FridgeFull, ChatMessage, PushedEvent }
 
 object CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
@@ -21,8 +21,8 @@ object CustomJsonProtocol {
     override def write(obj: DateTime) = JsString(parserISO.print(obj))
 
     override def read(json: JsValue): DateTime = json match {
-      case JsString(s) => parserISO.parseDateTime(s)
-      case _           => throw new DeserializationException("Expected ISO Date format")
+      case JsString(s) ⇒ parserISO.parseDateTime(s)
+      case _           ⇒ throw new DeserializationException("Expected ISO Date format")
     }
   }
 
@@ -31,8 +31,8 @@ object CustomJsonProtocol {
     def write(obj: UUID): JsValue = JsString(obj.toString())
 
     def read(json: JsValue): UUID = json match {
-      case JsString(x) => UUID.fromString(x)
-      case _           => deserializationError("Expected UUID as JsString")
+      case JsString(x) ⇒ UUID.fromString(x)
+      case _           ⇒ deserializationError("Expected UUID as JsString")
     }
   }
 }

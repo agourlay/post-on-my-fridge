@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props, ActorContext }
 
 import java.util.UUID
 import spray.routing._
@@ -12,8 +12,8 @@ class StreamingRoute(implicit context: ActorContext) extends Directives {
   val route =
     pathPrefix("stream") {
       get {
-        path("fridge" / JavaUUID) { fridgeId =>
-          parameters("token") { token =>
+        path("fridge" / JavaUUID) { fridgeId ⇒
+          parameters("token") { token ⇒
             streamUser(fridgeId, token)
           }
         } ~
@@ -24,11 +24,11 @@ class StreamingRoute(implicit context: ActorContext) extends Directives {
     }
 
   def streamFirehose(ctx: RequestContext): Unit = {
-    context.actorOf(FridgeUpdates.props(ctx.responder, (_, _) => true))
+    context.actorOf(FridgeUpdates.props(ctx.responder, (_, _) ⇒ true))
   }
 
   def streamUser(fridgeId: UUID, token: String)(ctx: RequestContext): Unit = {
-    val filter = (fridgeTarget: UUID, userToken: String) => fridgeId == fridgeTarget && token != userToken
+    val filter = (fridgeTarget: UUID, userToken: String) ⇒ fridgeId == fridgeTarget && token != userToken
     context.actorOf(FridgeUpdates.props(ctx.responder, filter))
   }
 }

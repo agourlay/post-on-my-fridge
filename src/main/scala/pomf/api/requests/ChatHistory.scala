@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.httpx.SprayJsonSupport._
 import spray.routing._
@@ -25,19 +25,19 @@ class ChatHistory(fridgeId: UUID, chatRepo: ActorRef, ctx: RequestContext) exten
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
+    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
   }
 
   def waitingHistory: Receive = {
-    case ChatHistoryContent(messages) => requestOver(messages)
+    case ChatHistoryContent(messages) ⇒ requestOver(messages)
   }
 
   def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) => {
+    case Some(ref) ⇒ {
       ref ! ChatRoomProtocol.ChatHistory
       context.become(super.receive orElse waitingHistory)
     }
-    case None => requestOver(new ChatRoomNotFoundException(id))
+    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

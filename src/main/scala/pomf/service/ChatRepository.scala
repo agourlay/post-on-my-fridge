@@ -1,6 +1,6 @@
 package pomf.service
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import pomf.service.ChatRepoProtocol._
 import java.util.UUID
@@ -10,7 +10,7 @@ class ChatRepository(notificationService: ActorRef) extends Actor {
   var chatRooms = Map.empty[UUID, ActorRef]
 
   def receive = {
-    case GetChatRoom(fridgeId) => sender ! getChatRoom(fridgeId)
+    case GetChatRoom(fridgeId) ⇒ sender ! getChatRoom(fridgeId)
   }
 
   def getChatRoom(fridgeId: UUID) = ChatRoomRef(fridgeId, Some(getOrCreateChatRoom(fridgeId)))

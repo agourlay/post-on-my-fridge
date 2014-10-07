@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.routing._
 import spray.json._
@@ -19,7 +19,7 @@ class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) ext
   override def receive = super.receive orElse waitingSearch
 
   def waitingSearch: Receive = {
-    case SearchResult(t, r) => requestOver(r)
+    case SearchResult(t, r) ⇒ requestOver(r)
   }
 }
 

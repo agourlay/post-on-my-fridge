@@ -1,6 +1,6 @@
 package pomf.service
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import scala.util._
 
@@ -15,31 +15,31 @@ import java.util.UUID
 class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with Instrumented {
 
   def receive = {
-    case FullFridge(fridgeId)            => sender ! getFridgeFull(fridgeId)
-    case AllFridge(pageNumber, pageSize) => sender ! getAllFridge(pageNumber, pageSize)
-    case CreateFridge(fridge)            => sender ! createFridge(fridge)
-    case GetPost(postId)                 => sender ! getPost(postId)
-    case DeletePost(postId, token)       => sender ! deletePost(postId, token)
-    case CreatePost(post, token)         => sender ! addPost(post, token)
-    case UpdatePost(post, token)         => sender ! updatePost(post, token)
-    case SearchFridge(term)              => sender ! searchByNameLike(term)
-    case CountFridges                    => sender ! countFridges
-    case CountPosts                      => sender ! countPosts
+    case FullFridge(fridgeId)            ⇒ sender ! getFridgeFull(fridgeId)
+    case AllFridge(pageNumber, pageSize) ⇒ sender ! getAllFridge(pageNumber, pageSize)
+    case CreateFridge(fridge)            ⇒ sender ! createFridge(fridge)
+    case GetPost(postId)                 ⇒ sender ! getPost(postId)
+    case DeletePost(postId, token)       ⇒ sender ! deletePost(postId, token)
+    case CreatePost(post, token)         ⇒ sender ! addPost(post, token)
+    case UpdatePost(post, token)         ⇒ sender ! updatePost(post, token)
+    case SearchFridge(term)              ⇒ sender ! searchByNameLike(term)
+    case CountFridges                    ⇒ sender ! countFridges
+    case CountPosts                      ⇒ sender ! countPosts
   }
 
   def getAllFridge(pageNumber: Int, pageSize: Int) = LightFridges(dao.getAllFridge(pageNumber, pageSize))
 
   def createFridge(fridgeName: String) = {
     dao.createFridge(fridgeName) match {
-      case Success(id) => dao.getFridgeById(id)
-      case Failure(ex) => Failure(ex)
+      case Success(id) ⇒ dao.getFridgeById(id)
+      case Failure(ex) ⇒ Failure(ex)
     }
   }
 
   def addPost(post: Post, token: String) = {
     dao.addPost(post) match {
-      case None => Failure(new FridgeNotFoundException(post.fridgeId))
-      case Some(persistedPost) => {
+      case None ⇒ Failure(new FridgeNotFoundException(post.fridgeId))
+      case Some(persistedPost) ⇒ {
         notificationService ! NotificationServiceProtocol.PostCreated(persistedPost, token)
         persistedPost
       }
@@ -48,22 +48,22 @@ class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with In
 
   def getFridgeFull(fridgeId: UUID) = {
     dao.getFridgeFull(fridgeId) match {
-      case None             => Failure(new FridgeNotFoundException(fridgeId))
-      case Some(fullFridge) => fullFridge
+      case None             ⇒ Failure(new FridgeNotFoundException(fridgeId))
+      case Some(fullFridge) ⇒ fullFridge
     }
   }
 
   def getPost(id: UUID) = dao.getPost(id) match {
-    case None       => Failure(new PostNotFoundException(id))
-    case Some(post) => post
+    case None       ⇒ Failure(new PostNotFoundException(id))
+    case Some(post) ⇒ post
   }
 
   def searchByNameLike(term: String) = SearchResult(term, dao.searchByNameLike(term))
 
   def deletePost(id: UUID, token: String) = {
     dao.getPost(id) match {
-      case None => Failure(new PostNotFoundException(id))
-      case Some(post) => {
+      case None ⇒ Failure(new PostNotFoundException(id))
+      case Some(post) ⇒ {
         val deleteAck = "post " + dao.deletePost(id) + " deleted"
         notificationService ! NotificationServiceProtocol.PostDeleted(post.fridgeId, id, token)
         OperationSuccess(deleteAck)
@@ -73,8 +73,8 @@ class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with In
 
   def updatePost(post: Post, token: String) = {
     dao.updatePost(post) match {
-      case None => Failure(new PostNotFoundException(post.id.get))
-      case Some(postUpdated) => {
+      case None ⇒ Failure(new PostNotFoundException(post.id.get))
+      case Some(postUpdated) ⇒ {
         notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
         postUpdated
       }

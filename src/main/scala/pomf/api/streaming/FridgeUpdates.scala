@@ -1,6 +1,6 @@
 package pomf.api.streaming
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model._
@@ -13,7 +13,7 @@ import spray.http.MediaTypes._
 import spray.can.Http
 import HttpHeaders._
 
-class FridgeUpdates(responder: ActorRef, filter: (UUID, String) => Boolean) extends StreamingResponse(responder) {
+class FridgeUpdates(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) extends StreamingResponse(responder) {
 
   override def preStart {
     super.preStart
@@ -21,7 +21,7 @@ class FridgeUpdates(responder: ActorRef, filter: (UUID, String) => Boolean) exte
   }
 
   override def receive = ({
-    case Notification(fridgeIdNotif, command, payload, timestamp, token) => {
+    case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒ {
       if (filter(fridgeIdNotif, token)) {
         val pushedEvent = PushedEvent(fridgeIdNotif, command, payload, timestamp)
         val nextChunk = MessageChunk("data: " + formatEvent.write(pushedEvent) + "\n\n")
@@ -32,5 +32,5 @@ class FridgeUpdates(responder: ActorRef, filter: (UUID, String) => Boolean) exte
 }
 
 object FridgeUpdates {
-  def props(responder: ActorRef, filter: (UUID, String) => Boolean) = Props(classOf[FridgeUpdates], responder, filter).withDispatcher("requests-dispatcher")
+  def props(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], responder, filter).withDispatcher("requests-dispatcher")
 }

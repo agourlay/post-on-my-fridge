@@ -12,7 +12,6 @@ import spray.httpx.marshalling._
 import spray.json._
 import spray.http._
 import spray.http.StatusCode
-import spray.httpx.marshalling._
 import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
@@ -31,9 +30,9 @@ abstract class RestRequest(ctx: RequestContext) extends Actor with ActorLogging 
   val timerCtx = metrics.timer("request").timerContext()
 
   def receive = {
-    case ReceiveTimeout => requestOver(new RequestTimeoutException())
-    case Failure(e)     => requestOver(e)
-    case e: Exception   => requestOver(e)
+    case ReceiveTimeout ⇒ requestOver(new RequestTimeoutException())
+    case Failure(e)     ⇒ requestOver(e)
+    case e: Exception   ⇒ requestOver(e)
   }
 
   private def closeThings() {
@@ -58,7 +57,7 @@ abstract class RestRequest(ctx: RequestContext) extends Actor with ActorLogging 
 
   override val supervisorStrategy =
     OneForOneStrategy() {
-      case e => {
+      case e ⇒ {
         ctx.complete(e)
         timerCtx.stop()
         Stop

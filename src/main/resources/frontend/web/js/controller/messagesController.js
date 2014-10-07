@@ -14,17 +14,12 @@ App.MessagesController = Ember.ArrayController.extend({
 				me.notificationManagement(payload, timestamp);
 			}
         });
-		this.initData();
 		return this._super();
 	},
 
-	reload : function (){
-		this.get('content').clear();
-		this.initData();
-	},
-
-	initData : function() {
+	reload : function () {
 		var me = this;
+		me.get('content').clear();
 		me.joinChat().done(function(){
 			me.retrievePreviousMessages();
 			me.retrieveParticipantNumber();

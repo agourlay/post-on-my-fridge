@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import java.util.UUID
 
@@ -21,15 +21,15 @@ class AddChatParticipant(fridgeId: UUID, token: String, participantName: String,
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) => handleChatRoomRef(id, optRef)
+    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
   }
 
   def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) => {
+    case Some(ref) ⇒ {
       ref ! ChatRoomProtocol.AddParticipant(token, participantName)
       requestOver(participantName + " joined chat " + fridgeId)
     }
-    case None => requestOver(new ChatRoomNotFoundException(id))
+    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 

@@ -1,6 +1,6 @@
 package pomf.api.request
 
-import akka.actor._
+import akka.actor.{ Actor, ActorRef, Props }
 
 import spray.routing._
 import spray.json._
@@ -20,7 +20,7 @@ class GenerateToken(ctx: RequestContext, tokenService: ActorRef) extends RestReq
   override def receive = super.receive orElse waitingToken
 
   def waitingToken: Receive = {
-    case NewToken(token) => requestOver(token)
+    case NewToken(token) ⇒ requestOver(token)
   }
 }
 

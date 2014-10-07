@@ -29,10 +29,10 @@ abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLo
   }
 
   def receive = {
-    case ev: Http.ConnectionClosed => {
+    case ev: Http.ConnectionClosed ⇒ {
       log.debug("Stopping response streaming due to {}", ev)
       self ! PoisonPill
     }
-    case ReceiveTimeout => responder ! MessageChunk(":\n") // Comment to keep connection alive  
+    case ReceiveTimeout ⇒ responder ! MessageChunk(":\n") // Comment to keep connection alive  
   }
 }

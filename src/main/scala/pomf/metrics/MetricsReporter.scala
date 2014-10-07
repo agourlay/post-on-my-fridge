@@ -22,7 +22,7 @@ class MetricsReporter extends Actor with ActorLogging with Instrumented {
 
   JmxReporter.forRegistry(metricRegistry).build().start()
 
-  log.info(s"Starting MetricsReporter to JMX")
+  log.info("Starting MetricsReporter to JMX")
 
   if (Settings(system).Graphite.Enable) {
     val graphiteHost = Settings(system).Graphite.Host
@@ -42,10 +42,10 @@ class MetricsReporter extends Actor with ActorLogging with Instrumented {
   }
 
   def receive = {
-    case All       => sender ! metricsByName(MetricsReporter.allMetrics)
-    case Requests  => sender ! metricsByName(MetricsReporter.requestsMetrics)
-    case Streaming => sender ! metricsByName(MetricsReporter.streamingMetrics)
-    case TopicRepo => sender ! metricsByName(MetricsReporter.domainMetrics)
+    case All       ⇒ sender ! metricsByName(MetricsReporter.allMetrics)
+    case Requests  ⇒ sender ! metricsByName(MetricsReporter.requestsMetrics)
+    case Streaming ⇒ sender ! metricsByName(MetricsReporter.streamingMetrics)
+    case TopicRepo ⇒ sender ! metricsByName(MetricsReporter.domainMetrics)
   }
 
   def metricsByName(name: String) = {
