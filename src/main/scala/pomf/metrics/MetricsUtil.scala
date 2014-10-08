@@ -7,24 +7,12 @@ import MetricsJson._
 
 // :(
 object MetricsUtil {
-  def magic(java: Any): JsValue = {
-    if (java.isInstanceOf[com.codahale.metrics.Timer]) {
-      val timer = new Timer(java.asInstanceOf[com.codahale.metrics.Timer])
-      return formatTimer.write(timer)
-    }
-    if (java.isInstanceOf[com.codahale.metrics.Gauge[Int]]) {
-      val gauge = new Gauge(java.asInstanceOf[com.codahale.metrics.Gauge[Int]])
-      return formatGauge.write(gauge)
-    }
-    if (java.isInstanceOf[com.codahale.metrics.Meter]) {
-      val meter = new Meter(java.asInstanceOf[com.codahale.metrics.Meter])
-      return formatMeter.write(meter)
-    }
-    if (java.isInstanceOf[com.codahale.metrics.Counter]) {
-      val counter = new Counter(java.asInstanceOf[com.codahale.metrics.Counter])
-      return formatCounter.write(counter)
-    }
-    throw new RuntimeException("From java with love")
+  def magic(java: Any): JsValue = java match {
+    case j: com.codahale.metrics.Timer      ⇒ formatTimer.write(new Timer(j))
+    case j: com.codahale.metrics.Gauge[Int] ⇒ formatGauge.write(new Gauge(j))
+    case j: com.codahale.metrics.Meter      ⇒ formatMeter.write(new Meter(j))
+    case j: com.codahale.metrics.Counter    ⇒ formatCounter.write(new Counter(j))
+    case _                                  ⇒ throw new RuntimeException("From java with love")
   }
 }
 
