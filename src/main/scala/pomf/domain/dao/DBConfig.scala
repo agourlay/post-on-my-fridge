@@ -9,7 +9,7 @@ trait DBConfig {
   def dao: Dao
 }
 
-class PostgresDB(user: String, password: String, schema: String, host: String, port: String, purge: Boolean) extends DBConfig {
+class PostgresDB(user: String, password: String, schema: String, host: String, port: Int, purge: Boolean) extends DBConfig {
   val log = LoggerFactory.getLogger("domain.dbConfig")
 
   val url = s"jdbc:postgresql://$host:$port/$schema"

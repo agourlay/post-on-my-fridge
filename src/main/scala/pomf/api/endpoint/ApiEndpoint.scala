@@ -11,7 +11,6 @@ import scala.concurrent.Future
 import pomf.api.route._
 import pomf.api.exceptions.RestFailureHandler
 import pomf.core.CoreActors
-import pomf.metrics.MetricsReporter
 
 class ApiEndpoint(coreActors: CoreActors) extends HttpEndpoint with Actor {
   implicit def actorRefFactory = context

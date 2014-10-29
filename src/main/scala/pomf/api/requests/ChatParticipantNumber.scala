@@ -21,22 +21,19 @@ class ChatParticipantNumber(fridgeId: UUID, chatRepo: ActorRef, ctx: RequestCont
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
-  }
-
-  def waitingCounter: Receive = {
-    case ParticipantNumberRoom(nb) ⇒ requestOver(nb.toString)
-  }
-
-  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) ⇒ {
-      ref ! ChatRoomProtocol.ParticipantNumber
-      context.become(super.receive orElse waitingCounter)
+    case ChatRoomRef(id, optRef) ⇒ optRef match {
+      case Some(ref) ⇒
+        ref ! ChatRoomProtocol.ParticipantNumber
+        context.become(super.receive orElse waitingForCounter)
+      case None ⇒ requestOver(new ChatRoomNotFoundException(id))
     }
-    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
+  }
+
+  def waitingForCounter: Receive = {
+    case ParticipantNumberRoom(nb) ⇒ requestOver(nb.toString)
   }
 }
 
 object ChatParticipantNumber {
-  def props(fridgeId: UUID, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[ChatParticipantNumber], fridgeId, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[ChatParticipantNumber], fridgeId, chatRepo, ctx)
 }

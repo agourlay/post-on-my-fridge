@@ -25,5 +25,5 @@ class GetPost(postId: UUID, ctx: RequestContext, crudService: ActorRef) extends 
 }
 
 object GetPost {
-  def props(postId: UUID, ctx: RequestContext, crudService: ActorRef) = Props(classOf[GetPost], postId, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(postId: UUID, ctx: RequestContext, crudService: ActorRef) = Props(classOf[GetPost], postId, ctx, crudService)
 }

@@ -1,4 +1,4 @@
-package pomf.metrics
+package pomf.core.metrics
 
 import com.codahale.metrics._
 import com.codahale.metrics.health.HealthCheckRegistry

@@ -4,10 +4,11 @@ import akka.actor.{ Actor, ActorRef, Props }
 
 import pomf.service.ChatRepoProtocol._
 import java.util.UUID
+import pomf.core.actors.CommonActor
 
-class ChatRepository(notificationService: ActorRef) extends Actor {
+class ChatRepository(notificationService: ActorRef) extends CommonActor {
 
-  var chatRooms = Map.empty[UUID, ActorRef]
+  val chatRooms = scala.collection.mutable.Map.empty[UUID, ActorRef]
 
   def receive = {
     case GetChatRoom(fridgeId) ⇒ sender ! getChatRoom(fridgeId)
@@ -32,5 +33,5 @@ object ChatRepoProtocol {
 }
 
 object ChatRepository {
-  def props(notificationService: ActorRef) = Props(classOf[ChatRepository], notificationService).withDispatcher("service-dispatcher")
+  def props(notificationService: ActorRef) = Props(classOf[ChatRepository], notificationService)
 }

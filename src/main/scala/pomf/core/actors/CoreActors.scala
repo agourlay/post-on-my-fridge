@@ -12,7 +12,8 @@ import pomf.service.ChatRepository
 import pomf.service.TokenService
 import pomf.domain.dao.PostgresDB
 import pomf.configuration.Settings
-import pomf.metrics.MetricsReporter
+import pomf.core.metrics.MetricsReporter
+import pomf.core.actors.UnhandledMessageListener
 
 trait CoreActors {
   this: Core ⇒
@@ -43,4 +44,6 @@ trait CoreActors {
   val chatRepo = system.actorOf(ChatRepository.props(notificationService), "chat-repository")
 
   val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
+
+  val unHandledlistener = system.actorOf(UnhandledMessageListener.props, "unhandled-message-listener")
 }

@@ -22,5 +22,5 @@ class CountFridges(ctx: RequestContext, crudService: ActorRef) extends RestReque
 }
 
 object CountFridges {
-  def props(ctx: RequestContext, crudService: ActorRef) = Props(classOf[CountFridges], ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(ctx: RequestContext, crudService: ActorRef) = Props(classOf[CountFridges], ctx, crudService)
 }

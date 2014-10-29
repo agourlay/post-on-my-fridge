@@ -18,20 +18,18 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
 
 scalacOptions := Seq(
   "-unchecked",
-  "-Xlint",
   "-deprecation",
   "-target:jvm-1.7",
   "-encoding", "UTF-8",
   "-Ywarn-dead-code",
-  "-language:_",
+  "-language:implicitConversions",
+  "-language:postfixOps",
   "-feature"
 )
-
-scapegoatConsoleOutput := false
 
 scalariformSettings
 
@@ -43,19 +41,10 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(PreserveDanglingCloseParenthesis, true)
   .setPreference(RewriteArrowSymbols, true)
 
-resolvers ++= Seq(
-   "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases/"
-  ,"typesafe release"   at "http://repo.typesafe.com/typesafe/releases/"
-  ,"typesafe repo"      at "http://repo.typesafe.com/typesafe/repo/"
-  ,"maven central"      at "http://repo1.maven.org/maven2/"
-  ,"akka repo"          at "http://repo.akka.io/"
-  ,"spray repo"         at "http://repo.spray.io/"
-)
-
 libraryDependencies ++= {
   val akkaV         = "2.3.6"
   val sprayV        = "1.3.2"
-  val sprayJsonV    = "1.3.0"
+  val sprayJsonV    = "1.3.1"
   val scalaMetricsV = "3.3.0_a2.3"
   val metricsV      = "3.1.0"
   val jodaTimeV     = "2.5"

@@ -8,8 +8,8 @@ import spray.json._
 
 import DefaultJsonProtocol._
 
-import pomf.metrics.MetricsReporterProtocol._
-import pomf.metrics.MetricsReporterProtocol
+import pomf.core.metrics.MetricsReporterProtocol._
+import pomf.core.metrics.MetricsReporterProtocol
 
 class AllMetrics(ctx: RequestContext, metricsRepo: ActorRef) extends RestRequest(ctx) {
   metricsRepo ! MetricsReporterProtocol.All
@@ -22,5 +22,5 @@ class AllMetrics(ctx: RequestContext, metricsRepo: ActorRef) extends RestRequest
 }
 
 object AllMetrics {
-  def props(ctx: RequestContext, metricsRepo: ActorRef) = Props(classOf[AllMetrics], ctx, metricsRepo).withDispatcher("requests-dispatcher")
+  def props(ctx: RequestContext, metricsRepo: ActorRef) = Props(classOf[AllMetrics], ctx, metricsRepo)
 }

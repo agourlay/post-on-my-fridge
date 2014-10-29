@@ -23,5 +23,5 @@ class CreateFridge(fridgeName: String, ctx: RequestContext, crudService: ActorRe
 }
 
 object CreateFridge {
-  def props(fridgeName: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[CreateFridge], fridgeName, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(fridgeName: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[CreateFridge], fridgeName, ctx, crudService)
 }

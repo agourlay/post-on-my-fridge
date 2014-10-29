@@ -24,5 +24,5 @@ class SearchFridge(term: String, ctx: RequestContext, crudService: ActorRef) ext
 }
 
 object SearchFridge {
-  def props(term: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[SearchFridge], term, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(term: String, ctx: RequestContext, crudService: ActorRef) = Props(classOf[SearchFridge], term, ctx, crudService)
 }

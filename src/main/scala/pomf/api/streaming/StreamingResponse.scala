@@ -6,10 +6,10 @@ import spray.http._
 import HttpHeaders._
 import spray.can.Http
 
-import pomf.metrics.Instrumented
+import pomf.core.actors.CommonActor
 import pomf.api.endpoint.ServerSentEvent
 
-abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLogging with Instrumented {
+abstract class StreamingResponse(responder: ActorRef) extends CommonActor {
 
   val timerCtx = metrics.timer("streaming").timerContext()
 
@@ -29,10 +29,9 @@ abstract class StreamingResponse(responder: ActorRef) extends Actor with ActorLo
   }
 
   def receive = {
-    case ev: Http.ConnectionClosed ⇒ {
+    case ev: Http.ConnectionClosed ⇒
       log.debug("Stopping response streaming due to {}", ev)
       self ! PoisonPill
-    }
     case ReceiveTimeout ⇒ responder ! MessageChunk(":\n") // Comment to keep connection alive  
   }
 }

@@ -5,9 +5,11 @@ import akka.actor.{ Actor, ActorRef, Props }
 import pomf.domain.model._
 import pomf.service.NotificationServiceProtocol._
 import pomf.api.endpoint.JsonSupport._
+import pomf.core.actors.CommonActor
+
 import java.util.UUID
 
-class NotificationService extends Actor {
+class NotificationService extends CommonActor {
 
   def receive = {
     case PostCreated(post, token)                              ⇒ toEventStream(Notification.createPost(post, token))
@@ -33,5 +35,5 @@ object NotificationServiceProtocol {
 }
 
 object NotificationService {
-  def props() = Props(classOf[NotificationService]).withDispatcher("service-dispatcher")
+  def props() = Props(classOf[NotificationService])
 }

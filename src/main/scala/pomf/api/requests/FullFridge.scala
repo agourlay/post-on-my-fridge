@@ -25,5 +25,5 @@ class FullFridge(fridgeId: UUID, ctx: RequestContext, crudService: ActorRef) ext
 }
 
 object FullFridge {
-  def props(fridgeId: UUID, ctx: RequestContext, crudService: ActorRef) = Props(classOf[FullFridge], fridgeId, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, ctx: RequestContext, crudService: ActorRef) = Props(classOf[FullFridge], fridgeId, ctx, crudService)
 }

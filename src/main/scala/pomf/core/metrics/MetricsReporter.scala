@@ -1,4 +1,4 @@
-package pomf.metrics
+package pomf.core.metrics
 
 import akka.actor._
 
@@ -8,15 +8,22 @@ import scala.collection.JavaConversions._
 
 import spray.json.JsValue
 
-import com.codahale.metrics._
+import com.codahale.metrics.JmxReporter
+import com.codahale.metrics.MetricFilter
+import com.codahale.metrics.{ Counter ⇒ JCounter }
+import com.codahale.metrics.{ Meter ⇒ JMeter }
+import com.codahale.metrics.{ Timer ⇒ JTimer }
+import com.codahale.metrics.{ Gauge ⇒ JGauge }
 import com.codahale.metrics.graphite._
 
 import nl.grons.metrics.scala._
 
+import pomf.api.endpoint.JsonSupport._
 import pomf.configuration.Settings
-import pomf.metrics.MetricsReporterProtocol._
+import pomf.core.actors.CommonActor
+import pomf.core.metrics.MetricsReporterProtocol._
 
-class MetricsReporter extends Actor with ActorLogging with Instrumented {
+class MetricsReporter extends CommonActor {
 
   val system = context.system
 
@@ -50,7 +57,15 @@ class MetricsReporter extends Actor with ActorLogging with Instrumented {
 
   def metricsByName(name: String) = {
     val rawMap = metricRegistry.getMetrics().filterKeys(_.contains(name))
-    MetricsReport(rawMap.toMap.mapValues(MetricsUtil.magic(_)))
+    MetricsReport(rawMap.toMap.mapValues(toJsValue(_)))
+  }
+
+  def toJsValue(java: Any): JsValue = java match {
+    case j: JTimer      ⇒ formatTimer.write(new Timer(j))
+    case j: JGauge[Int] ⇒ formatGauge.write(new Gauge(j))
+    case j: JMeter      ⇒ formatMeter.write(new Meter(j))
+    case j: JCounter    ⇒ formatCounter.write(new Counter(j))
+    case _              ⇒ throw new RuntimeException("From java with love")
   }
 }
 

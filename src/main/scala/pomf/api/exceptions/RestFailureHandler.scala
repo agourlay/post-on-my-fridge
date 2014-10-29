@@ -6,7 +6,7 @@ import spray.http._
 import HttpHeaders._
 
 import pomf.service._
-import pomf.metrics.Instrumented
+import pomf.core.metrics.Instrumented
 
 trait RestFailureHandler extends Instrumented {
   this: HttpService ⇒

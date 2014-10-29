@@ -22,18 +22,15 @@ class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatR
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
-  }
-
-  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) ⇒ {
-      ref ! ChatRoomProtocol.SendMessage(message, token)
-      requestOver(message)
+    case ChatRoomRef(id, optRef) ⇒ optRef match {
+      case Some(ref) ⇒
+        ref ! ChatRoomProtocol.SendMessage(message, token)
+        requestOver(message)
+      case None ⇒ requestOver(new ChatRoomNotFoundException(id))
     }
-    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object SendChatMessage {
-  def props(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[SendChatMessage], fridgeId, message, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[SendChatMessage], fridgeId, message, token, chatRepo, ctx)
 }

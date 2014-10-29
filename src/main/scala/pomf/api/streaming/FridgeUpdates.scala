@@ -21,16 +21,14 @@ class FridgeUpdates(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) ext
   }
 
   override def receive = ({
-    case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒ {
+    case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒
       if (filter(fridgeIdNotif, token)) {
         val pushedEvent = PushedEvent(fridgeIdNotif, command, payload, timestamp)
-        val nextChunk = MessageChunk("data: " + formatEvent.write(pushedEvent) + "\n\n")
-        responder ! nextChunk
+        responder ! MessageChunk("data: " + formatEvent.write(pushedEvent) + "\n\n")
       }
-    }
   }: Receive) orElse super.receive
 }
 
 object FridgeUpdates {
-  def props(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], responder, filter).withDispatcher("requests-dispatcher")
+  def props(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], responder, filter)
 }

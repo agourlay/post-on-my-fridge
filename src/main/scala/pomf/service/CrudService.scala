@@ -6,13 +6,14 @@ import scala.util._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.dao.Dao
-import pomf.metrics.Instrumented
 import pomf.domain.model._
 import pomf.service.CrudServiceProtocol._
 import pomf.service.NotificationServiceProtocol._
+import pomf.core.actors.CommonActor
+
 import java.util.UUID
 
-class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with Instrumented {
+class CrudService(dao: Dao, notificationService: ActorRef) extends CommonActor {
 
   def receive = {
     case FullFridge(fridgeId)            ⇒ sender ! getFridgeFull(fridgeId)
@@ -39,10 +40,9 @@ class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with In
   def addPost(post: Post, token: String) = {
     dao.addPost(post) match {
       case None ⇒ Failure(new FridgeNotFoundException(post.fridgeId))
-      case Some(persistedPost) ⇒ {
+      case Some(persistedPost) ⇒
         notificationService ! NotificationServiceProtocol.PostCreated(persistedPost, token)
         persistedPost
-      }
     }
   }
 
@@ -63,21 +63,19 @@ class CrudService(dao: Dao, notificationService: ActorRef) extends Actor with In
   def deletePost(id: UUID, token: String) = {
     dao.getPost(id) match {
       case None ⇒ Failure(new PostNotFoundException(id))
-      case Some(post) ⇒ {
+      case Some(post) ⇒
         val deleteAck = "post " + dao.deletePost(id) + " deleted"
         notificationService ! NotificationServiceProtocol.PostDeleted(post.fridgeId, id, token)
         OperationSuccess(deleteAck)
-      }
     }
   }
 
   def updatePost(post: Post, token: String) = {
     dao.updatePost(post) match {
       case None ⇒ Failure(new PostNotFoundException(post.id.get))
-      case Some(postUpdated) ⇒ {
+      case Some(postUpdated) ⇒
         notificationService ! NotificationServiceProtocol.PostUpdated(post, token)
         postUpdated
-      }
     }
   }
 
@@ -105,5 +103,5 @@ object CrudServiceProtocol {
 }
 
 object CrudService {
-  def props(dao: Dao, notificationService: ActorRef) = Props(classOf[CrudService], dao, notificationService).withDispatcher("service-dispatcher")
+  def props(dao: Dao, notificationService: ActorRef) = Props(classOf[CrudService], dao, notificationService).withDispatcher("db-calls-dispatcher")
 }

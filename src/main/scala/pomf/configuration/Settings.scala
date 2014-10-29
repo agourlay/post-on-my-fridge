@@ -20,7 +20,7 @@ class Settings(config: Config, extendedSystem: ExtendedActorSystem) extends Exte
     val DbPassword = config.getString("pomf.database.password")
     val DbSchema = config.getString("pomf.database.schema")
     val DbHost = config.getString("pomf.database.host")
-    val DbPort = config.getString("pomf.database.port")
+    val DbPort = config.getInt("pomf.database.port")
     val Purge = config.getBoolean("pomf.database.purge")
   }
 

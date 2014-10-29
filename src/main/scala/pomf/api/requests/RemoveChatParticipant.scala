@@ -21,18 +21,15 @@ class RemoveChatParticipant(fridgeId: UUID, token: String, chatRepo: ActorRef, c
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
-  }
-
-  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) ⇒ {
-      ref ! ChatRoomProtocol.RemoveParticipant(token)
-      requestOver(token + " removed from chat " + fridgeId)
+    case ChatRoomRef(id, optRef) ⇒ optRef match {
+      case Some(ref) ⇒
+        ref ! ChatRoomProtocol.RemoveParticipant(token)
+        requestOver(token + " removed from chat " + fridgeId)
+      case None ⇒ requestOver(new ChatRoomNotFoundException(id))
     }
-    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object RemoveChatParticipant {
-  def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, token: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RemoveChatParticipant], fridgeId, token, chatRepo, ctx)
 }

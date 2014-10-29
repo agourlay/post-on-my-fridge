@@ -21,18 +21,15 @@ class RenameChatParticipant(fridgeId: UUID, token: String, newName: String, chat
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
-  }
-
-  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) ⇒ {
-      ref ! ChatRoomProtocol.RenameParticipant(token, newName)
-      requestOver(newName + "changed name")
+    case ChatRoomRef(id, optRef) ⇒ optRef match {
+      case Some(ref) ⇒
+        ref ! ChatRoomProtocol.RenameParticipant(token, newName)
+        requestOver(newName + "changed name")
+      case None ⇒ requestOver(new ChatRoomNotFoundException(id))
     }
-    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object RenameChatParticipant {
-  def props(fridgeId: UUID, token: String, newtName: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RenameChatParticipant], fridgeId, token, newtName, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, token: String, newtName: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[RenameChatParticipant], fridgeId, token, newtName, chatRepo, ctx)
 }

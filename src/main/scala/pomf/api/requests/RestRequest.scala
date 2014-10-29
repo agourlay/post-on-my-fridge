@@ -15,11 +15,11 @@ import spray.http.StatusCode
 import DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
-import pomf.metrics.Instrumented
+import pomf.core.actors.CommonActor
 import pomf.configuration._
 import pomf.api.exceptions.RequestTimeoutException
 
-abstract class RestRequest(ctx: RequestContext) extends Actor with ActorLogging with Instrumented {
+abstract class RestRequest(ctx: RequestContext) extends CommonActor {
 
   val system = context.system
   implicit val executionContext = context.dispatcher

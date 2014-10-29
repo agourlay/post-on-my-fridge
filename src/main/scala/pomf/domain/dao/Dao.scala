@@ -12,7 +12,7 @@ import java.util.UUID
 
 import org.joda.time.DateTime
 
-import pomf.metrics.Instrumented
+import pomf.core.metrics.Instrumented
 import pomf.domain.model._
 import pomf.service.FridgeAlreadyExistsException
 
@@ -57,10 +57,7 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def getFridgeFull(fridgeId: UUID): Option[FridgeFull] = db withDynSession {
-    fridgeById(fridgeId).firstOption match {
-      case Some(f) ⇒ Some(buildFull(f))
-      case None    ⇒ None
-    }
+    fridgeById(fridgeId).firstOption.map(f ⇒ buildFull(f))
   }
 
   def getAllFridge(pageNumber: Int, pageSize: Int): List[FridgeLight] = db withDynSession {

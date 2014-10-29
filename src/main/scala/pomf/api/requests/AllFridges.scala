@@ -26,5 +26,5 @@ class AllFridges(pageNumber: Int, pageSize: Int, ctx: RequestContext, crudServic
 }
 
 object AllFridges {
-  def props(pageNumber: Int, pageSize: Int, ctx: RequestContext, crudService: ActorRef) = Props(classOf[AllFridges], pageNumber, pageSize, ctx, crudService).withDispatcher("requests-dispatcher")
+  def props(pageNumber: Int, pageSize: Int, ctx: RequestContext, crudService: ActorRef) = Props(classOf[AllFridges], pageNumber, pageSize, ctx, crudService)
 }

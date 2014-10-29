@@ -4,8 +4,9 @@ import akka.actor.{ Actor, Props }
 import java.util.UUID
 
 import pomf.service.TokenServiceProtocol._
+import pomf.core.actors.CommonActor
 
-class TokenService extends Actor {
+class TokenService extends CommonActor {
   def receive = {
     case RequestToken ⇒ sender ! NewToken(UUID.randomUUID())
   }
@@ -17,5 +18,5 @@ object TokenServiceProtocol {
 }
 
 object TokenService {
-  def props() = Props(classOf[TokenService]).withDispatcher("service-dispatcher")
+  def props() = Props(classOf[TokenService])
 }

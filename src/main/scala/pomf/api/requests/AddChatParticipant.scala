@@ -21,18 +21,15 @@ class AddChatParticipant(fridgeId: UUID, token: String, participantName: String,
   override def receive = super.receive orElse waitingLookup
 
   def waitingLookup: Receive = {
-    case ChatRoomRef(id, optRef) ⇒ handleChatRoomRef(id, optRef)
-  }
-
-  def handleChatRoomRef(id: UUID, optRef: Option[ActorRef]) = optRef match {
-    case Some(ref) ⇒ {
-      ref ! ChatRoomProtocol.AddParticipant(token, participantName)
-      requestOver(participantName + " joined chat " + fridgeId)
+    case ChatRoomRef(id, optRef) ⇒ optRef match {
+      case Some(ref) ⇒
+        ref ! ChatRoomProtocol.AddParticipant(token, participantName)
+        requestOver(participantName + " joined chat " + fridgeId)
+      case None ⇒ requestOver(new ChatRoomNotFoundException(id))
     }
-    case None ⇒ requestOver(new ChatRoomNotFoundException(id))
   }
 }
 
 object AddChatParticipant {
-  def props(fridgeId: UUID, token: String, participantName: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[AddChatParticipant], fridgeId, token, participantName, chatRepo, ctx).withDispatcher("requests-dispatcher")
+  def props(fridgeId: UUID, token: String, participantName: String, chatRepo: ActorRef, ctx: RequestContext) = Props(classOf[AddChatParticipant], fridgeId, token, participantName, chatRepo, ctx)
 }
