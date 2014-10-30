@@ -1,4 +1,4 @@
-package pomf.service
+package pomf.domain.actors
 
 import akka.actor.{ Actor, ActorRef, Props }
 
@@ -8,7 +8,9 @@ import scala.language.postfixOps
 import java.util.UUID
 
 import pomf.domain.model._
-import pomf.service.ChatRoomProtocol._
+import pomf.service.NotificationServiceProtocol
+import pomf.service.NotificationServiceProtocol._
+import pomf.domain.actors.ChatRoomProtocol._
 import pomf.util.CustomOrdering._
 import pomf.core.actors.CommonActor
 

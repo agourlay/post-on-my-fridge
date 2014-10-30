@@ -1,11 +1,11 @@
-package pomf.api.endpoint
+package pomf.api.streaming
 
 import spray.http._
 import spray.http.MediaTypes._
 import spray.routing._
 import Directives._
 
-object ServerSentEvent {
+object ServerSentEventSupport {
   val EventStreamType = register(
     MediaType.custom(
       mainType = "text",

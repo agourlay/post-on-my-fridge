@@ -1,8 +1,8 @@
-package pomf.service
+package pomf.domain.actors
 
 import akka.actor.{ Actor, ActorRef, Props }
 
-import pomf.service.ChatRepoProtocol._
+import pomf.domain.actors.ChatRepoProtocol._
 import java.util.UUID
 import pomf.core.actors.CommonActor
 

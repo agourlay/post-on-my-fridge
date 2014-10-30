@@ -7,14 +7,13 @@ import HttpHeaders._
 import spray.can.Http
 
 import pomf.core.actors.CommonActor
-import pomf.api.endpoint.ServerSentEvent
 
 abstract class StreamingResponse(responder: ActorRef) extends CommonActor {
 
   val timerCtx = metrics.timer("streaming").timerContext()
 
   lazy val responseStart = HttpResponse(
-    entity = HttpEntity(ServerSentEvent.EventStreamType, "streaming updates..."),
+    entity = HttpEntity(ServerSentEventSupport.EventStreamType, "streaming updates..."),
     headers = `Cache-Control`(CacheDirectives.`no-cache`) :: Nil
   )
 

@@ -9,10 +9,10 @@ import spray.routing._
 import spray.json._
 
 import pomf.service.ChatRoomNotFoundException
-import pomf.service.ChatRoomProtocol
-import pomf.service.ChatRoomProtocol._
-import pomf.service.ChatRepoProtocol
-import pomf.service.ChatRepoProtocol._
+import pomf.domain.actors.ChatRoomProtocol
+import pomf.domain.actors.ChatRoomProtocol._
+import pomf.domain.actors.ChatRepoProtocol
+import pomf.domain.actors.ChatRepoProtocol._
 
 class AddChatParticipant(fridgeId: UUID, token: String, participantName: String, chatRepo: ActorRef, ctx: RequestContext) extends RestRequest(ctx) {
 

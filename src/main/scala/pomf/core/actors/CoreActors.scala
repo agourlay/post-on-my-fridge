@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory
 import pomf.service.CrudService
 import pomf.service.CrudServiceProtocol
 import pomf.service.NotificationService
-import pomf.service.ChatRepository
 import pomf.service.TokenService
+import pomf.domain.actors.ChatRepository
 import pomf.domain.dao.PostgresDB
 import pomf.configuration.Settings
 import pomf.core.metrics.MetricsReporter

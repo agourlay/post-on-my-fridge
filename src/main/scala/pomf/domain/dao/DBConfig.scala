@@ -3,7 +3,7 @@ package pomf.domain.dao
 import org.slf4j.LoggerFactory
 
 import scala.slick.driver.PostgresDriver.simple._
-import org.apache.commons.dbcp.BasicDataSource
+import com.zaxxer.hikari.HikariDataSource
 
 trait DBConfig {
   def dao: Dao
@@ -16,14 +16,12 @@ class PostgresDB(user: String, password: String, schema: String, host: String, p
   log.info(s"Connecting to db $url with user $user")
 
   val databasePool = {
-    val ds = new BasicDataSource
-    ds.setDriverClassName("org.postgresql.Driver")
-    ds.setUrl(url)
-    ds.setMaxIdle(10);
-    ds.setInitialSize(10);
-    ds.setMaxActive(100)
-    ds.setUsername(user);
-    ds.setPassword(password);
+    val ds = new HikariDataSource()
+    ds.setMaximumPoolSize(50)
+    ds.setDriverClassName("org.postgresql.ds.PGSimpleDataSource")
+    ds.setJdbcUrl(url)
+    ds.addDataSourceProperty("user", user)
+    ds.addDataSourceProperty("password", password)
     Database.forDataSource(ds)
   }
 

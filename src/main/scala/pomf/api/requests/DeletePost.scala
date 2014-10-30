@@ -2,7 +2,6 @@ package pomf.api.request
 
 import akka.actor.{ Actor, ActorRef, Props }
 
-import scala.util.Failure
 import spray.routing._
 import spray.json._
 

@@ -52,7 +52,7 @@ class MetricsReporter extends CommonActor {
     case All       ⇒ sender ! metricsByName(MetricsReporter.allMetrics)
     case Requests  ⇒ sender ! metricsByName(MetricsReporter.requestsMetrics)
     case Streaming ⇒ sender ! metricsByName(MetricsReporter.streamingMetrics)
-    case TopicRepo ⇒ sender ! metricsByName(MetricsReporter.domainMetrics)
+    case Domain    ⇒ sender ! metricsByName(MetricsReporter.domainMetrics)
   }
 
   def metricsByName(name: String) = {
@@ -81,7 +81,6 @@ object MetricsReporterProtocol {
   case object All
   case object Requests
   case object Streaming
-  case object TopicRepo
-  case object SubRepo
+  case object Domain
   case class MetricsReport(metrics: Map[String, JsValue])
 }

@@ -22,9 +22,7 @@ App.PostView = Em.View.extend({
 		
 		trashPost : function () {
 			var view = this;
-			view.$() 
-			    .effect("highlight")
-			    .effect("clip", 300, function(){
+			view.$().effect("clip", 300, function(){
 				    infoMessage("Post from " + view.get('content').get('author') + " deleted");
 					view.get('controller').deletePost(view.get('content').get('id'));
 				});
@@ -100,7 +98,7 @@ App.PostView = Em.View.extend({
 
 	    this.$().offset({ "left" : left * fridge.width(), "top" : top * fridge.height()})
 	    		.hide()
-	    	    .fadeIn();
+	    	    .fadeIn({duration : 100});
 	},
 
 	updatePhysicalPosition: function() {

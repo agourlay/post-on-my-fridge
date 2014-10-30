@@ -11,9 +11,9 @@ import java.util.UUID
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
 import pomf.service.ChatRoomNotFoundException
-import pomf.service.ChatRoomProtocol
-import pomf.service.ChatRepoProtocol
-import pomf.service.ChatRepoProtocol._
+import pomf.domain.actors.ChatRoomProtocol
+import pomf.domain.actors.ChatRepoProtocol
+import pomf.domain.actors.ChatRepoProtocol._
 
 class SendChatMessage(fridgeId: UUID, message: ChatMessage, token: String, chatRepo: ActorRef, ctx: RequestContext) extends RestRequest(ctx) {
 

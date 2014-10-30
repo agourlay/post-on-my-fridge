@@ -1,16 +1,4 @@
-import com.typesafe.sbt.SbtNativePackager.Universal
-
-import com.typesafe.sbt.packager.Keys._
-
 import scalariform.formatter.preferences._
-
-packageArchetype.java_application
-
-mappings in Universal += {
-  file("src/main/resources/application.conf") -> "conf/pomf.conf"
-}
-
-scriptClasspath += "../conf/pomf.conf"
 
 organization := "com.agourlay"
 
@@ -30,6 +18,14 @@ scalacOptions := Seq(
   "-language:postfixOps",
   "-feature"
 )
+
+enablePlugins(JavaAppPackaging)
+
+mappings in Universal += {
+  file("src/main/resources/application.conf") -> "conf/pomf.conf"
+}
+
+scriptClasspath += "../conf/pomf.conf"
 
 scalariformSettings
 
@@ -53,7 +49,7 @@ libraryDependencies ++= {
   val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
-  val dbcpV         = "1.4"
+  val hikaricpV     = "2.1.0"
   Seq(
      "io.spray"              %%  "spray-can"         % sprayV     
     ,"io.spray"              %%  "spray-routing"     % sprayV             
@@ -66,7 +62,7 @@ libraryDependencies ++= {
     ,"com.typesafe.slick"    %%  "slick"             % slickV             
     ,"org.postgresql"        %   "postgresql"        % postgresqlV    
     ,"ch.qos.logback"        %   "logback-classic"   % logbackV
-    ,"commons-dbcp"          %   "commons-dbcp"      % dbcpV
+    ,"com.zaxxer"            %   "HikariCP-java6"    % hikaricpV
     ,"nl.grons"              %%  "metrics-scala"     % scalaMetricsV        
     ,"io.dropwizard.metrics" %   "metrics-graphite"  % metricsV                  
   )
