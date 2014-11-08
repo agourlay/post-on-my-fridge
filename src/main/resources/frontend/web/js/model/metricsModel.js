@@ -1,7 +1,8 @@
 App.Metrics = Em.Object.extend({
 	counters : [],
 	meters : [],
-	timers : []
+	timers : [],
+	histograms : []
 });
 
 App.Counter = Em.Object.extend({
@@ -20,6 +21,21 @@ App.Timer = Em.Object.extend({
 	fiveMinuteRate : null,
 	meanRate : null,
 	oneMinuteRate : null,
+	"50p" : null,
+	"75p" : null,
+	"95p" : null,
+	"98p" : null,
+	"99p" : null,
+	"999p" : null
+});
+
+App.Histogram = Em.Object.extend({
+	name : null,
+	count : null,
+	max: null,
+	min: null,
+	mean: null,
+	stdDev: null,
 	"50p" : null,
 	"75p" : null,
 	"95p" : null,

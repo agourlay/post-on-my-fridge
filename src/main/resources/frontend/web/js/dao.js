@@ -193,10 +193,12 @@ App.Dao = Em.Object.create({
             var system = App.Metrics.create();
             var meters = dao.buildMetric(json, 5);
             var timers = dao.buildMetric(json, 15);
+            var histograms = dao.buildMetric(json, 11);
             var counters = dao.buildMetric(json, 1);
             system.set('meters', meters);
             system.set('timers', timers);
             system.set('counters', counters);
+            system.set('histograms', histograms);
             return system;
         });
     },
@@ -207,6 +209,7 @@ App.Dao = Em.Object.create({
         jQuery.each(filtered, function(i, val) {
             var newMetric = new Object();
             if( keyNb == 15) { newMetric = App.Timer.create(val.value); }  
+            if( keyNb == 11) { newMetric = App.Histogram.create(val.value); }  
             if( keyNb == 5) { newMetric = App.Meter.create(val.value); }
             if( keyNb == 1) { newMetric = App.Counter.create(val.value); } 
             var tmpArr = val.name.split(".");

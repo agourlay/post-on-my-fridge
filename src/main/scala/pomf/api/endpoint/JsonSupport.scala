@@ -98,4 +98,22 @@ object JsonSupport {
     // we don't need to deserialize the TopicPath
     def read(json: JsValue): Timer = ???
   }
+
+  implicit val formatHisto = new RootJsonFormat[Histogram] {
+    def write(obj: Histogram) = JsObject(
+      "count" -> JsNumber(obj.count),
+      "max" -> JsNumber(obj.max),
+      "min" -> JsNumber(obj.min),
+      "mean" -> JsNumber(obj.mean),
+      "stdDev" -> JsNumber(obj.stdDev),
+      "50p" -> JsNumber(obj.snapshot.getMedian()),
+      "75p" -> JsNumber(obj.snapshot.get75thPercentile()),
+      "95p" -> JsNumber(obj.snapshot.get95thPercentile()),
+      "98p" -> JsNumber(obj.snapshot.get98thPercentile()),
+      "99p" -> JsNumber(obj.snapshot.get99thPercentile()),
+      "999p" -> JsNumber(obj.snapshot.get999thPercentile())
+    )
+    // we don't need to deserialize the TopicPath
+    def read(json: JsValue): Histogram = ???
+  }
 }

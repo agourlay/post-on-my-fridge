@@ -14,6 +14,7 @@ import com.codahale.metrics.{ Counter ⇒ JCounter }
 import com.codahale.metrics.{ Meter ⇒ JMeter }
 import com.codahale.metrics.{ Timer ⇒ JTimer }
 import com.codahale.metrics.{ Gauge ⇒ JGauge }
+import com.codahale.metrics.{ Histogram ⇒ JHistogram }
 import com.codahale.metrics.graphite._
 
 import nl.grons.metrics.scala._
@@ -65,7 +66,8 @@ class MetricsReporter extends CommonActor {
     case j: JGauge[Int] ⇒ formatGauge.write(new Gauge(j))
     case j: JMeter      ⇒ formatMeter.write(new Meter(j))
     case j: JCounter    ⇒ formatCounter.write(new Counter(j))
-    case _              ⇒ throw new RuntimeException("From java with love")
+    case j: JHistogram  ⇒ formatHisto.write(new Histogram(j))
+    case _              ⇒ throw new RuntimeException(s"Cannot format metric")
   }
 }
 

@@ -53,7 +53,52 @@
 						{{/each}}
 					</tbody>
 				</table>
-			</div>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-10 col-md-offset-1 text-center">
+				<h4>Histograms</h4>
+			</div>
+		</div>
+		<div class="row">		
+			<div class="col-md-10 col-md-offset-1 well">
+				<table class="table table-hover table-striped table-condensed">
+				<thead>
+				    <tr>
+				    	<th>name</th>
+				        <th>count</th>
+				        <th>max</th>
+				        <th>min</th>
+				        <th>mean</th>
+				        <th>stdDev</th>
+				        <th>50p</th>
+				        <th>75p</th>
+				        <th>95p</th>
+				        <th>98p</th>
+				        <th>99p</th>
+				        <th>99.9p</th>
+				    </tr>
+				</thead>
+				<tbody>
+					{{#each view.content.histograms}}
+						<tr>
+							<td class="left">{{name}}</td>
+							<td>{{count}}</td>
+							<td>{{duration max 2}}</td>
+							<td>{{duration min 2}}</td>
+							<td>{{duration mean 2}}</td>
+							<td>{{duration stdDev 2}}</td>
+							<td>{{duration 50p 2}}</td>
+							<td>{{duration 75p 2}}</td>
+							<td>{{duration 95p 2}}</td>
+							<td>{{duration 98p 2}}</td>
+							<td>{{duration 99p 2}}</td>
+							<td>{{duration 999p 2}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>		
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2 text-center">
 				<h4>Meters</h4>
