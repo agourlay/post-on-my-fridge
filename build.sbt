@@ -38,18 +38,18 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(RewriteArrowSymbols, true)
 
 libraryDependencies ++= {
-  val akkaV         = "2.3.6"
+  val akkaV         = "2.3.8"
   val sprayV        = "1.3.2"
   val sprayJsonV    = "1.3.1"
   val scalaMetricsV = "3.3.0_a2.3"
   val metricsV      = "3.1.0"
-  val jodaTimeV     = "2.5"
+  val jodaTimeV     = "2.6"
   val jodaConvertV  = "1.7"
   val slickV        = "2.1.0" 
   val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
-  val hikaricpV     = "2.2.4"
+  val hikaricpV     = "2.2.5"
   Seq(
      "io.spray"              %%  "spray-can"         % sprayV     
     ,"io.spray"              %%  "spray-routing"     % sprayV             
