@@ -2,10 +2,12 @@ App.FridgesController = Ember.ArrayController.extend({
 	sortProperties: ['modificationDate'],
 	sortAscending: false,
 	page: 1,
+	newName: null,
 
  	actions: {  
- 		createFridge : function(name){
+ 		createFridge : function(){
 			var me = this;
+			var name = this.get('newName');
 			if (!name){
 				infoMessage("fridge name is empty");
 			} else {

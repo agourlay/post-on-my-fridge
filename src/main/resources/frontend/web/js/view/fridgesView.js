@@ -1,7 +1,6 @@
 App.FridgesView = Em.View.extend({
 	tagName : 'div',
     elementId: 'fridgesView',
-	newName: null,
 
 	previousDisabled: function() {
 		return this.get('controller.page') == 1;
@@ -31,7 +30,7 @@ App.FridgesView = Em.View.extend({
 		    templates: {
 		        empty: [
 			      '<div class="tt-suggestion">',
-			      'no fridge matching',
+			      'no fridge found',
 			      '</div>'
 			    ].join('\n'),
 			    suggestion: function(data){

@@ -3,7 +3,9 @@
 	<div class="content">{{{view.generatedContent}}}</div>
 	<div class="footer">
 		<span class="author">{{view.content.author}}</span> posted 
-		<time class="date" datetime="{{view.content.creationDate}}">{{view.relativeDate}}</time>
+		<time class="date" {{bind-attr datetime=view.content.creationDate}}>
+			{{view.relativeDate}}
+		</time>
 	</div>
 {{else}}
 	{{partial "post/form"}}

@@ -27,7 +27,6 @@ module.exports = function(grunt) {
           "web/bower_components/bacon/dist/Bacon.min.js",
           "web/bower_components/jquery-ui/jquery-ui.min.js",
           "web/bower_components/noty/js/noty/packaged/jquery.noty.packaged.min.js",
-          "web/bower_components/hammerjs/hammer.min.js",
           "web/bower_components/jquery-ui-touch-punch-improved/jquery.ui.touch-punch-improved.js"
         ],
         dest: 'web/dist/js/libs.min.js'
