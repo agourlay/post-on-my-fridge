@@ -1,14 +1,14 @@
 package pomf.api.route
 
 import akka.actor.{ Actor, ActorRef, Props, ActorContext }
-
-import spray.routing._
+import akka.http.server._
+import Directives._
 
 import pomf.api.request.SearchFridge
 
-class SearchRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+object SearchRoute {
 
-  val route =
+  def build(crudService: ActorRef)(implicit context: ActorContext) =
     pathPrefix("search") {
       path("fridge") {
         parameters("term") { term ⇒

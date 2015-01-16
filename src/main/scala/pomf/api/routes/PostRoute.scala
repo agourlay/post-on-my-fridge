@@ -1,17 +1,19 @@
 package pomf.api.route
 
 import akka.actor.{ Actor, ActorRef, Props, ActorContext }
-
-import spray.routing._
-import spray.httpx.SprayJsonSupport._
+import akka.http.marshallers.sprayjson.SprayJsonSupport
+import akka.http.marshalling.Marshaller._
+import akka.http.unmarshalling.Unmarshal
+import akka.http.server._
+import Directives._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.Post
 import pomf.api.request._
 
-class PostRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+object PostRoute {
 
-  val route =
+  def build(crudService: ActorRef)(implicit context: ActorContext) =
     path("posts") {
       post {
         parameters("token") { token ⇒

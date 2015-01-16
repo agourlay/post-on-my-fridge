@@ -1,20 +1,21 @@
 package pomf.api.route
 
 import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.http.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.marshalling.Marshaller._
+import akka.http.unmarshalling.Unmarshal
+import akka.http.server.Directives._
 
-import spray.httpx.SprayJsonSupport._
-import spray.routing._
 import spray.json._
-
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model.ChatMessage
 import pomf.api.request._
 
-class ChatRoute(chatRepo: ActorRef)(implicit context: ActorContext) extends Directives {
+object ChatRoute {
 
-  val route =
+  def build(chatRepo: ActorRef)(implicit context: ActorContext) =
     pathPrefix("chat" / JavaUUID) { fridgeId ⇒
       path("messages") {
         post {

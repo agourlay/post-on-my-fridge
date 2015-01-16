@@ -1,17 +1,17 @@
 package pomf.api.route
 
 import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.http.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.marshalling.Marshaller._
+import akka.http.unmarshalling.Unmarshal
+import akka.http.server._
+import Directives._
 
-import spray.routing._
-import spray.httpx.encoding._
-import spray.httpx.SprayJsonSupport._
-
-import pomf.api.endpoint.JsonSupport._
 import pomf.api.request._
 
-class FridgeRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+object FridgeRoute {
 
-  val route =
+  def build(crudService: ActorRef)(implicit context: ActorContext) =
     path("fridges" / JavaUUID) { fridgeId ⇒
       get {
         ctx ⇒ context.actorOf(FullFridge.props(fridgeId, ctx, crudService))

@@ -2,17 +2,19 @@ package pomf.api.request
 
 import akka.actor._
 import akka.actor.SupervisorStrategy.Stop
+import akka.http.server._
+import akka.http.model._
+import akka.http.model.headers._
+import akka.http.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.unmarshalling.Unmarshal
+import akka.http.marshalling._
 
 import scala.util._
+import scala.collection.immutable.Seq
 import scala.concurrent.Future
 
-import spray.routing._
-import spray.httpx.SprayJsonSupport._
-import spray.httpx.marshalling._
 import spray.json._
-import spray.http._
-import spray.http.StatusCode
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
 import pomf.core.actors.CommonActor
@@ -40,19 +42,9 @@ abstract class RestRequest(ctx: RequestContext) extends CommonActor {
     self ! PoisonPill
   }
 
-  def requestOver[T](payload: T)(implicit marshaller: ToResponseMarshaller[T]) = {
-    ctx.complete(payload)
+  def requestOver[T: ToResponseMarshallable](payload: T) = {
+    ctx.complete(HttpResponse(entity = payload))
     closeThings()
-  }
-
-  def requestOver[T](status: StatusCode, payload: T)(implicit marshaller: ToResponseMarshaller[(StatusCode, T)]) = {
-    ctx.complete(status, payload)
-    closeThings()
-  }
-
-  def requestOver[T](status: StatusCode, headers: Seq[HttpHeader], payload: T)(implicit marshaller: ToResponseMarshaller[(StatusCode, Seq[HttpHeader], T)]) = {
-    ctx.complete(status, headers, payload)
-    closeThings
   }
 
   override val supervisorStrategy =
@@ -63,4 +55,10 @@ abstract class RestRequest(ctx: RequestContext) extends CommonActor {
         Stop
       }
     }
+}
+
+object RestRequest {
+  def perRequest[A](props: Props, message: Any)(implicit context: ActorContext) = {
+    (context.actorOf(RestRequest.props(ctx, props)) ? message).mapTo[A]
+  }
 }

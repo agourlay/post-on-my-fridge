@@ -1,9 +1,8 @@
 package pomf.api.request
 
 import akka.actor.{ Actor, ActorRef, Props }
+import akka.http.server._
 
-import spray.httpx.SprayJsonSupport._
-import spray.routing._
 import spray.json._
 
 import java.util.UUID

@@ -6,7 +6,7 @@ import java.text.ParseException
 import java.util.UUID
 
 import spray.json._
-import DefaultJsonProtocol._
+import spray.json.DefaultJsonProtocol._
 
 import nl.grons.metrics.scala._
 
@@ -39,7 +39,7 @@ object CustomJsonProtocol {
   }
 }
 
-object JsonSupport {
+object JsonSupport extends DefaultJsonProtocol {
   import CustomJsonProtocol._
 
   implicit val formatPost = jsonFormat8(Post)

@@ -1,15 +1,16 @@
 package pomf.api.exceptions
 
-import spray.util.LoggingContext
-import spray.routing._
-import spray.http._
-import HttpHeaders._
+import akka.actor.ActorLogging
+import akka.http.model.HttpResponse
+import akka.http.model.StatusCodes._
+import akka.http.server._
+import Directives._
 
 import pomf.service._
 import pomf.core.metrics.Instrumented
 
 trait RestFailureHandler extends Instrumented {
-  this: HttpService ⇒
+  this: ActorLogging ⇒
 
   val postNotFound = metrics.meter("PostNotFoundException")
   val fridgeNotFound = metrics.meter("FridgeNotFoundException")
@@ -19,58 +20,58 @@ trait RestFailureHandler extends Instrumented {
   val requestTimeout = metrics.meter("RequestTimeoutException")
   val otherException = metrics.meter("OtherException")
 
-  implicit def pomfExceptionHandler(implicit log: LoggingContext) = ExceptionHandler {
+  implicit def pomfExceptionHandler = ExceptionHandler {
 
     case e: PostNotFoundException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         postNotFound.mark()
         log.warning("Request to {} could not be handled normally -> post does not exist", uri)
-        complete(StatusCodes.NotFound, s"Post ${e.postId} not found : please check post id correctness\n")
+        complete(HttpResponse(NotFound, entity = s"Post ${e.postId} not found : please check post id correctness\n"))
       }
 
     case e: FridgeNotFoundException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         fridgeNotFound.mark()
         log.warning("Request to {} could not be handled normally -> fridge does not exist", uri)
-        complete(StatusCodes.NotFound, s"Fridge ${e.fridgeId} not found : please check fridge id correctness\n")
+        complete(HttpResponse(NotFound, entity = s"Fridge ${e.fridgeId} not found : please check fridge id correctness\n"))
       }
 
     case e: ChatRoomNotFoundException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         chatRoomNotFound.mark()
         log.warning("Request to {} could not be handled normally -> chatRoom does not exist", uri)
-        complete(StatusCodes.NotFound, s"ChatRoom ${e.fridgeId} not found : please check fridge id correctness\n")
+        complete(HttpResponse(NotFound, entity = s"ChatRoom ${e.fridgeId} not found : please check fridge id correctness\n"))
       }
 
     case e: FridgeAlreadyExistsException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         fridgeAlreadyExists.mark()
         log.warning("Request to {} could not be handled normally -> fridge {} already exists", uri, e.fridgeId)
-        complete(StatusCodes.Conflict, s"Fridge ${e.fridgeId} already exist \n")
+        complete(HttpResponse(Conflict, entity = s"Fridge ${e.fridgeId} already exist\n"))
       }
 
     case e: RequestTimeoutException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         requestTimeout.mark()
         log.error("Request to {} could not be handled normally -> RequestTimeout", uri)
         log.error("RequestTimeout : {} ", e)
-        complete(StatusCodes.InternalServerError, "Something is taking longer than expected, retry later \n")
+        complete(HttpResponse(InternalServerError, entity = s"Something is taking longer than expected, retry later\n"))
       }
 
     case e: IllegalArgumentException ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         illegalArgument.mark()
         log.error("Request to {} could not be handled normally -> IllegalArgumentException", uri)
         log.error("IllegalArgumentException : {} ", e)
-        complete(StatusCodes.InternalServerError, e.getMessage)
+        complete(HttpResponse(InternalServerError, entity = e.getMessage))
       }
 
     case e: Exception ⇒
-      requestUri { uri ⇒
+      extractUri { uri ⇒
         otherException.mark()
         log.error("Request to {} could not be handled normally -> unknown exception", uri)
         log.error("unknown exception : {} ", e)
-        complete(StatusCodes.InternalServerError, "An unexpected error occured \n")
+        complete(HttpResponse(InternalServerError, entity = "An unexpected error occured \n"))
       }
   }
 }

@@ -14,6 +14,7 @@ import pomf.domain.dao.PostgresDB
 import pomf.configuration.Settings
 import pomf.core.metrics.MetricsReporter
 import pomf.core.actors.UnhandledMessageListener
+import pomf.api.RestAPI
 
 trait CoreActors {
   this: Core ⇒
@@ -46,4 +47,6 @@ trait CoreActors {
   val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
 
   val unHandledlistener = system.actorOf(UnhandledMessageListener.props, "unhandled-message-listener")
+
+  val restAPI = system.actorOf(RestAPI.props(this), "rest-API")
 }
