@@ -6,7 +6,7 @@ import akka.http.model.StatusCodes._
 import akka.http.server._
 import Directives._
 
-import pomf.service._
+import pomf.domain.{ ChatRoomNotFoundException, FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
 import pomf.core.metrics.Instrumented
 
 trait RestFailureHandler extends Instrumented {
@@ -20,7 +20,7 @@ trait RestFailureHandler extends Instrumented {
   val requestTimeout = metrics.meter("RequestTimeoutException")
   val otherException = metrics.meter("OtherException")
 
-  implicit val pomfExceptionHandler = ExceptionHandler {
+  implicit val exceptionHandler = ExceptionHandler {
 
     case e: PostNotFoundException ⇒
       extractUri { uri ⇒

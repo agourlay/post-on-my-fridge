@@ -52,19 +52,19 @@ class MetricsReporter(system: ActorSystem) extends Instrumented with JsonSupport
     graphiteReporter.start(1, TimeUnit.MINUTES)
   }
 
-  def getAllMetrics() = Future {
+  def getAllMetrics = Future {
     metricsByName(MetricsReporter.allMetrics)
   }
 
-  def getRequestsMetrics() = Future {
+  def getRequestsMetrics = Future {
     metricsByName(MetricsReporter.requestsMetrics)
   }
 
-  def getStreamingMetrics() = Future {
+  def getStreamingMetrics = Future {
     metricsByName(MetricsReporter.streamingMetrics)
   }
 
-  def getDomainMetrics() = Future {
+  def getDomainMetrics = Future {
     metricsByName(MetricsReporter.domainMetrics)
   }
 

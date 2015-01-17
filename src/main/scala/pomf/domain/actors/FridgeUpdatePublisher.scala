@@ -1,14 +1,13 @@
-package pomf.api.streaming
-
-import akka.actor.Props
-import akka.stream.actor.ActorPublisher
-
-import pomf.core.actors.CommonActor
-import pomf.domain.model._
+package pomf.domain.actors
 
 import java.util.UUID
 
-class FridgeUpdates(filter: (UUID, String) ⇒ Boolean)
+import akka.actor.Props
+import akka.stream.actor.ActorPublisher
+import pomf.core.actors.CommonActor
+import pomf.domain.model._
+
+class FridgeUpdatePublisher(filter: (UUID, String) ⇒ Boolean)
     extends ActorPublisher[PushedEvent]
     with CommonActor {
 
@@ -25,6 +24,6 @@ class FridgeUpdates(filter: (UUID, String) ⇒ Boolean)
   }
 }
 
-object FridgeUpdates {
-  def props(filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], filter)
+object FridgeUpdatePublisher {
+  def props(filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdatePublisher], filter)
 }

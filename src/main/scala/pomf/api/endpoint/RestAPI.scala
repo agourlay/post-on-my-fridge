@@ -1,18 +1,16 @@
-package pomf.api
+package pomf.api.endpoint
 
 import akka.actor._
 import akka.http.Http
-import akka.http.server._
-import akka.http.server.RoutingSettings._
 import akka.http.coding.Gzip
+import akka.http.server.Directives._
+import akka.http.server.RoutingSettings._
 import akka.stream.FlowMaterializer
-import Directives._
-
-import pomf.configuration.Settings
-import pomf.core.actors.CommonActor
 import pomf.api.exceptions.RestFailureHandler
 import pomf.api.route._
+import pomf.configuration.Settings
 import pomf.core.CoreActors
+import pomf.core.actors.CommonActor
 
 class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
     extends CommonActor

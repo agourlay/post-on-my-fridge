@@ -9,7 +9,7 @@ import Directives._
 import akka.stream.FlowMaterializer
 
 import java.util.UUID
-import pomf.service.CrudService
+import pomf.domain.CrudService
 import pomf.domain.model.{ FridgeLight, Fridge, FridgeFull }
 import pomf.api.endpoint.JsonSupport
 import pomf.configuration._

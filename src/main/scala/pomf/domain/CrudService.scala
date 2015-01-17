@@ -1,15 +1,14 @@
-package pomf.service
+package pomf.domain
+
+import java.util.UUID
 
 import akka.actor.ActorSystem
 import pomf.api.endpoint.JsonSupport
-
-import scala.concurrent.Future
-import scala.util._
-
 import pomf.domain.dao.Dao
 import pomf.domain.model._
 
-import java.util.UUID
+import scala.concurrent.Future
+import scala.util._
 
 class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
 
@@ -83,3 +82,11 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
   private def toEventStream(n: Notification) = system.eventStream.publish(n)
 
 }
+
+class PostNotFoundException(val postId: UUID) extends Exception(s"Post $postId does not exist")
+
+class FridgeNotFoundException(val fridgeId: UUID) extends Exception(s"Fridge $fridgeId does not exist")
+
+class FridgeAlreadyExistsException(val fridgeId: UUID) extends Exception(s"Fridge $fridgeId already exists")
+
+class ChatRoomNotFoundException(val fridgeId: UUID) extends Exception(s"ChatRoom $fridgeId does not exist")

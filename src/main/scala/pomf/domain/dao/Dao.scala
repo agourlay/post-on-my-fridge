@@ -1,6 +1,7 @@
 package pomf.domain.dao
 
 import org.slf4j.LoggerFactory
+import pomf.domain.FridgeAlreadyExistsException
 
 import scala.slick.driver.PostgresDriver.simple._
 import scala.util._
@@ -13,7 +14,6 @@ import org.joda.time.DateTime
 
 import pomf.core.metrics.Instrumented
 import pomf.domain.model._
-import pomf.service.FridgeAlreadyExistsException
 
 class Dao(db: Database) extends Instrumented {
 

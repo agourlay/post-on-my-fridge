@@ -1,12 +1,12 @@
 package pomf.domain.actors
 
 import akka.actor.{ ActorRef, Props }
+import pomf.domain.ChatRoomNotFoundException
 
 import pomf.domain.actors.ChatRepoProtocol._
 import java.util.UUID
 import pomf.core.actors.CommonActor
 import pomf.domain.actors.ChatRoomProtocol.ChatRoomMessage
-import pomf.service.ChatRoomNotFoundException
 
 import scala.util.Failure
 

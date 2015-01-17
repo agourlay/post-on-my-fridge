@@ -9,9 +9,9 @@ import Directives._
 import akka.stream.FlowMaterializer
 
 import pomf.api.endpoint.JsonSupport
-import pomf.service.CrudService
 import pomf.core.metrics.MetricsReporter
 import pomf.configuration._
+import pomf.domain.CrudService
 import spray.json.JsValue
 
 object StatsRoute extends JsonSupport {
@@ -22,7 +22,7 @@ object StatsRoute extends JsonSupport {
 
     path("stats") {
       get {
-        onSuccess(metricsRepo.getAllMetrics()) { metrics: Map[String, JsValue] ⇒
+        onSuccess(metricsRepo.getAllMetrics) { metrics: Map[String, JsValue] ⇒
           complete(ToResponseMarshallable(OK -> metrics))
         }
       }
