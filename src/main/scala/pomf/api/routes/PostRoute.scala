@@ -9,10 +9,11 @@ import Directives._
 import akka.stream.FlowMaterializer
 
 import java.util.UUID
+
 import pomf.api.endpoint.JsonSupport
 import pomf.domain.CrudService
 import pomf.domain.model.Post
-import pomf.configuration._
+import pomf.core.configuration._
 
 object PostRoute extends JsonSupport {
 

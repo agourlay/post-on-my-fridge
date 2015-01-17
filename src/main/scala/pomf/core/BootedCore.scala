@@ -2,9 +2,9 @@ package pomf.core
 
 import akka.actor.ActorSystem
 import akka.stream.FlowMaterializer
-import org.slf4j.LoggerFactory
+
 import pomf.api.endpoint.RestAPI
-import pomf.configuration.Settings
+import pomf.core.configuration.Settings
 import pomf.core.actors.UnhandledMessageListener
 import pomf.core.metrics.MetricsReporter
 import pomf.domain.CrudService
@@ -12,20 +12,13 @@ import pomf.domain.actors.ChatRepository
 import pomf.domain.dao.PostgresDB
 
 trait Core {
-  implicit def system: ActorSystem
-  implicit def materializer: FlowMaterializer
-}
-
-trait BootedCore extends Core {
   implicit lazy val system = ActorSystem("pomf")
   implicit lazy val materializer = FlowMaterializer()
   sys.addShutdownHook(system.shutdown())
 }
 
-trait CoreActors {
+trait CoreComponents {
   this: Core ⇒
-
-  val logger = LoggerFactory.getLogger("core.coreActors")
 
   val dbUser = Settings(system).Database.DbUser
   val dbPassword = Settings(system).Database.DbPassword

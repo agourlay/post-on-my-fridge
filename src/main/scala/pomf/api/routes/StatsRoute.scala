@@ -8,11 +8,12 @@ import akka.http.server._
 import Directives._
 import akka.stream.FlowMaterializer
 
+import spray.json.JsValue
+
 import pomf.api.endpoint.JsonSupport
 import pomf.core.metrics.MetricsReporter
-import pomf.configuration._
+import pomf.core.configuration._
 import pomf.domain.CrudService
-import spray.json.JsValue
 
 object StatsRoute extends JsonSupport {
 

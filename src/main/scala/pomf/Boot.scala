@@ -1,6 +1,6 @@
 package pomf
 
-import pomf.configuration.Configuration
-import pomf.core.{ BootedCore, CoreActors }
+import pomf.core.configuration.Configuration
+import pomf.core.{ Core, CoreComponents }
 
-object Boot extends App with Configuration with BootedCore with CoreActors {}
+object Boot extends App with Configuration with Core with CoreComponents {}

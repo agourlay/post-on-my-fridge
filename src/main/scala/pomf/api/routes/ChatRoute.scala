@@ -9,7 +9,7 @@ import akka.http.server.Directives._
 import akka.stream.FlowMaterializer
 import pomf.domain.actors.{ ChatRoomProtocol, ChatRepoProtocol }
 
-import pomf.configuration._
+import pomf.core.configuration._
 import pomf.domain.model.ChatMessage
 import pomf.domain.actors.ChatRoomProtocol._
 import pomf.api.endpoint.JsonSupport

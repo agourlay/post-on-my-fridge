@@ -7,7 +7,7 @@ import akka.http.marshalling.ToResponseMarshallable._
 import akka.http.server._
 import Directives._
 
-import pomf.configuration._
+import pomf.core.configuration._
 
 object TokenRoute {
 

@@ -7,7 +7,7 @@ import akka.http.server._
 import Directives._
 import akka.stream.FlowMaterializer
 
-import pomf.configuration._
+import pomf.core.configuration._
 import pomf.api.endpoint.JsonSupport
 import pomf.domain.CrudService
 import pomf.domain.model.Fridge

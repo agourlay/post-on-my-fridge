@@ -1,4 +1,4 @@
-package pomf.configuration
+package pomf.core.configuration
 
 import java.util.concurrent.TimeUnit
 

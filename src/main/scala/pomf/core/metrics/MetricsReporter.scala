@@ -22,7 +22,7 @@ import com.codahale.metrics.graphite._
 import nl.grons.metrics.scala._
 
 import pomf.api.endpoint.JsonSupport
-import pomf.configuration.Settings
+import pomf.core.configuration.Settings
 
 import scala.concurrent.Future
 
@@ -56,14 +56,6 @@ class MetricsReporter(system: ActorSystem) extends Instrumented with JsonSupport
     metricsByName(MetricsReporter.allMetrics)
   }
 
-  def getRequestsMetrics = Future {
-    metricsByName(MetricsReporter.requestsMetrics)
-  }
-
-  def getStreamingMetrics = Future {
-    metricsByName(MetricsReporter.streamingMetrics)
-  }
-
   def getDomainMetrics = Future {
     metricsByName(MetricsReporter.domainMetrics)
   }
@@ -86,7 +78,5 @@ class MetricsReporter(system: ActorSystem) extends Instrumented with JsonSupport
 object MetricsReporter {
   def props = Props(classOf[MetricsReporter])
   val allMetrics = "pomf"
-  val requestsMetrics = "pomf.api.request"
-  val streamingMetrics = "pomf.api.streaming"
   val domainMetrics = "pomf.domain"
 }

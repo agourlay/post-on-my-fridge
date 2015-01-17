@@ -6,13 +6,13 @@ import akka.http.coding.Gzip
 import akka.http.server.Directives._
 import akka.http.server.RoutingSettings._
 import akka.stream.FlowMaterializer
-import pomf.api.exceptions.RestFailureHandler
+
 import pomf.api.route._
-import pomf.configuration.Settings
-import pomf.core.CoreActors
+import pomf.core.configuration.Settings
+import pomf.core.CoreComponents
 import pomf.core.actors.CommonActor
 
-class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
+class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: FlowMaterializer)
     extends CommonActor
     with RestFailureHandler {
 
@@ -21,7 +21,7 @@ class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
 
   override def receive: Receive = Actor.emptyBehavior
 
-  import coreActors._
+  import coreComponents._
 
   val chat = ChatRoute.build(chatRepo)
   val files = FilesRoute.build
@@ -42,6 +42,6 @@ class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
 }
 
 object RestAPI {
-  def props(coreActors: CoreActors)(implicit system: ActorSystem, fm: FlowMaterializer) =
+  def props(coreActors: CoreComponents)(implicit system: ActorSystem, fm: FlowMaterializer) =
     Props(classOf[RestAPI], coreActors, system, fm)
 }

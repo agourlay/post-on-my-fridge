@@ -1,13 +1,12 @@
-package pomf.api.exceptions
+package pomf.api.endpoint
 
 import akka.actor.ActorLogging
 import akka.http.model.HttpResponse
 import akka.http.model.StatusCodes._
+import akka.http.server.Directives._
 import akka.http.server._
-import Directives._
-
-import pomf.domain.{ ChatRoomNotFoundException, FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
 import pomf.core.metrics.Instrumented
+import pomf.domain.{ ChatRoomNotFoundException, FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
 
 trait RestFailureHandler extends Instrumented {
   this: ActorLogging ⇒
@@ -48,14 +47,6 @@ trait RestFailureHandler extends Instrumented {
         fridgeAlreadyExists.mark()
         log.warning("Request to {} could not be handled normally -> fridge {} already exists", uri, e.fridgeId)
         complete(HttpResponse(Conflict, entity = s"Fridge ${e.fridgeId} already exist\n"))
-      }
-
-    case e: RequestTimeoutException ⇒
-      extractUri { uri ⇒
-        requestTimeout.mark()
-        log.error("Request to {} could not be handled normally -> RequestTimeout", uri)
-        log.error("RequestTimeout : {} ", e)
-        complete(HttpResponse(InternalServerError, entity = s"Something is taking longer than expected, retry later\n"))
       }
 
     case e: IllegalArgumentException ⇒
