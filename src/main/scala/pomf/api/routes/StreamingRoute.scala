@@ -1,6 +1,6 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.{ ActorRef, ActorContext }
 import akka.http.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.marshalling.Marshaller._
 import akka.http.unmarshalling.Unmarshal
@@ -19,7 +19,13 @@ import pomf.api.streaming.FridgeUpdates
 
 object StreamingRoute extends SseMarshalling {
 
-  def build(implicit context: ActorContext) =
+  implicit def flowEventToSseMessage(event: PushedEvent): Sse.Message = {
+    Sse.Message(formatEvent.write(event) + "\n\n")
+  }
+
+  def build(implicit context: ActorContext) = {
+    implicit val ec = context.dispatcher
+
     pathPrefix("stream") {
       get {
         path("fridge" / JavaUUID) { fridgeId ⇒
@@ -31,9 +37,6 @@ object StreamingRoute extends SseMarshalling {
         }
       }
     }
-
-  implicit def flowEventToSseMessage(event: PushedEvent): Sse.Message = {
-    Sse.Message(formatEvent.write(event) + "\n\n")
   }
 
   def streamUser(fridgeId: UUID, token: String, context: ActorContext): ActorRef = {

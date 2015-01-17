@@ -1,22 +1,28 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import java.util.UUID
+
+import akka.actor.ActorContext
 import akka.http.marshallers.sprayjson.SprayJsonSupport
 import akka.http.unmarshalling.Unmarshal
+import akka.http.marshalling.ToResponseMarshallable._
 import akka.http.server._
 import Directives._
 
-import scala.concurrent.duration._
-import scala.language.postfixOps
-
-import pomf.api.request.GenerateToken
+import pomf.configuration._
 
 object TokenRoute {
 
-  def build(tokenService: ActorRef)(implicit context: ActorContext) =
+  def build()(implicit context: ActorContext) = {
+    implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
+    implicit val ec = context.dispatcher
+
     path("token") {
-      get { ctx ⇒
-        context.actorOf(GenerateToken.props(ctx, tokenService))
+      get {
+        complete {
+          UUID.randomUUID().toString
+        }
       }
     }
+  }
 }

@@ -1,57 +1,85 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.{ ActorRef, ActorContext }
+import akka.pattern._
 import akka.http.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.marshalling.Marshaller._
+import akka.http.marshalling.ToResponseMarshallable
+import akka.http.model.StatusCodes._
 import akka.http.unmarshalling.Unmarshal
 import akka.http.server.Directives._
+import akka.stream.FlowMaterializer
+import pomf.domain.actors.{ ChatRoomProtocol, ChatRepoProtocol }
 
 import spray.json._
 import spray.json.DefaultJsonProtocol._
 
 import pomf.api.endpoint.JsonSupport._
+import pomf.configuration._
 import pomf.domain.model.ChatMessage
-import pomf.api.request._
+import pomf.domain.actors.ChatRoomProtocol._
 
 object ChatRoute {
 
-  def build(chatRepo: ActorRef)(implicit context: ActorContext) =
+  def build(chatRepo: ActorRef)(implicit context: ActorContext, fm: FlowMaterializer) = {
+    implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
+    implicit val ec = context.dispatcher
+
     pathPrefix("chat" / JavaUUID) { fridgeId ⇒
       path("messages") {
         post {
           parameters("token") { token ⇒
             entity(as[ChatMessage]) { message ⇒
-              ctx ⇒ context.actorOf(SendChatMessage.props(fridgeId, message, token, chatRepo, ctx))
+              complete {
+                (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.SendMessage(message, token))).mapTo[ChatMessage].map {
+                  case cm: ChatMessage ⇒ ToResponseMarshallable(OK -> cm)
+                }
+              }
             }
           }
         } ~
           get {
-            ctx ⇒ context.actorOf(ChatHistory.props(fridgeId, chatRepo, ctx))
+            complete {
+              (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.ChatHistory)).mapTo[ChatHistoryContent].map {
+                case ChatHistoryContent(messages) ⇒ ToResponseMarshallable(OK -> messages)
+              }
+            }
           }
       } ~
         path("participants") {
           post {
             parameters("token") { token ⇒
               entity(as[String]) { participantName ⇒
-                ctx ⇒ context.actorOf(AddChatParticipant.props(fridgeId, token, participantName, chatRepo, ctx))
+                complete {
+                  (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.AddParticipant(token, participantName))).mapTo[String]
+                }
               }
             }
           } ~
             put {
               parameters("token") { token ⇒
                 entity(as[String]) { newName ⇒
-                  ctx ⇒ context.actorOf(RenameChatParticipant.props(fridgeId, token, newName, chatRepo, ctx))
+                  complete {
+                    (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.RenameParticipant(token, newName))).mapTo[String]
+                  }
                 }
               }
             } ~
             get {
-              ctx ⇒ context.actorOf(ChatParticipantNumber.props(fridgeId, chatRepo, ctx))
+              complete {
+                (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.ParticipantNumber)).mapTo[ParticipantNumberRoom].map {
+                  case ParticipantNumberRoom(nb) ⇒ ToResponseMarshallable(OK -> nb)
+                }
+              }
             } ~
             delete {
               parameters("token") { token ⇒
-                ctx ⇒ context.actorOf(RemoveChatParticipant.props(fridgeId, token, chatRepo, ctx))
+                complete {
+                  (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.RemoveParticipant(token))).mapTo[String]
+                }
               }
             }
         }
     }
+  }
 }

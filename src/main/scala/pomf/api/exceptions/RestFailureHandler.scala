@@ -20,7 +20,7 @@ trait RestFailureHandler extends Instrumented {
   val requestTimeout = metrics.meter("RequestTimeoutException")
   val otherException = metrics.meter("OtherException")
 
-  implicit def pomfExceptionHandler = ExceptionHandler {
+  implicit val pomfExceptionHandler = ExceptionHandler {
 
     case e: PostNotFoundException ⇒
       extractUri { uri ⇒

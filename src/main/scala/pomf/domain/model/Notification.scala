@@ -1,6 +1,5 @@
 package pomf.domain.model
 
-import scala.compat.Platform
 import org.joda.time.DateTime
 import spray.json._
 import pomf.api.endpoint.JsonSupport._

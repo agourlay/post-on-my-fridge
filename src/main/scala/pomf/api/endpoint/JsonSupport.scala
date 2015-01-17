@@ -1,12 +1,8 @@
 package pomf.api.endpoint
 
-import java.util.Date
-import java.text.SimpleDateFormat
-import java.text.ParseException
 import java.util.UUID
 
 import spray.json._
-import spray.json.DefaultJsonProtocol._
 
 import nl.grons.metrics.scala._
 

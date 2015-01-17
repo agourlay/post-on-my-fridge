@@ -1,7 +1,6 @@
 package pomf.api
 
 import akka.actor._
-import akka.http._
 import akka.http.Http
 import akka.http.server._
 import akka.http.server.RoutingSettings._
@@ -19,6 +18,9 @@ class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
     extends CommonActor
     with RestFailureHandler {
 
+  implicit val executionContext = system.dispatcher
+  implicit val ifm = fm
+
   override def receive: Receive = Actor.emptyBehavior
 
   import coreActors._
@@ -30,14 +32,15 @@ class RestAPI(coreActors: CoreActors, system: ActorSystem, fm: FlowMaterializer)
   val search = SearchRoute.build(crudService)
   val stats = StatsRoute.build(crudService, metricsReporter)
   val streaming = StreamingRoute.build
-  val token = TokenRoute.build(tokenService)
+  val token = TokenRoute.build()
 
   val routes = encodeResponse(Gzip) {
     chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token
   }
 
-  Http(system).bind(interface = "localhost", port = Settings(system).Http.Port)
-    .startHandlingWith(Route.handlerFlow(routes))(fm)
+  Http(system)
+    .bind(interface = "localhost", port = Settings(system).Http.Port)
+    .startHandlingWith(routes)
 }
 
 object RestAPI {

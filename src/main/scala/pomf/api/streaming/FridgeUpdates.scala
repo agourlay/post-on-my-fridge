@@ -1,12 +1,9 @@
 package pomf.api.streaming
 
-import akka.actor.{ Actor, ActorRef, Props }
-import akka.http._
-import akka.http.model._
-import akka.stream.actor.{ ActorPublisher, ActorPublisherMessage }
+import akka.actor.Props
+import akka.stream.actor.ActorPublisher
 
 import pomf.core.actors.CommonActor
-import pomf.api.endpoint.JsonSupport._
 import pomf.domain.model._
 
 import java.util.UUID
