@@ -48,7 +48,7 @@ libraryDependencies ++= {
   val metricsV      = "3.1.0"
   val jodaTimeV     = "2.7"
   val jodaConvertV  = "1.7"
-  val slickV        = "2.1.0" 
+  val slickV        = "2.1.0"
   val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
@@ -57,7 +57,6 @@ libraryDependencies ++= {
      "com.typesafe.akka"     %%  "akka-actor"                        % akkaV
     ,"com.typesafe.akka"     %%  "akka-slf4j"                        % akkaV
     ,"com.typesafe.akka"     %%  "akka-http-experimental"            % akkaHttpV
-    ,"com.typesafe.akka"     %%  "akka-http-core-experimental"       % akkaHttpV
     ,"com.typesafe.akka"     %%  "akka-http-spray-json-experimental" % akkaHttpV
     ,"de.heikoseeberger"     %%  "akka-sse"                          % akkaSseV
     ,"io.spray"              %%  "spray-json"                        % sprayJsonV
