@@ -26,9 +26,9 @@ trait CoreActors {
 
   val crudService = new CrudService(dbConfig.dao, system)
 
-  val chatRepo = system.actorOf(ChatRepository.props(), "chat-repository")
+  val metricsReporter = new MetricsReporter(system)
 
-  val metricsReporter = system.actorOf(MetricsReporter.props, "metrics-reporter")
+  val chatRepo = system.actorOf(ChatRepository.props(), "chat-repository")
 
   val unHandledListener = system.actorOf(UnhandledMessageListener.props, "unhandled-message-listener")
 

@@ -4,6 +4,8 @@ import akka.actor._
 
 import java.util.concurrent.TimeUnit
 
+import org.slf4j.LoggerFactory
+
 import scala.collection.JavaConversions._
 
 import spray.json.JsValue
@@ -21,12 +23,13 @@ import nl.grons.metrics.scala._
 
 import pomf.api.endpoint.JsonSupport
 import pomf.configuration.Settings
-import pomf.core.actors.CommonActor
-import pomf.core.metrics.MetricsReporterProtocol._
 
-class MetricsReporter extends CommonActor with JsonSupport {
+import scala.concurrent.Future
 
-  val system = context.system
+class MetricsReporter(system: ActorSystem) extends Instrumented with JsonSupport {
+
+  val log = LoggerFactory.getLogger("metricsReporter")
+  implicit val ec = system.dispatcher
 
   JmxReporter.forRegistry(metricRegistry).build().start()
 
@@ -49,16 +52,25 @@ class MetricsReporter extends CommonActor with JsonSupport {
     graphiteReporter.start(1, TimeUnit.MINUTES)
   }
 
-  def receive = {
-    case All       ⇒ sender ! metricsByName(MetricsReporter.allMetrics)
-    case Requests  ⇒ sender ! metricsByName(MetricsReporter.requestsMetrics)
-    case Streaming ⇒ sender ! metricsByName(MetricsReporter.streamingMetrics)
-    case Domain    ⇒ sender ! metricsByName(MetricsReporter.domainMetrics)
+  def getAllMetrics() = Future {
+    metricsByName(MetricsReporter.allMetrics)
   }
 
-  def metricsByName(name: String) = {
+  def getRequestsMetrics() = Future {
+    metricsByName(MetricsReporter.requestsMetrics)
+  }
+
+  def getStreamingMetrics() = Future {
+    metricsByName(MetricsReporter.streamingMetrics)
+  }
+
+  def getDomainMetrics() = Future {
+    metricsByName(MetricsReporter.domainMetrics)
+  }
+
+  def metricsByName(name: String): Map[String, JsValue] = {
     val rawMap = metricRegistry.getMetrics().filterKeys(_.contains(name))
-    MetricsReport(rawMap.toMap.mapValues(toJsValue(_)))
+    rawMap.toMap.mapValues(toJsValue(_))
   }
 
   def toJsValue(java: Any): JsValue = java match {
@@ -77,12 +89,4 @@ object MetricsReporter {
   val requestsMetrics = "pomf.api.request"
   val streamingMetrics = "pomf.api.streaming"
   val domainMetrics = "pomf.domain"
-}
-
-object MetricsReporterProtocol {
-  case object All
-  case object Requests
-  case object Streaming
-  case object Domain
-  case class MetricsReport(metrics: Map[String, JsValue])
 }

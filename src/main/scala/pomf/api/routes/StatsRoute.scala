@@ -1,33 +1,29 @@
 package pomf.api.route
 
-import akka.actor.{ ActorRef, ActorContext }
-import akka.pattern._
+import akka.actor.ActorContext
 import akka.http.model.StatusCodes._
 import akka.http.marshalling.Marshaller._
 import akka.http.marshalling.ToResponseMarshallable
-import akka.http.marshalling.ToResponseMarshallable._
 import akka.http.server._
 import Directives._
 import akka.stream.FlowMaterializer
+
 import pomf.api.endpoint.JsonSupport
 import pomf.service.CrudService
-
-import pomf.core.metrics.MetricsReporterProtocol
-import pomf.core.metrics.MetricsReporterProtocol._
+import pomf.core.metrics.MetricsReporter
 import pomf.configuration._
+import spray.json.JsValue
 
 object StatsRoute extends JsonSupport {
 
-  def build(crudService: CrudService, metricsRepo: ActorRef)(implicit context: ActorContext, fm: FlowMaterializer) = {
+  def build(crudService: CrudService, metricsRepo: MetricsReporter)(implicit context: ActorContext, fm: FlowMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher
 
     path("stats") {
       get {
-        complete {
-          (metricsRepo ? MetricsReporterProtocol.All).mapTo[MetricsReport].map {
-            case MetricsReport(metrics) ⇒ ToResponseMarshallable(OK -> metrics)
-          }
+        onSuccess(metricsRepo.getAllMetrics()) { metrics: Map[String, JsValue] ⇒
+          complete(ToResponseMarshallable(OK -> metrics))
         }
       }
     } ~
