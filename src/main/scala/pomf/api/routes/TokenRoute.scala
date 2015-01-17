@@ -3,8 +3,6 @@ package pomf.api.route
 import java.util.UUID
 
 import akka.actor.ActorContext
-import akka.http.marshallers.sprayjson.SprayJsonSupport
-import akka.http.unmarshalling.Unmarshal
 import akka.http.marshalling.ToResponseMarshallable._
 import akka.http.server._
 import Directives._

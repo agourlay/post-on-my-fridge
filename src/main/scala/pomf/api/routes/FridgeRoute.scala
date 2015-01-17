@@ -1,27 +1,20 @@
 package pomf.api.route
 
-import akka.actor.{ ActorRef, ActorContext }
-import akka.pattern._
+import akka.actor.ActorContext
 import akka.http.model.StatusCodes._
 import akka.http.marshalling.Marshaller._
 import akka.http.marshalling.ToResponseMarshallable
-import akka.http.marshallers.sprayjson.SprayJsonSupport._
-import akka.http.marshalling.ToResponseMarshallable._
 import akka.http.server._
 import Directives._
 import akka.stream.FlowMaterializer
-import pomf.service.CrudService
-
-import spray.json._
-import spray.json.DefaultJsonProtocol._
 
 import java.util.UUID
-
+import pomf.service.CrudService
 import pomf.domain.model.{ FridgeLight, Fridge, FridgeFull }
-import pomf.api.endpoint.JsonSupport._
+import pomf.api.endpoint.JsonSupport
 import pomf.configuration._
 
-object FridgeRoute {
+object FridgeRoute extends JsonSupport {
 
   def build(crudService: CrudService)(implicit context: ActorContext, fm: FlowMaterializer) = {
 

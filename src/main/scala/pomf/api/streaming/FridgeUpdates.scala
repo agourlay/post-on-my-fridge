@@ -14,7 +14,7 @@ class FridgeUpdates(filter: (UUID, String) ⇒ Boolean)
 
   context.system.eventStream.subscribe(self, classOf[Notification])
 
-  override def receive = receiveNotification orElse super.receive
+  override def receive = receiveNotification
 
   def receiveNotification: Receive = {
     case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒

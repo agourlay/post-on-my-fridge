@@ -13,11 +13,11 @@ import de.heikoseeberger.akkasse.{ Sse, SseMarshalling }
 
 import java.util.UUID
 
-import pomf.api.endpoint.JsonSupport._
+import pomf.api.endpoint.JsonSupport
 import pomf.domain.model._
 import pomf.api.streaming.FridgeUpdates
 
-object StreamingRoute extends SseMarshalling {
+object StreamingRoute extends SseMarshalling with JsonSupport {
 
   implicit def flowEventToSseMessage(event: PushedEvent): Sse.Message = {
     Sse.Message(formatEvent.write(event) + "\n\n")

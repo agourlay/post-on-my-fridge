@@ -2,24 +2,19 @@ package pomf.api.route
 
 import akka.actor.{ ActorRef, ActorContext }
 import akka.pattern._
-import akka.http.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.marshalling.Marshaller._
 import akka.http.marshalling.ToResponseMarshallable
 import akka.http.model.StatusCodes._
-import akka.http.unmarshalling.Unmarshal
 import akka.http.server.Directives._
 import akka.stream.FlowMaterializer
 import pomf.domain.actors.{ ChatRoomProtocol, ChatRepoProtocol }
 
-import spray.json._
-import spray.json.DefaultJsonProtocol._
-
-import pomf.api.endpoint.JsonSupport._
 import pomf.configuration._
 import pomf.domain.model.ChatMessage
 import pomf.domain.actors.ChatRoomProtocol._
+import pomf.api.endpoint.JsonSupport
 
-object ChatRoute {
+object ChatRoute extends JsonSupport {
 
   def build(chatRepo: ActorRef)(implicit context: ActorContext, fm: FlowMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
@@ -68,7 +63,7 @@ object ChatRoute {
             get {
               complete {
                 (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.ParticipantNumber)).mapTo[ParticipantNumberRoom].map {
-                  case ParticipantNumberRoom(nb) ⇒ ToResponseMarshallable(OK -> nb)
+                  case ParticipantNumberRoom(nb) ⇒ ToResponseMarshallable(OK -> nb.toString)
                 }
               }
             } ~

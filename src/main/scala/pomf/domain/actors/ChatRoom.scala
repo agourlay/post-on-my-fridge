@@ -8,12 +8,12 @@ import scala.language.postfixOps
 import java.util.UUID
 
 import pomf.domain.model._
-import pomf.api.endpoint.JsonSupport._
+import pomf.api.endpoint.JsonSupport
 import pomf.domain.actors.ChatRoomProtocol._
 import pomf.util.CustomOrdering._
 import pomf.core.actors.CommonActor
 
-class ChatRoom(fridgeId: UUID) extends CommonActor {
+class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
 
   implicit val executionContext = context.dispatcher
 

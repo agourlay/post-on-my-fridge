@@ -19,12 +19,12 @@ import com.codahale.metrics.graphite._
 
 import nl.grons.metrics.scala._
 
-import pomf.api.endpoint.JsonSupport._
+import pomf.api.endpoint.JsonSupport
 import pomf.configuration.Settings
 import pomf.core.actors.CommonActor
 import pomf.core.metrics.MetricsReporterProtocol._
 
-class MetricsReporter extends CommonActor {
+class MetricsReporter extends CommonActor with JsonSupport {
 
   val system = context.system
 

@@ -1,17 +1,17 @@
 package pomf.service
 
 import akka.actor.ActorSystem
+import pomf.api.endpoint.JsonSupport
 
 import scala.concurrent.Future
 import scala.util._
 
 import pomf.domain.dao.Dao
 import pomf.domain.model._
-import pomf.api.endpoint.JsonSupport._
 
 import java.util.UUID
 
-class CrudService(dao: Dao, system: ActorSystem) {
+class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
 
   implicit val ec = system.dispatcher
 
