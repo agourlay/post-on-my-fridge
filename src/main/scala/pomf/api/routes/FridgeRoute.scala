@@ -1,34 +1,50 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.ActorContext
+import akka.http.model.StatusCodes._
+import akka.http.marshalling.Marshaller._
+import akka.http.marshalling.ToResponseMarshallable
+import akka.http.server._
+import Directives._
+import akka.stream.FlowMaterializer
 
-import spray.routing._
-import spray.httpx.encoding._
-import spray.httpx.SprayJsonSupport._
+import java.util.UUID
+import pomf.service.CrudService
+import pomf.domain.model.{ FridgeLight, Fridge, FridgeFull }
+import pomf.api.endpoint.JsonSupport
+import pomf.configuration._
 
-import pomf.api.endpoint.JsonSupport._
-import pomf.api.request._
+object FridgeRoute extends JsonSupport {
 
-class FridgeRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+  def build(crudService: CrudService)(implicit context: ActorContext, fm: FlowMaterializer) = {
 
-  val route =
-    path("fridges" / JavaUUID) { fridgeId ⇒
+    implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
+    implicit val ec = context.dispatcher
+
+    path("fridges" / JavaUUID) { fridgeId: UUID ⇒
       get {
-        ctx ⇒ context.actorOf(FullFridge.props(fridgeId, ctx, crudService))
+        onSuccess(crudService.getFridgeFull(fridgeId)) { fridge: FridgeFull ⇒
+          complete(ToResponseMarshallable(OK -> fridge))
+        }
       }
     } ~
       path("fridges") {
-        parameters('pageNumber ? 1, 'pageSize ? 50) { (pageNumber, pageSize) ⇒
+        parameters('pageNumber ? 1, 'pageSize ? 50) { (pageNumber: Int, pageSize: Int) ⇒
           get {
-            ctx ⇒ context.actorOf(AllFridges.props(pageNumber, pageSize, ctx, crudService))
+            onSuccess(crudService.getAllFridge(pageNumber, pageSize)) { fridges: List[FridgeLight] ⇒
+              complete(ToResponseMarshallable(OK -> fridges))
+            }
           }
         }
       } ~
       path("fridges") {
         post {
-          entity(as[String]) { fridgeName ⇒
-            ctx ⇒ context.actorOf(CreateFridge.props(fridgeName, ctx, crudService))
+          entity(as[String]) { fridgeName: String ⇒
+            onSuccess(crudService.createFridge(fridgeName)) { fridge: Fridge ⇒
+              complete(ToResponseMarshallable(OK -> fridge))
+            }
           }
         }
       }
+  }
 }

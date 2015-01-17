@@ -6,7 +6,7 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.5"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -37,34 +37,39 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(PreserveDanglingCloseParenthesis, true)
   .setPreference(RewriteArrowSymbols, true)
 
+resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
+
 libraryDependencies ++= {
   val akkaV         = "2.3.8"
-  val sprayV        = "1.3.2"
+  val akkaHttpV     = "1.0-M2"
+  val akkaSseV      = "0.2.1"
   val sprayJsonV    = "1.3.1"
   val scalaMetricsV = "3.3.0_a2.3"
   val metricsV      = "3.1.0"
-  val jodaTimeV     = "2.6"
+  val jodaTimeV     = "2.7"
   val jodaConvertV  = "1.7"
   val slickV        = "2.1.0" 
   val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
   val hikaricpV     = "2.2.5"
-  Seq(
-     "io.spray"              %%  "spray-can"         % sprayV     
-    ,"io.spray"              %%  "spray-routing"     % sprayV             
-    ,"io.spray"              %%  "spray-json"        % sprayJsonV                
-    ,"com.typesafe.akka"     %%  "akka-actor"        % akkaV        
-    ,"com.typesafe.akka"     %%  "akka-slf4j"        % akkaV          
-    ,"joda-time"             %   "joda-time"         % jodaTimeV                
-    ,"org.joda"              %   "joda-convert"      % jodaConvertV                
-    ,"com.github.tototoshi"  %%  "slick-joda-mapper" % slickJodaV             
-    ,"com.typesafe.slick"    %%  "slick"             % slickV             
-    ,"org.postgresql"        %   "postgresql"        % postgresqlV    
-    ,"ch.qos.logback"        %   "logback-classic"   % logbackV
-    ,"com.zaxxer"            %   "HikariCP-java6"    % hikaricpV
-    ,"nl.grons"              %%  "metrics-scala"     % scalaMetricsV        
-    ,"io.dropwizard.metrics" %   "metrics-graphite"  % metricsV                  
+  Seq(                
+     "com.typesafe.akka"     %%  "akka-actor"                        % akkaV
+    ,"com.typesafe.akka"     %%  "akka-slf4j"                        % akkaV
+    ,"com.typesafe.akka"     %%  "akka-http-experimental"            % akkaHttpV
+    ,"com.typesafe.akka"     %%  "akka-http-core-experimental"       % akkaHttpV
+    ,"com.typesafe.akka"     %%  "akka-http-spray-json-experimental" % akkaHttpV
+    ,"de.heikoseeberger"     %%  "akka-sse"                          % akkaSseV
+    ,"io.spray"              %%  "spray-json"                        % sprayJsonV
+    ,"joda-time"             %   "joda-time"                         % jodaTimeV
+    ,"org.joda"              %   "joda-convert"                      % jodaConvertV
+    ,"com.github.tototoshi"  %%  "slick-joda-mapper"                 % slickJodaV
+    ,"com.typesafe.slick"    %%  "slick"                             % slickV
+    ,"org.postgresql"        %   "postgresql"                        % postgresqlV
+    ,"ch.qos.logback"        %   "logback-classic"                   % logbackV
+    ,"com.zaxxer"            %   "HikariCP-java6"                    % hikaricpV
+    ,"nl.grons"              %%  "metrics-scala"                     % scalaMetricsV
+    ,"io.dropwizard.metrics" %   "metrics-graphite"                  % metricsV
   )
 }
 

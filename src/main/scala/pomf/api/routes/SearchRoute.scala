@@ -1,21 +1,33 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.ActorContext
+import akka.http.model.StatusCodes._
+import akka.http.marshalling.ToResponseMarshallable
+import akka.http.server._
+import Directives._
+import akka.stream.FlowMaterializer
 
-import spray.routing._
+import pomf.configuration._
+import pomf.api.endpoint.JsonSupport
+import pomf.domain.model.Fridge
+import pomf.service.CrudService
 
-import pomf.api.request.SearchFridge
+object SearchRoute extends JsonSupport {
 
-class SearchRoute(crudService: ActorRef)(implicit context: ActorContext) extends Directives {
+  def build(crudService: CrudService)(implicit context: ActorContext, fm: FlowMaterializer) = {
+    implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
+    implicit val ec = context.dispatcher
 
-  val route =
     pathPrefix("search") {
       path("fridge") {
-        parameters("term") { term ⇒
-          get { ctx ⇒
-            context.actorOf(SearchFridge.props(term, ctx, crudService))
+        get {
+          parameters("term") { term: String ⇒
+            onSuccess(crudService.searchByNameLike(term)) { fridges: List[Fridge] ⇒
+              complete(ToResponseMarshallable(OK -> fridges))
+            }
           }
         }
       }
     }
+  }
 }

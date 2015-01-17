@@ -3,7 +3,6 @@ package pomf.domain.dao
 import org.slf4j.LoggerFactory
 
 import scala.slick.driver.PostgresDriver.simple._
-import scala.slick.lifted
 import scala.util._
 
 import Database.dynamicSession

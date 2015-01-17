@@ -1,29 +1,51 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.{ ActorRef, ActorContext }
+import akka.pattern._
+import akka.http.model.StatusCodes._
+import akka.http.marshalling.Marshaller._
+import akka.http.marshalling.ToResponseMarshallable
+import akka.http.marshalling.ToResponseMarshallable._
+import akka.http.server._
+import Directives._
+import akka.stream.FlowMaterializer
+import pomf.api.endpoint.JsonSupport
+import pomf.service.CrudService
 
-import spray.routing._
+import pomf.core.metrics.MetricsReporterProtocol
+import pomf.core.metrics.MetricsReporterProtocol._
+import pomf.configuration._
 
-import pomf.api.request.{ AllMetrics, CountFridges, CountPosts }
+object StatsRoute extends JsonSupport {
 
-class StatsRoute(crudService: ActorRef, metricsRepo: ActorRef)(implicit context: ActorContext) extends Directives {
+  def build(crudService: CrudService, metricsRepo: ActorRef)(implicit context: ActorContext, fm: FlowMaterializer) = {
+    implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
+    implicit val ec = context.dispatcher
 
-  val route =
     path("stats") {
-      get { ctx ⇒
-        context.actorOf(AllMetrics.props(ctx, metricsRepo))
+      get {
+        complete {
+          (metricsRepo ? MetricsReporterProtocol.All).mapTo[MetricsReport].map {
+            case MetricsReport(metrics) ⇒ ToResponseMarshallable(OK -> metrics)
+          }
+        }
       }
     } ~
       pathPrefix("count") {
         path("fridges") {
-          get { ctx ⇒
-            context.actorOf(CountFridges.props(ctx, crudService))
+          get {
+            onSuccess(crudService.countFridges()) { nb: Int ⇒
+              complete(ToResponseMarshallable(OK -> nb.toString))
+            }
           }
         } ~
           path("posts") {
-            get { ctx ⇒
-              context.actorOf(CountPosts.props(ctx, crudService))
+            get {
+              onSuccess(crudService.countPosts()) { nb: Int ⇒
+                complete(ToResponseMarshallable(OK -> nb.toString))
+              }
             }
           }
       }
+  }
 }

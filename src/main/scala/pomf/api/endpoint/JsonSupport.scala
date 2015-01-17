@@ -1,12 +1,9 @@
 package pomf.api.endpoint
 
-import java.util.Date
-import java.text.SimpleDateFormat
-import java.text.ParseException
 import java.util.UUID
 
+import akka.http.marshallers.sprayjson.SprayJsonSupport
 import spray.json._
-import DefaultJsonProtocol._
 
 import nl.grons.metrics.scala._
 
@@ -15,7 +12,7 @@ import org.joda.time.format._
 
 import pomf.domain.model.{ Post, Fridge, FridgeLight, FridgeFull, ChatMessage, PushedEvent }
 
-object CustomJsonProtocol {
+trait CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
 
     private val parserISO: DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
@@ -39,15 +36,14 @@ object CustomJsonProtocol {
   }
 }
 
-object JsonSupport {
-  import CustomJsonProtocol._
+trait JsonSupport extends DefaultJsonProtocol with SprayJsonSupport with CustomJsonProtocol {
 
-  implicit val formatPost = jsonFormat8(Post)
-  implicit val formatFridge = jsonFormat4(Fridge)
-  implicit val formatFridgeLight = jsonFormat6(FridgeLight)
-  implicit val formatFridgeFull = jsonFormat6(FridgeFull)
-  implicit val formatChatMessage = jsonFormat3(ChatMessage)
-  implicit val formatEvent = jsonFormat4(PushedEvent)
+  implicit val formatPost = jsonFormat8(Post.apply)
+  implicit val formatFridge = jsonFormat4(Fridge.apply)
+  implicit val formatFridgeLight = jsonFormat6(FridgeLight.apply)
+  implicit val formatFridgeFull = jsonFormat6(FridgeFull.apply)
+  implicit val formatChatMessage = jsonFormat3(ChatMessage.apply)
+  implicit val formatEvent = jsonFormat4(PushedEvent.apply)
 
   implicit val formatCounter = new RootJsonFormat[Counter] {
     def write(obj: Counter) = JsObject(

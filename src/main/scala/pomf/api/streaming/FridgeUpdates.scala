@@ -1,32 +1,30 @@
 package pomf.api.streaming
 
-import akka.actor.{ Actor, ActorRef, Props }
+import akka.actor.Props
+import akka.stream.actor.ActorPublisher
 
-import pomf.api.endpoint.JsonSupport._
+import pomf.core.actors.CommonActor
 import pomf.domain.model._
 
 import java.util.UUID
 
-import spray.http._
-import spray.http.MediaTypes._
-import spray.can.Http
-import HttpHeaders._
-
-class FridgeUpdates(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) extends StreamingResponse(responder) {
+class FridgeUpdates(filter: (UUID, String) ⇒ Boolean)
+    extends ActorPublisher[PushedEvent]
+    with CommonActor {
 
   context.system.eventStream.subscribe(self, classOf[Notification])
 
-  override def receive = receiveNotification orElse super.receive
+  override def receive = receiveNotification
 
   def receiveNotification: Receive = {
     case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒
       if (filter(fridgeIdNotif, token)) {
         val pushedEvent = PushedEvent(fridgeIdNotif, command, payload, timestamp)
-        responder ! MessageChunk("data: " + formatEvent.write(pushedEvent) + "\n\n")
+        onNext(pushedEvent)
       }
   }
 }
 
 object FridgeUpdates {
-  def props(responder: ActorRef, filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], responder, filter)
+  def props(filter: (UUID, String) ⇒ Boolean) = Props(classOf[FridgeUpdates], filter)
 }

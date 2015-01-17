@@ -1,15 +1,13 @@
 package pomf.domain.model
 
-import scala.compat.Platform
 import org.joda.time.DateTime
+import pomf.api.endpoint.JsonSupport
 import spray.json._
-import pomf.api.endpoint.JsonSupport._
-import pomf.api.endpoint.CustomJsonProtocol._
 import java.util.UUID
 
 case class Notification(fridgeId: UUID, command: String, payload: JsValue, date: DateTime, token: String)
 
-object Notification {
+object Notification extends JsonSupport {
 
   def createPost(post: Post, token: String)(implicit conv: RootJsonFormat[Post]) = {
     new Notification(post.fridgeId, "postCreated", conv.write(post), new DateTime(), token)

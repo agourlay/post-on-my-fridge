@@ -1,34 +1,46 @@
 package pomf.api.route
 
-import akka.actor.{ Actor, ActorRef, Props, ActorContext }
+import akka.actor.{ ActorRef, ActorContext }
+import akka.http.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.marshalling.Marshaller._
+import akka.http.unmarshalling.Unmarshal
+import akka.stream.actor.ActorPublisher
+import akka.stream.scaladsl.{ ImplicitFlowMaterializer, Source }
+import akka.http.server._
+import Directives._
+
+import de.heikoseeberger.akkasse.{ Sse, SseMarshalling }
 
 import java.util.UUID
-import spray.routing._
 
-import pomf.api.streaming._
+import pomf.api.endpoint.JsonSupport
+import pomf.domain.model._
+import pomf.api.streaming.FridgeUpdates
 
-class StreamingRoute(implicit context: ActorContext) extends Directives {
+object StreamingRoute extends SseMarshalling with JsonSupport {
 
-  val route =
+  implicit def flowEventToSseMessage(event: PushedEvent): Sse.Message = {
+    Sse.Message(formatEvent.write(event) + "\n\n")
+  }
+
+  def build(implicit context: ActorContext) = {
+    implicit val ec = context.dispatcher
+
     pathPrefix("stream") {
       get {
         path("fridge" / JavaUUID) { fridgeId ⇒
           parameters("token") { token ⇒
-            streamUser(fridgeId, token)
+            complete {
+              Source(ActorPublisher[PushedEvent](streamUser(fridgeId, token, context)))
+            }
           }
-        } ~
-          path("firehose") {
-            streamFirehose
-          }
+        }
       }
     }
-
-  def streamFirehose(ctx: RequestContext): Unit = {
-    context.actorOf(FridgeUpdates.props(ctx.responder, (_, _) ⇒ true))
   }
 
-  def streamUser(fridgeId: UUID, token: String)(ctx: RequestContext): Unit = {
+  def streamUser(fridgeId: UUID, token: String, context: ActorContext): ActorRef = {
     val filter = (fridgeTarget: UUID, userToken: String) ⇒ fridgeId == fridgeTarget && token != userToken
-    context.actorOf(FridgeUpdates.props(ctx.responder, filter))
+    context.actorOf(FridgeUpdates.props(filter))
   }
 }
