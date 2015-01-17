@@ -88,7 +88,6 @@ App.MessagesController = Ember.ArrayController.extend({
 			timeout : 1000,
         	contentType: "application/json",
         	dataType: "text",
-        	data: App.Dao.pseudo(),
 			error: function(xhr, ajaxOptions, thrownError) {
 				errorMessage("Could not exit chat");
 			}

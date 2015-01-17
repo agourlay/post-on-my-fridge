@@ -46,7 +46,7 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
 
   def retrieveChatHistory = ChatHistoryContent(messages.values.toVector.sortBy(_.timestamp))
 
-  def removeParticipant(token: String) = {
+  def removeParticipant(token: String): String = {
     val nameQuitter = participantByToken.getOrElse(token, "Anonymous")
     participantByToken -= token
     toEventStream(Notification.removeParticipant(fridgeId, nameQuitter, token))
