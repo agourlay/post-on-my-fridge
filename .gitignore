@@ -19,6 +19,7 @@ bin
 .cache
 .classpath
 .settings
+.DS_Store
 
 *.class
 *.log

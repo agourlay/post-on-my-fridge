@@ -6,7 +6,7 @@ import akka.stream.scaladsl.Source
 import akka.http.server._
 import Directives._
 
-import de.heikoseeberger.akkasse.{ Sse, SseMarshalling }
+import de.heikoseeberger.akkasse.{ ServerSentEvent, EventStreamMarshalling }
 
 import java.util.UUID
 
@@ -14,10 +14,10 @@ import pomf.api.endpoint.JsonSupport
 import pomf.domain.actors.FridgeUpdatePublisher
 import pomf.domain.model._
 
-object StreamingRoute extends SseMarshalling with JsonSupport {
+object StreamingRoute extends EventStreamMarshalling with JsonSupport {
 
-  implicit def flowEventToSseMessage(event: PushedEvent): Sse.Message = {
-    Sse.Message(formatEvent.write(event) + "\n\n")
+  implicit def flowEventToSseMessage(event: PushedEvent): ServerSentEvent = {
+    ServerSentEvent(formatEvent.write(event) + "\n\n")
   }
 
   def build(implicit context: ActorContext) = {
