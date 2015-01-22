@@ -1,6 +1,6 @@
 package pomf.domain.actors
 
-import akka.actor.Props
+import akka.actor.{ ReceiveTimeout, PoisonPill, Props }
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -20,6 +20,7 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
   val messages = scala.collection.mutable.Map.empty[Long, ChatMessage]
   val participantByToken = scala.collection.mutable.Map.empty[String, String]
 
+  context.setReceiveTimeout(2 hour)
   context.system.scheduler.schedule(1 hour, 1 hour, self, ChatRoomProtocol.PurgeChat)
 
   def receive = {
@@ -30,6 +31,7 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
     case RemoveParticipant(token)          ⇒ sender ! removeParticipant(token)
     case ParticipantNumber                 ⇒ sender ! ParticipantNumberRoom(participantByToken.size)
     case RenameParticipant(token, newName) ⇒ sender ! renameParticipant(token, newName)
+    case ReceiveTimeout                    ⇒ self ! PoisonPill
   }
 
   def addParticipant(token: String, name: String): String = {

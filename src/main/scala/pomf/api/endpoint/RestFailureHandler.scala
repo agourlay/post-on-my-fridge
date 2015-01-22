@@ -6,14 +6,13 @@ import akka.http.model.StatusCodes._
 import akka.http.server.Directives._
 import akka.http.server._
 import pomf.core.metrics.Instrumented
-import pomf.domain.{ ChatRoomNotFoundException, FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
+import pomf.domain.{ FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
 
 trait RestFailureHandler extends Instrumented {
   this: ActorLogging ⇒
 
   val postNotFound = metrics.meter("PostNotFoundException")
   val fridgeNotFound = metrics.meter("FridgeNotFoundException")
-  val chatRoomNotFound = metrics.meter("ChatRoomNotFoundException")
   val fridgeAlreadyExists = metrics.meter("FridgeAlreadyExistsException")
   val illegalArgument = metrics.meter("IllegalArgumentException")
   val requestTimeout = metrics.meter("RequestTimeoutException")
@@ -33,13 +32,6 @@ trait RestFailureHandler extends Instrumented {
         fridgeNotFound.mark()
         log.warning("Request to {} could not be handled normally -> fridge does not exist", uri)
         complete(HttpResponse(NotFound, entity = s"Fridge ${e.fridgeId} not found : please check fridge id correctness\n"))
-      }
-
-    case e: ChatRoomNotFoundException ⇒
-      extractUri { uri ⇒
-        chatRoomNotFound.mark()
-        log.warning("Request to {} could not be handled normally -> chatRoom does not exist", uri)
-        complete(HttpResponse(NotFound, entity = s"ChatRoom ${e.fridgeId} not found : please check fridge id correctness\n"))
       }
 
     case e: FridgeAlreadyExistsException ⇒
