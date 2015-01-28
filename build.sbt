@@ -52,7 +52,7 @@ libraryDependencies ++= {
   val slickJodaV    = "1.2.0"
   val postgresqlV   = "9.3-1102-jdbc41"
   val logbackV      = "1.1.2"
-  val hikaricpV     = "2.3.0"
+  val hikaricpV     = "2.3.1"
   Seq(                
      "com.typesafe.akka"     %%  "akka-actor"                        % akkaV
     ,"com.typesafe.akka"     %%  "akka-slf4j"                        % akkaV
