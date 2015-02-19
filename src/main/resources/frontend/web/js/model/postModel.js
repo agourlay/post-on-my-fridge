@@ -28,7 +28,7 @@ App.Post = Em.Object.extend({
 			this.set('positionY', parseFloat(position[1]));
 			return value;
 		}
-	}.property().cacheable(),
+	}.property(),
 
 	deletePost: function() {
 		$.ajax({

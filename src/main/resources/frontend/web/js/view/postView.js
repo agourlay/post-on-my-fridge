@@ -9,11 +9,11 @@ App.PostView = Em.View.extend({
 	relativeDate: function() {
 		var date = this.get('content').get('date');
 		return moment(date, "YYYY-MM-DDTHH:mm:ssZZ").fromNow();
-	}.property('content.date').cacheable(),
+	}.property('content.date'),
 
 	generatedContent: function() {
 		return this.generateContent();
-	}.property('content.content').cacheable(),
+	}.property('content.content'),
 
 	actions: {  
 		toggleEditMode : function() {

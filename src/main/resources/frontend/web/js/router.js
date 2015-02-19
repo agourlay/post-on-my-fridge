@@ -2,7 +2,6 @@ App.Router.map(function() {
   this.resource('index', { path:'/'}); 
   this.resource('fridges');
   this.resource('fridge', { path:'/fridge/:fridge_id' });
-  this.resource('metrics');
 });
 
 App.FridgeRoute = Ember.Route.extend({

@@ -1,7 +1,7 @@
 package pomf.core
 
 import akka.actor.ActorSystem
-import akka.stream.FlowMaterializer
+import akka.stream.ActorFlowMaterializer
 
 import pomf.api.endpoint.RestAPI
 import pomf.core.configuration.Settings
@@ -13,7 +13,7 @@ import pomf.domain.dao.PostgresDB
 
 trait Core {
   implicit lazy val system = ActorSystem("pomf")
-  implicit lazy val materializer = FlowMaterializer()
+  implicit lazy val materializer = ActorFlowMaterializer()
   sys.addShutdownHook(system.shutdown())
 }
 
