@@ -6,7 +6,7 @@ import akka.http.marshalling.Marshaller._
 import akka.http.marshalling.ToResponseMarshallable
 import akka.http.server._
 import Directives._
-import akka.stream.FlowMaterializer
+import akka.stream.ActorFlowMaterializer
 
 import java.util.UUID
 
@@ -17,7 +17,7 @@ import pomf.core.configuration._
 
 object FridgeRoute extends JsonSupport {
 
-  def build(crudService: CrudService)(implicit context: ActorContext, fm: FlowMaterializer) = {
+  def build(crudService: CrudService)(implicit context: ActorContext, fm: ActorFlowMaterializer) = {
 
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher

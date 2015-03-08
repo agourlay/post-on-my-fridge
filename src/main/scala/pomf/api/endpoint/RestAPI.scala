@@ -4,15 +4,15 @@ import akka.actor._
 import akka.http.Http
 import akka.http.coding.Gzip
 import akka.http.server.Directives._
-import akka.http.server.RoutingSettings._
-import akka.stream.FlowMaterializer
+import akka.stream.scaladsl.Sink
+import akka.stream.{ ActorFlowMaterializer, FlowMaterializer }
 
 import pomf.api.route._
 import pomf.core.configuration.Settings
 import pomf.core.CoreComponents
 import pomf.core.actors.CommonActor
 
-class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: FlowMaterializer)
+class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorFlowMaterializer)
     extends CommonActor
     with RestFailureHandler {
 
@@ -32,13 +32,13 @@ class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: FlowMater
   val streaming = StreamingRoute.build
   val token = TokenRoute.build()
 
-  val routes = encodeResponse(Gzip) {
+  val routes = encodeResponseWith(Gzip) {
     chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token
   }
 
-  Http(system)
-    .bind(interface = "localhost", port = Settings(system).Http.Port)
-    .startHandlingWith(routes)
+  Http(system).bind("localhost", port = Settings(system).Http.Port)
+    .to(Sink.foreach { conn ⇒ conn.flow.join(routes).run() }).run()
+
 }
 
 object RestAPI {

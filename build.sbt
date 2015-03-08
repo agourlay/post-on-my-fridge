@@ -6,7 +6,7 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -41,18 +41,18 @@ resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
   val akkaV         = "2.3.9"
-  val akkaHttpV     = "1.0-M3"
-  val akkaSseV      = "0.4.0"
+  val akkaHttpV     = "1.0-M4"
+  val akkaSseV      = "0.7.0"
   val sprayJsonV    = "1.3.1"
   val scalaMetricsV = "3.3.0_a2.3"
-  val metricsV      = "3.1.0"
+  val metricsV      = "3.1.1"
   val jodaTimeV     = "2.7"
   val jodaConvertV  = "1.7"
   val slickV        = "2.1.0"
   val slickJodaV    = "1.2.0"
-  val postgresqlV   = "9.4-1200-jdbc41"
+  val postgresqlV   = "9.4-1201-jdbc41"
   val logbackV      = "1.1.2"
-  val hikaricpV     = "2.3.2"
+  val hikaricpV     = "2.3.3"
   Seq(                
      "com.typesafe.akka"     %%  "akka-actor"                        % akkaV
     ,"com.typesafe.akka"     %%  "akka-slf4j"                        % akkaV
