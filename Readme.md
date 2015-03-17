@@ -1,6 +1,6 @@
 #post-on-my-fridge  
 
-[Sticky notes shared in real time](http://fridges.arnaud-gourlay.info/)
+Sticky notes shared in real time.
 
 [![Build Status](https://travis-ci.org/agourlay/post-on-my-fridge.png?branch=master)](https://travis-ci.org/agourlay/post-on-my-fridge)
 
