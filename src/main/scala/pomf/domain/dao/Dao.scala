@@ -36,7 +36,7 @@ class Dao(db: Database) extends Instrumented {
   def countPostForFridge(id: Column[UUID]) = {
     val query = for {
       p ← posts
-      if (p.fridgeId === id)
+      if p.fridgeId === id
     } yield 1
     query.length.run
   }
@@ -48,10 +48,9 @@ class Dao(db: Database) extends Instrumented {
   def createFridge(name: String): Try[UUID] = db withDynTransaction {
     fridgeByName(name).firstOption match {
       case Some(f) ⇒ Failure(new FridgeAlreadyExistsException(f.id.get))
-      case None ⇒ {
+      case None ⇒
         val fridge = Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime())
         Try((fridges returning fridges.map(_.id)) += fridge)
-      }
     }
   }
 
@@ -63,7 +62,7 @@ class Dao(db: Database) extends Instrumented {
     fridges.sortBy(_.modificationDate.desc)
       .drop((pageNumber - 1) * pageSize).take(pageSize)
       .list
-      .map(buildLight(_))
+      .map(buildLight)
   }
 
   def buildFull(f: Fridge) = {
@@ -88,22 +87,20 @@ class Dao(db: Database) extends Instrumented {
   def deletePost(postId: UUID) = db withDynTransaction {
     val postQuery = postById(postId)
     postQuery.firstOption match {
-      case Some(p) ⇒ {
+      case Some(p) ⇒
         postQuery.delete
         updateModificationDate(p.fridgeId)
-      }
       case None ⇒ None
     }
   }
 
   def addPost(post: Post): Option[Post] = db withDynTransaction {
     fridgeById(post.fridgeId).firstOption match {
-      case Some(f) ⇒ {
+      case Some(f) ⇒
         val toPersist = post.copy(id = Some(UUID.randomUUID()))
         posts.insert(toPersist)
         updateModificationDate(f.id.get)
         Some(toPersist)
-      }
       case None ⇒ None
     }
   }
@@ -111,11 +108,10 @@ class Dao(db: Database) extends Instrumented {
   def updatePost(post: Post): Option[Post] = db withDynTransaction {
     postById(post.id.get).firstOption match {
       case None ⇒ None
-      case Some(p) ⇒ {
+      case Some(p) ⇒
         updateModificationDate(post.fridgeId)
         postById(p.id.get).update(post)
         postById(p.id.get).firstOption
-      }
     }
   }
 

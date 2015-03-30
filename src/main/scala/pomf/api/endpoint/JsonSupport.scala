@@ -15,7 +15,7 @@ import pomf.domain.model.{ Post, Fridge, FridgeLight, FridgeFull, ChatMessage, P
 trait CustomJsonProtocol {
   implicit object DateJsonFormat extends RootJsonFormat[DateTime] {
 
-    private val parserISO: DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis();
+    private val parserISO: DateTimeFormatter = ISODateTimeFormat.dateTimeNoMillis()
 
     override def write(obj: DateTime) = JsString(parserISO.print(obj))
 

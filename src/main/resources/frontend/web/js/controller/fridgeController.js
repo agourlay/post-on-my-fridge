@@ -1,1 +1,1 @@
-App.FridgeController = Ember.ObjectController.extend({});
+App.FridgeController = Ember.Controller.extend({});

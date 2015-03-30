@@ -1,4 +1,4 @@
-App.ChatInputController = Ember.ObjectController.extend({
+App.ChatInputController = Ember.Controller.extend({
 	needs: "messages",
 	
 	sendChatMessage: function() {

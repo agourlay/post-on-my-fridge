@@ -1,1 +1,1 @@
-App.PanelController = Ember.ObjectController.extend({});
+App.PanelController = Ember.Controller.extend({});

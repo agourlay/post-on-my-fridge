@@ -36,8 +36,7 @@ class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorFlow
     chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token
   }
 
-  Http(system).bind("localhost", port = Settings(system).Http.Port)
-    .to(Sink.foreach { conn ⇒ conn.flow.join(routes).run() }).run()
+  Http(system).bindAndHandle(routes, "localhost", port = Settings(system).Http.Port)
 
 }
 
