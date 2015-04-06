@@ -4,6 +4,7 @@ import java.util.UUID
 
 import akka.actor.Props
 import akka.stream.actor.ActorPublisher
+import akka.stream.actor.ActorPublisherMessage.{ Cancel, Request }
 import pomf.core.actors.CommonActor
 import pomf.domain.model._
 
@@ -13,12 +14,26 @@ class FridgeUpdatePublisher(filter: (UUID, String) ⇒ Boolean)
 
   context.system.eventStream.subscribe(self, classOf[Notification])
 
+  val events = scala.collection.mutable.Queue.empty[PushedEvent]
+
   override def receive = {
     case Notification(fridgeIdNotif, command, payload, timestamp, token) ⇒
       if (filter(fridgeIdNotif, token)) {
-        val pushedEvent = PushedEvent(fridgeIdNotif, command, payload, timestamp)
-        onNext(pushedEvent)
+        if (events.size > 500) events.dequeue()
+        events.enqueue(PushedEvent(fridgeIdNotif, command, payload, timestamp))
+        pushToSub()
       }
+    case Request(_) ⇒
+      pushToSub()
+
+    case Cancel ⇒
+      context.stop(self)
+  }
+
+  def pushToSub() {
+    while (totalDemand > 0 && events.nonEmpty) {
+      onNext(events.dequeue())
+    }
   }
 }
 
