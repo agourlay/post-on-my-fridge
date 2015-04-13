@@ -35,14 +35,14 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
   }
 
   def addParticipant(token: String, name: String): String = {
-    toEventStream(Notification.addParticipant(fridgeId, name, token))
+    pushToStream(Notification.addParticipant(fridgeId, name, token))
     participantByToken += (token -> name)
     s"$name joined chat $fridgeId"
   }
 
   def addChatMessage(message: ChatMessage, token: String) = {
     messages += (System.currentTimeMillis -> message)
-    toEventStream(Notification.sendMessage(fridgeId, message, token))
+    pushToStream(Notification.sendMessage(fridgeId, message, token))
     message
   }
 
@@ -51,14 +51,14 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
   def removeParticipant(token: String): String = {
     val nameQuitter = participantByToken.getOrElse(token, "Anonymous")
     participantByToken -= token
-    toEventStream(Notification.removeParticipant(fridgeId, nameQuitter, token))
+    pushToStream(Notification.removeParticipant(fridgeId, nameQuitter, token))
     s"$token removed from chat $fridgeId"
   }
 
   def renameParticipant(token: String, newName: String) = {
     val formerName = participantByToken.getOrElse(token, "Anonymous")
     participantByToken += (token -> newName)
-    toEventStream(Notification.renameParticipant(fridgeId, token, newName, formerName))
+    pushToStream(Notification.renameParticipant(fridgeId, token, newName, formerName))
     s"$newName changed name"
   }
 
@@ -67,7 +67,7 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
     participantByToken.clear()
   }
 
-  def toEventStream(n: Notification) = context.system.eventStream.publish(n)
+  def pushToStream(n: Notification) = context.system.eventStream.publish(n)
 }
 
 object ChatRoomProtocol {

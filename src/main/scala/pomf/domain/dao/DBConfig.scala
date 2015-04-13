@@ -30,5 +30,5 @@ class PostgresDB(user: String, password: String, schema: String, host: String, p
   }
 
   val dao = new Dao(databasePool)
-  if (purge) dao.purgeDB else dao.createDB
+  if (purge) dao.purgeDB() else dao.createDB()
 }

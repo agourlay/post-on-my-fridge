@@ -17,8 +17,8 @@ import pomf.domain.model._
 
 class Dao(db: Database) extends Instrumented {
 
-  metrics.gauge("posts")(countPosts)
-  metrics.gauge("fridges")(countFridges)
+  metrics.gauge("posts")(countPosts())
+  metrics.gauge("fridges")(countFridges())
 
   val log = LoggerFactory.getLogger("domain.dao")
 
@@ -46,12 +46,10 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def createFridge(name: String): Try[UUID] = db withDynTransaction {
-    fridgeByName(name).firstOption match {
-      case Some(f) ⇒ Failure(new FridgeAlreadyExistsException(f.id.get))
-      case None ⇒
-        val fridge = Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime())
-        Try((fridges returning fridges.map(_.id)) += fridge)
-    }
+    fridgeByName(name).firstOption.fold {
+      val fridge = Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime())
+      Try((fridges returning fridges.map(_.id)) += fridge)
+    } { f ⇒ Failure(new FridgeAlreadyExistsException(f.id.get)) }
   }
 
   def getFridgeFull(fridgeId: UUID): Option[FridgeFull] = db withDynSession {
@@ -86,32 +84,26 @@ class Dao(db: Database) extends Instrumented {
 
   def deletePost(postId: UUID) = db withDynTransaction {
     val postQuery = postById(postId)
-    postQuery.firstOption match {
-      case Some(p) ⇒
-        postQuery.delete
-        updateModificationDate(p.fridgeId)
-      case None ⇒ None
+    postQuery.firstOption.map { p ⇒
+      postQuery.delete
+      updateModificationDate(p.fridgeId)
     }
   }
 
   def addPost(post: Post): Option[Post] = db withDynTransaction {
-    fridgeById(post.fridgeId).firstOption match {
-      case Some(f) ⇒
-        val toPersist = post.copy(id = Some(UUID.randomUUID()))
-        posts.insert(toPersist)
-        updateModificationDate(f.id.get)
-        Some(toPersist)
-      case None ⇒ None
+    fridgeById(post.fridgeId).firstOption.map { f ⇒
+      val toPersist = post.copy(id = Some(UUID.randomUUID()))
+      posts.insert(toPersist)
+      updateModificationDate(f.id.get)
+      toPersist
     }
   }
 
   def updatePost(post: Post): Option[Post] = db withDynTransaction {
-    postById(post.id.get).firstOption match {
-      case None ⇒ None
-      case Some(p) ⇒
-        updateModificationDate(post.fridgeId)
-        postById(p.id.get).update(post)
-        postById(p.id.get).firstOption
+    postById(post.id.get).firstOption.flatMap { p ⇒
+      updateModificationDate(post.fridgeId)
+      postById(p.id.get).update(post)
+      postById(p.id.get).firstOption
     }
   }
 
@@ -146,7 +138,7 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def purgeDB() = db withDynTransaction {
-    dropDB
-    createDB
+    dropDB()
+    createDB()
   }
 }

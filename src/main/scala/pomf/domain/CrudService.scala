@@ -29,23 +29,17 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
     dao.addPost(post) match {
       case None ⇒ throw new FridgeNotFoundException(post.fridgeId)
       case Some(persistedPost) ⇒
-        toEventStream(Notification.createPost(persistedPost, token))
+        pushToStream(Notification.createPost(persistedPost, token))
         persistedPost
     }
   }
 
   def getFridgeFull(fridgeId: UUID): Future[FridgeFull] = Future {
-    dao.getFridgeFull(fridgeId) match {
-      case None             ⇒ throw new FridgeNotFoundException(fridgeId)
-      case Some(fullFridge) ⇒ fullFridge
-    }
+    dao.getFridgeFull(fridgeId).getOrElse(throw new FridgeNotFoundException(fridgeId))
   }
 
   def getPost(id: UUID): Future[Post] = Future {
-    dao.getPost(id) match {
-      case None       ⇒ throw new PostNotFoundException(id)
-      case Some(post) ⇒ post
-    }
+    dao.getPost(id).getOrElse(throw new PostNotFoundException(id))
   }
 
   def searchByNameLike(term: String): Future[List[Fridge]] = Future {
@@ -53,21 +47,17 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
   }
 
   def deletePost(id: UUID, token: String): Future[String] = Future {
-    dao.getPost(id) match {
-      case None ⇒ throw new PostNotFoundException(id)
-      case Some(post) ⇒
-        val deleteAck = "post " + dao.deletePost(id) + " deleted"
-        toEventStream(Notification.deletePost(post.fridgeId, id, token))
-        deleteAck
+    dao.getPost(id).fold(throw new PostNotFoundException(id)) { post: Post ⇒
+      val deleteAck = "post " + dao.deletePost(id) + " deleted"
+      pushToStream(Notification.deletePost(post.fridgeId, id, token))
+      deleteAck
     }
   }
 
   def updatePost(post: Post, token: String): Future[Post] = Future {
-    dao.updatePost(post) match {
-      case None ⇒ throw new PostNotFoundException(post.id.get)
-      case Some(postUpdated) ⇒
-        toEventStream(Notification.updatePost(post, token))
-        postUpdated
+    dao.updatePost(post).fold(throw new PostNotFoundException(post.id.get)) { postUpdated ⇒
+      pushToStream(Notification.updatePost(post, token))
+      postUpdated
     }
   }
 
@@ -79,7 +69,7 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
     dao.countPosts()
   }
 
-  private def toEventStream(n: Notification) = system.eventStream.publish(n)
+  private def pushToStream(n: Notification) = system.eventStream.publish(n)
 
 }
 

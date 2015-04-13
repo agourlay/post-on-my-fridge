@@ -61,7 +61,7 @@ class MetricsReporter(system: ActorSystem) extends Instrumented with JsonSupport
   }
 
   def metricsByName(name: String): Map[String, JsValue] = {
-    val rawMap = metricRegistry.getMetrics().filterKeys(_.contains(name))
+    val rawMap = metricRegistry.getMetrics.filterKeys(_.contains(name))
     rawMap.toMap.mapValues(toJsValue(_))
   }
 

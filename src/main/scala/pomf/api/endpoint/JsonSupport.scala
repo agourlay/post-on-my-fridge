@@ -27,7 +27,7 @@ trait CustomJsonProtocol {
 
   implicit object UUIDFormat extends RootJsonFormat[UUID] {
 
-    def write(obj: UUID): JsValue = JsString(obj.toString())
+    def write(obj: UUID): JsValue = JsString(obj.toString)
 
     def read(json: JsValue): UUID = json match {
       case JsString(x) ⇒ UUID.fromString(x)
@@ -84,12 +84,12 @@ trait JsonSupport extends DefaultJsonProtocol with SprayJsonSupport with CustomJ
       "fiveMinuteRate" -> JsNumber(obj.fiveMinuteRate),
       "meanRate" -> JsNumber(obj.meanRate),
       "oneMinuteRate" -> JsNumber(obj.oneMinuteRate),
-      "50p" -> JsNumber(obj.snapshot.getMedian() / 1000000),
-      "75p" -> JsNumber(obj.snapshot.get75thPercentile() / 1000000),
-      "95p" -> JsNumber(obj.snapshot.get95thPercentile() / 1000000),
-      "98p" -> JsNumber(obj.snapshot.get98thPercentile() / 1000000),
-      "99p" -> JsNumber(obj.snapshot.get99thPercentile() / 1000000),
-      "999p" -> JsNumber(obj.snapshot.get999thPercentile() / 1000000)
+      "50p" -> JsNumber(obj.snapshot.getMedian / 1000000),
+      "75p" -> JsNumber(obj.snapshot.get75thPercentile / 1000000),
+      "95p" -> JsNumber(obj.snapshot.get95thPercentile / 1000000),
+      "98p" -> JsNumber(obj.snapshot.get98thPercentile / 1000000),
+      "99p" -> JsNumber(obj.snapshot.get99thPercentile / 1000000),
+      "999p" -> JsNumber(obj.snapshot.get999thPercentile / 1000000)
     )
     // we don't need to deserialize the TopicPath
     def read(json: JsValue): Timer = ???
@@ -102,12 +102,12 @@ trait JsonSupport extends DefaultJsonProtocol with SprayJsonSupport with CustomJ
       "min" -> JsNumber(obj.min),
       "mean" -> JsNumber(obj.mean),
       "stdDev" -> JsNumber(obj.stdDev),
-      "50p" -> JsNumber(obj.snapshot.getMedian()),
-      "75p" -> JsNumber(obj.snapshot.get75thPercentile()),
-      "95p" -> JsNumber(obj.snapshot.get95thPercentile()),
-      "98p" -> JsNumber(obj.snapshot.get98thPercentile()),
-      "99p" -> JsNumber(obj.snapshot.get99thPercentile()),
-      "999p" -> JsNumber(obj.snapshot.get999thPercentile())
+      "50p" -> JsNumber(obj.snapshot.getMedian),
+      "75p" -> JsNumber(obj.snapshot.get75thPercentile),
+      "95p" -> JsNumber(obj.snapshot.get95thPercentile),
+      "98p" -> JsNumber(obj.snapshot.get98thPercentile),
+      "99p" -> JsNumber(obj.snapshot.get99thPercentile),
+      "999p" -> JsNumber(obj.snapshot.get999thPercentile)
     )
     // we don't need to deserialize the TopicPath
     def read(json: JsValue): Histogram = ???
