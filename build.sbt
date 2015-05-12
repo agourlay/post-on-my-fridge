@@ -19,7 +19,7 @@ scalacOptions := Seq(
   "-feature"
 )
 
-enablePlugins(JavaAppPackaging)
+enablePlugins(JavaServerAppPackaging)
 
 mappings in Universal += {
   file("src/main/resources/application.conf") -> "conf/pomf.conf"
@@ -40,12 +40,12 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
 resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
-  val akkaV         = "2.3.9"
+  val akkaV         = "2.3.11"
   val akkaHttpV     = "1.0-M5"
   val akkaSseV      = "0.8.0"
-  val sprayJsonV    = "1.3.1"
-  val scalaMetricsV = "3.4.0_a2.3"
-  val metricsV      = "3.1.1"
+  val sprayJsonV    = "1.3.2"
+  val scalaMetricsV = "3.5.0_a2.3"
+  val metricsV      = "3.1.2"
   val jodaTimeV     = "2.7"
   val jodaConvertV  = "1.7"
   val slickV        = "2.1.0"
