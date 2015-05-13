@@ -3,8 +3,8 @@ package pomf.api.route
 import java.util.UUID
 
 import akka.actor.ActorContext
-import akka.http.marshalling.ToResponseMarshallable._
-import akka.http.server._
+import akka.http.scaladsl.marshalling.ToResponseMarshallable._
+import akka.http.scaladsl.server._
 import Directives._
 
 import pomf.core.configuration._

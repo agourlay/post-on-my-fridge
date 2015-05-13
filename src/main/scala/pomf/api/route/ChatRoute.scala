@@ -2,10 +2,10 @@ package pomf.api.route
 
 import akka.actor.{ ActorRef, ActorContext }
 import akka.pattern._
-import akka.http.marshalling.Marshaller._
-import akka.http.marshalling.ToResponseMarshallable
-import akka.http.model.StatusCodes._
-import akka.http.server.Directives._
+import akka.http.scaladsl.marshalling.Marshaller._
+import akka.http.scaladsl.marshalling.ToResponseMarshallable
+import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorFlowMaterializer
 import pomf.domain.actors.{ ChatRoomProtocol, ChatRepoProtocol }
 

@@ -2,7 +2,7 @@ package pomf.api.endpoint
 
 import java.util.UUID
 
-import akka.http.marshallers.sprayjson.SprayJsonSupport
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import spray.json._
 
 import nl.grons.metrics.scala._

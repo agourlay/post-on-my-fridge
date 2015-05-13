@@ -1,8 +1,8 @@
 package pomf.api.route
 
-import akka.http.model.headers._
-import akka.http.model.headers.CacheDirectives._
-import akka.http.server._
+import akka.http.scaladsl.model.headers._
+import akka.http.scaladsl.model.headers.CacheDirectives._
+import akka.http.scaladsl.server._
 import Directives._
 
 object FilesRoute {

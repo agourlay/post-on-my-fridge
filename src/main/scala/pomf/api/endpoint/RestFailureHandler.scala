@@ -1,10 +1,10 @@
 package pomf.api.endpoint
 
 import akka.actor.ActorLogging
-import akka.http.model.HttpResponse
-import akka.http.model.StatusCodes._
-import akka.http.server.Directives._
-import akka.http.server._
+import akka.http.scaladsl.model.HttpResponse
+import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server._
 import pomf.core.metrics.Instrumented
 import pomf.domain.{ FridgeAlreadyExistsException, FridgeNotFoundException, PostNotFoundException }
 

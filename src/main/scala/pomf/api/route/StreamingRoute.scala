@@ -3,7 +3,7 @@ package pomf.api.route
 import akka.actor.{ ActorRef, ActorContext }
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.Source
-import akka.http.server._
+import akka.http.scaladsl.server._
 import Directives._
 
 import de.heikoseeberger.akkasse.{ ServerSentEvent, EventStreamMarshalling }
@@ -16,10 +16,6 @@ import pomf.domain.model._
 
 object StreamingRoute extends EventStreamMarshalling with JsonSupport {
 
-  implicit def flowEventToSseMessage(event: PushedEvent): ServerSentEvent = {
-    ServerSentEvent(formatEvent.write(event) + "\n\n")
-  }
-
   def build(implicit context: ActorContext) = {
     implicit val ec = context.dispatcher
 
@@ -28,7 +24,7 @@ object StreamingRoute extends EventStreamMarshalling with JsonSupport {
         path("fridge" / JavaUUID) { fridgeId ⇒
           parameters("token") { token ⇒
             complete {
-              Source(ActorPublisher[PushedEvent](streamUser(fridgeId, token, context)))
+              Source(ActorPublisher[ServerSentEvent](streamUser(fridgeId, token, context)))
             }
           }
         }

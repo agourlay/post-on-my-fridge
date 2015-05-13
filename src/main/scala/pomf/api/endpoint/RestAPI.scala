@@ -1,10 +1,9 @@
 package pomf.api.endpoint
 
 import akka.actor._
-import akka.http.Http
-import akka.http.coding.Gzip
-import akka.http.server.Directives._
-import akka.stream.scaladsl.Sink
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.coding.Gzip
+import akka.http.scaladsl.server.Directives._
 import akka.stream.{ ActorFlowMaterializer, FlowMaterializer }
 
 import pomf.api.route._

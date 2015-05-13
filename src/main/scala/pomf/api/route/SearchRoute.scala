@@ -1,9 +1,9 @@
 package pomf.api.route
 
 import akka.actor.ActorContext
-import akka.http.model.StatusCodes._
-import akka.http.marshalling.ToResponseMarshallable
-import akka.http.server._
+import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.marshalling.ToResponseMarshallable
+import akka.http.scaladsl.server._
 import Directives._
 import akka.stream.FlowMaterializer
 
