@@ -50,7 +50,7 @@ class Dao(db: Database) extends Instrumented {
     fridgeByName(name).result.headOption
   }.map {
     case Some(f) ⇒ throw new FridgeAlreadyExistsException(f.id.get)
-    case None    ⇒ fridges += Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime())
+    case None    ⇒ db run { fridges += Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime()) }
   }
 
   def getFridgeFull(fridgeId: UUID): Future[Option[Fridge]] = db run {
@@ -59,10 +59,12 @@ class Dao(db: Database) extends Instrumented {
 
   def getAllFridge(pageNumber: Int, pageSize: Int): Future[Seq[Fridge]] =
     db run {
-      fridges.sortBy(_.modificationDate).drop((pageNumber - 1) * pageSize).take(pageSize).result //_.modificationDate.desc
+      fridges.sortBy(_.modificationDate).drop((pageNumber - 1) * pageSize).take(pageSize).result
     }
 
-  def buildFull(f: Fridge): Future[FridgeFull] = db.run(postByFridgeId(f.id.get).result).map { posts ⇒
+  def buildFull(f: Fridge): Future[FridgeFull] = db.run {
+    postByFridgeId(f.id.get).result
+  }.map { posts ⇒
     FridgeFull(f.name, f.creationDate, f.modificationDate, f.id.get, posts.size, posts.toList)
   }
 
@@ -80,31 +82,34 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def deletePost(postId: UUID): Future[UUID] = db run {
-    postById(postId).result.headOption.map { op ⇒
-      op.fold(throw new PostNotFoundException(postId)) { p ⇒
-        postById(postId).delete
-        updateModificationDate(p.fridgeId)
-        p.id.get
+    postById(postId).result.headOption
+  }.map { op ⇒
+    op.fold(throw new PostNotFoundException(postId)) { p ⇒
+      db run {
+        postById(postId).delete >> updateFridgeModificationDate(p.fridgeId)
       }
+      p.id.get
     }
   }
 
   def addPost(post: Post): Future[Post] = db run {
-    fridgeById(post.fridgeId).result.headOption.map { of ⇒
-      of.fold(throw new FridgeNotFoundException(post.fridgeId)) { f ⇒
-        val toPersist = post.copy(id = Some(UUID.randomUUID()))
-        posts.forceInsert(toPersist)
-        updateModificationDate(f.id.get)
-        toPersist
+    fridgeById(post.fridgeId).result.headOption
+  }.map { of ⇒
+    of.fold(throw new FridgeNotFoundException(post.fridgeId)) { f ⇒
+      val toPersist = post.copy(id = Some(UUID.randomUUID()))
+      db run {
+        posts.forceInsert(toPersist) >> updateFridgeModificationDate(f.id.get)
       }
+      toPersist
     }
   }
 
-  def updatePost(post: Post): Future[Unit] = db run {
+  def updatePost(post: Post): Future[Unit] = db.run {
     postById(post.id.get).result.headOption.map { op ⇒
       op.fold(throw new PostNotFoundException(post.id.get)) { p ⇒
-        updateModificationDate(post.fridgeId)
-        postById(p.id.get).update(post)
+        db.run {
+          updateFridgeModificationDate(p.fridgeId) >> postById(p.id.get).update(post)
+        }
       }
     }
   }
@@ -117,21 +122,19 @@ class Dao(db: Database) extends Instrumented {
     fridges.length.result
   }
 
-  def updateModificationDate(fridgeId: UUID) = {
+  def updateFridgeModificationDate(fridgeId: UUID) = {
     fridges.filter(_.id === fridgeId).map(_.modificationDate).update(new DateTime())
   }
 
   def createDB() = db.run {
-    posts.schema.create
-    fridges.schema.create
+    posts.schema.create >> fridges.schema.create
   }.onComplete {
     case Success(_) ⇒ log.info("Database schema created")
     case Failure(e) ⇒ log.info("Could not create db ... assuming it already exist")
   }
 
   def dropDB() = db.run {
-    posts.schema.drop
-    fridges.schema.drop
+    posts.schema.drop >> fridges.schema.drop
   }.onComplete {
     case Success(_) ⇒ log.info("Database schema dropped")
     case Failure(e) ⇒ log.error("Could not drop db : {} ", e)

@@ -23,10 +23,11 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
       dao.getFridgeByName(fridgeName)
     }
 
-  def addPost(post: Post, token: String): Future[Post] = dao.addPost(post).map { persistedPost ⇒
-    pushToStream(Notification.createPost(persistedPost, token))
-    persistedPost
-  }
+  def addPost(post: Post, token: String): Future[Post] =
+    dao.addPost(post).map { persistedPost ⇒
+      pushToStream(Notification.createPost(persistedPost, token))
+      persistedPost
+    }
 
   def getFridgeFull(fridgeId: UUID): Future[FridgeFull] =
     dao.getFridgeFull(fridgeId).map(_.getOrElse(throw new FridgeNotFoundException(fridgeId))).flatMap(dao.buildFull)
@@ -35,24 +36,26 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
 
   def searchByNameLike(term: String): Future[Seq[Fridge]] = dao.searchByNameLike(term)
 
-  def deletePost(id: UUID, token: String): Future[String] = dao.getPost(id).map { o ⇒
-    o.fold(throw new PostNotFoundException(id)) { post: Post ⇒
-      val deleteAck = "post " + dao.deletePost(id) + " deleted"
-      pushToStream(Notification.deletePost(post.fridgeId, id, token))
-      deleteAck
+  def deletePost(id: UUID, token: String): Future[String] =
+    dao.getPost(id).map { o ⇒
+      o.fold(throw new PostNotFoundException(id)) { post: Post ⇒
+        val deleteAck = "post " + dao.deletePost(id) + " deleted"
+        pushToStream(Notification.deletePost(post.fridgeId, id, token))
+        deleteAck
+      }
     }
-  }
 
-  def updatePost(post: Post, token: String): Future[Post] = post.id.fold(throw new RuntimeException) { pid: UUID ⇒
-    dao.updatePost(post).flatMap { _ ⇒
-      dao.getPost(pid).map {
-        _.fold(throw new PostNotFoundException(pid)) { postUpdated ⇒
-          pushToStream(Notification.updatePost(post, token))
-          postUpdated
+  def updatePost(post: Post, token: String): Future[Post] =
+    post.id.fold(throw new RuntimeException) { pid: UUID ⇒
+      dao.updatePost(post).flatMap { _ ⇒
+        dao.getPost(pid).map {
+          _.fold(throw new PostNotFoundException(pid)) { postUpdated ⇒
+            pushToStream(Notification.updatePost(post, token))
+            postUpdated
+          }
         }
       }
     }
-  }
 
   def countFridges(): Future[Int] = dao.countFridges()
 

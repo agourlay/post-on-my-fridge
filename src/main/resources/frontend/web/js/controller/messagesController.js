@@ -19,7 +19,9 @@ App.MessagesController = Ember.ArrayController.extend({
 
 	reload : function () {
 		var me = this;
-		me.get('content').clear();
+		if (me.get('content') != undefined){
+		  me.get('content').clear();
+		}
 		me.joinChat().done(function(){
 			me.retrievePreviousMessages();
 			me.retrieveParticipantNumber();
