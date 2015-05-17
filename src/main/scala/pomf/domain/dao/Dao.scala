@@ -38,10 +38,6 @@ class Dao(db: Database) extends Instrumented {
     for (l ← posts.filter(_.fridgeId === id).length.result) yield l
   }
 
-  def getFridgeById(id: UUID) = db.run {
-    fridgeById(id).result.head
-  }
-
   def getFridgeByName(name: String): Future[Fridge] = db.run {
     fridgeByName(name).result.head
   }
@@ -53,7 +49,7 @@ class Dao(db: Database) extends Instrumented {
     case None    ⇒ db run { fridges += Fridge(Some(UUID.randomUUID()), name, new DateTime(), new DateTime()) }
   }
 
-  def getFridgeFull(fridgeId: UUID): Future[Option[Fridge]] = db run {
+  def getFridgeById(fridgeId: UUID): Future[Option[Fridge]] = db run {
     fridgeById(fridgeId).result.headOption
   }
 
@@ -94,8 +90,8 @@ class Dao(db: Database) extends Instrumented {
 
   def addPost(post: Post): Future[Post] = db run {
     fridgeById(post.fridgeId).result.headOption
-  }.map { of ⇒
-    of.fold(throw new FridgeNotFoundException(post.fridgeId)) { f ⇒
+  }.map {
+    _.fold(throw new FridgeNotFoundException(post.fridgeId)) { f ⇒
       val toPersist = post.copy(id = Some(UUID.randomUUID()))
       db run {
         posts.forceInsert(toPersist) >> updateFridgeModificationDate(f.id.get)
@@ -105,10 +101,10 @@ class Dao(db: Database) extends Instrumented {
   }
 
   def updatePost(post: Post): Future[Unit] = db.run {
-    postById(post.id.get).result.headOption.map { op ⇒
-      op.fold(throw new PostNotFoundException(post.id.get)) { p ⇒
+    postById(post.id.get).result.headOption.map {
+      _.fold(throw new PostNotFoundException(post.id.get)) { p ⇒
         db.run {
-          updateFridgeModificationDate(p.fridgeId) >> postById(p.id.get).update(post)
+          postById(p.id.get).update(post) >> updateFridgeModificationDate(p.fridgeId)
         }
       }
     }

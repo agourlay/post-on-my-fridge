@@ -19,9 +19,10 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
     }
 
   def createFridge(fridgeName: String): Future[Fridge] =
-    dao.createFridge(fridgeName).flatMap { _ ⇒
-      dao.getFridgeByName(fridgeName)
-    }
+    for {
+      _ ← dao.createFridge(fridgeName)
+      newFridge ← dao.getFridgeByName(fridgeName)
+    } yield newFridge
 
   def addPost(post: Post, token: String): Future[Post] =
     dao.addPost(post).map { persistedPost ⇒
@@ -30,18 +31,19 @@ class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
     }
 
   def getFridgeFull(fridgeId: UUID): Future[FridgeFull] =
-    dao.getFridgeFull(fridgeId).map(_.getOrElse(throw new FridgeNotFoundException(fridgeId))).flatMap(dao.buildFull)
+    dao.getFridgeById(fridgeId).map(_.getOrElse(throw new FridgeNotFoundException(fridgeId))).flatMap(dao.buildFull)
 
   def getPost(id: UUID): Future[Post] = dao.getPost(id).map(_.getOrElse(throw new PostNotFoundException(id)))
 
   def searchByNameLike(term: String): Future[Seq[Fridge]] = dao.searchByNameLike(term)
 
   def deletePost(id: UUID, token: String): Future[String] =
-    dao.getPost(id).map { o ⇒
+    dao.getPost(id).flatMap { o ⇒
       o.fold(throw new PostNotFoundException(id)) { post: Post ⇒
-        val deleteAck = "post " + dao.deletePost(id) + " deleted"
-        pushToStream(Notification.deletePost(post.fridgeId, id, token))
-        deleteAck
+        dao.deletePost(id).map { uuid ⇒
+          pushToStream(Notification.deletePost(post.fridgeId, id, token))
+          s"post $uuid deleted"
+        }
       }
     }
 
