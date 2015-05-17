@@ -32,7 +32,7 @@ object FridgeRoute extends JsonSupport {
       path("fridges") {
         parameters('pageNumber ? 1, 'pageSize ? 50) { (pageNumber: Int, pageSize: Int) ⇒
           get {
-            onSuccess(crudService.getAllFridge(pageNumber, pageSize)) { fridges: List[FridgeLight] ⇒
+            onSuccess(crudService.getAllFridge(pageNumber, pageSize)) { fridges: Seq[FridgeLight] ⇒
               complete(ToResponseMarshallable(OK -> fridges))
             }
           }

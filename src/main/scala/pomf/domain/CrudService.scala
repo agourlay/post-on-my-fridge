@@ -8,66 +8,55 @@ import pomf.domain.dao.Dao
 import pomf.domain.model._
 
 import scala.concurrent.Future
-import scala.util._
 
 class CrudService(dao: Dao, system: ActorSystem) extends JsonSupport {
 
   implicit val ec = system.dispatcher
 
-  def getAllFridge(pageNumber: Int, pageSize: Int): Future[List[FridgeLight]] = Future {
-    dao.getAllFridge(pageNumber, pageSize)
-  }
-
-  def createFridge(fridgeName: String): Future[Fridge] = Future {
-    dao.createFridge(fridgeName) match {
-      case Success(id) ⇒ dao.getFridgeById(id)
-      case Failure(ex) ⇒ throw ex
+  def getAllFridge(pageNumber: Int, pageSize: Int): Future[Seq[FridgeLight]] =
+    dao.getAllFridge(pageNumber, pageSize).flatMap { fl ⇒
+      Future.sequence(fl.map(dao.buildLight))
     }
-  }
 
-  def addPost(post: Post, token: String): Future[Post] = Future {
-    dao.addPost(post) match {
-      case None ⇒ throw new FridgeNotFoundException(post.fridgeId)
-      case Some(persistedPost) ⇒
-        pushToStream(Notification.createPost(persistedPost, token))
-        persistedPost
+  def createFridge(fridgeName: String): Future[Fridge] =
+    dao.createFridge(fridgeName).flatMap { _ ⇒
+      dao.getFridgeByName(fridgeName)
     }
+
+  def addPost(post: Post, token: String): Future[Post] = dao.addPost(post).map { persistedPost ⇒
+    pushToStream(Notification.createPost(persistedPost, token))
+    persistedPost
   }
 
-  def getFridgeFull(fridgeId: UUID): Future[FridgeFull] = Future {
-    dao.getFridgeFull(fridgeId).getOrElse(throw new FridgeNotFoundException(fridgeId))
-  }
+  def getFridgeFull(fridgeId: UUID): Future[FridgeFull] =
+    dao.getFridgeFull(fridgeId).map(_.getOrElse(throw new FridgeNotFoundException(fridgeId))).flatMap(dao.buildFull)
 
-  def getPost(id: UUID): Future[Post] = Future {
-    dao.getPost(id).getOrElse(throw new PostNotFoundException(id))
-  }
+  def getPost(id: UUID): Future[Post] = dao.getPost(id).map(_.getOrElse(throw new PostNotFoundException(id)))
 
-  def searchByNameLike(term: String): Future[List[Fridge]] = Future {
-    dao.searchByNameLike(term)
-  }
+  def searchByNameLike(term: String): Future[Seq[Fridge]] = dao.searchByNameLike(term)
 
-  def deletePost(id: UUID, token: String): Future[String] = Future {
-    dao.getPost(id).fold(throw new PostNotFoundException(id)) { post: Post ⇒
+  def deletePost(id: UUID, token: String): Future[String] = dao.getPost(id).map { o ⇒
+    o.fold(throw new PostNotFoundException(id)) { post: Post ⇒
       val deleteAck = "post " + dao.deletePost(id) + " deleted"
       pushToStream(Notification.deletePost(post.fridgeId, id, token))
       deleteAck
     }
   }
 
-  def updatePost(post: Post, token: String): Future[Post] = Future {
-    dao.updatePost(post).fold(throw new PostNotFoundException(post.id.get)) { postUpdated ⇒
-      pushToStream(Notification.updatePost(post, token))
-      postUpdated
+  def updatePost(post: Post, token: String): Future[Post] = post.id.fold(throw new RuntimeException) { pid: UUID ⇒
+    dao.updatePost(post).flatMap { _ ⇒
+      dao.getPost(pid).map {
+        _.fold(throw new PostNotFoundException(pid)) { postUpdated ⇒
+          pushToStream(Notification.updatePost(post, token))
+          postUpdated
+        }
+      }
     }
   }
 
-  def countFridges(): Future[Int] = Future {
-    dao.countFridges()
-  }
+  def countFridges(): Future[Int] = dao.countFridges()
 
-  def countPosts(): Future[Int] = Future {
-    dao.countPosts()
-  }
+  def countPosts(): Future[Int] = dao.countPosts()
 
   private def pushToStream(n: Notification) = system.eventStream.publish(n)
 

@@ -2,7 +2,7 @@ package pomf.domain.dao
 
 import org.slf4j.LoggerFactory
 
-import scala.slick.driver.PostgresDriver.simple._
+import slick.driver.PostgresDriver.api._
 import com.zaxxer.hikari.HikariDataSource
 
 import pomf.core.metrics.Instrumented
