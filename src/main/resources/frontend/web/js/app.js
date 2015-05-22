@@ -16,15 +16,5 @@ App.ApplicationController = Ember.Controller.extend({
 
   currentPathChanged: function() {
     window.scrollTo(0, 0);
-    var page;
-
-    if (!Ember.isNone(_gaq)) {
-      page = window.location.hash.length > 0 ?
-             window.location.hash.substring(1) :
-             window.location.pathname;
-      _gaq.push(['_trackPageview', page]);
-      _gaq.push(['_setAccount', 'UA-53313643-1']);
-      _gaq.push(['_setSiteSpeedSampleRate', 100]);
-    }
   }.observes('currentPath')
 });

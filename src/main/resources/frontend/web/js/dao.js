@@ -38,10 +38,12 @@ App.Dao = Em.Object.create({
 		me.set("source", new EventSource("stream/fridge/" + fridgeId +"?token="+ token));
 		var source = me.get("source");
 		source.addEventListener('message', function(e) {
-			var data = $.parseJSON(e.data);
-			var payload = data.payload;
-			var timestamp = data.timestamp;
-			me.get("eventBus").push(data);
+		    if(e.data) {
+		    	var data = $.parseJSON(e.data);
+				var payload = data.payload;
+				var timestamp = data.timestamp;
+				me.get("eventBus").push(data);
+		    }
 		}, false);
 
 		source.addEventListener('open', function(e) {
