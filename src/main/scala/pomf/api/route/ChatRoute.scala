@@ -6,7 +6,7 @@ import akka.http.scaladsl.marshalling.Marshaller._
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.server.Directives._
-import akka.stream.ActorFlowMaterializer
+import akka.stream.ActorMaterializer
 import pomf.domain.actors.{ ChatRoomProtocol, ChatRepoProtocol }
 
 import pomf.core.configuration._
@@ -16,7 +16,7 @@ import pomf.api.endpoint.JsonSupport
 
 object ChatRoute extends JsonSupport {
 
-  def build(chatRepo: ActorRef)(implicit context: ActorContext, fm: ActorFlowMaterializer) = {
+  def build(chatRepo: ActorRef)(implicit context: ActorContext, fm: ActorMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher
 

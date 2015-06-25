@@ -5,7 +5,7 @@ import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.server._
 import Directives._
-import akka.stream.FlowMaterializer
+import akka.stream.ActorMaterializer
 
 import pomf.core.configuration._
 import pomf.api.endpoint.JsonSupport
@@ -14,7 +14,7 @@ import pomf.domain.model.Fridge
 
 object SearchRoute extends JsonSupport {
 
-  def build(crudService: CrudService)(implicit context: ActorContext, fm: FlowMaterializer) = {
+  def build(crudService: CrudService)(implicit context: ActorContext, fm: ActorMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher
 

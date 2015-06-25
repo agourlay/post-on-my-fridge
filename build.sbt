@@ -6,7 +6,7 @@ name := "pomf"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 scalacOptions := Seq(
   "-unchecked",
@@ -41,12 +41,12 @@ resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
   val akkaV         = "2.3.11"
-  val akkaHttpV     = "1.0-RC3"
-  val akkaSseV      = "0.13.0"
+  val akkaHttpV     = "1.0-RC4"
+  val akkaSseV      = "0.14.0"
   val sprayJsonV    = "1.3.2"
   val scalaMetricsV = "3.5.1_a2.3"
   val metricsV      = "3.1.2"
-  val jodaTimeV     = "2.7"
+  val jodaTimeV     = "2.8.1"
   val jodaConvertV  = "1.7"
   val slickV        = "3.0.0"
   val slickJodaV    = "2.0.0"

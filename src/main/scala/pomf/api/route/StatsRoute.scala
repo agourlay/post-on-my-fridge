@@ -6,7 +6,7 @@ import akka.http.scaladsl.marshalling.Marshaller._
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.server._
 import Directives._
-import akka.stream.FlowMaterializer
+import akka.stream.ActorMaterializer
 
 import spray.json.JsValue
 
@@ -17,7 +17,7 @@ import pomf.domain.CrudService
 
 object StatsRoute extends JsonSupport {
 
-  def build(crudService: CrudService, metricsRepo: MetricsReporter)(implicit context: ActorContext, fm: FlowMaterializer) = {
+  def build(crudService: CrudService, metricsRepo: MetricsReporter)(implicit context: ActorContext, fm: ActorMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher
 

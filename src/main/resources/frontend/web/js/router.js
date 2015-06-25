@@ -6,7 +6,7 @@ App.Router.map(function() {
 
 App.FridgeRoute = Ember.Route.extend({
 	model: function(params) {
-		return App.Dao.initSessionData(params.fridge_id);
+	  return App.Dao.initSessionData(params.fridge_id);
   },
 
   setupController: function(controller, model) {
@@ -15,15 +15,15 @@ App.FridgeRoute = Ember.Route.extend({
   },
 
   actions: {
-	  willTransition: function(transition) {
-	   	App.Dao.leaveChatOnExit();
-	  }
-	}  
+    willTransition: function(transition) {
+      App.Dao.leaveChatOnExit();
+    }
+  }
 });
 
 App.FridgesRoute = Ember.Route.extend({
-	model: function() {
-		return App.Dao.getFridges(1);
+  model: function() {
+	return App.Dao.getFridges(1);
   }
 });
 

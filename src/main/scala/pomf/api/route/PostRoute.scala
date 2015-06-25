@@ -9,7 +9,7 @@ import Directives._
 
 import java.util.UUID
 
-import akka.stream.ActorFlowMaterializer
+import akka.stream.ActorMaterializer
 import pomf.api.endpoint.JsonSupport
 import pomf.domain.CrudService
 import pomf.domain.model.Post
@@ -17,7 +17,7 @@ import pomf.core.configuration._
 
 object PostRoute extends JsonSupport {
 
-  def build(crudService: CrudService)(implicit context: ActorContext, fm: ActorFlowMaterializer) = {
+  def build(crudService: CrudService)(implicit context: ActorContext, fm: ActorMaterializer) = {
     implicit val timeout = akka.util.Timeout(Settings(context.system).Timeout)
     implicit val ec = context.dispatcher
 

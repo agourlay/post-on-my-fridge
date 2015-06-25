@@ -4,14 +4,14 @@ import akka.actor._
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.coding.Gzip
 import akka.http.scaladsl.server.Directives._
-import akka.stream.{ ActorFlowMaterializer, FlowMaterializer }
+import akka.stream.ActorMaterializer
 
 import pomf.api.route._
 import pomf.core.configuration.Settings
 import pomf.core.CoreComponents
 import pomf.core.actors.CommonActor
 
-class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorFlowMaterializer)
+class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorMaterializer)
     extends CommonActor
     with RestFailureHandler {
 
@@ -40,6 +40,6 @@ class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorFlow
 }
 
 object RestAPI {
-  def props(coreActors: CoreComponents)(implicit system: ActorSystem, fm: FlowMaterializer) =
+  def props(coreActors: CoreComponents)(implicit system: ActorSystem, fm: ActorMaterializer) =
     Props(classOf[RestAPI], coreActors, system, fm)
 }
