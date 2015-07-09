@@ -40,7 +40,7 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
 resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
-  val akkaV         = "2.3.11"
+  val akkaV         = "2.3.12"
   val akkaHttpV     = "1.0-RC4"
   val akkaSseV      = "0.14.0"
   val sprayJsonV    = "1.3.2"
