@@ -41,8 +41,8 @@ resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
   val akkaV         = "2.3.12"
-  val akkaHttpV     = "1.0-RC4"
-  val akkaSseV      = "0.14.0"
+  val akkaHttpV     = "1.0"
+  val akkaSseV      = "1.0.0"
   val sprayJsonV    = "1.3.2"
   val scalaMetricsV = "3.5.1_a2.3"
   val metricsV      = "3.1.2"
