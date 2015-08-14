@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         src : [
           "web/bower_components/jquery/dist/jquery.min.js",
           "web/bower_components/bootstrap/dist/js/bootstrap.min.js",
-          "web/bower_components/ember/ember.prod.js",
+          "web/bower_components/ember/ember.js",
           "web/bower_components/momentjs/min/moment.min.js",
           "web/bower_components/store.js/store.min.js",
           "web/bower_components/js-url/url.min.js",

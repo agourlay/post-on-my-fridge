@@ -34,7 +34,6 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
   .setPreference(AlignSingleLineCaseStatements.MaxArrowIndent, 100)
   .setPreference(AlignParameters, true)
   .setPreference(DoubleIndentClassDeclaration, true)
-  .setPreference(PreserveDanglingCloseParenthesis, true)
   .setPreference(RewriteArrowSymbols, true)
 
 resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
@@ -46,9 +45,9 @@ libraryDependencies ++= {
   val sprayJsonV    = "1.3.2"
   val scalaMetricsV = "3.5.1_a2.3"
   val metricsV      = "3.1.2"
-  val jodaTimeV     = "2.8.1"
+  val jodaTimeV     = "2.8.2"
   val jodaConvertV  = "1.7"
-  val slickV        = "3.0.0"
+  val slickV        = "3.0.1"
   val slickJodaV    = "2.0.0"
   val postgresqlV   = "9.4-1201-jdbc41"
   val logbackV      = "1.1.3"
