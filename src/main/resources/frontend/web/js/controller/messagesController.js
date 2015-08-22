@@ -1,7 +1,7 @@
 App.MessagesController = Ember.ArrayController.extend({
 
 	init: function () {
-		var me = this; 
+		var me = this;
 		App.Dao.set("messagesController", this);
 		App.Dao.get("eventBus").onValue(function(evt){
 			var payload = evt.payload;
@@ -34,7 +34,7 @@ App.MessagesController = Ember.ArrayController.extend({
 		messageModel.set("user" ,message.user);
 		messageModel.set("timestamp" ,message.timestamp);
 		messageModel.set("isNotification" ,false);
-		this.pushObject(messageModel);
+		this.get("content").pushObject(messageModel);
 	},
 
 	notificationManagement: function(message, timestamp) {
@@ -42,7 +42,7 @@ App.MessagesController = Ember.ArrayController.extend({
 		messageModel.set("message" ,message);
 		messageModel.set("timestamp" ,timestamp);
 		messageModel.set("isNotification" ,true);
-		this.pushObject(messageModel);
+		this.get("content").pushObject(messageModel);
 	},
 	
 	retrievePreviousMessages: function() {

@@ -3,11 +3,11 @@
 		<ul class="pager">
 		    {{#if view.previousDisabled}}
 		    	<li class="disabled">
-		    		<a {{action previousPage}}><i class="fa fa-angle-left"></i> Previous</a>
+		    		<a {{action 'previousPage'}}><i class="fa fa-angle-left"></i> Previous</a>
 		    	</li>
 		    {{else}}
 				<li>
-					<a {{action previousPage}}><i class="fa fa-angle-left"></i> Previous</a>
+					<a {{action 'previousPage'}}><i class="fa fa-angle-left"></i> Previous</a>
 				</li>
 			{{/if}}
 				<li>
@@ -15,11 +15,11 @@
 				</li>	
 			{{#if view.nextDisabled}}
 		    	<li class="disabled">
-		    		<a {{action nextPage}}>Next <i class="fa fa-angle-right"></i></a>
+		    		<a {{action 'nextPage'}}>Next <i class="fa fa-angle-right"></i></a>
 		    	</li>
 		    {{else}}
 				<li>
-					<a {{action nextPage}}>Next <i class="fa fa-angle-right"></i></a>
+					<a {{action 'nextPage'}}>Next <i class="fa fa-angle-right"></i></a>
 				</li>
 			{{/if}}
 		</ul>

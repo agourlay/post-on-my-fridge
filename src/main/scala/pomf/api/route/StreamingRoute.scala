@@ -5,9 +5,8 @@ import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.Source
 import akka.http.scaladsl.server._
 import Directives._
-
-import de.heikoseeberger.akkasse.{ ServerSentEvent, EventStreamMarshalling }
-
+import de.heikoseeberger.akkasse.{ WithHeartbeats, EventStreamMarshalling }
+import scala.concurrent.duration._
 import java.util.UUID
 
 import pomf.api.endpoint.JsonSupport
@@ -24,7 +23,9 @@ object StreamingRoute extends EventStreamMarshalling with JsonSupport {
         path("fridge" / JavaUUID) { fridgeId ⇒
           parameters("token") { token ⇒
             complete {
-              Source(ActorPublisher[ServerSentEvent](streamUser(fridgeId, token, context)))
+              Source(ActorPublisher[PushedEvent](streamUser(fridgeId, token, context)))
+                .map(PushedEvent.toServerSentEvent)
+                .via(WithHeartbeats(1.second))
             }
           }
         }
