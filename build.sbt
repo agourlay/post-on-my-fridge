@@ -39,7 +39,7 @@ ScalariformKeys.preferences := ScalariformKeys.preferences.value
 resolvers += "hseeberger at bintray" at "http://dl.bintray.com/hseeberger/maven"
 
 libraryDependencies ++= {
-  val akkaV         = "2.3.12"
+  val akkaV         = "2.3.14"
   val akkaHttpV     = "1.0"
   val akkaSseV      = "1.1.0"
   val sprayJsonV    = "1.3.2"
@@ -47,9 +47,9 @@ libraryDependencies ++= {
   val metricsV      = "3.1.2"
   val jodaTimeV     = "2.8.2"
   val jodaConvertV  = "1.7"
-  val slickV        = "3.0.2"
+  val slickV        = "3.0.3"
   val slickJodaV    = "2.0.0"
-  val postgresqlV   = "9.4-1201-jdbc41"
+  val postgresqlV   = "9.4-1203-jdbc42"
   val logbackV      = "1.1.3"
   val hikaricpV     = "2.3.5"
   Seq(                

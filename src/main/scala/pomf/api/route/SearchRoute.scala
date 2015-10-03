@@ -23,7 +23,7 @@ object SearchRoute extends JsonSupport {
         get {
           parameters("term") { term: String ⇒
             onSuccess(crudService.searchByNameLike(term)) { fridges: Seq[Fridge] ⇒
-              complete(ToResponseMarshallable(OK -> fridges))
+              complete(ToResponseMarshallable(OK → fridges))
             }
           }
         }

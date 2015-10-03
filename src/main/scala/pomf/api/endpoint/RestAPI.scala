@@ -2,7 +2,6 @@ package pomf.api.endpoint
 
 import akka.actor._
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.coding.Gzip
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 
@@ -31,7 +30,7 @@ class RestAPI(coreComponents: CoreComponents, system: ActorSystem, fm: ActorMate
   val streaming = StreamingRoute.build
   val token = TokenRoute.build()
 
-  val routes = encodeResponseWith(Gzip) {
+  val routes = encodeResponse {
     chat ~ files ~ fridge ~ post ~ search ~ stats ~ streaming ~ token
   }
 

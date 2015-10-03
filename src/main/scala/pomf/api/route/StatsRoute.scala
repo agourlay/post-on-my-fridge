@@ -24,7 +24,7 @@ object StatsRoute extends JsonSupport {
     path("stats") {
       get {
         onSuccess(metricsRepo.getAllMetrics) { metrics: Map[String, JsValue] ⇒
-          complete(ToResponseMarshallable(OK -> metrics))
+          complete(ToResponseMarshallable(OK → metrics))
         }
       }
     } ~
@@ -32,14 +32,14 @@ object StatsRoute extends JsonSupport {
         path("fridges") {
           get {
             onSuccess(crudService.countFridges()) { nb: Int ⇒
-              complete(ToResponseMarshallable(OK -> nb.toString))
+              complete(ToResponseMarshallable(OK → nb.toString))
             }
           }
         } ~
           path("posts") {
             get {
               onSuccess(crudService.countPosts()) { nb: Int ⇒
-                complete(ToResponseMarshallable(OK -> nb.toString))
+                complete(ToResponseMarshallable(OK → nb.toString))
               }
             }
           }

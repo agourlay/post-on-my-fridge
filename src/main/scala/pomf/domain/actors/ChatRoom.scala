@@ -36,12 +36,12 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
 
   def addParticipant(token: String, name: String): String = {
     pushToStream(Notification.addParticipant(fridgeId, name, token))
-    participantByToken += (token -> name)
+    participantByToken += (token → name)
     s"$name joined chat $fridgeId"
   }
 
   def addChatMessage(message: ChatMessage, token: String) = {
-    messages += (System.currentTimeMillis -> message)
+    messages += (System.currentTimeMillis → message)
     pushToStream(Notification.sendMessage(fridgeId, message, token))
     message
   }
@@ -57,7 +57,7 @@ class ChatRoom(fridgeId: UUID) extends CommonActor with JsonSupport {
 
   def renameParticipant(token: String, newName: String) = {
     val formerName = participantByToken.getOrElse(token, "Anonymous")
-    participantByToken += (token -> newName)
+    participantByToken += (token → newName)
     pushToStream(Notification.renameParticipant(fridgeId, token, newName, formerName))
     s"$newName changed name"
   }

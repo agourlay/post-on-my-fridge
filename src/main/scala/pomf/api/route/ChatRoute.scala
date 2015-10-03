@@ -27,7 +27,7 @@ object ChatRoute extends JsonSupport {
             entity(as[ChatMessage]) { message ⇒
               complete {
                 (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.SendMessage(message, token))).mapTo[ChatMessage].map {
-                  case cm: ChatMessage ⇒ ToResponseMarshallable(OK -> cm)
+                  case cm: ChatMessage ⇒ ToResponseMarshallable(OK → cm)
                 }
               }
             }
@@ -36,7 +36,7 @@ object ChatRoute extends JsonSupport {
           get {
             complete {
               (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.ChatHistory)).mapTo[ChatHistoryContent].map {
-                case ChatHistoryContent(messages) ⇒ ToResponseMarshallable(OK -> messages)
+                case ChatHistoryContent(messages) ⇒ ToResponseMarshallable(OK → messages)
               }
             }
           }
@@ -63,7 +63,7 @@ object ChatRoute extends JsonSupport {
             get {
               complete {
                 (chatRepo ? ChatRepoProtocol.ToChatRoom(fridgeId, ChatRoomProtocol.ParticipantNumber)).mapTo[ParticipantNumberRoom].map {
-                  case ParticipantNumberRoom(nb) ⇒ ToResponseMarshallable(OK -> nb.toString)
+                  case ParticipantNumberRoom(nb) ⇒ ToResponseMarshallable(OK → nb.toString)
                 }
               }
             } ~

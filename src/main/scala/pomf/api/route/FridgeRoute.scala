@@ -25,7 +25,7 @@ object FridgeRoute extends JsonSupport {
     path("fridges" / JavaUUID) { fridgeId: UUID ⇒
       get {
         onSuccess(crudService.getFridgeFull(fridgeId)) { fridge: FridgeFull ⇒
-          complete(ToResponseMarshallable(OK -> fridge))
+          complete(ToResponseMarshallable(OK → fridge))
         }
       }
     } ~
@@ -33,7 +33,7 @@ object FridgeRoute extends JsonSupport {
         parameters('pageNumber ? 1, 'pageSize ? 50) { (pageNumber: Int, pageSize: Int) ⇒
           get {
             onSuccess(crudService.getAllFridge(pageNumber, pageSize)) { fridges: Seq[FridgeLight] ⇒
-              complete(ToResponseMarshallable(OK -> fridges))
+              complete(ToResponseMarshallable(OK → fridges))
             }
           }
         }
@@ -42,7 +42,7 @@ object FridgeRoute extends JsonSupport {
         post {
           entity(as[String]) { fridgeName: String ⇒
             onSuccess(crudService.createFridge(fridgeName)) { fridge: Fridge ⇒
-              complete(ToResponseMarshallable(OK -> fridge))
+              complete(ToResponseMarshallable(Created → fridge))
             }
           }
         }

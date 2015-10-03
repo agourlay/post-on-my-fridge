@@ -6,14 +6,16 @@ import pomf.util.XssFilter
 import slick.driver.PostgresDriver.api._
 import java.util.UUID
 
-case class Post(id: Option[UUID],
-                author: String,
-                content: String,
-                color: String,
-                date: DateTime,
-                positionX: Double,
-                positionY: Double,
-                fridgeId: UUID) {
+case class Post(
+  id:        Option[UUID],
+  author:    String,
+  content:   String,
+  color:     String,
+  date:      DateTime,
+  positionX: Double,
+  positionY: Double,
+  fridgeId:  UUID
+) {
   require(!author.isEmpty, "author must not be empty")
   require(!XssFilter.containsScript(author), "author must not contain script tags")
   require(!XssFilter.containsScript(content), "content must not contain script tags")

@@ -26,7 +26,7 @@ object PostRoute extends JsonSupport {
         parameters("token") { token: String ⇒
           entity(as[Post]) { post: Post ⇒
             onSuccess(crudService.addPost(post, token)) { created: Post ⇒
-              complete(ToResponseMarshallable(OK -> created))
+              complete(ToResponseMarshallable(OK → created))
             }
           }
         }
@@ -35,7 +35,7 @@ object PostRoute extends JsonSupport {
           parameters("token") { token: String ⇒
             entity(as[Post]) { post: Post ⇒
               onSuccess(crudService.updatePost(post, token)) { updated: Post ⇒
-                complete(ToResponseMarshallable(OK -> updated))
+                complete(ToResponseMarshallable(OK → updated))
               }
             }
           }
@@ -44,13 +44,13 @@ object PostRoute extends JsonSupport {
       path("posts" / JavaUUID) { postId: UUID ⇒
         get {
           onSuccess(crudService.getPost(postId)) { post: Post ⇒
-            complete(ToResponseMarshallable(OK -> post))
+            complete(ToResponseMarshallable(OK → post))
           }
         } ~
           delete {
             parameters("token") { token: String ⇒
               onSuccess(crudService.deletePost(postId, token)) { msg: String ⇒
-                complete(ToResponseMarshallable(OK -> msg))
+                complete(ToResponseMarshallable(OK → msg))
               }
             }
           }
