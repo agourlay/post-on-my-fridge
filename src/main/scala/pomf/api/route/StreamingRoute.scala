@@ -1,11 +1,11 @@
 package pomf.api.route
 
-import akka.actor.{ ActorRef, ActorContext }
+import akka.actor.{ Props, ActorRef, ActorContext }
 import akka.stream.actor.ActorPublisher
 import akka.stream.scaladsl.Source
 import akka.http.scaladsl.server._
 import Directives._
-import de.heikoseeberger.akkasse.{ WithHeartbeats, EventStreamMarshalling }
+import de.heikoseeberger.akkasse.EventStreamMarshalling
 import scala.concurrent.duration._
 import java.util.UUID
 
@@ -23,9 +23,8 @@ object StreamingRoute extends EventStreamMarshalling with JsonSupport {
         path("fridge" / JavaUUID) { fridgeId ⇒
           parameters("token") { token ⇒
             complete {
-              Source(ActorPublisher[PushedEvent](streamUser(fridgeId, token, context)))
+              Source.actorPublisher[PushedEvent](streamUser(fridgeId, token, context))
                 .map(PushedEvent.toServerSentEvent)
-                .via(WithHeartbeats(1.second))
             }
           }
         }
@@ -33,8 +32,8 @@ object StreamingRoute extends EventStreamMarshalling with JsonSupport {
     }
   }
 
-  def streamUser(fridgeId: UUID, token: String, context: ActorContext): ActorRef = {
+  def streamUser(fridgeId: UUID, token: String, context: ActorContext): Props = {
     val filter = (fridgeTarget: UUID, userToken: String) ⇒ fridgeId == fridgeTarget && token != userToken
-    context.actorOf(FridgeUpdatePublisher.props(filter))
+    FridgeUpdatePublisher.props(filter)
   }
 }

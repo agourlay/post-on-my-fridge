@@ -14,7 +14,7 @@ import pomf.domain.dao.PostgresDB
 trait Core {
   implicit lazy val system = ActorSystem("pomf")
   implicit lazy val materializer = ActorMaterializer()
-  sys.addShutdownHook(system.shutdown())
+  sys.addShutdownHook(system.terminate())
 }
 
 trait CoreComponents {

@@ -6,6 +6,6 @@ import pomf.core.{ Core, CoreComponents }
 object Boot extends App with Configuration with Core with CoreComponents {
 
   def stop() = {
-    system.shutdown()
+    system.terminate()
   }
 }
